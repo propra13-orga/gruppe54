@@ -2,6 +2,8 @@ package propra2013.Gruppe54;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 
 import javax.swing.*;
@@ -26,7 +28,7 @@ public class Frame extends JFrame{
 	public static JButton schließen = new JButton("Verlassen");
 	public static JButton menü = new JButton("Hauptmenü");
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static JComboBox levelAuswahl = new JComboBox(auswahl);
 	
 	/**
@@ -37,6 +39,7 @@ public class Frame extends JFrame{
 		setSize(size);
 		setResizable(false);
 		setLayout(null); 
+		this.setFocusable(true);
 		setLocationRelativeTo(null); //Frame in der Mitte
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -60,6 +63,54 @@ public class Frame extends JFrame{
 		levelAuswahl.setBounds(400, 250, 150, 30);	//ComboBox Levelauswahl
 		levelAuswahl.setVisible(true);
 		add(levelAuswahl);
+		
+		/*
+		 * 
+		 * 
+		 *   KeyEvents - Steuerung der Figur
+		 * 
+		 * 
+		 */
+		
+		addKeyListener(new KeyListener(){
+			@SuppressWarnings("static-access")
+			public void keyPressed(KeyEvent e){
+		        int key = e.getKeyCode();
+		      //nur bewegen wenn der Spieler aktiv ist
+		      if(spieler.aktiv){
+		    	  //prüfen welche ID die stelle an die gegangen werden soll hat und nur laufen wenn es keine Mauer ist
+		    	  //die +16 bei dem spieler.y sind dafür, dass der Spieler grafisch zur Hälfte in eine Mauer ragen kann,
+		    	  //da das sonst ziemlich komisch aussah, genau so bei den anderen koordinaten je nach Richtung
+		         if ((key == KeyEvent.VK_A)&&(spielfeld.getBlockID(spieler.x-2, spieler.y+16))!=1) {
+		            spieler.x-=2;
+		         }
+
+		         if ((key == KeyEvent.VK_D)&(spielfeld.getBlockID(spieler.x+24, spieler.y+16))!=1) {
+		         	spieler.x+=2;
+		         }
+
+		         if ((key == KeyEvent.VK_W)&&(spielfeld.getBlockID(spieler.x+16, spieler.y-2+16))!=1) {
+		         	spieler.y-=2;
+		         }
+		         
+		         if ((key == KeyEvent.VK_S)&&(spielfeld.getBlockID(spieler.x+16, spieler.y+2+32))!=1) {
+		         	spieler.y+=2;
+		         }
+		      }
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		//Combobox event
 		levelAuswahl.addActionListener(new ActionListener(){
@@ -99,6 +150,10 @@ public class Frame extends JFrame{
 				//Button Hauptmenü hinzufügen
 				add(menü);
 				menü.setVisible(true);
+				
+				//Spieler auf Anfangspunkt setzen, zufällig gewählt. später ist das dann der Startpunkt des jeweiligen Raum
+				spieler.x=100;
+				spieler.y=20;
 			}
 		});
 		
@@ -130,7 +185,6 @@ public class Frame extends JFrame{
 		
 		init();
 	}
-
 	
 	/**
 	 * Initialisierung

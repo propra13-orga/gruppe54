@@ -20,6 +20,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	
 	public static Raum raum = new Raum();
 	public static level level = new level();
+	public static spieler spieler;
 	
 	/**
 	 * Konstruktor
@@ -46,18 +47,20 @@ public class Spielfeld extends JPanel implements Runnable{
 	}
 	
 	//Bilder in Array laden     
-		//	ID: 0 - Boden   1 - Mauer  
-		//      2 - Falle_Loch   3 - Falle_Feuer   4 - Falle_Speer  
-	    //      5 - Item_Trank
+		//	ID: 0 - Boden   1 - Mauer   2 - Ausgang 
+		//      3 - Falle_Loch   4 - Falle_Feuer   5 - Falle_Speer  
+	    //      6 - Item_Trank
 	
 	public void define(){
 		raum = new Raum();
+		spieler = new spieler();
 		elemente[0] = new ImageIcon("pics/boden.png").getImage(); 
 		elemente[1] = new ImageIcon("pics/mauer.png").getImage(); 
-		elemente[2] = new ImageIcon("pics/falle_loch.png").getImage();
-		elemente[3] = new ImageIcon("pics/falle_feuer.png").getImage();
-		elemente[4] = new ImageIcon("pics/falle_speer.png").getImage();
-		elemente[5] = new ImageIcon("pics/item_trank.png").getImage();
+		elemente[2] = new ImageIcon("pics/ausgang.png").getImage();
+		elemente[3] = new ImageIcon("pics/falle_loch.png").getImage();
+		elemente[4] = new ImageIcon("pics/falle_feuer.png").getImage();
+		elemente[5] = new ImageIcon("pics/falle_speer.png").getImage();
+		elemente[6] = new ImageIcon("pics/item_trank.png").getImage();
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
 	}
 	
@@ -67,13 +70,16 @@ public class Spielfeld extends JPanel implements Runnable{
 			isFirst=false;
 		}
 		raum.draw(g); //zeichnet den raum
+		
+		if(spieler.aktiv){
+			spieler.draw(g);  //zeichnet den Spieler
+		}
 	}
 	
 	public void run(){
 		while(true){
-			
+			validate();
 			repaint();
-			
 			try{
 				Thread.sleep(1);
 			} catch(Exception e){ 
