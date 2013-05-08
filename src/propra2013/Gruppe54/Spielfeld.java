@@ -12,7 +12,7 @@ public class Spielfeld extends JPanel implements Runnable{
 
 	public Thread thread = new Thread(this);
 	
-	public static Image[] elemente = new Image[5];
+	public static Image[] elemente = new Image[10];
 	
 	public static int current_lvl=1,current_room=1;
 	
@@ -45,11 +45,19 @@ public class Spielfeld extends JPanel implements Runnable{
 		return Raum.block[i][j].ID;
 	}
 	
-	//Bilder in Array laden     ID: 0 - Boden   1 - Mauer 
+	//Bilder in Array laden     
+		//	ID: 0 - Boden   1 - Mauer  
+		//      2 - Falle_Loch   3 - Falle_Feuer   4 - Falle_Speer  
+	    //      5 - Item_Trank
+	
 	public void define(){
 		raum = new Raum();
 		elemente[0] = new ImageIcon("pics/boden.png").getImage(); 
 		elemente[1] = new ImageIcon("pics/mauer.png").getImage(); 
+		elemente[2] = new ImageIcon("pics/falle_loch.png").getImage();
+		elemente[3] = new ImageIcon("pics/falle_feuer.png").getImage();
+		elemente[4] = new ImageIcon("pics/falle_speer.png").getImage();
+		elemente[5] = new ImageIcon("pics/item_trank.png").getImage();
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
 	}
 	
