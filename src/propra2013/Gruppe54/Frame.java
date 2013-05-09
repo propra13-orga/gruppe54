@@ -1,4 +1,5 @@
 package propra2013.Gruppe54;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +28,10 @@ public class Frame extends JFrame{
 	public static JButton info = new JButton("Info");
 	public static JButton schließen = new JButton("Verlassen");
 	public static JButton menü = new JButton("Hauptmenü");
+	
+	public static boolean unten=false; // gibt an, ob der Gegener unten an eine Wand stößt
+	public static boolean rechts=false; // gibt an, ob der Gegener rechts an eine Wand stößt
+
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static JComboBox levelAuswahl = new JComboBox(auswahl);
@@ -64,6 +69,7 @@ public class Frame extends JFrame{
 		levelAuswahl.setVisible(true);
 		add(levelAuswahl);
 		
+		
 		/*
 		 * 
 		 * 
@@ -96,8 +102,33 @@ public class Frame extends JFrame{
 		         if ((key == KeyEvent.VK_S)&&(spielfeld.getBlockID(spieler.x+16, spieler.y+2+32))!=1) {
 		         	spieler.y+=2;
 		         }
+		         // Wenn Space gedrückt wird, bewegt sich der Gegner hoch und runter, bis er zu einer Mauer kommt
+		         // Das muss nun natürlich noch ohne KeyEvent gehen, dass er das tut sobald er erzeugt wird, 
+		         //bzw dann entweder von rechts nach links oder von unten nach oben
+		         if (key == KeyEvent.VK_SPACE){
+		        	 if ((unten==false) &&(spielfeld.getBlockID(Gegner.x+16, Gegner.y+2+32)!=1)){
+		        		 Gegner.y+=2;
+		        	 } else unten = true;
+		        	 if ((unten==true)&& (spielfeld.getBlockID(Gegner.x+16, Gegner.y-2+16)!=1)){
+		        		 Gegner.y-=2;
+		        	 } else unten = false;
+		        	
+		        	 
+		         }
+		      // Wenn V gedrückt wird, bewegt sich der Gegner rechts <-> links, bis er zu einer Mauer kommt
+		         if (key == KeyEvent.VK_V){
+		        	 if ((rechts==false) &&(spielfeld.getBlockID(Gegner.x+24, Gegner.y+16)!=1)){
+		        		 Gegner.x+=2;
+		        	 } else rechts = true;
+		        	 if ((rechts==true)&& (spielfeld.getBlockID(Gegner.x-2, Gegner.y+16)!=1)){
+		        		 Gegner.x-=2;
+		        	 } else rechts = false;
+		        	
+		        	 
+		         }
 		      }
 			}
+
 
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -111,6 +142,7 @@ public class Frame extends JFrame{
 				
 			}
 		});
+
 		
 		//Combobox event
 		levelAuswahl.addActionListener(new ActionListener(){
@@ -154,6 +186,10 @@ public class Frame extends JFrame{
 				//Spieler auf Anfangspunkt setzen, zufällig gewählt. später ist das dann der Startpunkt des jeweiligen Raum
 				spieler.x=100;
 				spieler.y=20;
+				
+				//Gegner auf Anfangspunkt setzen
+				Gegner.x=700;
+				Gegner.y=20;
 			}
 		});
 		
@@ -182,6 +218,7 @@ public class Frame extends JFrame{
 				System.exit(0);
 			}
 		});
+		
 		
 		init();
 	}
