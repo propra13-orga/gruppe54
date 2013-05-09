@@ -22,6 +22,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static level level = new level();
 	public static spieler spieler;
 	public static Gegner Gegner;
+
 	
 	/**
 	 * Konstruktor
@@ -74,8 +75,9 @@ public class Spielfeld extends JPanel implements Runnable{
 		raum.draw(g); //zeichnet den raum
 		
 		if(Gegner.aktiv){
-			Gegner.draw(g);  //zeichnet den Spieler
+			Gegner.draw(g);  //zeichnet den Gegner
 		}
+
 		
 		if(spieler.aktiv){
 			spieler.draw(g);  //zeichnet den Spieler

@@ -9,7 +9,7 @@ import java.io.File;
 
 import javax.swing.*;
 
-public class Frame extends JFrame{
+public class Frame extends JFrame implements ActionListener{
 	/**
 	 * 
 	 */
@@ -31,7 +31,7 @@ public class Frame extends JFrame{
 	
 	public static boolean unten=false; // gibt an, ob der Gegener unten an eine Wand stößt
 	public static boolean rechts=false; // gibt an, ob der Gegener rechts an eine Wand stößt
-
+	public static Timer time;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static JComboBox levelAuswahl = new JComboBox(auswahl);
@@ -69,6 +69,10 @@ public class Frame extends JFrame{
 		levelAuswahl.setVisible(true);
 		add(levelAuswahl);
 		
+		// damit der Gegner sich von alleine bewegt
+		time = new Timer(5,this);
+		time.start();
+		
 		
 		/*
 		 * 
@@ -102,30 +106,7 @@ public class Frame extends JFrame{
 		         if ((key == KeyEvent.VK_S)&&(spielfeld.getBlockID(spieler.x+16, spieler.y+2+32))!=1) {
 		         	spieler.y+=2;
 		         }
-		         // Wenn Space gedrückt wird, bewegt sich der Gegner hoch und runter, bis er zu einer Mauer kommt
-		         // Das muss nun natürlich noch ohne KeyEvent gehen, dass er das tut sobald er erzeugt wird, 
-		         //bzw dann entweder von rechts nach links oder von unten nach oben
-		         if (key == KeyEvent.VK_SPACE){
-		        	 if ((unten==false) &&(spielfeld.getBlockID(Gegner.x+16, Gegner.y+2+32)!=1)){
-		        		 Gegner.y+=2;
-		        	 } else unten = true;
-		        	 if ((unten==true)&& (spielfeld.getBlockID(Gegner.x+16, Gegner.y-2+16)!=1)){
-		        		 Gegner.y-=2;
-		        	 } else unten = false;
-		        	
-		        	 
-		         }
-		      // Wenn V gedrückt wird, bewegt sich der Gegner rechts <-> links, bis er zu einer Mauer kommt
-		         if (key == KeyEvent.VK_V){
-		        	 if ((rechts==false) &&(spielfeld.getBlockID(Gegner.x+24, Gegner.y+16)!=1)){
-		        		 Gegner.x+=2;
-		        	 } else rechts = true;
-		        	 if ((rechts==true)&& (spielfeld.getBlockID(Gegner.x-2, Gegner.y+16)!=1)){
-		        		 Gegner.x-=2;
-		        	 } else rechts = false;
-		        	
-		        	 
-		         }
+	
 		      }
 			}
 
@@ -190,6 +171,8 @@ public class Frame extends JFrame{
 				//Gegner auf Anfangspunkt setzen
 				Gegner.x=700;
 				Gegner.y=20;
+				
+			
 			}
 		});
 		
@@ -240,5 +223,26 @@ public class Frame extends JFrame{
 		
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		 if ((unten==false) &&(Spielfeld.getBlockID(Gegner.x+16, Gegner.y+2+32)!=1)){
+    		 Gegner.y+=2;
+    	 } else unten = true;
+    	 if ((unten==true)&& (Spielfeld.getBlockID(Gegner.x+16, Gegner.y-2+16)!=1)){
+    		 Gegner.y-=2;
+    	 } else unten = false;	
+    	 
+    	 // wenn der von links nach rechts gehen soll
+        //	 if ((rechts==false) &&(Spielfeld.getBlockID(Gegner.x+24, Gegner.y+16)!=1)){
+        //		 Gegner.x+=2;
+        //	 } else rechts = true;
+        //	 if ((rechts==true)&& (Spielfeld.getBlockID(Gegner.x-2, Gegner.y+16)!=1)){
+       //		 Gegner.x-=2;
+        //	 } else rechts = false;
+        	
+        	 
+         }
+	}
 
-}
+
+
