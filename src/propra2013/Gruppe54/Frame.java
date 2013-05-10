@@ -91,7 +91,7 @@ public class Frame extends JFrame implements ActionListener{
 			public void keyPressed(KeyEvent e){
 		        int key = e.getKeyCode();
 		      //nur bewegen wenn der Spieler aktiv ist
-		      if(spieler.aktiv){
+		      if(Spielfeld.spieler.aktiv){
 		    	  //prüfen welche ID die stelle an die gegangen werden soll hat und nur laufen wenn es keine Mauer ist
 		    	  //die +16 bei dem spieler.y sind dafür, dass der Spieler grafisch zur Hälfte in eine Mauer ragen kann,
 		    	  //da das sonst ziemlich komisch aussah, genau so bei den anderen koordinaten je nach Richtung
