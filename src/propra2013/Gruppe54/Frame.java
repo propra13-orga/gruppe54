@@ -1,4 +1,5 @@
 package propra2013.Gruppe54;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +9,7 @@ import java.io.File;
 
 import javax.swing.*;
 
-public class Frame extends JFrame{
+public class Frame extends JFrame implements ActionListener{
 	/**
 	 * 
 	 */
@@ -29,6 +30,10 @@ public class Frame extends JFrame{
 	public static JButton menü = new JButton("Hauptmenü");
 	
 	public static JLabel leben = new JLabel();
+
+	public static boolean unten=false; // gibt an, ob der Gegener unten an eine Wand stößt
+	public static boolean rechts=false; // gibt an, ob der Gegener rechts an eine Wand stößt
+	public static Timer time;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static JComboBox levelAuswahl = new JComboBox(auswahl);
@@ -69,6 +74,10 @@ public class Frame extends JFrame{
 		leben.setBounds(220, 25, 100, 20);
 		leben.setVisible(false);
 		
+		// damit der Gegner sich von alleine bewegt
+		time = new Timer(5,this);
+		
+		
 		/*
 		 * 
 		 * 
@@ -105,8 +114,10 @@ public class Frame extends JFrame{
 		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+16, spieler.y+32),spielfeld.getBlock(spieler.x-2, spieler.y+16));
 		         	spieler.y+=4;
 		         }
+	
 		      }
 			}
+
 
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -120,6 +131,7 @@ public class Frame extends JFrame{
 				
 			}
 		});
+
 		
 		//Combobox event
 		levelAuswahl.addActionListener(new ActionListener(){
@@ -163,6 +175,17 @@ public class Frame extends JFrame{
 				add(leben);
 				leben.setVisible(true);
 				Spielfeld.isFirst = true;
+
+				//Spieler auf Anfangspunkt setzen, zufällig gewählt. später ist das dann der Startpunkt des jeweiligen Raum
+				spieler.x=100;
+				spieler.y=20;
+				
+				//Gegner auf Anfangspunkt setzen
+				Gegner.x=700;
+				Gegner.y=20;
+				
+				time.start();
+				
 			}
 		});
 		
@@ -194,6 +217,7 @@ public class Frame extends JFrame{
 			}
 		});
 		
+		
 		init();
 	}
 	
@@ -214,5 +238,26 @@ public class Frame extends JFrame{
 		
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		 if ((unten==false) &&(Spielfeld.getBlockID(Gegner.x+16, Gegner.y+2+32)!=1)){
+    		 Gegner.y+=2;
+    	 } else unten = true;
+    	 if ((unten==true)&& (Spielfeld.getBlockID(Gegner.x+16, Gegner.y-2+16)!=1)){
+    		 Gegner.y-=2;
+    	 } else unten = false;	
+    	 
+    	 /* wenn der von links nach rechts gehen soll
+        	 if ((rechts==false) &&(Spielfeld.getBlockID(Gegner.x+24, Gegner.y+16)!=1)){
+        		 Gegner.x+=2;
+        	 } else rechts = true;
+        	 if ((rechts==true)&& (Spielfeld.getBlockID(Gegner.x-2, Gegner.y+16)!=1)){
+       		 Gegner.x-=2;
+        	 } else rechts = false; */
+        
+        	 
+         }
+	}
 
-}
+
+
