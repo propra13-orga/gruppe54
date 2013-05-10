@@ -1,11 +1,14 @@
 package propra2013.Gruppe54;
 import java.awt.Graphics;
+import java.awt.Point;
 
 public class Raum {
 
 	public static int worldWidth=25;  //Breite Spielfelds
 	public static int worldHeight=15; //Höhe Spielfelds
 	public static int blockSize=32;   //Größe eines Blocks
+	
+	public static Point[] Startpunkt = {new Point(5,195),new Point(5,350),new Point(65,450)};
 	
 	public static Block[][] block; 
 	

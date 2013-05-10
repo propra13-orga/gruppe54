@@ -28,6 +28,8 @@ public class Frame extends JFrame{
 	public static JButton schließen = new JButton("Verlassen");
 	public static JButton menü = new JButton("Hauptmenü");
 	
+	public static JLabel leben = new JLabel();
+	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static JComboBox levelAuswahl = new JComboBox(auswahl);
 	
@@ -64,6 +66,9 @@ public class Frame extends JFrame{
 		levelAuswahl.setVisible(true);
 		add(levelAuswahl);
 		
+		leben.setBounds(220, 25, 100, 20);
+		leben.setVisible(false);
+		
 		/*
 		 * 
 		 * 
@@ -82,19 +87,23 @@ public class Frame extends JFrame{
 		    	  //die +16 bei dem spieler.y sind dafür, dass der Spieler grafisch zur Hälfte in eine Mauer ragen kann,
 		    	  //da das sonst ziemlich komisch aussah, genau so bei den anderen koordinaten je nach Richtung
 		         if ((key == KeyEvent.VK_A)&&(spielfeld.getBlockID(spieler.x-2, spieler.y+16))!=1) {
-		            spieler.x-=2;
+		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x-2, spieler.y+16),spielfeld.getBlock(spieler.x-2, spieler.y+16));
+		            spieler.x-=4;
 		         }
 
-		         if ((key == KeyEvent.VK_D)&(spielfeld.getBlockID(spieler.x+24, spieler.y+16))!=1) {
-		         	spieler.x+=2;
+		         if ((key == KeyEvent.VK_D)&&(spielfeld.getBlockID(spieler.x+32, spieler.y+28))!=1) {
+		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+32, spieler.y+28),spielfeld.getBlock(spieler.x+32, spieler.y+28));
+		         	spieler.x+=4;
 		         }
 
 		         if ((key == KeyEvent.VK_W)&&(spielfeld.getBlockID(spieler.x+16, spieler.y-2+16))!=1) {
-		         	spieler.y-=2;
+		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+16, spieler.y+16),spielfeld.getBlock(spieler.x-2, spieler.y+16));
+		         	spieler.y-=4;
 		         }
 		         
 		         if ((key == KeyEvent.VK_S)&&(spielfeld.getBlockID(spieler.x+16, spieler.y+2+32))!=1) {
-		         	spieler.y+=2;
+		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+16, spieler.y+32),spielfeld.getBlock(spieler.x-2, spieler.y+16));
+		         	spieler.y+=4;
 		         }
 		      }
 			}
@@ -151,9 +160,9 @@ public class Frame extends JFrame{
 				add(menü);
 				menü.setVisible(true);
 				
-				//Spieler auf Anfangspunkt setzen, zufällig gewählt. später ist das dann der Startpunkt des jeweiligen Raum
-				spieler.x=100;
-				spieler.y=20;
+				add(leben);
+				leben.setVisible(true);
+				Spielfeld.isFirst = true;
 			}
 		});
 		
@@ -162,6 +171,8 @@ public class Frame extends JFrame{
 			public void actionPerformed(ActionEvent e){
 				menü.setVisible(false);
 				remove(menü);
+				leben.setVisible(false);
+				remove(leben);
 				spielfeld.setVisible(false);
 				setLayout(null);
 				

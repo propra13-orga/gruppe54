@@ -46,6 +46,22 @@ public class Spielfeld extends JPanel implements Runnable{
 		return Raum.block[i][j].ID;
 	}
 	
+	//liefert den Block bei gegebenen x,y Koordinaten eines Punktes auf dem Spielfeld
+		public static Block getBlock(int x,int y){
+			int i,j;
+			for(i=0;i<Raum.worldHeight;i++){
+				if((y>=i*Raum.blockSize)&(y<=(i+1)*Raum.blockSize)){
+					break;
+				}
+			}
+			for(j=0;j<Raum.worldWidth;j++){
+				if((x>=j*Raum.blockSize)&(x<=(j+1)*Raum.blockSize)){
+					break;
+				}
+			}
+			return Raum.block[i][j];
+		}
+	
 	//Bilder in Array laden     
 		//	ID: 0 - Boden   1 - Mauer   2 - Ausgang 
 		//      3 - Falle_Loch   4 - Falle_Feuer   5 - Falle_Speer  
@@ -54,6 +70,9 @@ public class Spielfeld extends JPanel implements Runnable{
 	public void define(){
 		raum = new Raum();
 		spieler = new spieler();
+		
+		Frame.leben.setText("Leben:   "+spieler.leben+"%");
+		
 		elemente[0] = new ImageIcon("pics/boden.png").getImage(); 
 		elemente[1] = new ImageIcon("pics/mauer.png").getImage(); 
 		elemente[2] = new ImageIcon("pics/ausgang.png").getImage();
@@ -80,6 +99,14 @@ public class Spielfeld extends JPanel implements Runnable{
 		while(true){
 			validate();
 			repaint();
+			
+			if(spieler.leben == 0){
+				spieler.aktiv = false;
+				Frame.leben.setText("GAME OVER");
+			} else {
+				Frame.leben.setText("Leben:   "+spieler.leben+"%");    //Lebensanzeige aktualisieren
+			}
+			
 			try{
 				Thread.sleep(1);
 			} catch(Exception e){ 

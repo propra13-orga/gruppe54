@@ -1,5 +1,6 @@
 package propra2013.Gruppe54;
 import java.awt.*;
+import java.sql.Blob;
 
 public class Block extends Rectangle {
 
