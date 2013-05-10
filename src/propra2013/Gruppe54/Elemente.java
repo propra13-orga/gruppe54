@@ -1,5 +1,6 @@
 package propra2013.Gruppe54;
 
+import java.awt.Graphics;
 import java.io.File;
 
 public class Elemente {
@@ -34,6 +35,8 @@ public class Elemente {
 		if(ID == 6){           //Zaubertrank
 			spieler.leben = 100;
 			block.ID=0;
+		} else if(ID == 7){
+			//truhe
 		}
 	}
 	

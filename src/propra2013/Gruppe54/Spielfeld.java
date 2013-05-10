@@ -67,7 +67,18 @@ public class Spielfeld extends JPanel implements Runnable{
 	//Bilder in Array laden     
 		//	ID: 0 - Boden   1 - Mauer   2 - Ausgang 
 		//      3 - Falle_Loch   4 - Falle_Feuer   5 - Falle_Speer  
-	    //      6 - Item_Trank
+	    //      6 - Item_Trank   7 - Truhe
+    
+	public static void loadImages(){
+		elemente[0] = new ImageIcon("pics/boden"+current_lvl+".png").getImage(); 
+		elemente[1] = new ImageIcon("pics/mauer"+current_lvl+".png").getImage(); 
+		elemente[2] = new ImageIcon("pics/ausgang.png").getImage();
+		elemente[3] = new ImageIcon("pics/falle_loch.png").getImage();
+		elemente[4] = new ImageIcon("pics/falle_feuer"+current_lvl+".png").getImage();
+		elemente[5] = new ImageIcon("pics/falle_speer"+current_lvl+".png").getImage();
+		elemente[6] = new ImageIcon("pics/item_trank.png").getImage();
+		elemente[7] = new ImageIcon ("pics/truhe_zu.png").getImage();
+	}
 	
 	public void define(){
 		raum = new Raum();
@@ -75,15 +86,10 @@ public class Spielfeld extends JPanel implements Runnable{
 		
 		Frame.leben.setText("Leben:   "+spieler.leben+"%");
 		
+		loadImages();
+		
 		Gegner = new Gegner();
 
-		elemente[0] = new ImageIcon("pics/boden.png").getImage(); 
-		elemente[1] = new ImageIcon("pics/mauer.png").getImage(); 
-		elemente[2] = new ImageIcon("pics/ausgang.png").getImage();
-		elemente[3] = new ImageIcon("pics/falle_loch.png").getImage();
-		elemente[4] = new ImageIcon("pics/falle_feuer.png").getImage();
-		elemente[5] = new ImageIcon("pics/falle_speer.png").getImage();
-		elemente[6] = new ImageIcon("pics/item_trank.png").getImage();
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
 	}
 	
@@ -110,7 +116,7 @@ public class Spielfeld extends JPanel implements Runnable{
 			validate();
 			repaint();
 			
-			if(spieler.leben <= 0){
+			if((spieler.leben <= 0)&&(spieler.aktiv)){
 				spieler.aktiv = false;
 				Frame.leben.setText("GAME OVER");
 			} else {

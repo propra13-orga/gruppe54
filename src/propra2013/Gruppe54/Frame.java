@@ -71,7 +71,7 @@ public class Frame extends JFrame implements ActionListener{
 		levelAuswahl.setVisible(true);
 		add(levelAuswahl);
 		
-		leben.setBounds(220, 25, 100, 20);
+		leben.setBounds(220, 25, 300, 20);
 		leben.setVisible(false);
 		
 		// damit der Gegner sich von alleine bewegt
@@ -93,15 +93,14 @@ public class Frame extends JFrame implements ActionListener{
 		      //nur bewegen wenn der Spieler aktiv ist
 		      if(Spielfeld.spieler.aktiv){
 		    	  //prüfen welche ID die stelle an die gegangen werden soll hat und nur laufen wenn es keine Mauer ist
-		    	  //die +16 bei dem spieler.y sind dafür, dass der Spieler grafisch zur Hälfte in eine Mauer ragen kann,
-		    	  //da das sonst ziemlich komisch aussah, genau so bei den anderen koordinaten je nach Richtung
+		    	  //zusätzlich prüfen ob und wenn ja welches Element oder welche Falle dort liegt
 		         if ((key == KeyEvent.VK_A)&&(spielfeld.getBlockID(spieler.x-2, spieler.y+28))!=1) {
 		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+4, spieler.y+28),spielfeld.getBlock(spieler.x+4, spieler.y+28));//unten links
 		            spieler.x-=4;
 		         }
 
 		         if ((key == KeyEvent.VK_D)&&(spielfeld.getBlockID(spieler.x+32, spieler.y+28))!=1) {
-			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+26, spieler.y+26),spielfeld.getBlock(spieler.x+26, spieler.y+26));//unten rechts
+			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+28, spieler.y+28),spielfeld.getBlock(spieler.x+28, spieler.y+28));//unten rechts
 		         	spieler.x+=4;
 		         }
 
@@ -175,6 +174,8 @@ public class Frame extends JFrame implements ActionListener{
 				add(leben);
 				leben.setVisible(true);
 				Spielfeld.isFirst = true;
+				//Bilder des Levels laden
+				Spielfeld.loadImages();
 				
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
 				spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
