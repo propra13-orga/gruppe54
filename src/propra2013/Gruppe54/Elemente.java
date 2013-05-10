@@ -25,7 +25,7 @@ public class Elemente {
 		} else if(ID == 4){    //Falle_Feuer
 			spieler.leben-=1;
 		} else if(ID == 5){    //Falle_Speer
-			spieler.leben-=20;
+			spieler.leben-=5;
 		}
 	}
 	

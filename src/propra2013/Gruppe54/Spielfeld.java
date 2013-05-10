@@ -104,12 +104,13 @@ public class Spielfeld extends JPanel implements Runnable{
 		}
 	}
 	
+	//Thread
 	public void run(){
 		while(true){
 			validate();
 			repaint();
 			
-			if(spieler.leben == 0){
+			if(spieler.leben <= 0){
 				spieler.aktiv = false;
 				Frame.leben.setText("GAME OVER");
 			} else {
