@@ -106,15 +106,14 @@ public class Frame extends JFrame implements ActionListener{
 		         }
 
 		         if ((key == KeyEvent.VK_W)&&(spielfeld.getBlockID(spieler.x+16, spieler.y-2+16))!=1) {
-		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+16, spieler.y+16),spielfeld.getBlock(spieler.x-2, spieler.y+16));
+		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+16, spieler.y+16),spielfeld.getBlock(spieler.x+16, spieler.y+16-2));
 		         	spieler.y-=4;
 		         }
 		         
 		         if ((key == KeyEvent.VK_S)&&(spielfeld.getBlockID(spieler.x+16, spieler.y+2+32))!=1) {
 		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+16, spieler.y+32),spielfeld.getBlock(spieler.x-2, spieler.y+16));
 		         	spieler.y+=4;
-		         }
-	
+		         }	
 		      }
 			}
 
@@ -140,13 +139,10 @@ public class Frame extends JFrame implements ActionListener{
 				
 				if("Level1".equals(selectedChoice.getSelectedItem())){				//Listenauswahl: Level1
 					Spielfeld.current_lvl=1;
-					Spielfeld.current_room=1;
 				} else if("Level2".equals(selectedChoice.getSelectedItem())){		//Level2
 					Spielfeld.current_lvl=2;
-					Spielfeld.current_room=1;
 				} else if("Level3".equals(selectedChoice.getSelectedItem())){		//Level3
 					Spielfeld.current_lvl=3;
-					Spielfeld.current_room=1;
 				}
 				
 			}
@@ -163,7 +159,9 @@ public class Frame extends JFrame implements ActionListener{
 				remove(info);
 				remove(schließen);
 				remove(levelAuswahl);
-			
+
+				Spielfeld.current_room=1;
+				
 				//Spielfeld anzeigen	
 				Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_"+Spielfeld.current_room+".lvl"));    //Level laden
 				add(spielfeld);						//hinzufügen
@@ -175,10 +173,10 @@ public class Frame extends JFrame implements ActionListener{
 				add(leben);
 				leben.setVisible(true);
 				Spielfeld.isFirst = true;
-
-				//Spieler auf Anfangspunkt setzen, zufällig gewählt. später ist das dann der Startpunkt des jeweiligen Raum
-				spieler.x=100;
-				spieler.y=20;
+				
+				//Spieler auf den Startpunkt des jeweiligen Levels setzen
+				spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
+				spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
 				
 				//Gegner auf Anfangspunkt setzen
 				Gegner.x=700;
