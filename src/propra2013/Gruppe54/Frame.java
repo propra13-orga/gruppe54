@@ -75,7 +75,7 @@ public class Frame extends JFrame implements ActionListener{
 		leben.setVisible(false);
 		
 		// damit der Gegner sich von alleine bewegt
-		time = new Timer(5,this);
+		time = new Timer(20,this);
 		
 		
 		/*
@@ -95,23 +95,25 @@ public class Frame extends JFrame implements ActionListener{
 		    	  //prüfen welche ID die stelle an die gegangen werden soll hat und nur laufen wenn es keine Mauer ist
 		    	  //die +16 bei dem spieler.y sind dafür, dass der Spieler grafisch zur Hälfte in eine Mauer ragen kann,
 		    	  //da das sonst ziemlich komisch aussah, genau so bei den anderen koordinaten je nach Richtung
-		         if ((key == KeyEvent.VK_A)&&(spielfeld.getBlockID(spieler.x-2, spieler.y+16))!=1) {
-		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x-2, spieler.y+16),spielfeld.getBlock(spieler.x-2, spieler.y+16));
+		         if ((key == KeyEvent.VK_A)&&(spielfeld.getBlockID(spieler.x-2, spieler.y+28))!=1) {
+		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+4, spieler.y+28),spielfeld.getBlock(spieler.x+4, spieler.y+28));//unten links
 		            spieler.x-=4;
 		         }
 
 		         if ((key == KeyEvent.VK_D)&&(spielfeld.getBlockID(spieler.x+32, spieler.y+28))!=1) {
-		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+32, spieler.y+28),spielfeld.getBlock(spieler.x+32, spieler.y+28));
+			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+26, spieler.y+26),spielfeld.getBlock(spieler.x+26, spieler.y+26));//unten rechts
 		         	spieler.x+=4;
 		         }
 
-		         if ((key == KeyEvent.VK_W)&&(spielfeld.getBlockID(spieler.x+16, spieler.y-2+16))!=1) {
-		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+16, spieler.y+16),spielfeld.getBlock(spieler.x+16, spieler.y+16-2));
+		         if ((key == KeyEvent.VK_W)&&(spielfeld.getBlockID(spieler.x+16, spieler.y+16))!=1) {
+			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+8, spieler.y+24),spielfeld.getBlock(spieler.x+8, spieler.y+24));//mitte links
+			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+24, spieler.y+24),spielfeld.getBlock(spieler.x+24, spieler.y+24));//mitte rechts
 		         	spieler.y-=4;
 		         }
 		         
-		         if ((key == KeyEvent.VK_S)&&(spielfeld.getBlockID(spieler.x+16, spieler.y+2+32))!=1) {
-		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+16, spieler.y+32),spielfeld.getBlock(spieler.x-2, spieler.y+16));
+		         if ((key == KeyEvent.VK_S)&&(spielfeld.getBlockID(spieler.x+16, spieler.y+32))!=1) {
+			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+8, spieler.y+32),spielfeld.getBlock(spieler.x+8, spieler.y+32));//unten links
+			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+24, spieler.y+32),spielfeld.getBlock(spieler.x+24, spieler.y+32));//unten rechts
 		         	spieler.y+=4;
 		         }	
 		      }

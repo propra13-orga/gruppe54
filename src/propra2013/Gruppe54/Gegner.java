@@ -24,7 +24,7 @@ public class Gegner extends Rectangle {
 	
 	
 	public void draw(Graphics g){
-		g.drawImage(new ImageIcon("pics/gegner.png").getImage(), x, y, 32, 32, null); //zeichnet den Gegner an (x,y)
+		g.drawImage(new ImageIcon("pics/gegner2.png").getImage(), x, y, 32, 32, null); //zeichnet den Gegner an (x,y)
 	}
 	
 	public static void main(String[] args) {
