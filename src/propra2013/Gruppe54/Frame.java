@@ -71,7 +71,7 @@ public class Frame extends JFrame implements ActionListener{
 		
 		// damit der Gegner sich von alleine bewegt
 		time = new Timer(5,this);
-		time.start();
+		
 		
 		
 		/*
@@ -172,6 +172,8 @@ public class Frame extends JFrame implements ActionListener{
 				Gegner.x=700;
 				Gegner.y=20;
 				
+				time.start();
+				
 			
 			}
 		});
@@ -232,14 +234,14 @@ public class Frame extends JFrame implements ActionListener{
     		 Gegner.y-=2;
     	 } else unten = false;	
     	 
-    	 // wenn der von links nach rechts gehen soll
-        //	 if ((rechts==false) &&(Spielfeld.getBlockID(Gegner.x+24, Gegner.y+16)!=1)){
-        //		 Gegner.x+=2;
-        //	 } else rechts = true;
-        //	 if ((rechts==true)&& (Spielfeld.getBlockID(Gegner.x-2, Gegner.y+16)!=1)){
-       //		 Gegner.x-=2;
-        //	 } else rechts = false;
-        	
+    	 /* wenn der von links nach rechts gehen soll
+        	 if ((rechts==false) &&(Spielfeld.getBlockID(Gegner.x+24, Gegner.y+16)!=1)){
+        		 Gegner.x+=2;
+        	 } else rechts = true;
+        	 if ((rechts==true)&& (Spielfeld.getBlockID(Gegner.x-2, Gegner.y+16)!=1)){
+       		 Gegner.x-=2;
+        	 } else rechts = false; */
+        
         	 
          }
 	}
