@@ -119,7 +119,8 @@ public class Spielfeld extends JPanel implements Runnable{
 			if((spieler.leben <= 0)&&(spieler.aktiv)){
 				spieler.aktiv = false;
 				Frame.leben.setText("GAME OVER");
-			} else {
+				Frame.neustart.setVisible(true);
+			} else if(spieler.leben>0) {
 				Frame.leben.setText("Leben:   "+spieler.leben+"%");    //Lebensanzeige aktualisieren
 			}
 			

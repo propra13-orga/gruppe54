@@ -28,6 +28,7 @@ public class Frame extends JFrame implements ActionListener{
 	public static JButton info = new JButton("Info");
 	public static JButton schließen = new JButton("Verlassen");
 	public static JButton menü = new JButton("Hauptmenü");
+	public static JButton neustart = new JButton("Neustart");
 	
 	public static JLabel leben = new JLabel();
 
@@ -54,6 +55,14 @@ public class Frame extends JFrame implements ActionListener{
 		menü.setBounds(75,25,130,20);
 		menü.setVisible(false);
 		
+		//Button Neustart, nur im "Spielmodus" sichtbar wenn der Spieler kein Leben mehr hat
+		neustart.setBounds(220, 25, 100, 20);
+		neustart.setVisible(false);
+		
+		//Label für die Lebensanzeige
+		leben.setBounds(350,25,130,20);
+		leben.setVisible(false);
+		
 		//Anzeige des Menüs
 		enter.setBounds(400, 100, 150, 30);		//Button Enter
 		enter.setVisible(true);
@@ -70,9 +79,6 @@ public class Frame extends JFrame implements ActionListener{
 		levelAuswahl.setBounds(400, 250, 150, 30);	//ComboBox Levelauswahl
 		levelAuswahl.setVisible(true);
 		add(levelAuswahl);
-		
-		leben.setBounds(220, 25, 300, 20);
-		leben.setVisible(false);
 		
 		// damit der Gegner sich von alleine bewegt
 		time = new Timer(20,this);
@@ -169,6 +175,7 @@ public class Frame extends JFrame implements ActionListener{
 				spielfeld.setVisible(true);	
 				//Button Hauptmenü hinzufügen
 				add(menü);
+				add(neustart);
 				menü.setVisible(true);
 				
 				add(leben);
@@ -190,6 +197,20 @@ public class Frame extends JFrame implements ActionListener{
 			}
 		});
 		
+		//Button Neustart Click
+		neustart.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				neustart.setVisible(false);
+				//aktuelles Level in Raum 1 neu laden
+				Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_1.lvl"));
+				//Spieler auf den Startpunkt des jeweiligen Levels setzen
+				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
+				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
+				Spielfeld.spieler.aktiv = true;
+				Spielfeld.spieler.leben = 100;
+			}
+		});
+		
 		//Button Hauptmenü Click
 		menü.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -197,6 +218,7 @@ public class Frame extends JFrame implements ActionListener{
 				remove(menü);
 				leben.setVisible(false);
 				remove(leben);
+				neustart.setVisible(false);
 				spielfeld.setVisible(false);
 				setLayout(null);
 				
