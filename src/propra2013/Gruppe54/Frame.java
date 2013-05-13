@@ -28,6 +28,7 @@ public class Frame extends JFrame implements ActionListener{
 	public static JButton info = new JButton("Info");
 	public static JButton schließen = new JButton("Verlassen");
 	public static JButton menü = new JButton("Hauptmenü");
+	public static JButton neustart = new JButton("Neustart");
 	
 	public static JLabel leben = new JLabel();
 	public static Timer time;
@@ -51,6 +52,14 @@ public class Frame extends JFrame implements ActionListener{
 		menü.setBounds(75,25,130,20);
 		menü.setVisible(false);
 		
+		//Button Neustart, nur im "Spielmodus" sichtbar wenn der Spieler kein Leben mehr hat
+		neustart.setBounds(220, 25, 100, 20);
+		neustart.setVisible(false);
+		
+		//Label für die Lebensanzeige
+		leben.setBounds(350,25,130,20);
+		leben.setVisible(false);
+		
 		//Anzeige des Menüs
 		enter.setBounds(400, 100, 150, 30);		//Button Enter
 		enter.setVisible(true);
@@ -68,11 +77,8 @@ public class Frame extends JFrame implements ActionListener{
 		levelAuswahl.setVisible(true);
 		add(levelAuswahl);
 		
-		leben.setBounds(220, 25, 100, 20);
-		leben.setVisible(false);
-		
 		// damit der Gegner sich von alleine bewegt
-		time = new Timer(5,this);
+		time = new Timer(20,this);
 		
 		
 		/*
@@ -88,29 +94,31 @@ public class Frame extends JFrame implements ActionListener{
 			public void keyPressed(KeyEvent e){
 		        int key = e.getKeyCode();
 		      //nur bewegen wenn der Spieler aktiv ist
-		      if(spieler.aktiv){
+		      if(Spielfeld.spieler.aktiv){
 		    	  //prüfen welche ID die stelle an die gegangen werden soll hat und nur laufen wenn es keine Mauer ist
-		    	  //die +16 bei dem spieler.y sind dafür, dass der Spieler grafisch zur Hälfte in eine Mauer ragen kann,
-		    	  //da das sonst ziemlich komisch aussah, genau so bei den anderen koordinaten je nach Richtung
-		         if ((key == KeyEvent.VK_A)&&(spielfeld.getBlockID(spieler.x-2, spieler.y+16))!=1) {
-		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x-2, spieler.y+16),spielfeld.getBlock(spieler.x-2, spieler.y+16));
+		    	  //zusätzlich prüfen ob und wenn ja welches Element oder welche Falle dort liegt
+		         if ((key == KeyEvent.VK_A)&&(spielfeld.getBlockID(spieler.x-2, spieler.y+28))!=1) {
+		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+4, spieler.y+28),spielfeld.getBlock(spieler.x+4, spieler.y+28));//unten links
 		            spieler.x-=4;
 		         }
 
 		         if ((key == KeyEvent.VK_D)&&(spielfeld.getBlockID(spieler.x+32, spieler.y+28))!=1) {
-		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+32, spieler.y+28),spielfeld.getBlock(spieler.x+32, spieler.y+28));
+			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+28, spieler.y+28),spielfeld.getBlock(spieler.x+28, spieler.y+28));//unten rechts
 		         	spieler.x+=4;
 		         }
 
-		         if ((key == KeyEvent.VK_W)&&(spielfeld.getBlockID(spieler.x+16, spieler.y-2+16))!=1) {
-		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+16, spieler.y+16),spielfeld.getBlock(spieler.x-2, spieler.y+16));
+		         if ((key == KeyEvent.VK_W)&&(spielfeld.getBlockID(spieler.x+16, spieler.y+16))!=1) {
+			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+8, spieler.y+24),spielfeld.getBlock(spieler.x+8, spieler.y+24));//mitte links
+			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+24, spieler.y+24),spielfeld.getBlock(spieler.x+24, spieler.y+24));//mitte rechts
 		         	spieler.y-=4;
 		        	
 		         }
 		         
-		         if ((key == KeyEvent.VK_S)&&(spielfeld.getBlockID(spieler.x+16, spieler.y+2+32))!=1) {
-		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+16, spieler.y+32),spielfeld.getBlock(spieler.x-2, spieler.y+16));
+		         if ((key == KeyEvent.VK_S)&&(spielfeld.getBlockID(spieler.x+16, spieler.y+32))!=1) {
+			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+8, spieler.y+32),spielfeld.getBlock(spieler.x+8, spieler.y+32));//unten links
+			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+24, spieler.y+32),spielfeld.getBlock(spieler.x+24, spieler.y+32));//unten rechts
 		         	spieler.y+=4;
+
 		        	
 		         }
 	
@@ -139,13 +147,10 @@ public class Frame extends JFrame implements ActionListener{
 				
 				if("Level1".equals(selectedChoice.getSelectedItem())){				//Listenauswahl: Level1
 					Spielfeld.current_lvl=1;
-					Spielfeld.current_room=1;
 				} else if("Level2".equals(selectedChoice.getSelectedItem())){		//Level2
 					Spielfeld.current_lvl=2;
-					Spielfeld.current_room=1;
 				} else if("Level3".equals(selectedChoice.getSelectedItem())){		//Level3
 					Spielfeld.current_lvl=3;
-					Spielfeld.current_room=1;
 				}
 				
 			}
@@ -162,22 +167,27 @@ public class Frame extends JFrame implements ActionListener{
 				remove(info);
 				remove(schließen);
 				remove(levelAuswahl);
-			
+
+				Spielfeld.current_room=1;
+				
 				//Spielfeld anzeigen	
 				Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_"+Spielfeld.current_room+".lvl"));    //Level laden
 				add(spielfeld);						//hinzufügen
 				spielfeld.setVisible(true);	
 				//Button Hauptmenü hinzufügen
 				add(menü);
+				add(neustart);
 				menü.setVisible(true);
 				
 				add(leben);
 				leben.setVisible(true);
 				Spielfeld.isFirst = true;
-
-				//Spieler auf Anfangspunkt setzen, zufällig gewählt. später ist das dann der Startpunkt des jeweiligen Raum
-				spieler.x=100;
-				spieler.y=20;
+				//Bilder des Levels laden
+				Spielfeld.loadImages();
+				
+				//Spieler auf den Startpunkt des jeweiligen Levels setzen
+				spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
+				spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
 				
 				spielfeld.gegner1.x = 700;
 				spielfeld.gegner1.y = 300;
@@ -190,6 +200,20 @@ public class Frame extends JFrame implements ActionListener{
 			}
 		});
 		
+		//Button Neustart Click
+		neustart.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				neustart.setVisible(false);
+				//aktuelles Level in Raum 1 neu laden
+				Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_1.lvl"));
+				//Spieler auf den Startpunkt des jeweiligen Levels setzen
+				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
+				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
+				Spielfeld.spieler.aktiv = true;
+				Spielfeld.spieler.leben = 100;
+			}
+		});
+		
 		//Button Hauptmenü Click
 		menü.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -197,6 +221,7 @@ public class Frame extends JFrame implements ActionListener{
 				remove(menü);
 				leben.setVisible(false);
 				remove(leben);
+				neustart.setVisible(false);
 				spielfeld.setVisible(false);
 				setLayout(null);
 				

@@ -35,6 +35,8 @@ public class Gegner extends Rectangle {
 			g.drawImage(new ImageIcon("pics/gegner2.png").getImage(), x, y, 32, 32, null); //zeichnet den Gegner an (x,y)
 
 		}*/
+
+
 	}
 	
 	

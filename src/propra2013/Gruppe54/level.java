@@ -14,7 +14,7 @@ public class level {
 				for(int y=0;y<Raum.block.length;y++){    
 					
 					for(int x=0;x<Raum.block[0].length;x++){  
-						Raum.block[y][x].ID = loadScanner.nextInt();  //setze ID des Blocks gleich eingelesener Zahl	
+						Raum.block[y][x].ID = loadScanner.nextInt();  //setze ID des Blocks gleich eingelesener Zahl
 					}
 					
 				}
