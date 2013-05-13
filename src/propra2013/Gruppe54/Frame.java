@@ -30,9 +30,6 @@ public class Frame extends JFrame implements ActionListener{
 	public static JButton menü = new JButton("Hauptmenü");
 	
 	public static JLabel leben = new JLabel();
-
-	public static boolean unten=false; // gibt an, ob der Gegener unten an eine Wand stößt
-	public static boolean rechts=false; // gibt an, ob der Gegener rechts an eine Wand stößt
 	public static Timer time;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -108,11 +105,13 @@ public class Frame extends JFrame implements ActionListener{
 		         if ((key == KeyEvent.VK_W)&&(spielfeld.getBlockID(spieler.x+16, spieler.y-2+16))!=1) {
 		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+16, spieler.y+16),spielfeld.getBlock(spieler.x-2, spieler.y+16));
 		         	spieler.y-=4;
+		        	
 		         }
 		         
 		         if ((key == KeyEvent.VK_S)&&(spielfeld.getBlockID(spieler.x+16, spieler.y+2+32))!=1) {
 		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+16, spieler.y+32),spielfeld.getBlock(spieler.x-2, spieler.y+16));
 		         	spieler.y+=4;
+		        	
 		         }
 	
 		      }
@@ -180,9 +179,11 @@ public class Frame extends JFrame implements ActionListener{
 				spieler.x=100;
 				spieler.y=20;
 				
-				//Gegner auf Anfangspunkt setzen
-				Gegner.x=700;
-				Gegner.y=20;
+				spielfeld.gegner1.x = 700;
+				spielfeld.gegner1.y = 300;
+				
+				/*spielfeld.gegner2.x = 150;
+				spielfeld.gegner2.y= 20; */
 				
 				time.start();
 				
@@ -240,23 +241,10 @@ public class Frame extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		 if ((unten==false) &&(Spielfeld.getBlockID(Gegner.x+16, Gegner.y+2+32)!=1)){
-    		 Gegner.y+=2;
-    	 } else unten = true;
-    	 if ((unten==true)&& (Spielfeld.getBlockID(Gegner.x+16, Gegner.y-2+16)!=1)){
-    		 Gegner.y-=2;
-    	 } else unten = false;	
-    	 
-    	 /* wenn der von links nach rechts gehen soll
-        	 if ((rechts==false) &&(Spielfeld.getBlockID(Gegner.x+24, Gegner.y+16)!=1)){
-        		 Gegner.x+=2;
-        	 } else rechts = true;
-        	 if ((rechts==true)&& (Spielfeld.getBlockID(Gegner.x-2, Gegner.y+16)!=1)){
-       		 Gegner.x-=2;
-        	 } else rechts = false; */
-        
-        	 
-         }
+	//	spielfeld.gegner2.lauf();
+		spielfeld.gegner1.lauf();
+		
+	}
 	}
 
 
