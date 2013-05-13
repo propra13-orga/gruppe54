@@ -25,7 +25,7 @@ public class Raum {
 		
 		for(int y=0;y<block.length;y++){
 			for(int x=0;x<worldWidth;x++){
-				block[y][x] = new Block(x*blockSize,y*blockSize,blockSize,blockSize,0);	// Konstruktor Blöcke
+				block[y][x] = new Block(x*blockSize,y*blockSize,blockSize,blockSize,0);	// Konstruktor
 			}
 		}
 	}

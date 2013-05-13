@@ -6,14 +6,11 @@ import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
 public class spieler extends Rectangle {
-	
-	//bei einem Rectangle ist der Startpunkt immer ober links, d.h. hier wäre anfangs (0,0)
-	//die linke obere Ecke
 
 	public static int x=Raum.Startpunkt[Spielfeld.current_lvl-1].x,y=Raum.Startpunkt[Spielfeld.current_lvl-1].y; 
 	
 	public static int leben;
-	public static boolean aktiv=false; 
+	public static boolean aktiv = false; 
 	
 	/**
 	 * 

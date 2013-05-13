@@ -1,21 +1,26 @@
 package propra2013.Gruppe54;
 
-import java.awt.Graphics;
 import java.io.File;
 
 public class Elemente {
 
 	public static void Aufruf(int ID,Block block){
 		if(ID < 6){
+			
 			Falle(ID);
-		} if((ID == 2)&&(Spielfeld.current_room!=3)) {
+		
+		} if((ID == 2)&&(Spielfeld.current_room!=3)) {  //Ausgang
+		
 			Spielfeld.current_room+=1;
 			Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_"+Spielfeld.current_room+".lvl"));
 			//Spieler auf den Startpunkt des jeweiligen Levels setzen
 			spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
 			spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
+		
 		} else {
+		
 			Item(ID,block);
+		
 		}
 	}
 	
@@ -32,7 +37,7 @@ public class Elemente {
 	
 	//block muss mit übergeben werden, da das Item ja entfernt werden soll
 	public static void Item(int ID,Block block){
-		if(ID == 6){           //Zaubertrank
+		if((ID == 6)&&(spieler.leben!=100)){           //Zaubertrank
 			spieler.leben = 100;
 			block.ID=0;
 		} else if(ID == 7){
