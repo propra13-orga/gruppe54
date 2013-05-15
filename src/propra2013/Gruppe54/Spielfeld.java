@@ -33,38 +33,6 @@ public class Spielfeld extends JPanel implements Runnable{
 		thread.start();
 	}
 	
-	//liefert die ID des Blocks bei gegebenen x,y Koordinaten eines Punktes auf dem Spielfeld
-	public static int getBlockID(int x,int y){
-		int i,j;
-		for(i=0;i<Raum.worldHeight;i++){
-			if((y>=i*Raum.blockSize)&(y<=(i+1)*Raum.blockSize)){
-				break;
-			}
-		}
-		for(j=0;j<Raum.worldWidth;j++){
-			if((x>=j*Raum.blockSize)&(x<=(j+1)*Raum.blockSize)){
-				break;
-			}
-		}
-		return Raum.block[i][j].ID;
-	}
-	
-	//liefert den Block bei gegebenen x,y Koordinaten eines Punktes auf dem Spielfeld
-		public static Block getBlock(int x,int y){
-			int i,j;
-			for(i=0;i<Raum.worldHeight;i++){
-				if((y>=i*Raum.blockSize)&(y<=(i+1)*Raum.blockSize)){
-					break;
-				}
-			}
-			for(j=0;j<Raum.worldWidth;j++){
-				if((x>=j*Raum.blockSize)&(x<=(j+1)*Raum.blockSize)){
-					break;
-				}
-			}
-			return Raum.block[i][j];
-		}
-	
 	//Bilder in Array laden     
 		//	ID: 0 - Boden   1 - Mauer   2 - Ausgang 
 		//      3 - Falle_Loch   4 - Falle_Feuer   5 - Falle_Speer  
@@ -87,8 +55,8 @@ public class Spielfeld extends JPanel implements Runnable{
 		
 		Frame.leben.setText("Leben:   "+spieler.leben+"%");
 		
-		gegner1 = new Gegner(0);
-		
+		gegner1 = new Gegner(1);
+	
 		
 		loadImages();
 		
@@ -106,7 +74,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		if(gegner1.aktiv){
 			gegner1.draw(g);  //zeichnet den Gegner
 		}
-		
+	
 	
 
 		
@@ -128,13 +96,45 @@ public class Spielfeld extends JPanel implements Runnable{
 			} else if(spieler.leben>0) {
 				Frame.leben.setText("Leben:   "+spieler.leben+"%");    //Lebensanzeige aktualisieren
 			}
-
+			
 			try{
 				Thread.sleep(1);
 			} catch(Exception e){ 
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	//liefert die ID des Blocks bei gegebenen x,y Koordinaten eines Punktes auf dem Spielfeld
+	public static int getBlockID(int x,int y){
+		int i,j;
+		for(i=0;i<Raum.worldHeight;i++){
+			if((y>=i*Raum.blockSize)&(y<=(i+1)*Raum.blockSize)){
+				break;
+			}
+		}
+		for(j=0;j<Raum.worldWidth;j++){
+			if((x>=j*Raum.blockSize)&(x<=(j+1)*Raum.blockSize)){
+				break;
+			}
+		}
+		return Raum.block[i][j].ID;
+	}
+		
+	//liefert den Block bei gegebenen x,y Koordinaten eines Punktes auf dem Spielfeld
+	public static Block getBlock(int x,int y){
+		int i,j;
+		for(i=0;i<Raum.worldHeight;i++){
+			if((y>=i*Raum.blockSize)&(y<=(i+1)*Raum.blockSize)){
+				break;
+			}
+		}
+		for(j=0;j<Raum.worldWidth;j++){
+			if((x>=j*Raum.blockSize)&(x<=(j+1)*Raum.blockSize)){
+				break;
+			}
+		}
+		return Raum.block[i][j];
 	}
 	
 	/**

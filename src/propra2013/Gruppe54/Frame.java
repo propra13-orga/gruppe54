@@ -99,25 +99,25 @@ public class Frame extends JFrame implements ActionListener{
 		    	  //zusätzlich prüfen ob und wenn ja welches Element oder welche Falle dort liegt
 		         if ((key == KeyEvent.VK_A)&&(spielfeld.getBlockID(spieler.x-2, spieler.y+28))!=1) {
 		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+4, spieler.y+28),spielfeld.getBlock(spieler.x+4, spieler.y+28));//unten links
-		        	spieler.x-=4;
+		            spieler.x-=4;
 		         }
 
 		         if ((key == KeyEvent.VK_D)&&(spielfeld.getBlockID(spieler.x+32, spieler.y+28))!=1) {
 			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+28, spieler.y+28),spielfeld.getBlock(spieler.x+28, spieler.y+28));//unten rechts
-			        	spieler.x+=4;
+		         	spieler.x+=4;
 		         }
 
 		         if ((key == KeyEvent.VK_W)&&(spielfeld.getBlockID(spieler.x+16, spieler.y+16))!=1) {
 			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+8, spieler.y+24),spielfeld.getBlock(spieler.x+8, spieler.y+24));//mitte links
 			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+24, spieler.y+24),spielfeld.getBlock(spieler.x+24, spieler.y+24));//mitte rechts
-			        	spieler.y-=4;
+		         	spieler.y-=4;
 		        	
 		         }
 		         
 		         if ((key == KeyEvent.VK_S)&&(spielfeld.getBlockID(spieler.x+16, spieler.y+32))!=1) {
 			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+8, spieler.y+32),spielfeld.getBlock(spieler.x+8, spieler.y+32));//unten links
 			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+24, spieler.y+32),spielfeld.getBlock(spieler.x+24, spieler.y+32));//unten rechts
-			        	spieler.y+=4;
+		         	spieler.y+=4;
 
 		        	
 		         }
@@ -190,9 +190,9 @@ public class Frame extends JFrame implements ActionListener{
 				spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
 				
 				spielfeld.gegner1.x = 700;
-				spielfeld.gegner1.y = 250;
+				spielfeld.gegner1.y = 300;
 				
-				
+			
 				
 				time.start();
 				
@@ -265,10 +265,8 @@ public class Frame extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		Gegner.lauf();
-		
-		
+	
+		spielfeld.gegner1.lauf();
 		
 	}
 	}
