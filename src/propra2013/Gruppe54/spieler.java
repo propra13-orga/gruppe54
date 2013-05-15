@@ -15,6 +15,7 @@ public class spieler extends Rectangle {
 	public static int leben;
 	public static boolean aktiv=false; 
 	
+	
 	/**
 	 * 
 	 */

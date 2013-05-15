@@ -22,7 +22,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static level level = new level();
 	public static spieler spieler;
 	public static Gegner gegner1;
-	//public static Gegner gegner2;
+	
 
 	
 	/**
@@ -87,8 +87,8 @@ public class Spielfeld extends JPanel implements Runnable{
 		
 		Frame.leben.setText("Leben:   "+spieler.leben+"%");
 		
-		gegner1 = new Gegner(1);
-		//gegner2 = new Gegner(1);
+		gegner1 = new Gegner(0);
+		
 		
 		loadImages();
 		
@@ -106,9 +106,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		if(gegner1.aktiv){
 			gegner1.draw(g);  //zeichnet den Gegner
 		}
-		/*if(gegner2.aktiv){
-			gegner2.draw(g);  //zeichnet den Gegner
-		}*/
+		
 	
 
 		
@@ -123,10 +121,6 @@ public class Spielfeld extends JPanel implements Runnable{
 			validate();
 			repaint();
 
-	    
-			
-
-			
 			if((spieler.leben <= 0)&&(spieler.aktiv)){
 				spieler.aktiv = false;
 				Frame.leben.setText("GAME OVER");
@@ -134,7 +128,7 @@ public class Spielfeld extends JPanel implements Runnable{
 			} else if(spieler.leben>0) {
 				Frame.leben.setText("Leben:   "+spieler.leben+"%");    //Lebensanzeige aktualisieren
 			}
-			
+
 			try{
 				Thread.sleep(1);
 			} catch(Exception e){ 
