@@ -22,6 +22,9 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static level level = new level();
 	public static spieler spieler;
 	
+	public static Gegner gegner1;
+	
+	
 	/**
 	 * Konstruktor
 	 */
@@ -51,6 +54,11 @@ public class Spielfeld extends JPanel implements Runnable{
 		spieler = new spieler();
 		
 		Frame.leben.setText("Leben:   "+spieler.leben+"%");
+		
+		gegner1 = new Gegner(1);
+	
+		
+		loadImages();
 
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
 	}
@@ -62,6 +70,10 @@ public class Spielfeld extends JPanel implements Runnable{
 		}
 		raum.draw(g); //zeichnet den raum
 
+		if(gegner1.aktiv){
+			gegner1.draw(g);  //zeichnet den Gegner
+		}
+	
 		if(spieler.aktiv){
 			spieler.draw(g);  //zeichnet den Spieler
 		}

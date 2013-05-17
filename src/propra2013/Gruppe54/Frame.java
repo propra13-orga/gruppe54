@@ -196,6 +196,10 @@ public class Frame extends JFrame implements ActionListener{
 				spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
 				spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
 				
+				spielfeld.gegner1.x = 700;
+				spielfeld.gegner1.y = 300;
+				
+			
 				time.start();
 				
 			}
@@ -267,7 +271,7 @@ public class Frame extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-	
+		spielfeld.gegner1.lauf();
 		
 	}
 	}
