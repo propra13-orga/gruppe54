@@ -12,18 +12,15 @@ public class Spielfeld extends JPanel implements Runnable{
 
 	public Thread thread = new Thread(this);
 	
-	public static Image[] elemente = new Image[10];
+	public static Image[] elemente = new Image[12];
 	
-	public static int current_lvl=1,current_room=1;
+	public static int current_lvl=1,current_room=1,current_player=1;
 	
 	public static boolean isFirst = true; //erster Aufruf
 	
 	public static Raum raum = new Raum();
 	public static level level = new level();
 	public static spieler spieler;
-	public static Gegner gegner1;
-	//public static Gegner gegner2;
-
 	
 	/**
 	 * Konstruktor
@@ -36,7 +33,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	//Bilder in Array laden     
 		//	ID: 0 - Boden   1 - Mauer   2 - Ausgang 
 		//      3 - Falle_Loch   4 - Falle_Feuer   5 - Falle_Speer  
-	    //      6 - Item_Trank   7 - Truhe
+	    //      6 - Item_Trank   7 - Item_Trank2
     
 	public static void loadImages(){
 		elemente[0] = new ImageIcon("pics/boden"+current_lvl+".png").getImage(); 
@@ -46,7 +43,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		elemente[4] = new ImageIcon("pics/falle_feuer"+current_lvl+".png").getImage();
 		elemente[5] = new ImageIcon("pics/falle_speer"+current_lvl+".png").getImage();
 		elemente[6] = new ImageIcon("pics/item_trank.png").getImage();
-		elemente[7] = new ImageIcon ("pics/truhe_zu.png").getImage();
+		elemente[7] = new ImageIcon("pics/item_trank2.png").getImage();
 	}
 	
 	public void define(){
@@ -54,12 +51,6 @@ public class Spielfeld extends JPanel implements Runnable{
 		spieler = new spieler();
 		
 		Frame.leben.setText("Leben:   "+spieler.leben+"%");
-		
-		gegner1 = new Gegner(1);
-		//gegner2 = new Gegner(1);
-		
-		loadImages();
-		
 
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
 	}
@@ -71,15 +62,6 @@ public class Spielfeld extends JPanel implements Runnable{
 		}
 		raum.draw(g); //zeichnet den raum
 
-		if(gegner1.aktiv){
-			gegner1.draw(g);  //zeichnet den Gegner
-		}
-		/*if(gegner2.aktiv){
-			gegner2.draw(g);  //zeichnet den Gegner
-		}*/
-	
-
-		
 		if(spieler.aktiv){
 			spieler.draw(g);  //zeichnet den Spieler
 		}

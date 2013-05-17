@@ -1,6 +1,7 @@
 package propra2013.Gruppe54;
 
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -30,6 +31,7 @@ public class Frame extends JFrame implements ActionListener{
 	public static JButton menü = new JButton("Hauptmenü");
 	public static JButton neustart = new JButton("Neustart");
 	
+	public static JLabel charakter = new JLabel();
 	public static JLabel leben = new JLabel();
 	public static Timer time;
 	
@@ -60,22 +62,28 @@ public class Frame extends JFrame implements ActionListener{
 		leben.setBounds(350,25,130,20);
 		leben.setVisible(false);
 		
+		charakter.setBounds(450,150,150,30);
+		charakter.setText("Charakterauswahl:");
+		charakter.setVisible(true);
+		add(charakter);
+		
 		//Anzeige des Menüs
-		enter.setBounds(400, 100, 150, 30);		//Button Enter
+		enter.setBounds(250, 100, 150, 30);		//Button Enter
 		enter.setVisible(true);
 		add(enter);
 		
-		info.setBounds(400,150,150,30);			//Button Info
+		info.setBounds(250,150,150,30);			//Button Info
 		info.setVisible(true);
 		add(info);
 		
-		schließen.setBounds(400, 200, 150, 30); //Button Schließen
+		schließen.setBounds(250, 200, 150, 30); //Button Schließen
 		schließen.setVisible(true);
 		add(schließen);
 		
-		levelAuswahl.setBounds(400, 250, 150, 30);	//ComboBox Levelauswahl
+		levelAuswahl.setBounds(250, 250, 150, 30);	//ComboBox Levelauswahl
 		levelAuswahl.setVisible(true);
 		add(levelAuswahl);
+	
 		
 		// damit der Gegner sich von alleine bewegt
 		time = new Timer(20,this);
@@ -97,29 +105,28 @@ public class Frame extends JFrame implements ActionListener{
 		      if(Spielfeld.spieler.aktiv){
 		    	  //prüfen welche ID die stelle an die gegangen werden soll hat und nur laufen wenn es keine Mauer ist
 		    	  //zusätzlich prüfen ob und wenn ja welches Element oder welche Falle dort liegt
-		         if ((key == KeyEvent.VK_A)&&(spielfeld.getBlockID(spieler.x-2, spieler.y+28))!=1) {
+		         if ((key == KeyEvent.VK_A)&&(spielfeld.getBlockID(spieler.x+2, spieler.y+26)!=1)&&(spielfeld.getBlockID(spieler.x+2, spieler.y+32)!=1)) {
 		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+4, spieler.y+28),spielfeld.getBlock(spieler.x+4, spieler.y+28));//unten links
 		            spieler.x-=4;
 		         }
 
-		         if ((key == KeyEvent.VK_D)&&(spielfeld.getBlockID(spieler.x+32, spieler.y+28))!=1) {
+		         if ((key == KeyEvent.VK_D)&&(spielfeld.getBlockID(spieler.x+30, spieler.y+26)!=1)&&(spielfeld.getBlockID(spieler.x+30, spieler.y+32)!=1)) {
 			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+28, spieler.y+28),spielfeld.getBlock(spieler.x+28, spieler.y+28));//unten rechts
 		         	spieler.x+=4;
 		         }
 
-		         if ((key == KeyEvent.VK_W)&&(spielfeld.getBlockID(spieler.x+16, spieler.y+16))!=1) {
+		         if ((key == KeyEvent.VK_W)&&(spielfeld.getBlockID(spieler.x+6, spieler.y+23)!=1)&&(spielfeld.getBlockID(spieler.x+26, spieler.y+23)!=1)) {
 			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+8, spieler.y+24),spielfeld.getBlock(spieler.x+8, spieler.y+24));//mitte links
 			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+24, spieler.y+24),spielfeld.getBlock(spieler.x+24, spieler.y+24));//mitte rechts
 		         	spieler.y-=4;
 		        	
 		         }
 		         
-		         if ((key == KeyEvent.VK_S)&&(spielfeld.getBlockID(spieler.x+16, spieler.y+32))!=1) {
+		         if ((key == KeyEvent.VK_S)&&(spielfeld.getBlockID(spieler.x+6, spieler.y+36)!=1)&&(spielfeld.getBlockID(spieler.x+26, spieler.y+36)!=1)) {
 			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+8, spieler.y+32),spielfeld.getBlock(spieler.x+8, spieler.y+32));//unten links
 			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+24, spieler.y+32),spielfeld.getBlock(spieler.x+24, spieler.y+32));//unten rechts
 		         	spieler.y+=4;
-
-		        	
+		         	
 		         }
 	
 		      }
@@ -189,12 +196,6 @@ public class Frame extends JFrame implements ActionListener{
 				spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
 				spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
 				
-				spielfeld.gegner1.x = 700;
-				spielfeld.gegner1.y = 300;
-				
-				/*spielfeld.gegner2.x = 150;
-				spielfeld.gegner2.y= 20; */
-				
 				time.start();
 				
 			}
@@ -224,10 +225,10 @@ public class Frame extends JFrame implements ActionListener{
 				neustart.setVisible(false);
 				spielfeld.setVisible(false);
 				setLayout(null);
-				
 				enter.setVisible(true);
 				info.setVisible(true);
 				schließen.setVisible(true);
+				levelAuswahl.setVisible(true);
 				add(enter);
 				add(info);
 				add(schließen);
@@ -266,8 +267,7 @@ public class Frame extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-	//	spielfeld.gegner2.lauf();
-		spielfeld.gegner1.lauf();
+	
 		
 	}
 	}

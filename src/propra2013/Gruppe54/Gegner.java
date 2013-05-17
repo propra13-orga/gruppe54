@@ -11,11 +11,12 @@ public class Gegner extends Rectangle {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	public static int ID;
 	public static boolean unten=false; // gibt an, ob der Gegener unten an eine Wand stößt
 	public static boolean rechts=false; // gibt an, ob der Gegener rechts an eine Wand stößt
-	public static int x=200,y=20;  
+	public static int x=200,y=300;  
 	public static boolean aktiv=false; 
-	public static int ID;
+	
 	/**
 	 * @param args
 	 */
@@ -23,18 +24,17 @@ public class Gegner extends Rectangle {
 	public Gegner(int ID) {
 		setBounds(x,y,32,32);
 		aktiv = true;		//gibt an ob der Gegner im Spiel ist
-		this.ID = ID;
+		Gegner.ID = ID;
 	}
 	
 	
 	public void draw(Graphics g){
 		
-			g.drawImage(new ImageIcon("pics/gegner.png").getImage(), Gegner.x, Gegner.y, 32, 32, null); //zeichnet den Gegner an (x,y)
-		
-		/*if (Gegner.ID == 0){
-			g.drawImage(new ImageIcon("pics/gegner2.png").getImage(), x, y, 32, 32, null); //zeichnet den Gegner an (x,y)
+		if (Gegner.ID == 0){
+			
+			g.drawImage(new ImageIcon("pics/gegner0.png").getImage(), x, y, 32, 32, null); //zeichnet den Gegner an (x,y)
 
-		}*/
+		}// usw.
 
 
 	}
@@ -57,7 +57,7 @@ public class Gegner extends Rectangle {
        		 Gegner.x-=2;
         	 } else rechts = false;  
 		} 
-}
+	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

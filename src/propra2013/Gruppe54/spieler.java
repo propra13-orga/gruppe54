@@ -24,7 +24,7 @@ public class spieler extends Rectangle {
 	}
 	
 	public void draw(Graphics g){
-		g.drawImage(new ImageIcon("pics/spieler.png").getImage(), x, y, 32, 32, null); //zeichnet den Spieler an (x,y)
+		g.drawImage(new ImageIcon("pics/spieler"+Spielfeld.current_player+".png").getImage(), x, y, 32, 32, null); //zeichnet den Spieler an (x,y)
 	}
 	
 	/**

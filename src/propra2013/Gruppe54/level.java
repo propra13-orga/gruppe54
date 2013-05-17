@@ -11,12 +11,11 @@ public class level {
 			
 			while(loadScanner.hasNext()){     //solange noch Zeichen vorhanden sind 
 				
-				for(int y=0;y<Raum.block.length;y++){    
-					
-					for(int x=0;x<Raum.block[0].length;x++){  
-						Raum.block[y][x].ID = loadScanner.nextInt();  //setze ID des Blocks gleich eingelesener Zahl
+				
+				for(int y=0;y<Raum.block.length;y++){  
+					for(int x=0;x<Raum.block[0].length;x++){ 
+						Raum.block[y][x].ID = Integer.parseInt(loadScanner.next(),16);
 					}
-					
 				}
 				
 			}
