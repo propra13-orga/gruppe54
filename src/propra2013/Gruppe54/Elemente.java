@@ -3,6 +3,8 @@ package propra2013.Gruppe54;
 import java.io.File;
 
 public class Elemente {
+	
+	public static boolean beruehrung = false;
 
 	public static void Aufruf(int ID,Block block){
 		if(ID < 6){
@@ -10,7 +12,6 @@ public class Elemente {
 			Falle(ID);
 		
 		} if((ID == 2)&&(Spielfeld.current_room!=3)) {  //Ausgang
-		
 			Spielfeld.current_room+=1;
 			Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_"+Spielfeld.current_room+".lvl"));
 			//Spieler auf den Startpunkt des jeweiligen Levels setzen
@@ -29,8 +30,10 @@ public class Elemente {
 			spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
 			spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
 		} else if(ID == 4){    //Falle_Feuer
-			spieler.leben-=1;
+			beruehrung = true;					//da z.B. beim hochlaufen zwei Punkte auf Berührung überprüft werden, soll gespeichert werden,
+			spieler.leben-=1;					//ob bereits eine Falle ausgelöst wurde damit die Punkte nicht doppelt abgezogen werden
 		} else if(ID == 5){    //Falle_Speer
+			beruehrung = true;
 			spieler.leben-=3;
 		}
 	}

@@ -21,10 +21,9 @@ public class Spielfeld extends JPanel implements Runnable{
 	
 	public static Raum raum = new Raum();
 	public static level level = new level();
+	
 	public static spieler spieler;
-	
 	public static Gegner gegner1;
-	
 	
 	/**
 	 * Konstruktor
@@ -89,7 +88,6 @@ public class Spielfeld extends JPanel implements Runnable{
 
 			if((spieler.leben <= 0)&&(spieler.aktiv)){
 				spieler.aktiv = false;
-				Frame.leben.setSize(spieler.leben*2, 10);
 				Frame.neustart.setVisible(true);
 			} if((spieler.leben > 30)&&(spieler.aktiv)) {
 				Frame.lebensanzeige = new ImageIcon("pics/lebensanzeige.png");

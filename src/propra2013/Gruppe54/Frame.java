@@ -63,7 +63,7 @@ public class Frame extends JFrame implements ActionListener{
 		neustart.setVisible(false);
 		
 		//Label für die Lebensanzeige
-		leben.setBounds(75,550,Spielfeld.spieler.leben*2,10);
+		leben.setBounds(75,540,Spielfeld.spieler.leben*2,10);
 		leben.setIcon(lebensanzeige);
 		leben.setVisible(false);
 		
@@ -115,21 +115,25 @@ public class Frame extends JFrame implements ActionListener{
 		         }
 
 		         if ((key == KeyEvent.VK_D)&&(spielfeld.getBlockID(spieler.x+30, spieler.y+26)!=1)&&(spielfeld.getBlockID(spieler.x+30, spieler.y+32)!=1)) {
-			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+28, spieler.y+28),spielfeld.getBlock(spieler.x+28, spieler.y+28));//unten rechts
+			        Elemente.Aufruf(spielfeld.getBlockID(spieler.x+28, spieler.y+28),spielfeld.getBlock(spieler.x+28, spieler.y+28));//unten rechts
 		         	spieler.x+=4;
 		         }
 
 		         if ((key == KeyEvent.VK_W)&&(spielfeld.getBlockID(spieler.x+6, spieler.y+23)!=1)&&(spielfeld.getBlockID(spieler.x+26, spieler.y+23)!=1)) {
-			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+8, spieler.y+24),spielfeld.getBlock(spieler.x+8, spieler.y+24));//mitte links
+			        Elemente.Aufruf(spielfeld.getBlockID(spieler.x+8, spieler.y+24),spielfeld.getBlock(spieler.x+8, spieler.y+24));//mitte links
+			        if(Elemente.beruehrung == false){ //zweiten Punkt prüfen
 			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+24, spieler.y+24),spielfeld.getBlock(spieler.x+24, spieler.y+24));//mitte rechts
-		         	spieler.y-=4;
+			        }
+			        spieler.y-=4;
 		        	
 		         }
 		         
 		         if ((key == KeyEvent.VK_S)&&(spielfeld.getBlockID(spieler.x+6, spieler.y+36)!=1)&&(spielfeld.getBlockID(spieler.x+26, spieler.y+36)!=1)) {
-			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+8, spieler.y+32),spielfeld.getBlock(spieler.x+8, spieler.y+32));//unten links
+			        Elemente.Aufruf(spielfeld.getBlockID(spieler.x+8, spieler.y+32),spielfeld.getBlock(spieler.x+8, spieler.y+32));//unten links
+			        if(Elemente.beruehrung == false){ //zweiten Punkt prüfen
 			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+24, spieler.y+32),spielfeld.getBlock(spieler.x+24, spieler.y+32));//unten rechts
-		         	spieler.y+=4;
+			        }
+			        	spieler.y+=4;
 		         	
 		         }
 	
