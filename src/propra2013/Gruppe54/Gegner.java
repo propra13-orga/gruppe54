@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
 public class Gegner extends Rectangle {
-	
+	//Alte Gegner Klasse die nun nicht mehr verwendet wird
 	/**
 	 * 
 	 */
@@ -41,7 +41,7 @@ public class Gegner extends Rectangle {
 	
 	
 	
-	public static void lauf(){
+	/*public static void lauf(){
 		//Gegner läuft hoch und runter
 		if (ID == 1){
 			if ((unten==false) &&(Spielfeld.getBlockID(Gegner.x+16, Gegner.y+2+32)!=1)){
@@ -64,7 +64,7 @@ public class Gegner extends Rectangle {
         		 Gegner.x-=2;
         	 } else rechts = false;  
 		} 
-	}
+	}*/
 
 //Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
 public void Kollision2(){

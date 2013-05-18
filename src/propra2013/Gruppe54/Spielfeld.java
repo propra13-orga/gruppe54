@@ -21,8 +21,8 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static Raum raum = new Raum();
 	public static level level = new level();
 	public static spieler spieler;
+
 	
-	public static Gegner gegner1;
 	
 	
 	/**
@@ -52,10 +52,9 @@ public class Spielfeld extends JPanel implements Runnable{
 	public void define(){
 		raum = new Raum();
 		spieler = new spieler();
+
 		
 		Frame.leben.setText("Leben:   "+spieler.leben+"%");
-		
-		gegner1 = new Gegner(1);
 	
 		
 		loadImages();
@@ -70,9 +69,6 @@ public class Spielfeld extends JPanel implements Runnable{
 		}
 		raum.draw(g); //zeichnet den raum
 
-		if(gegner1.aktiv){
-			gegner1.draw(g);  //zeichnet den Gegner
-		}
 	
 		if(spieler.aktiv){
 			spieler.draw(g);  //zeichnet den Spieler
