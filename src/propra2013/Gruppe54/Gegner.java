@@ -32,7 +32,7 @@ public class Gegner extends Rectangle {
 		
 		if (Gegner.ID == 0){
 			
-			g.drawImage(new ImageIcon("pics/gegner0.png").getImage(), x, y, 32, 32, null); //zeichnet den Gegner an (x,y)
+			g.drawImage(new ImageIcon("pics/gegner.png").getImage(), x, y, 32, 32, null); //zeichnet den Gegner an (x,y)
 
 		}// usw.
 
@@ -55,11 +55,11 @@ public class Gegner extends Rectangle {
 		} 
 		//Gegner läuft von rechts nach links
 		if (ID == 0){
-        	 if ((rechts==false) &&(Spielfeld.getBlockID(Gegner.x+24, Gegner.y+16)!=1)){
+        	 if ((rechts==false) &&(Spielfeld.getBlockID(Gegner.x+24, Gegner.y+26)!=1)){
         		 Spielfeld.gegner1.Kollision2();
         		 Gegner.x+=2;
         	 } else rechts = true;
-        	 if ((rechts==true)&& (Spielfeld.getBlockID(Gegner.x-2, Gegner.y+16)!=1)){
+        	 if ((rechts==true)&& (Spielfeld.getBlockID(Gegner.x-2, Gegner.y+26)!=1)){
         		 Spielfeld.gegner1.Kollision2();
         		 Gegner.x-=2;
         	 } else rechts = false;  

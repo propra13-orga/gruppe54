@@ -10,7 +10,7 @@ public class spieler extends Rectangle {
 	public static int x=Raum.Startpunkt[Spielfeld.current_lvl-1].x,y=Raum.Startpunkt[Spielfeld.current_lvl-1].y; 
 	
 	public static int leben;
-	public static boolean aktiv = false; 
+	public static boolean aktiv = false,beweglich = false; 
 	
 	/**
 	 * 
@@ -21,6 +21,7 @@ public class spieler extends Rectangle {
 		setBounds(x,y,32,32);
 		leben = 100;		//Lebenspunkte
 		aktiv = true;		//gibt an ob der Spieler im Spiel ist
+		beweglich = true;
 	}
 	
 	public void draw(Graphics g){

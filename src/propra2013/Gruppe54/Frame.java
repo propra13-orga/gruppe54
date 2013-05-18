@@ -33,7 +33,11 @@ public class Frame extends JFrame implements ActionListener{
 	
 	public static JLabel charakter = new JLabel();
 	public static JLabel leben = new JLabel();
+	public static ImageIcon lebensanzeige = new ImageIcon("pics/lebensanzeige.png");
+	
 	public static Timer time;
+	
+	public static int spielerx=0,spielery=0;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static JComboBox levelAuswahl = new JComboBox(auswahl);
@@ -59,7 +63,8 @@ public class Frame extends JFrame implements ActionListener{
 		neustart.setVisible(false);
 		
 		//Label für die Lebensanzeige
-		leben.setBounds(350,25,130,20);
+		leben.setBounds(75,550,Spielfeld.spieler.leben*2,10);
+		leben.setIcon(lebensanzeige);
 		leben.setVisible(false);
 		
 		charakter.setBounds(450,150,150,30);
@@ -83,7 +88,6 @@ public class Frame extends JFrame implements ActionListener{
 		levelAuswahl.setBounds(250, 250, 150, 30);	//ComboBox Levelauswahl
 		levelAuswahl.setVisible(true);
 		add(levelAuswahl);
-	
 		
 		// damit der Gegner sich von alleine bewegt
 		time = new Timer(20,this);
@@ -102,7 +106,7 @@ public class Frame extends JFrame implements ActionListener{
 			public void keyPressed(KeyEvent e){
 		        int key = e.getKeyCode();
 		      //nur bewegen wenn der Spieler aktiv ist
-		      if(Spielfeld.spieler.aktiv){
+		      if((Spielfeld.spieler.aktiv)&&(Spielfeld.spieler.beweglich)){
 		    	  //prüfen welche ID die stelle an die gegangen werden soll hat und nur laufen wenn es keine Mauer ist
 		    	  //zusätzlich prüfen ob und wenn ja welches Element oder welche Falle dort liegt
 		         if ((key == KeyEvent.VK_A)&&(spielfeld.getBlockID(spieler.x+2, spieler.y+26)!=1)&&(spielfeld.getBlockID(spieler.x+2, spieler.y+32)!=1)) {
@@ -170,10 +174,12 @@ public class Frame extends JFrame implements ActionListener{
 				enter.setVisible(false);
 				info.setVisible(false);
 				schließen.setVisible(false);
+				charakter.setVisible(false);
 				remove(enter);
 				remove(info);
 				remove(schließen);
 				remove(levelAuswahl);
+				remove(charakter);
 
 				Spielfeld.current_room=1;
 				
@@ -195,6 +201,7 @@ public class Frame extends JFrame implements ActionListener{
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
 				spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
 				spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
+				spieler.beweglich = true;
 				
 				spielfeld.gegner1.x = 700;
 				spielfeld.gegner1.y = 300;
@@ -208,14 +215,15 @@ public class Frame extends JFrame implements ActionListener{
 		//Button Neustart Click
 		neustart.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				neustart.setVisible(false);
 				//aktuelles Level in Raum 1 neu laden
 				Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_1.lvl"));
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
 				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
 				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
 				Spielfeld.spieler.aktiv = true;
+				Spielfeld.spieler.beweglich = true;
 				Spielfeld.spieler.leben = 100;
+				neustart.setVisible(false);
 			}
 		});
 		
@@ -233,10 +241,12 @@ public class Frame extends JFrame implements ActionListener{
 				info.setVisible(true);
 				schließen.setVisible(true);
 				levelAuswahl.setVisible(true);
+				charakter.setVisible(true);
 				add(enter);
 				add(info);
 				add(schließen);
 				add(levelAuswahl);
+				add(charakter);
 				init();
 			}
 		});

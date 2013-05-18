@@ -31,7 +31,7 @@ public class Elemente {
 		} else if(ID == 4){    //Falle_Feuer
 			spieler.leben-=1;
 		} else if(ID == 5){    //Falle_Speer
-			spieler.leben-=5;
+			spieler.leben-=3;
 		}
 	}
 	
@@ -50,7 +50,8 @@ public class Elemente {
 			}
 			block.ID = 0;
 		} else if(ID == 8){
-			
+			spieler.beweglich = false;
+			block.ID = 0;
 		} else if(ID == 9){
 			
 		}

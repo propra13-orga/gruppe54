@@ -1,5 +1,6 @@
 package propra2013.Gruppe54;
 import javax.swing.*;
+
 import java.awt.*;
 import java.io.File;
 
@@ -29,7 +30,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	 * Konstruktor
 	 */
 	public Spielfeld(){
-		setBounds(75,55,800,800);
+		setBounds(75,55,800,480);
 		thread.start();
 	}
 	
@@ -47,6 +48,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		elemente[5] = new ImageIcon("pics/falle_speer"+current_lvl+".png").getImage();
 		elemente[6] = new ImageIcon("pics/item_trank.png").getImage();
 		elemente[7] = new ImageIcon("pics/item_trank2.png").getImage();
+		elemente[8] = new ImageIcon("pics/zepter"+current_lvl+".png").getImage();
 	}
 	
 	public void define(){
@@ -55,7 +57,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		
 		Frame.leben.setText("Leben:   "+spieler.leben+"%");
 		
-		gegner1 = new Gegner(1);
+		gegner1 = new Gegner(0);
 	
 		
 		loadImages();
@@ -87,10 +89,16 @@ public class Spielfeld extends JPanel implements Runnable{
 
 			if((spieler.leben <= 0)&&(spieler.aktiv)){
 				spieler.aktiv = false;
-				Frame.leben.setText("GAME OVER");
+				Frame.leben.setSize(spieler.leben*2, 10);
 				Frame.neustart.setVisible(true);
-			} else if(spieler.leben>0) {
-				Frame.leben.setText("Leben:   "+spieler.leben+"%");    //Lebensanzeige aktualisieren
+			} if((spieler.leben > 30)&&(spieler.aktiv)) {
+				Frame.lebensanzeige = new ImageIcon("pics/lebensanzeige.png");
+				Frame.leben.setSize(spieler.leben*2, 10);
+				Frame.leben.setIcon(Frame.lebensanzeige);
+			} else {
+				Frame.lebensanzeige = new ImageIcon("pics/lebensanzeige_rot.png");
+				Frame.leben.setSize(spieler.leben*2, 10);
+				Frame.leben.setIcon(Frame.lebensanzeige);
 			}
 			
 			try{
