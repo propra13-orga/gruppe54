@@ -1,5 +1,7 @@
 package propra2013.Gruppe54;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -32,8 +34,17 @@ public class Frame extends JFrame implements ActionListener{
 	public static JButton neustart = new JButton("Neustart");
 	
 	public static JLabel charakter = new JLabel();
+	public static JLabel charakterBild = new JLabel();
+	public static JButton PfeilRechts = new JButton();
+	public static JButton PfeilLinks = new JButton();
+	public static ImageIcon Figur1 = new ImageIcon("pics/spieler.png");
+	public static ImageIcon Figur2 = new ImageIcon("pics/Figur.png");
+	public static Image image;
+	
+	
 	public static JLabel leben = new JLabel();
 	public static ImageIcon lebensanzeige = new ImageIcon("pics/lebensanzeige.png");
+	
 	
 	public static Timer time;
 	
@@ -67,10 +78,29 @@ public class Frame extends JFrame implements ActionListener{
 		leben.setIcon(lebensanzeige);
 		leben.setVisible(false);
 		
+		//Label Charakterauswahl
 		charakter.setBounds(450,150,150,30);
 		charakter.setText("Charakterauswahl:");
 		charakter.setVisible(true);
 		add(charakter);
+	
+		
+		//Label für das Charakter-Bild
+		charakterBild.setBounds(500, 200, 32, 32);
+		charakterBild.setVisible(true);
+		charakterBild.setIcon(Figur1);
+		image = Figur1.getImage();
+		add(charakterBild);
+		
+		//Buttons zur Charakterauswahl
+		PfeilRechts.setBounds(552, 205, 20, 20);
+		PfeilLinks.setBounds(460, 205, 20, 20);
+		PfeilRechts.setVisible(true);
+		PfeilLinks.setVisible(true);
+		PfeilRechts.setText(">");
+		PfeilLinks.setText("<");
+		add(PfeilLinks);
+		add(PfeilRechts);
 		
 		//Anzeige des Menüs
 		enter.setBounds(250, 100, 150, 30);		//Button Enter
@@ -171,6 +201,22 @@ public class Frame extends JFrame implements ActionListener{
 			}
 		});
 		
+		//Button PfeilRechts Click
+		PfeilRechts.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				charakterBild.setIcon(Figur2);
+				image = Figur2.getImage();
+			}
+		});
+		
+		//Button PfeilLinks Click
+		PfeilLinks.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				charakterBild.setIcon(Figur1);
+				image = Figur1.getImage();
+			}
+		});
+		
 		//Button Enter Click
 		enter.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -179,6 +225,12 @@ public class Frame extends JFrame implements ActionListener{
 				info.setVisible(false);
 				schließen.setVisible(false);
 				charakter.setVisible(false);
+				PfeilRechts.setVisible(false);
+				PfeilLinks.setVisible(false);
+				charakterBild.setVisible(false);
+				remove(PfeilRechts);
+				remove(PfeilLinks);
+				remove(charakterBild);
 				remove(enter);
 				remove(info);
 				remove(schließen);
@@ -244,6 +296,12 @@ public class Frame extends JFrame implements ActionListener{
 				schließen.setVisible(true);
 				levelAuswahl.setVisible(true);
 				charakter.setVisible(true);
+				PfeilRechts.setVisible(true);
+				PfeilLinks.setVisible(true);
+				charakterBild.setVisible(true);
+				add(PfeilRechts);
+				add(PfeilLinks);
+				add(charakterBild);
 				add(enter);
 				add(info);
 				add(schließen);
