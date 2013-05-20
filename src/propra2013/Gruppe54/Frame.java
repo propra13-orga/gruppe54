@@ -86,19 +86,19 @@ public class Frame extends JFrame implements ActionListener{
 	
 		
 		//Label für das Charakter-Bild
-		charakterBild.setBounds(500, 200, 32, 32);
+		charakterBild.setBounds(560, 200, 32, 32);
 		charakterBild.setVisible(true);
 		charakterBild.setIcon(Figur1);
 		image = Figur1.getImage();
 		add(charakterBild);
 		
 		//Buttons zur Charakterauswahl
-		PfeilRechts.setBounds(552, 205, 20, 20);
-		PfeilLinks.setBounds(460, 205, 20, 20);
+		PfeilRechts.setBounds(600, 205, 90, 30);
+		PfeilLinks.setBounds(460, 205, 90, 30);
 		PfeilRechts.setVisible(true);
 		PfeilLinks.setVisible(true);
-		PfeilRechts.setText(">");
-		PfeilLinks.setText("<");
+		PfeilRechts.setText("Figur 2");
+		PfeilLinks.setText("Figur 1");
 		add(PfeilLinks);
 		add(PfeilRechts);
 		
