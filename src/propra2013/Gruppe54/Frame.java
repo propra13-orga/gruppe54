@@ -1,7 +1,5 @@
 package propra2013.Gruppe54;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -26,13 +24,13 @@ public class Frame extends JFrame implements ActionListener{
 	public static Frame frame;
 	
     public static Spielfeld spielfeld = new Spielfeld();
-    
+    //Menü
     public static JButton enter = new JButton("Spielen");
 	public static JButton info = new JButton("Info");
 	public static JButton schließen = new JButton("Verlassen");
 	public static JButton menü = new JButton("Hauptmenü");
 	public static JButton neustart = new JButton("Neustart");
-	
+	//Charakterauswahl
 	public static JLabel charakter = new JLabel();
 	public static JLabel charakterBild = new JLabel();
 	public static JButton PfeilRechts = new JButton();
@@ -40,8 +38,7 @@ public class Frame extends JFrame implements ActionListener{
 	public static ImageIcon Figur1 = new ImageIcon("pics/spieler1.png");
 	public static ImageIcon Figur2 = new ImageIcon("pics/Figur.png");
 	public static Image image;
-	
-	
+	//Lebensanzeige
 	public static JLabel leben = new JLabel();
 	public static ImageIcon lebensanzeige = new ImageIcon("pics/lebensanzeige.png");
 	
@@ -93,8 +90,8 @@ public class Frame extends JFrame implements ActionListener{
 		add(charakterBild);
 		
 		//Buttons zur Charakterauswahl
-		PfeilRechts.setBounds(552, 205, 25, 25);
-		PfeilLinks.setBounds(460, 205, 25, 25);
+		PfeilRechts.setBounds(552, 205, 20, 20);
+		PfeilLinks.setBounds(460, 205, 20, 20);
 		PfeilRechts.setVisible(true);
 		PfeilLinks.setVisible(true);
 		PfeilRechts.setText(">");

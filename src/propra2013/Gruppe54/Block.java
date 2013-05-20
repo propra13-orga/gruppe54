@@ -77,9 +77,6 @@ public class Block extends Rectangle {
 				gegnerOU.draw(g);
 			}
 			
-			//Raum.Startpunkt_GegnerX[Raum.anzahl_gegner] = x;
-			//Raum.Startpunkt_GegnerY[Raum.anzahl_gegner] = y;
-				
 		} else if((ID==12)){		//Gegner 3
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
 			
