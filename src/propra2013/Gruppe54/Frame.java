@@ -125,7 +125,7 @@ public class Frame extends JFrame implements ActionListener{
 			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+24, spieler.y+24),spielfeld.getBlock(spieler.x+24, spieler.y+24));//mitte rechts
 			        }
 			        spieler.y-=4;
-		        	
+		        	Elemente.beruehrung = false;
 		         }
 		         
 		         if ((key == KeyEvent.VK_S)&&(spielfeld.getBlockID(spieler.x+6, spieler.y+36)!=1)&&(spielfeld.getBlockID(spieler.x+26, spieler.y+36)!=1)) {
@@ -134,7 +134,7 @@ public class Frame extends JFrame implements ActionListener{
 			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+24, spieler.y+32),spielfeld.getBlock(spieler.x+24, spieler.y+32));//unten rechts
 			        }
 			        	spieler.y+=4;
-		         	
+			        	Elemente.beruehrung = false;
 		         }
 	
 		      }
@@ -207,8 +207,6 @@ public class Frame extends JFrame implements ActionListener{
 				spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
 				spieler.beweglich = true;
 				
-				spielfeld.gegner1.x = 700;
-				spielfeld.gegner1.y = 300;
 				
 			
 				time.start();
@@ -285,7 +283,8 @@ public class Frame extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		spielfeld.gegner1.lauf();
+		//GegnerOU.lauf();
+		//GegnerRL.lauf();
 		
 	}
 	}

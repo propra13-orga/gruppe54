@@ -11,8 +11,6 @@ public class Raum {
 	
 	public static Point[] Startpunkt = {new Point(5,185),new Point(5,277),new Point(675,435)};
 	public static int anzahl_gegner=0;
-	public static int[] Startpunkt_GegnerX = new int[4];
-	public static int[] Startpunkt_GegnerY = new int[4];
 	
 	
 	public static Block[][] block; 
