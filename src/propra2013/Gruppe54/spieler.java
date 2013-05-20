@@ -10,7 +10,7 @@ public class spieler extends Rectangle {
 	public static int x=Raum.Startpunkt[Spielfeld.current_lvl-1].x,y=Raum.Startpunkt[Spielfeld.current_lvl-1].y; 
 	
 	public static int leben;
-	public static boolean aktiv = false,beweglich = false; 
+	public static boolean aktiv = false,beweglich = false,rechts = false,links = false,hoch = false,runter = false; 
 	
 	/**
 	 * 

@@ -1,5 +1,6 @@
 package propra2013.Gruppe54;
 
+import java.awt.Graphics;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
@@ -8,7 +9,7 @@ public class Elemente {
 	public static boolean beruehrung = false;
 
 	public static void Aufruf(int ID,Block block){
-		if(ID < 6){
+		if(ID < 7){
 			
 			Falle(ID);
 		
@@ -36,32 +37,43 @@ public class Elemente {
 		} else if(ID == 5){    //Falle_Speer
 			beruehrung = true;
 			spieler.leben-=3;
+		} else if(ID == 6){    //Falle_Monster
+			beruehrung = true;
+			spieler.leben-=5;
+			if(spieler.rechts){
+				spieler.x-=12;
+			} else if(spieler.links){
+				spieler.x+=12;
+			} else if(spieler.hoch){
+				spieler.y+=12;
+			} else if(spieler.runter){
+				spieler.y-=12;
+			}
+			
 		}
 	}
 	
 	//block muss mit übergeben werden, da das Item ja vom Block entfernt werden soll
 	public static void Item(int ID,Block block){
-		if((ID == 6)&&(spieler.leben<100)){           //trank1
+		if((ID == 7)&&(spieler.leben<100)){           //trank1
 			spieler.leben+=25;
 			if(spieler.leben>100){
 				spieler.leben = 100;
 			}
 			block.ID = 0;
-		} else if((ID == 7)&&(spieler.leben<100)){	  //trank2
+		} else if((ID == 8)&&(spieler.leben<100)){	  //trank2
 			spieler.leben+=10;
 			if(spieler.leben>100){
 				spieler.leben = 100;
 			}
 			block.ID = 0;
-		} else if(ID == 8){						      //zepter
+		} else if(ID == 9){						      //zepter
 			spieler.beweglich = false;
 			block.ID = 0;
 			if(Spielfeld.current_lvl<3){
 				Frame.nextLevel.setVisible(true);
 			}
 			Frame.neustart.setVisible(true);
-		} else if(ID == 9){
-			
 		}
 	}
 	

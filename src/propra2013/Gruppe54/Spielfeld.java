@@ -44,9 +44,10 @@ public class Spielfeld extends JPanel implements Runnable{
 		elemente[3] = new ImageIcon("pics/falle_loch.png").getImage();
 		elemente[4] = new ImageIcon("pics/falle_feuer"+current_lvl+".png").getImage();
 		elemente[5] = new ImageIcon("pics/falle_speer"+current_lvl+".png").getImage();
-		elemente[6] = new ImageIcon("pics/item_trank.png").getImage();
-		elemente[7] = new ImageIcon("pics/item_trank2.png").getImage();
-		elemente[8] = new ImageIcon("pics/zepter"+current_lvl+".png").getImage();
+		elemente[6] = new ImageIcon("pics/falle_monster1.png").getImage();
+		elemente[7] = new ImageIcon("pics/item_trank.png").getImage();
+		elemente[8] = new ImageIcon("pics/item_trank2.png").getImage();
+		elemente[9] = new ImageIcon("pics/zepter"+current_lvl+".png").getImage();
 	}
 	
 	public void define(){

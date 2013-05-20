@@ -84,7 +84,6 @@ public class Frame extends JFrame implements ActionListener{
 		charakter.setText("Charakterauswahl:");
 		charakter.setVisible(true);
 		add(charakter);
-	
 		
 		//Label für das Charakter-Bild
 		charakterBild.setBounds(540, 200, 32, 32);
@@ -140,11 +139,19 @@ public class Frame extends JFrame implements ActionListener{
 		         if ((key == KeyEvent.VK_A)&&(spielfeld.getBlockID(spieler.x+2, spieler.y+26)!=1)&&(spielfeld.getBlockID(spieler.x+2, spieler.y+32)!=1)) {
 		        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+4, spieler.y+28),spielfeld.getBlock(spieler.x+4, spieler.y+28));//unten links
 		            spieler.x-=4;
+		            spieler.links = true;
+		            spieler.rechts = false;
+		            spieler.hoch = false;
+		            spieler.runter = false;
 		         }
 
 		         if ((key == KeyEvent.VK_D)&&(spielfeld.getBlockID(spieler.x+30, spieler.y+26)!=1)&&(spielfeld.getBlockID(spieler.x+30, spieler.y+32)!=1)) {
 			        Elemente.Aufruf(spielfeld.getBlockID(spieler.x+28, spieler.y+28),spielfeld.getBlock(spieler.x+28, spieler.y+28));//unten rechts
 		         	spieler.x+=4;
+		         	spieler.links = false;
+		         	spieler.rechts = true;
+		         	spieler.hoch = false;
+		            spieler.runter = false;
 		         }
 
 		         if ((key == KeyEvent.VK_W)&&(spielfeld.getBlockID(spieler.x+6, spieler.y+23)!=1)&&(spielfeld.getBlockID(spieler.x+26, spieler.y+23)!=1)) {
@@ -154,6 +161,10 @@ public class Frame extends JFrame implements ActionListener{
 			        }
 			        spieler.y-=4;
 		        	Elemente.beruehrung = false;
+		        	spieler.links = false;
+		         	spieler.rechts = false;
+		         	spieler.hoch = true;
+		            spieler.runter = false;
 		         }
 		         
 		         if ((key == KeyEvent.VK_S)&&(spielfeld.getBlockID(spieler.x+6, spieler.y+36)!=1)&&(spielfeld.getBlockID(spieler.x+26, spieler.y+36)!=1)) {
@@ -161,8 +172,12 @@ public class Frame extends JFrame implements ActionListener{
 			        if(Elemente.beruehrung == false){ //zweiten Punkt prüfen
 			        	Elemente.Aufruf(spielfeld.getBlockID(spieler.x+24, spieler.y+32),spielfeld.getBlock(spieler.x+24, spieler.y+32));//unten rechts
 			        }
-			        	spieler.y+=4;
-			        	Elemente.beruehrung = false;
+			        spieler.y+=4;
+			        Elemente.beruehrung = false;
+			        spieler.links = false;
+			        spieler.rechts = false;
+			        spieler.hoch = false;
+			        spieler.runter = true;
 		         }
 	
 		      }
