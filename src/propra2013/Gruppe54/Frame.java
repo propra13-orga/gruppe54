@@ -19,8 +19,6 @@ public class Frame extends JFrame implements ActionListener{
 	public static String title ="Dungeon Crawler";
 	public static Dimension size = new Dimension(1000,650); 
 	
-	public static String auswahl[] = {"Level1","Level2","Level3"};
-	
 	public static Frame frame;
 	
     public static Spielfeld spielfeld = new Spielfeld();
@@ -30,6 +28,7 @@ public class Frame extends JFrame implements ActionListener{
 	public static JButton schließen = new JButton("Verlassen");
 	public static JButton menü = new JButton("Hauptmenü");
 	public static JButton neustart = new JButton("Neustart");
+	public static JButton nextLevel = new JButton("Nächstes Level");
 	//Charakterauswahl
 	public static JLabel charakter = new JLabel();
 	public static JLabel charakterBild = new JLabel();
@@ -46,7 +45,8 @@ public class Frame extends JFrame implements ActionListener{
 	public static Timer time;
 	
 	public static int spielerx=0,spielery=0;
-	
+	//Levelauswahl
+	public static String auswahl[] = {"Level1","Level2","Level3"};
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static JComboBox levelAuswahl = new JComboBox(auswahl);
 	
@@ -70,28 +70,32 @@ public class Frame extends JFrame implements ActionListener{
 		neustart.setBounds(220, 25, 100, 20);
 		neustart.setVisible(false);
 		
+		//Button nächstes Level, nur sichtbar wenn ein Level erfolgreich absolviert wurde
+		nextLevel.setBounds(340,25,150,20);
+		nextLevel.setVisible(false);
+		
 		//Label für die Lebensanzeige
 		leben.setBounds(75,540,Spielfeld.spieler.leben*2,10);
 		leben.setIcon(lebensanzeige);
 		leben.setVisible(false);
 		
 		//Label Charakterauswahl
-		charakter.setBounds(450,150,150,30);
+		charakter.setBounds(460,150,150,30);
 		charakter.setText("Charakterauswahl:");
 		charakter.setVisible(true);
 		add(charakter);
 	
 		
 		//Label für das Charakter-Bild
-		charakterBild.setBounds(500, 200, 32, 32);
+		charakterBild.setBounds(540, 200, 32, 32);
 		charakterBild.setVisible(true);
 		charakterBild.setIcon(Figur1);
 		image = Figur1.getImage();
 		add(charakterBild);
 		
 		//Buttons zur Charakterauswahl
-		PfeilRechts.setBounds(552, 205, 20, 20);
-		PfeilLinks.setBounds(460, 205, 20, 20);
+		PfeilRechts.setBounds(600, 205, 50, 20);
+		PfeilLinks.setBounds(460, 205, 50, 20);
 		PfeilRechts.setVisible(true);
 		PfeilLinks.setVisible(true);
 		PfeilRechts.setText(">");
@@ -115,9 +119,6 @@ public class Frame extends JFrame implements ActionListener{
 		levelAuswahl.setBounds(250, 250, 150, 30);	//ComboBox Levelauswahl
 		levelAuswahl.setVisible(true);
 		add(levelAuswahl);
-		
-		// damit der Gegner sich von alleine bewegt
-		time = new Timer(20,this);
 		
 		
 		/*
@@ -243,6 +244,7 @@ public class Frame extends JFrame implements ActionListener{
 				//Button Hauptmenü hinzufügen
 				add(menü);
 				add(neustart);
+				add(nextLevel);
 				menü.setVisible(true);
 				
 				add(leben);
@@ -255,11 +257,6 @@ public class Frame extends JFrame implements ActionListener{
 				spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
 				spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
 				spieler.beweglich = true;
-				
-				
-			
-				time.start();
-				
 			}
 		});
 		
@@ -275,6 +272,21 @@ public class Frame extends JFrame implements ActionListener{
 				Spielfeld.spieler.beweglich = true;
 				Spielfeld.spieler.leben = 100;
 				neustart.setVisible(false);
+				nextLevel.setVisible(false);
+			}
+		});
+		
+		nextLevel.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				Spielfeld.current_lvl += 1;
+				Spielfeld.current_room = 1; 
+				Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_"+Spielfeld.current_room+".lvl"));    //Level laden
+	            spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
+				spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
+				spieler.beweglich = true;
+				Spielfeld.loadImages();
+				nextLevel.setVisible(false);
+				neustart.setVisible(false);
 			}
 		});
 		
@@ -286,6 +298,7 @@ public class Frame extends JFrame implements ActionListener{
 				leben.setVisible(false);
 				remove(leben);
 				neustart.setVisible(false);
+				nextLevel.setVisible(false);
 				spielfeld.setVisible(false);
 				setLayout(null);
 				enter.setVisible(true);
@@ -305,6 +318,7 @@ public class Frame extends JFrame implements ActionListener{
 				add(levelAuswahl);
 				add(charakter);
 				init();
+				levelAuswahl.setSelectedItem("Level"+Spielfeld.current_lvl);
 			}
 		});
 		
@@ -337,11 +351,11 @@ public class Frame extends JFrame implements ActionListener{
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		//GegnerOU.lauf();
-		//GegnerRL.lauf();
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
+	
 	}
 
 

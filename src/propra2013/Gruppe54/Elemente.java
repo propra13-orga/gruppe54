@@ -1,6 +1,7 @@
 package propra2013.Gruppe54;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 public class Elemente {
 	
@@ -38,23 +39,27 @@ public class Elemente {
 		}
 	}
 	
-	//block muss mit übergeben werden, da das Item ja entfernt werden soll
+	//block muss mit übergeben werden, da das Item ja vom Block entfernt werden soll
 	public static void Item(int ID,Block block){
-		if((ID == 6)&&(spieler.leben<100)){           //Zaubertrank
+		if((ID == 6)&&(spieler.leben<100)){           //trank1
 			spieler.leben+=25;
 			if(spieler.leben>100){
 				spieler.leben = 100;
 			}
 			block.ID = 0;
-		} else if((ID == 7)&&(spieler.leben<100)){
+		} else if((ID == 7)&&(spieler.leben<100)){	  //trank2
 			spieler.leben+=10;
 			if(spieler.leben>100){
 				spieler.leben = 100;
 			}
 			block.ID = 0;
-		} else if(ID == 8){
+		} else if(ID == 8){						      //zepter
 			spieler.beweglich = false;
 			block.ID = 0;
+			if(Spielfeld.current_lvl<3){
+				Frame.nextLevel.setVisible(true);
+			}
+			Frame.neustart.setVisible(true);
 		} else if(ID == 9){
 			
 		}
