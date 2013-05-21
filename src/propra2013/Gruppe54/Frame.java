@@ -34,8 +34,15 @@ public class Frame extends JFrame implements ActionListener{
 	public static JLabel charakterBild = new JLabel();
 	public static JButton PfeilRechts = new JButton();
 	public static JButton PfeilLinks = new JButton();
-	public static ImageIcon Figur1 = new ImageIcon("pics/spieler1.png");
-	public static ImageIcon Figur2 = new ImageIcon("pics/Figur.png");
+	public static ImageIcon Figur2_rechts = new ImageIcon("pics/Figur2_rechts.png");
+	public static ImageIcon Figur2_links = new ImageIcon("pics/Figur2_links.png");
+	public static ImageIcon Figur2_unten = new ImageIcon("pics/Figur2_unten.png");
+	public static ImageIcon Figur2_oben = new ImageIcon("pics/Figur2_oben.png");
+	public static ImageIcon Figur1_rechts = new ImageIcon("pics/Figur1_rechts.png");
+	public static ImageIcon Figur1_links = new ImageIcon("pics/Figur1_links.png");
+	public static ImageIcon Figur1_unten = new ImageIcon("pics/Figur1_unten.png");
+	public static ImageIcon Figur1_oben = new ImageIcon("pics/Figur1_oben.png");
+	public static int CharakterAuswahl;
 	public static Image image;
 	//Lebensanzeige
 	public static JLabel leben = new JLabel();
@@ -88,9 +95,11 @@ public class Frame extends JFrame implements ActionListener{
 		//Label für das Charakter-Bild
 		charakterBild.setBounds(540, 200, 32, 32);
 		charakterBild.setVisible(true);
-		charakterBild.setIcon(Figur1);
-		image = Figur1.getImage();
+		charakterBild.setIcon(Figur1_unten);
+		image = Figur1_unten.getImage();
 		add(charakterBild);
+		
+		CharakterAuswahl = 1;
 		
 		//Buttons zur Charakterauswahl
 		PfeilRechts.setBounds(600, 205, 50, 20);
@@ -143,6 +152,11 @@ public class Frame extends JFrame implements ActionListener{
 		            spieler.rechts = false;
 		            spieler.hoch = false;
 		            spieler.runter = false;
+		            if (CharakterAuswahl==2){
+		            	image = Figur2_links.getImage();
+		            }else if (CharakterAuswahl ==1){
+		            	image = Figur1_links.getImage();
+		            }
 		         }
 
 		         if ((key == KeyEvent.VK_D)&&(spielfeld.getBlockID(spieler.x+30, spieler.y+26)!=1)&&(spielfeld.getBlockID(spieler.x+30, spieler.y+32)!=1)) {
@@ -152,6 +166,11 @@ public class Frame extends JFrame implements ActionListener{
 		         	spieler.rechts = true;
 		         	spieler.hoch = false;
 		            spieler.runter = false;
+		            if (CharakterAuswahl==2){
+		            	image = Figur2_rechts.getImage();
+		            } else if (CharakterAuswahl ==1){
+		            	image = Figur1_rechts.getImage();
+		            }
 		         }
 
 		         if ((key == KeyEvent.VK_W)&&(spielfeld.getBlockID(spieler.x+6, spieler.y+23)!=1)&&(spielfeld.getBlockID(spieler.x+26, spieler.y+23)!=1)) {
@@ -165,6 +184,11 @@ public class Frame extends JFrame implements ActionListener{
 		         	spieler.rechts = false;
 		         	spieler.hoch = true;
 		            spieler.runter = false;
+		            if (CharakterAuswahl==2){
+		            	image = Figur2_oben.getImage();
+		            }else if (CharakterAuswahl ==1){
+		            	image = Figur1_oben.getImage();
+		            }
 		         }
 		         
 		         if ((key == KeyEvent.VK_S)&&(spielfeld.getBlockID(spieler.x+6, spieler.y+36)!=1)&&(spielfeld.getBlockID(spieler.x+26, spieler.y+36)!=1)) {
@@ -178,6 +202,11 @@ public class Frame extends JFrame implements ActionListener{
 			        spieler.rechts = false;
 			        spieler.hoch = false;
 			        spieler.runter = true;
+			        if (CharakterAuswahl==2){
+		            	image = Figur2_unten.getImage();
+		            }else if (CharakterAuswahl ==1){
+		            	image = Figur1_unten.getImage();
+		            }
 		         }
 	
 		      }
@@ -217,16 +246,18 @@ public class Frame extends JFrame implements ActionListener{
 		//Button PfeilRechts Click
 		PfeilRechts.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				charakterBild.setIcon(Figur2);
-				image = Figur2.getImage();
+				charakterBild.setIcon(Figur2_unten);
+				image = Figur2_unten.getImage();
+				CharakterAuswahl = 2;
 			}
 		});
 		
 		//Button PfeilLinks Click
 		PfeilLinks.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				charakterBild.setIcon(Figur1);
-				image = Figur1.getImage();
+				charakterBild.setIcon(Figur1_unten);
+				image = Figur1_unten.getImage();
+				CharakterAuswahl =1;
 			}
 		});
 		
