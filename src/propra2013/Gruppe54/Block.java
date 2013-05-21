@@ -30,7 +30,7 @@ public class Block extends Rectangle {
 		if(((ID>1)&&(ID<5))|(ID>5)&&(ID<10)){      // ID größer als 1, d.h. elemente sind Fallen oder Items
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
 			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null); //element zeichnen, damit hintergrund richtig angezeigt wird
-		} else if(ID==5){ 	//Falle_speer
+		} else if(ID==5){ 	//Falle_speer, wird "einzeln behandelt", da diese zwei Zustände hat (aktiv,inaktiv)
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
 			if(Falle==0){
 				g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
