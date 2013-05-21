@@ -51,9 +51,9 @@ public class Block extends Rectangle {
 			if((gegnerRL.aktiv)){
 				gegnerRL.draw(g);  //zeichnet den Gegner
 			}
-			if(Raum.anzahl_gegner<3){
+			/*if(Raum.anzahl_gegner<3){
 				Raum.anzahl_gegner++;
-				}
+				}*/
 			} else if (counter_gegner10==1){
 				GegnerRL.lauf();
 				gegnerRL.draw(g);
@@ -78,9 +78,9 @@ public class Block extends Rectangle {
 			if((gegnerOU.aktiv)){
 				gegnerOU.draw(g);  //zeichnet den Gegner
 			}
-			if(Raum.anzahl_gegner<3){
+			/*if(Raum.anzahl_gegner<3){
 				Raum.anzahl_gegner++;
-				}
+				}*/
 			} else if (counter_gegner11==1){
 				GegnerOU.lauf();
 				gegnerOU.draw(g);
