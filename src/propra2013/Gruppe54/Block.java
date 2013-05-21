@@ -10,7 +10,7 @@ public class Block extends Rectangle {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-    int ID,Falle=0;
+    int ID,Falle=0;				//Falle gibt an, ob die Falle bereits betätigt wurde   	0 - inaktiv, 1 - aktiv
     public static GegnerRL gegnerRL;
 	public static GegnerOU gegnerOU;
 	public int counter_gegner10=0;
