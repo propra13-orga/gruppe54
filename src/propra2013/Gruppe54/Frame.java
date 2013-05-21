@@ -82,7 +82,7 @@ public class Frame extends JFrame implements ActionListener{
 		nextLevel.setVisible(false);
 		
 		//Label für die Lebensanzeige
-		leben.setBounds(75,540,Spielfeld.spieler.leben*2,10);
+		leben.setBounds(75,540,spieler.leben*2,10);
 		leben.setIcon(lebensanzeige);
 		leben.setVisible(false);
 		
@@ -310,13 +310,14 @@ public class Frame extends JFrame implements ActionListener{
 		neustart.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				//aktuelles Level in Raum 1 neu laden
-				Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_1.lvl"));
+				Spielfeld.current_room = 1;
+				spielfeld.define();
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
-				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
-				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
-				Spielfeld.spieler.aktiv = true;
-				Spielfeld.spieler.beweglich = true;
-				Spielfeld.spieler.leben = 100;
+				spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
+				spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
+				spieler.aktiv = true;
+				spieler.beweglich = true;
+				spieler.leben = 100;
 				neustart.setVisible(false);
 				nextLevel.setVisible(false);
 			}

@@ -1,6 +1,5 @@
 package propra2013.Gruppe54;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Point;
 
 public class Raum {

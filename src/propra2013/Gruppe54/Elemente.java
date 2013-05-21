@@ -1,8 +1,6 @@
 package propra2013.Gruppe54;
 
-import java.awt.Graphics;
 import java.io.File;
-import java.util.concurrent.TimeUnit;
 
 public class Elemente {
 	

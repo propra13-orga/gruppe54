@@ -30,7 +30,7 @@ public class Block extends Rectangle {
 		if(((ID>1)&&(ID<5))|(ID>5)&&(ID<10)){      // ID größer als 1, d.h. elemente sind Fallen oder Items
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
 			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null); //element zeichnen, damit hintergrund richtig angezeigt wird
-		} else if(ID==5){
+		} else if(ID==5){ 	//Falle_speer
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
 			if(Falle==0){
 				g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
@@ -48,7 +48,7 @@ public class Block extends Rectangle {
 			GegnerRL.StartX = x;
 			GegnerRL.StartY = y;
 			
-			if((gegnerRL.aktiv)){
+			if((GegnerRL.aktiv)){
 				gegnerRL.draw(g);  //zeichnet den Gegner
 			}
 			/*if(Raum.anzahl_gegner<3){
@@ -58,10 +58,6 @@ public class Block extends Rectangle {
 				GegnerRL.lauf();
 				gegnerRL.draw(g);
 			}
-			
-			//Raum.Startpunkt_GegnerX[Raum.anzahl_gegner] = x;
-			//Raum.Startpunkt_GegnerY[Raum.anzahl_gegner] = y;
-			
 			
 		} else if((ID==11)){		//Gegner 2 
 		g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
@@ -75,7 +71,7 @@ public class Block extends Rectangle {
 			GegnerOU.StartX = x;
 			GegnerOU.StartY = y;
 			
-			if((gegnerOU.aktiv)){
+			if((GegnerOU.aktiv)){
 				gegnerOU.draw(g);  //zeichnet den Gegner
 			}
 			/*if(Raum.anzahl_gegner<3){
