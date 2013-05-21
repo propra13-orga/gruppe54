@@ -11,7 +11,7 @@ public class Elemente {
 	public static void Aufruf(int ID,Block block){
 		if(ID < 7){
 			
-			Falle(ID);
+			Falle(ID,block);
 		
 		} if((ID == 2)&&(Spielfeld.current_room!=3)) {  //Ausgang
 			Spielfeld.current_room+=1;
@@ -27,7 +27,7 @@ public class Elemente {
 		}
 	}
 	
-	public static void Falle(int ID){
+	public static void Falle(int ID,Block block){
 		if(ID == 3){  		   //Falle_Loch - Spieler soll auf den Startpunkt zurück fallen
 			spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
 			spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
@@ -37,6 +37,7 @@ public class Elemente {
 		} else if(ID == 5){    //Falle_Speer
 			beruehrung = true;
 			spieler.leben-=3;
+			block.Falle = 1;
 		} else if(ID == 6){    //Falle_Monster
 			beruehrung = true;
 			spieler.leben-=5;

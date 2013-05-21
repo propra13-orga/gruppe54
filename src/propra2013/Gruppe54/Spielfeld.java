@@ -35,7 +35,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	//Bilder in Array laden     
 		//	ID: 0 - Boden   1 - Mauer   2 - Ausgang 
 		//      3 - Falle_Loch   4 - Falle_Feuer   5 - Falle_Speer  
-	    //      6 - Item_Trank   7 - Item_Trank2
+	    //      7 - Item_Trank   8 - Item_Trank2
     
 	public static void loadImages(){
 		elemente[0] = new ImageIcon("pics/boden"+current_lvl+".png").getImage(); 

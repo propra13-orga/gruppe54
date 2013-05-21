@@ -1,6 +1,8 @@
 package propra2013.Gruppe54;
 import java.awt.*;
 
+import javax.swing.ImageIcon;
+
 public class Block extends Rectangle {
 
 	/**
@@ -8,7 +10,7 @@ public class Block extends Rectangle {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-    int ID;
+    int ID,Falle=0;
     public static GegnerRL gegnerRL;
 	public static GegnerOU gegnerOU;
 	public int counter_gegner10=0;
@@ -25,9 +27,16 @@ public class Block extends Rectangle {
 	
 	//zeichnet den Block, Bild wird anhand der ID geladen
 	public void draw(Graphics g){ 
-		if((ID>1)&&(ID<=9)){      // ID größer als 1, d.h. elemente sind Fallen oder Items
+		if(((ID>1)&&(ID<5))|(ID>5)&&(ID<10)){      // ID größer als 1, d.h. elemente sind Fallen oder Items
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
 			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null); //element zeichnen, damit hintergrund richtig angezeigt wird
+		} else if(ID==5){
+			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
+			if(Falle==0){
+				g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
+			} else if(Falle==1) {
+				g.drawImage(new ImageIcon("pics/falle_speer"+Spielfeld.current_lvl+"_aktiv.png").getImage(),x,y,width,height,null);
+			}
 		} else if((ID==10)){		//Gegner 1
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
 			/*der counter wird auf eins gesetz wenn ein gegner gezeichnet wurde und ab da
