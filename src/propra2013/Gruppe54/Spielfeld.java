@@ -81,6 +81,7 @@ public class Spielfeld extends JPanel implements Runnable{
 			validate();
 			repaint();
 
+			//Lebensanzeige und Buttons
 			if((spieler.leben <= 0)&&(spieler.aktiv)){
 				spieler.aktiv = false;
 				Frame.neustart.setVisible(true);
@@ -93,7 +94,7 @@ public class Spielfeld extends JPanel implements Runnable{
 				Frame.leben.setSize(spieler.leben*2, 10);
 				Frame.leben.setIcon(Frame.lebensanzeige);
 			}
-			
+			//Steuerung des Spielers
 			if((getBlockID(spieler.x+6+Frame.dx,spieler.y+26+Frame.dy)!=1)&&(getBlockID(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy)!=1)
 					&&(getBlockID(spieler.x+6+Frame.dx,spieler.y+34+Frame.dy)!=1)&&(getBlockID(spieler.x+26+Frame.dx,spieler.y+34+Frame.dy)!=1)){
 				
@@ -109,6 +110,7 @@ public class Spielfeld extends JPanel implements Runnable{
 				spieler.y += Frame.dy;
 				Elemente.beruehrung = false;
 			}
+			
 			
 			try{
 				Thread.sleep(5);

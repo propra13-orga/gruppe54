@@ -7,10 +7,11 @@ import javax.swing.ImageIcon;
 
 public class spieler extends Rectangle {
 
-	public static double x=Raum.Startpunkt[Spielfeld.current_lvl-1].x,y=Raum.Startpunkt[Spielfeld.current_lvl-1].y; 
+	public static double x=Raum.Startpunkt[Spielfeld.current_lvl-1].getX(),y=Raum.Startpunkt[Spielfeld.current_lvl-1].getY(); 
 	
 	public static int leben;
 	public static double speed = 0.5;
+	//public static int sprint = 100;
 	public static boolean aktiv = false,beweglich = false,rechts = false,links = false,hoch = false,runter = false; 
 	
 	/**

@@ -192,7 +192,7 @@ public class Frame extends JFrame implements ActionListener{
 		            
 		            if (CharakterAuswahl==2){
 		            	image = Figur2_oben.getImage();
-		            }else if (CharakterAuswahl ==1){
+		            } else if (CharakterAuswahl ==1){
 		            	image = Figur1_oben.getImage();
 		            }
 		         }
@@ -213,6 +213,13 @@ public class Frame extends JFrame implements ActionListener{
 		            	image = Figur1_unten.getImage();
 		            }
 		         }
+		         
+		         /*if ((key == KeyEvent.VK_M)&&(spieler.sprint>0)){
+		        	 if(spieler.sprint>0){
+		        		 spieler.sprint--;
+		        		 spieler.speed = 0.8;
+		        	 }
+		         }*/
 	
 		      }
 			}
@@ -244,6 +251,10 @@ public class Frame extends JFrame implements ActionListener{
 		        if (key == KeyEvent.VK_S) {
 		            dy = 0;
 		        }
+		        
+		       /* if (key == KeyEvent.VK_M) {
+		        	spieler.speed = 0.5;
+		        }*/
 				
 			}
 		});
@@ -304,9 +315,8 @@ public class Frame extends JFrame implements ActionListener{
 				remove(charakter);
 
 				Spielfeld.current_room=1;
-				
 				//Spielfeld anzeigen	
-				Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_"+Spielfeld.current_room+".lvl"));    //Level laden
+				spielfeld.define();
 				add(spielfeld);						//hinzufügen
 				spielfeld.setVisible(true);	
 				//Button Hauptmenü hinzufügen
@@ -322,8 +332,8 @@ public class Frame extends JFrame implements ActionListener{
 				Spielfeld.loadImages();
 				
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
-				spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
-				spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
+				spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].getX();
+				spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].getY();
 				spieler.beweglich = true;
 			}
 		});
@@ -349,9 +359,9 @@ public class Frame extends JFrame implements ActionListener{
 			public void actionPerformed(ActionEvent e){
 				Spielfeld.current_lvl += 1;
 				Spielfeld.current_room = 1; 
-				Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_"+Spielfeld.current_room+".lvl"));    //Level laden
-	            spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
-				spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
+				spielfeld.define();
+	            spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].getX();
+				spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].getY();
 				spieler.beweglich = true;
 				Spielfeld.loadImages();
 				nextLevel.setVisible(false);
@@ -387,6 +397,9 @@ public class Frame extends JFrame implements ActionListener{
 				add(levelAuswahl);
 				add(charakter);
 				init();
+				spieler.aktiv = false;
+				spieler.x=0;
+				spieler.y=0;
 				levelAuswahl.setSelectedItem("Level"+Spielfeld.current_lvl);
 			}
 		});
