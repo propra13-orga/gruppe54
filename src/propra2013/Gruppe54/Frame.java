@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
 
 import javax.swing.*;
 
@@ -17,7 +16,7 @@ public class Frame extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	
 	public static String title ="Dungeon Crawler";
-	public static Dimension size = new Dimension(1000,650); 
+	public static Dimension size = new Dimension(1100,650); 
 	
 	public static Frame frame;
 	

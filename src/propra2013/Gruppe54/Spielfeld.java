@@ -46,7 +46,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		elemente[5] = new ImageIcon("pics/falle_speer"+current_lvl+".png").getImage();
 		elemente[6] = new ImageIcon("pics/anim.gif").getImage();
 		elemente[7] = new ImageIcon("pics/item_trank.png").getImage();
-		elemente[8] = new ImageIcon("pics/item_trank2.png").getImage();
+		elemente[8] = new ImageIcon("pics/brunnen_rot.png").getImage();
 		elemente[9] = new ImageIcon("pics/zepter"+current_lvl+".png").getImage();
 	}
 	
@@ -96,20 +96,27 @@ public class Spielfeld extends JPanel implements Runnable{
 			}
 			if(spieler.aktiv){
 			//Steuerung des Spielers
-			if((getBlockID(spieler.x+6+Frame.dx,spieler.y+26+Frame.dy)!=1)&&(getBlockID(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy)!=1)
-					&&(getBlockID(spieler.x+6+Frame.dx,spieler.y+34+Frame.dy)!=1)&&(getBlockID(spieler.x+26+Frame.dx,spieler.y+34+Frame.dy)!=1)){
-				
+			if((check(1))&&(check(8))){		//Mauer und Brunnen dürfen nicht durchlaufen werden
 				Elemente.Aufruf(getBlockID(spieler.x+6+Frame.dx, spieler.y+26+Frame.dy),getBlock(spieler.x+6+Frame.dx, spieler.y+26+Frame.dy));
 		        if(Elemente.beruehrung == false){ //zweiten Punkt prüfen
 		        	Elemente.Aufruf(getBlockID(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy),getBlock(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy));
-		        } else if(Elemente.beruehrung == false){ //zweiten Punkt prüfen
+		        } else if(Elemente.beruehrung == false){ //dritten Punkt prüfen
 		        	Elemente.Aufruf(getBlockID(spieler.x+6+Frame.dx,spieler.y+34+Frame.dy),getBlock(spieler.x+6+Frame.dx,spieler.y+34+Frame.dy));
-		        } else if(Elemente.beruehrung == false){ //zweiten Punkt prüfen
+		        } else if(Elemente.beruehrung == false){ //vierten Punkt prüfen
 		        	Elemente.Aufruf(getBlockID(spieler.x+26+Frame.dx,spieler.y+34+Frame.dy),getBlock(spieler.x+26+Frame.dx,spieler.y+34+Frame.dy));
 		        }
 				spieler.x += Frame.dx;
 				spieler.y += Frame.dy;
 				Elemente.beruehrung = false;
+			} else if((check(8)==false)){
+				Elemente.Aufruf(getBlockID(spieler.x+6+Frame.dx, spieler.y+26+Frame.dy),getBlock(spieler.x+6+Frame.dx, spieler.y+26+Frame.dy));
+		        if(Elemente.beruehrung == false){ //zweiten Punkt prüfen
+		        	Elemente.Aufruf(getBlockID(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy),getBlock(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy));
+		        } else if(Elemente.beruehrung == false){ //dritten Punkt prüfen
+		        	Elemente.Aufruf(getBlockID(spieler.x+6+Frame.dx,spieler.y+34+Frame.dy),getBlock(spieler.x+6+Frame.dx,spieler.y+34+Frame.dy));
+		        } else if(Elemente.beruehrung == false){ //vierten Punkt prüfen
+		        	Elemente.Aufruf(getBlockID(spieler.x+26+Frame.dx,spieler.y+34+Frame.dy),getBlock(spieler.x+26+Frame.dx,spieler.y+34+Frame.dy));
+		        }
 			}
 			}
 			
@@ -119,6 +126,16 @@ public class Spielfeld extends JPanel implements Runnable{
 			} catch(Exception e){ 
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	//prüft an 4 Punkten ob sich dort ein Objekt befindet durch das der Spieler nicht laufen darf
+	public static boolean check(int ID){
+		if((getBlockID(spieler.x+6+Frame.dx,spieler.y+26+Frame.dy)!=ID)&&(getBlockID(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy)!=ID)&&(getBlockID(spieler.x+6+Frame.dx,spieler.y+34+Frame.dy)!=ID)
+			&&(getBlockID(spieler.x+26+Frame.dx,spieler.y+34+Frame.dy)!=ID)){
+			return true;
+		} else {
+			return false;
 		}
 	}
 	

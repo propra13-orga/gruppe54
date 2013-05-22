@@ -42,7 +42,7 @@ public class Elemente {
 			if(speer==5){
 				beruehrung = true;
 				spieler.leben -= 2;
-				block.Falle = 1;	//lädt das aktive Bild der Falle
+				block.Zustand = 1;	//lädt das aktive Bild der Falle
 				speer = 0;
 			}
 		} else if(ID == 6){    //Falle_Monster
@@ -69,12 +69,12 @@ public class Elemente {
 				spieler.leben = 100;
 			}
 			block.ID = 0;
-		} else if((ID == 8)&&(spieler.leben<100)){	  //trank2
-			spieler.leben+=20;
+		} else if((ID == 8)&&(spieler.leben<100)&&(block.Zustand==0)){	  //brunnen
+			spieler.leben = 100;
 			if(spieler.leben>100){
 				spieler.leben = 100;
 			}
-			block.ID = 0;
+			block.Zustand = 1;
 		} else if(ID == 9){						      //zepter
 			spieler.beweglich = false;
 			block.ID = 0;
