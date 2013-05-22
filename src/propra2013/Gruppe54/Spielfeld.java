@@ -44,7 +44,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		elemente[3] = new ImageIcon("pics/falle_loch.png").getImage();
 		elemente[4] = new ImageIcon("pics/falle_feuer"+current_lvl+".png").getImage();
 		elemente[5] = new ImageIcon("pics/falle_speer"+current_lvl+".png").getImage();
-		elemente[6] = new ImageIcon("pics/falle_monster1.png").getImage();
+		elemente[6] = new ImageIcon("pics/anim.gif").getImage();
 		elemente[7] = new ImageIcon("pics/item_trank.png").getImage();
 		elemente[8] = new ImageIcon("pics/item_trank2.png").getImage();
 		elemente[9] = new ImageIcon("pics/zepter"+current_lvl+".png").getImage();
@@ -94,8 +94,24 @@ public class Spielfeld extends JPanel implements Runnable{
 				Frame.leben.setIcon(Frame.lebensanzeige);
 			}
 			
+			if((getBlockID(spieler.x+6+Frame.dx,spieler.y+26+Frame.dy)!=1)&&(getBlockID(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy)!=1)
+					&&(getBlockID(spieler.x+6+Frame.dx,spieler.y+34+Frame.dy)!=1)&&(getBlockID(spieler.x+26+Frame.dx,spieler.y+34+Frame.dy)!=1)){
+				
+				Elemente.Aufruf(getBlockID(spieler.x+6+Frame.dx, spieler.y+26+Frame.dy),getBlock(spieler.x+6+Frame.dx, spieler.y+26+Frame.dy));
+		        if(Elemente.beruehrung == false){ //zweiten Punkt prüfen
+		        	Elemente.Aufruf(getBlockID(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy),getBlock(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy));
+		        } else if(Elemente.beruehrung == false){ //zweiten Punkt prüfen
+		        	Elemente.Aufruf(getBlockID(spieler.x+6+Frame.dx,spieler.y+34+Frame.dy),getBlock(spieler.x+6+Frame.dx,spieler.y+34+Frame.dy));
+		        } else if(Elemente.beruehrung == false){ //zweiten Punkt prüfen
+		        	Elemente.Aufruf(getBlockID(spieler.x+26+Frame.dx,spieler.y+34+Frame.dy),getBlock(spieler.x+26+Frame.dx,spieler.y+34+Frame.dy));
+		        }
+				spieler.x += Frame.dx;
+				spieler.y += Frame.dy;
+				Elemente.beruehrung = false;
+			}
+			
 			try{
-				Thread.sleep(1);
+				Thread.sleep(5);
 			} catch(Exception e){ 
 				e.printStackTrace();
 			}
@@ -103,7 +119,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	}
 	
 	//liefert die ID des Blocks bei gegebenen x,y Koordinaten eines Punktes auf dem Spielfeld
-	public static int getBlockID(int x,int y){
+	public static int getBlockID(double x,double y){
 		int i,j;
 		for(i=0;i<Raum.worldHeight;i++){
 			if((y>=i*Raum.blockSize)&(y<=(i+1)*Raum.blockSize)){
@@ -119,7 +135,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	}
 		
 	//liefert den Block bei gegebenen x,y Koordinaten eines Punktes auf dem Spielfeld
-	public static Block getBlock(int x,int y){
+	public static Block getBlock(double x,double y){
 		int i,j;
 		for(i=0;i<Raum.worldHeight;i++){
 			if((y>=i*Raum.blockSize)&(y<=(i+1)*Raum.blockSize)){

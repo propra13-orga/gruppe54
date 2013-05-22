@@ -5,6 +5,7 @@ import java.io.File;
 public class Elemente {
 	
 	public static boolean beruehrung = false;
+	public static int feuer = 0,speer = 0; //es soll nicht jeder Schritt über das Feuer Schaden geben, es soll aber Schaden genommen werden wenn der Spieler stehen bleibt
 
 	public static void Aufruf(int ID,Block block){
 		if(ID < 7){
@@ -30,12 +31,20 @@ public class Elemente {
 			spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
 			spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
 		} else if(ID == 4){    //Falle_Feuer
-			beruehrung = true;					//da z.B. beim hochlaufen zwei Punkte auf Berührung überprüft werden, soll gespeichert werden,
-			spieler.leben-=1;					//ob bereits eine Falle ausgelöst wurde damit die Punkte nicht doppelt abgezogen werden
+			feuer++;
+			if(feuer==5){
+				beruehrung = true;		//da z.B. beim hochlaufen zwei Punkte auf Berührung überprüft werden, soll gespeichert werden,
+				spieler.leben -= 1;		//ob bereits eine Falle ausgelöst wurde damit die Punkte nicht doppelt abgezogen werden
+				feuer = 0;
+			}
 		} else if(ID == 5){    //Falle_Speer
-			beruehrung = true;
-			spieler.leben-=3;
-			block.Falle = 1;
+			speer++;
+			if(speer==5){
+				beruehrung = true;
+				spieler.leben -= 2;
+				block.Falle = 1;	//lädt das aktive Bild der Falle
+				speer = 0;
+			}
 		} else if(ID == 6){    //Falle_Monster
 			beruehrung = true;
 			spieler.leben-=5;
