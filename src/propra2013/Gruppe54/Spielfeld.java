@@ -22,6 +22,9 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static Raum raum = new Raum();
 	public static level level = new level();
 	public static spieler spieler;
+	public static GegnerRL gegnerRL;
+	public static GegnerOU gegnerOU;
+	public static GegnerKreis gegnerKreis;
 
 	
 	/**
@@ -53,6 +56,10 @@ public class Spielfeld extends JPanel implements Runnable{
 	public void define(){
 		raum = new Raum();
 		spieler = new spieler();
+		gegnerRL = new GegnerRL();
+		gegnerOU = new GegnerOU();
+		gegnerKreis = new GegnerKreis();
+		
 
 		
 		Frame.leben.setText("Leben:   "+spieler.leben+"%");
@@ -73,6 +80,16 @@ public class Spielfeld extends JPanel implements Runnable{
 		if(spieler.aktiv){
 			spieler.draw(g);  //zeichnet den Spieler
 		}
+		if(gegnerRL.aktiv){
+			gegnerRL.draw(g);
+		}
+		if(gegnerOU.aktiv){
+			gegnerOU.draw(g);
+		}
+		if (gegnerKreis.aktiv){
+			gegnerKreis.draw(g);
+		}
+		
 	}
 	
 	//Thread

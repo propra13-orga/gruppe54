@@ -11,10 +11,10 @@ public class Block extends Rectangle {
 	private static final long serialVersionUID = 1L;
 	
     int ID,Falle=0;				//Falle gibt an, ob die Falle bereits betätigt wurde   	0 - inaktiv, 1 - aktiv
-    public static GegnerRL gegnerRL;
-	public static GegnerOU gegnerOU;
+
 	public int counter_gegner10=0;
 	public int counter_gegner11=0;
+	public int counter_gegner12=0;
 
 	
 	/**
@@ -39,24 +39,20 @@ public class Block extends Rectangle {
 			}
 		} else if((ID==10)){		//Gegner 1
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
+			
+			
 			/*der counter wird auf eins gesetz wenn ein gegner gezeichnet wurde und ab da
 			 * soll er nur noch laufen und nicht ständig an den start punkt gezeichnet werden
 				*/
 			if(counter_gegner10==0){
-			gegnerRL = new GegnerRL();
 			counter_gegner10=1;
 			GegnerRL.StartX = x;
 			GegnerRL.StartY = y;
 			
-			if((GegnerRL.aktiv)){
-				gegnerRL.draw(g);  //zeichnet den Gegner
-			}
-			/*if(Raum.anzahl_gegner<3){
-				Raum.anzahl_gegner++;
-				}*/
+			
 			} else if (counter_gegner10==1){
 				GegnerRL.lauf();
-				gegnerRL.draw(g);
+				Spielfeld.gegnerRL.draw(g);
 			}
 			
 		} else if((ID==11)){		//Gegner 2 
@@ -66,26 +62,28 @@ public class Block extends Rectangle {
 		 * soll er nur noch laufen und nicht ständig an den start punkt gezeichnet werden
 			*/
 			if(counter_gegner11==0){	
-			gegnerOU = new GegnerOU();
 			counter_gegner11=1;
 			GegnerOU.StartX = x;
 			GegnerOU.StartY = y;
 			
-			if((GegnerOU.aktiv)){
-				gegnerOU.draw(g);  //zeichnet den Gegner
-			}
-			/*if(Raum.anzahl_gegner<3){
-				Raum.anzahl_gegner++;
-				}*/
+		
 			} else if (counter_gegner11==1){
 				GegnerOU.lauf();
-				gegnerOU.draw(g);
+				Spielfeld.gegnerOU.draw(g);
 			}
 			
 		} else if((ID==12)){		//Gegner 3
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
 			
-			//Fehlt noch
+			if(counter_gegner12==0){	
+				counter_gegner12=1;
+				GegnerKreis.StartX = x;
+				GegnerKreis.StartY = y;
+				
+				} else if (counter_gegner12==1){
+					GegnerKreis.lauf();
+					Spielfeld.gegnerKreis.draw(g);
+				}
 			}
 			
 		 else {

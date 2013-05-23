@@ -36,18 +36,18 @@ public class GegnerOU extends Rectangle{
 	public static void lauf(){
 		//Gegner läuft hoch und runter
 			if ((unten==false) &&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY+2+32)!=1)){
-				Block.gegnerOU.Kollision2();
+				Kollision2();
 				GegnerOU.StartY+=1;
 				} else unten = true;
 			if ((unten==true)&& (Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY-2+16)!=1)){
-				Block.gegnerOU.Kollision2();
+				Kollision2();
 				GegnerOU.StartY-=1;
 				} else unten = false;	
 			} 
 	
 
 //Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
-public void Kollision2(){
+public static void Kollision2(){
 
 		if( (GegnerOU.StartX+31 >= spieler.x)     && 
 			(GegnerOU.StartX <= spieler.x+31)  &&

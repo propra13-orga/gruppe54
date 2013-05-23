@@ -31,7 +31,7 @@ public class GegnerRL extends Rectangle  {
 	}
 	
 	
-	public void draw(Graphics g){
+	public  void draw(Graphics g){
 	
 			
 			g.drawImage(new ImageIcon("pics/gegner.png").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner 
@@ -45,18 +45,18 @@ public class GegnerRL extends Rectangle  {
 		//Gegner läuft von rechts nach links
 	
         	 if ((rechts==false) &&(Spielfeld.getBlockID(GegnerRL.StartX+24, GegnerRL.StartY+16)!=1)){
-        		Block.gegnerRL.Kollision2();
+        		Kollision2();
         		GegnerRL.StartX+=1;
         	 } else rechts = true;
         	 if ((rechts==true)&& (Spielfeld.getBlockID(GegnerRL.StartX-2, GegnerRL.StartY+16)!=1)){
-        		 Block.gegnerRL.Kollision2();
+        		Kollision2();
         		 GegnerRL.StartX-=1;
         	 } else rechts = false;  
 		} 
 	
 
 //Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
-public void Kollision2(){
+public static void Kollision2(){
 
 		if( (GegnerRL.StartX+31 >= spieler.x)     && 
 			(GegnerRL.StartX <= spieler.x+31)  &&
