@@ -69,12 +69,12 @@ public class Gegner extends Rectangle {
 //Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
 public void Kollision2(){
 
-		if( (Gegner.x+31 >= spieler.x)     && 
-			(Gegner.x <= spieler.x+31)  &&
-			(Gegner.y+31 >= spieler.y)  &&
-			(Gegner.y <= spieler.y+31)){		
+		if( (Gegner.x+31 >= Spielfeld.spieler.x)     && 
+			(Gegner.x <= Spielfeld.spieler.x+31)  &&
+			(Gegner.y+31 >= Spielfeld.spieler.y)  &&
+			(Gegner.y <= Spielfeld.spieler.y+31)){		
 			
-			spieler.leben = spieler.leben -1;
+			spieler.leben -= 1;
 			
 		}
 }

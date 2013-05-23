@@ -132,10 +132,10 @@ public class GegnerKreis extends Rectangle {
 	//Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
 	public static void Kollision(){
 
-			if( (GegnerKreis.StartX+31 >= spieler.x)     && 
-				(GegnerKreis.StartX <= spieler.x+31)  &&
-				(GegnerKreis.StartY+31 >= spieler.y)  &&
-				(GegnerKreis.StartY <= spieler.y+31)){		
+			if( (GegnerKreis.StartX+31 >= Spielfeld.spieler.x)     && 
+				(GegnerKreis.StartX <= Spielfeld.spieler.x+31)  &&
+				(GegnerKreis.StartY+31 >= Spielfeld.spieler.y)  &&
+				(GegnerKreis.StartY <= Spielfeld.spieler.y+31)){		
 				
 				spieler.leben = spieler.leben -1;
 				
