@@ -47,9 +47,6 @@ public class Frame extends JFrame implements ActionListener{
 	public static JLabel leben = new JLabel();
 	public static ImageIcon lebensanzeige = new ImageIcon("pics/lebensanzeige.png");
 	
-	
-	public static Timer time;
-	
 	public static int spielerx=0,spielery=0;
 	public static double dx=0,dy=0;
 	
@@ -145,15 +142,15 @@ public class Frame extends JFrame implements ActionListener{
 		      //nur bewegen wenn der Spieler aktiv ist
 		      if((Spielfeld.spieler.aktiv)&&(Spielfeld.spieler.beweglich)){
 		    	  //prüfen welche ID die stelle an die gegangen werden soll hat und nur laufen wenn es keine Mauer ist
-		         if ((key == KeyEvent.VK_A)&&(spielfeld.getBlockID(spieler.x+1.5, spieler.y+26)!=1)&&(spielfeld.getBlockID(spieler.x+2, spieler.y+32)!=1)) {
-		            if(spielfeld.getBlockID(spieler.x, spieler.y+26)!=1){	
-		        		dx = -1*spieler.speed;
+		         if ((key == KeyEvent.VK_A)&&(spielfeld.getBlockID(Spielfeld.spieler.x+1.5, Spielfeld.spieler.y+26)!=1)&&(spielfeld.getBlockID(Spielfeld.spieler.x+2, Spielfeld.spieler.y+32)!=1)) {
+		            if(spielfeld.getBlockID(Spielfeld.spieler.x, Spielfeld.spieler.y+26)!=1){	
+		        		dx = -1*Spielfeld.spieler.speed;
 		            }
 		            
-		            spieler.links = true;
-		            spieler.rechts = false;
-		            spieler.hoch = false;
-		            spieler.runter = false;
+		            Spielfeld.spieler.links = true;
+		            Spielfeld.spieler.rechts = false;
+		            Spielfeld.spieler.hoch = false;
+		            Spielfeld.spieler.runter = false;
 		            
 		            if (CharakterAuswahl==2){
 		            	image = Figur2_links.getImage();
@@ -162,15 +159,15 @@ public class Frame extends JFrame implements ActionListener{
 		            }
 		         }
 
-		         if ((key == KeyEvent.VK_D)&&(spielfeld.getBlockID(spieler.x+30, spieler.y+26)!=1)&&(spielfeld.getBlockID(spieler.x+30, spieler.y+32)!=1)) {
-			        if(spielfeld.getBlockID(spieler.x+30.5, spieler.y+26)!=1){
-		         		dx = 1*spieler.speed;
+		         if ((key == KeyEvent.VK_D)&&(spielfeld.getBlockID(Spielfeld.spieler.x+30, Spielfeld.spieler.y+26)!=1)&&(spielfeld.getBlockID(Spielfeld.spieler.x+30, Spielfeld.spieler.y+32)!=1)) {
+			        if(spielfeld.getBlockID(Spielfeld.spieler.x+30.5, Spielfeld.spieler.y+26)!=1){
+		         		dx = 1*Spielfeld.spieler.speed;
 		         	}
 			        
-		         	spieler.links = false;
-		         	spieler.rechts = true;
-		         	spieler.hoch = false;
-		            spieler.runter = false;
+			        Spielfeld.spieler.links = false;
+		         	Spielfeld.spieler.rechts = true;
+		         	Spielfeld.spieler.hoch = false;
+		         	Spielfeld.spieler.runter = false;
 		            
 		            if (CharakterAuswahl==2){
 		            	image = Figur2_rechts.getImage();
@@ -179,15 +176,15 @@ public class Frame extends JFrame implements ActionListener{
 		            }
 		         }
 
-		         if ((key == KeyEvent.VK_W)&&(spielfeld.getBlockID(spieler.x+6, spieler.y+23)!=1)&&(spielfeld.getBlockID(spieler.x+26, spieler.y+23)!=1)) {
-			        if(spielfeld.getBlockID(spieler.x+6, spieler.y+22.5)!=1){
-			        	dy = -1*spieler.speed;
+		         if ((key == KeyEvent.VK_W)&&(spielfeld.getBlockID(Spielfeld.spieler.x+6, Spielfeld.spieler.y+23)!=1)&&(spielfeld.getBlockID(Spielfeld.spieler.x+26, Spielfeld.spieler.y+23)!=1)) {
+			        if(spielfeld.getBlockID(Spielfeld.spieler.x+6, Spielfeld.spieler.y+22.5)!=1){
+			        	dy = -1*Spielfeld.spieler.speed;
 			        }
 			        
-		        	spieler.links = false;
-		         	spieler.rechts = false;
-		         	spieler.hoch = true;
-		            spieler.runter = false;
+			        Spielfeld.spieler.links = false;
+			        Spielfeld.spieler.rechts = false;
+			        Spielfeld.spieler.hoch = true;
+			        Spielfeld.spieler.runter = false;
 		            
 		            if (CharakterAuswahl==2){
 		            	image = Figur2_oben.getImage();
@@ -196,15 +193,15 @@ public class Frame extends JFrame implements ActionListener{
 		            }
 		         }
 		         
-		         if ((key == KeyEvent.VK_S)&&(spielfeld.getBlockID(spieler.x+6, spieler.y+36)!=1)&&(spielfeld.getBlockID(spieler.x+26, spieler.y+36)!=1)) {
-			        if(spielfeld.getBlockID(spieler.x+6, spieler.y+36)!=1){
-			        	dy = 1*spieler.speed;
+		         if ((key == KeyEvent.VK_S)&&(spielfeld.getBlockID(Spielfeld.spieler.x+6, Spielfeld.spieler.y+36)!=1)&&(spielfeld.getBlockID(Spielfeld.spieler.x+26, Spielfeld.spieler.y+36)!=1)) {
+			        if(spielfeld.getBlockID(Spielfeld.spieler.x+6, Spielfeld.spieler.y+36)!=1){
+			        	dy = 1*Spielfeld.spieler.speed;
 			        }
 			        
-			        spieler.links = false;
-			        spieler.rechts = false;
-			        spieler.hoch = false;
-			        spieler.runter = true;
+			        Spielfeld.spieler.links = false;
+			        Spielfeld.spieler.rechts = false;
+			        Spielfeld.spieler.hoch = false;
+			        Spielfeld.spieler.runter = true;
 			        
 			        if (CharakterAuswahl==2){
 		            	image = Figur2_unten.getImage();
@@ -213,13 +210,12 @@ public class Frame extends JFrame implements ActionListener{
 		            }
 		         }
 		         
-		         /*if ((key == KeyEvent.VK_M)&&(spieler.sprint>0)){
-		        	 if(spieler.sprint>0){
-		        		 spieler.sprint--;
-		        		 spieler.speed = 0.8;
+		        /* if ((key == KeyEvent.VK_M)&&(Spielfeld.spieler.sprint>20)){
+		        	 if(Spielfeld.spieler.sprint>20){
+		        		 Spielfeld.spieler.sprint--;
+		        		 Spielfeld.spieler.speed = 0.8;
 		        	 }
 		         }*/
-	
 		      }
 			}
 
@@ -250,9 +246,9 @@ public class Frame extends JFrame implements ActionListener{
 		        if (key == KeyEvent.VK_S) {
 		            dy = 0;
 		        }
-		        
-		       /* if (key == KeyEvent.VK_M) {
-		        	spieler.speed = 0.5;
+		        /*
+		        if (key == KeyEvent.VK_M) {
+		        	Spielfeld.spieler.speed = 0.5;
 		        }*/
 				
 			}
@@ -331,9 +327,9 @@ public class Frame extends JFrame implements ActionListener{
 				Spielfeld.loadImages();
 				
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
-				spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].getX();
-				spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].getY();
-				spieler.beweglich = true;
+				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].getX();
+				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].getY();
+				Spielfeld.spieler.beweglich = true;
 			}
 		});
 		
@@ -344,10 +340,10 @@ public class Frame extends JFrame implements ActionListener{
 				Spielfeld.current_room = 1;
 				spielfeld.define();
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
-				spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].getX();
-				spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].getY();
+				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].getX();
+				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].getY();
 				spieler.aktiv = true;
-				spieler.beweglich = true;
+				Spielfeld.spieler.beweglich = true;
 				spieler.leben = 100;
 				neustart.setVisible(false);
 				nextLevel.setVisible(false);
@@ -359,9 +355,9 @@ public class Frame extends JFrame implements ActionListener{
 				Spielfeld.current_lvl += 1;
 				Spielfeld.current_room = 1; 
 				spielfeld.define();
-	            spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].getX();
-				spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].getY();
-				spieler.beweglich = true;
+				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].getX();
+				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].getY();
+				Spielfeld.spieler.beweglich = true;
 				Spielfeld.loadImages();
 				nextLevel.setVisible(false);
 				neustart.setVisible(false);
@@ -397,8 +393,8 @@ public class Frame extends JFrame implements ActionListener{
 				add(charakter);
 				init();
 				spieler.aktiv = false;
-				spieler.x=0;
-				spieler.y=0;
+				Spielfeld.spieler.x=0;
+				Spielfeld.spieler.y=0;
 				levelAuswahl.setSelectedItem("Level"+Spielfeld.current_lvl);
 			}
 		});

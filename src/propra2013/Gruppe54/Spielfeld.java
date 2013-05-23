@@ -55,7 +55,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		spieler = new spieler();
 
 		
-		Frame.leben.setText("Leben:   "+spieler.leben+"%");
+		Frame.leben.setText("Leben:   "+propra2013.Gruppe54.spieler.leben+"%");
 		
 		loadImages();
 
@@ -70,7 +70,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		raum.draw(g); //zeichnet den raum
 
 	
-		if(spieler.aktiv){
+		if(propra2013.Gruppe54.spieler.aktiv){
 			spieler.draw(g);  //zeichnet den Spieler
 		}
 	}
@@ -82,19 +82,25 @@ public class Spielfeld extends JPanel implements Runnable{
 			repaint();
 
 			//Lebensanzeige und Buttons
-			if((spieler.leben <= 0)&&(spieler.aktiv)){
-				spieler.aktiv = false;
+			if((propra2013.Gruppe54.spieler.leben <= 0)&&(propra2013.Gruppe54.spieler.aktiv)){
+				propra2013.Gruppe54.spieler.aktiv = false;
 				Frame.neustart.setVisible(true);
-			} if((spieler.leben > 30)&&(spieler.aktiv)) {
+			} if((propra2013.Gruppe54.spieler.leben > 30)&&(propra2013.Gruppe54.spieler.aktiv)) {
 				Frame.lebensanzeige = new ImageIcon("pics/lebensanzeige.png");
-				Frame.leben.setSize(spieler.leben*2, 10);
+				Frame.leben.setSize(propra2013.Gruppe54.spieler.leben*2, 10);
 				Frame.leben.setIcon(Frame.lebensanzeige);
 			} else {
 				Frame.lebensanzeige = new ImageIcon("pics/lebensanzeige_rot.png");
-				Frame.leben.setSize(spieler.leben*2, 10);
+				Frame.leben.setSize(propra2013.Gruppe54.spieler.leben*2, 10);
 				Frame.leben.setIcon(Frame.lebensanzeige);
 			}
-			if(spieler.aktiv){
+			
+			if(propra2013.Gruppe54.spieler.aktiv){
+				
+			/*if(spieler.sprint == 0){
+				spieler.speed = 0.5;
+			}*/
+				
 			//Steuerung des Spielers
 			if((check(1))&&(check(8))){		//Mauer und Brunnen dürfen nicht durchlaufen werden
 				Elemente.Aufruf(getBlockID(spieler.x+6+Frame.dx, spieler.y+26+Frame.dy),getBlock(spieler.x+6+Frame.dx, spieler.y+26+Frame.dy));
@@ -108,7 +114,7 @@ public class Spielfeld extends JPanel implements Runnable{
 				spieler.x += Frame.dx;
 				spieler.y += Frame.dy;
 				Elemente.beruehrung = false;
-			} else if((check(8)==false)){
+			} else if((check(8)==false)){   //Brunnen soll berührt aber nicht durschritten werden, also wird das Element nur aufgerufen aber der Spieler läuft nicht
 				Elemente.Aufruf(getBlockID(spieler.x+6+Frame.dx, spieler.y+26+Frame.dy),getBlock(spieler.x+6+Frame.dx, spieler.y+26+Frame.dy));
 		        if(Elemente.beruehrung == false){ //zweiten Punkt prüfen
 		        	Elemente.Aufruf(getBlockID(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy),getBlock(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy));
@@ -119,7 +125,6 @@ public class Spielfeld extends JPanel implements Runnable{
 		        }
 			}
 			}
-			
 			
 			try{
 				Thread.sleep(5);
@@ -132,7 +137,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	//prüft an 4 Punkten ob sich dort ein Objekt befindet durch das der Spieler nicht laufen darf
 	public static boolean check(int ID){
 		if((getBlockID(spieler.x+6+Frame.dx,spieler.y+26+Frame.dy)!=ID)&&(getBlockID(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy)!=ID)&&(getBlockID(spieler.x+6+Frame.dx,spieler.y+34+Frame.dy)!=ID)
-			&&(getBlockID(spieler.x+26+Frame.dx,spieler.y+34+Frame.dy)!=ID)){
+			&&(getBlockID(spieler.x+26+Frame.dx,spieler.y+34+Frame.dy)!=ID)&&(spieler.x+Frame.dx>0)&&(spieler.y+34+Frame.dy<(Raum.worldHeight*Raum.blockSize)-2)){
 			return true;
 		} else {
 			return false;
