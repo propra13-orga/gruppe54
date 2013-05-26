@@ -13,11 +13,12 @@ public class Spielfeld extends JPanel implements Runnable{
 
 	public Thread thread = new Thread(this);
 	
-	public static Image[] elemente = new Image[12];
+	public static Image[] elemente = new Image[16];
 	
 	public static int current_lvl=1,current_room=1,current_player=1;
 	
 	public static boolean isFirst = true; //erster Aufruf
+	public static boolean shop = false;
 	
 	public static Raum raum = new Raum();
 	public static level level = new level();
@@ -31,15 +32,19 @@ public class Spielfeld extends JPanel implements Runnable{
 	 * Konstruktor
 	 */
 	public Spielfeld(){
-		setBounds(75,55,800,480);
+		setBounds(200,55,800,480);
 		thread.start();
+		spieler = new spieler();
 	}
 	
-	//Bilder in Array laden     
-		//	ID: 0 - Boden   1 - Mauer   2 - Ausgang 
-		//      3 - Falle_Loch   4 - Falle_Feuer   5 - Falle_Speer  
-	    //      7 - Item_Trank   8 - Item_Trank2
-    
+	/*       
+			ID: 0 - Boden   1 - Mauer   2 - Ausgang 
+		        3 - Falle_Loch   4 - Falle_Feuer   5 - Falle_Speer  
+	            7 - Item_Trank   8 - Brunnen       9 - Zepter
+	      		A - Gegner1      B - Gegner2       C - Gegner3
+		  		. . . 			 F - Shopbesitzer						*/
+	
+    //Bilder in Array laden
 	public static void loadImages(){
 		elemente[0] = new ImageIcon("pics/boden"+current_lvl+".png").getImage(); 
 		elemente[1] = new ImageIcon("pics/mauer"+current_lvl+".png").getImage(); 
@@ -51,21 +56,15 @@ public class Spielfeld extends JPanel implements Runnable{
 		elemente[7] = new ImageIcon("pics/item_trank.png").getImage();
 		elemente[8] = new ImageIcon("pics/brunnen_rot.png").getImage();
 		elemente[9] = new ImageIcon("pics/zepter"+current_lvl+".png").getImage();
+		elemente[15] = new ImageIcon("pics/shopguy.png").getImage();
 	}
 	
 	public void define(){
 		raum = new Raum();
-		spieler = new spieler();
 		gegnerRL = new GegnerRL();
 		gegnerOU = new GegnerOU();
 		gegnerKreis = new GegnerKreis();
-		
-
-		
-		Frame.leben.setText("Leben:   "+propra2013.Gruppe54.spieler.leben+"%");
-		
 		loadImages();
-
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
 	}
 	
@@ -75,18 +74,17 @@ public class Spielfeld extends JPanel implements Runnable{
 			isFirst=false;
 		}
 		raum.draw(g); //zeichnet den raum
-
 	
 		if(propra2013.Gruppe54.spieler.aktiv){
 			spieler.draw(g);  //zeichnet den Spieler
 		}
-		if(gegnerRL.aktiv){
+		if(GegnerRL.aktiv){
 			gegnerRL.draw(g);
 		}
-		if(gegnerOU.aktiv){
+		if(GegnerOU.aktiv){
 			gegnerOU.draw(g);
 		}
-		if (gegnerKreis.aktiv){
+		if (GegnerKreis.aktiv){
 			gegnerKreis.draw(g);
 		}
 		
@@ -98,48 +96,24 @@ public class Spielfeld extends JPanel implements Runnable{
 			validate();
 			repaint();
 
-			//Lebensanzeige und Buttons
+			//Button Neustart anzeigen wenn der Spieler keine Lebenspunkte mehr hat
 			if((propra2013.Gruppe54.spieler.leben <= 0)&&(propra2013.Gruppe54.spieler.aktiv)){
 				propra2013.Gruppe54.spieler.aktiv = false;
 				Frame.neustart.setVisible(true);
-			} if((propra2013.Gruppe54.spieler.leben > 30)&&(propra2013.Gruppe54.spieler.aktiv)) {
-				Frame.lebensanzeige = new ImageIcon("pics/lebensanzeige.png");
-				Frame.leben.setSize(propra2013.Gruppe54.spieler.leben*2, 10);
-				Frame.leben.setIcon(Frame.lebensanzeige);
-			} else {
-				Frame.lebensanzeige = new ImageIcon("pics/lebensanzeige_rot.png");
-				Frame.leben.setSize(propra2013.Gruppe54.spieler.leben*2, 10);
-				Frame.leben.setIcon(Frame.lebensanzeige);
 			}
 			
 			if(propra2013.Gruppe54.spieler.aktiv){
-				
-			/*if(spieler.sprint == 0){
-				spieler.speed = 0.5;
-			}*/
-				
+			
 			//Steuerung des Spielers
-			if((check(1))&&(check(8))){		//Mauer und Brunnen dürfen nicht durchlaufen werden
-				Elemente.Aufruf(getBlockID(spieler.x+6+Frame.dx, spieler.y+26+Frame.dy),getBlock(spieler.x+6+Frame.dx, spieler.y+26+Frame.dy));
-		        if(Elemente.beruehrung == false){ //zweiten Punkt prüfen
-		        	Elemente.Aufruf(getBlockID(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy),getBlock(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy));
-		        } else if(Elemente.beruehrung == false){ //dritten Punkt prüfen
-		        	Elemente.Aufruf(getBlockID(spieler.x+6+Frame.dx,spieler.y+34+Frame.dy),getBlock(spieler.x+6+Frame.dx,spieler.y+34+Frame.dy));
-		        } else if(Elemente.beruehrung == false){ //vierten Punkt prüfen
-		        	Elemente.Aufruf(getBlockID(spieler.x+26+Frame.dx,spieler.y+34+Frame.dy),getBlock(spieler.x+26+Frame.dx,spieler.y+34+Frame.dy));
-		        }
+			if((check(1))&&(check(8))&&(check(15))){		//Mauer, Brunnen und der Shopbesitzer dürfen nicht durchlaufen werden
+				checkKollision();
 				spieler.x += Frame.dx;
 				spieler.y += Frame.dy;
 				Elemente.beruehrung = false;
 			} else if((check(8)==false)){   //Brunnen soll berührt aber nicht durschritten werden, also wird das Element nur aufgerufen aber der Spieler läuft nicht
-				Elemente.Aufruf(getBlockID(spieler.x+6+Frame.dx, spieler.y+26+Frame.dy),getBlock(spieler.x+6+Frame.dx, spieler.y+26+Frame.dy));
-		        if(Elemente.beruehrung == false){ //zweiten Punkt prüfen
-		        	Elemente.Aufruf(getBlockID(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy),getBlock(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy));
-		        } else if(Elemente.beruehrung == false){ //dritten Punkt prüfen
-		        	Elemente.Aufruf(getBlockID(spieler.x+6+Frame.dx,spieler.y+34+Frame.dy),getBlock(spieler.x+6+Frame.dx,spieler.y+34+Frame.dy));
-		        } else if(Elemente.beruehrung == false){ //vierten Punkt prüfen
-		        	Elemente.Aufruf(getBlockID(spieler.x+26+Frame.dx,spieler.y+34+Frame.dy),getBlock(spieler.x+26+Frame.dx,spieler.y+34+Frame.dy));
-		        }
+				checkKollision();
+			} else if((check(15)==false)){  //Shopbesitzer soll auch nur berührt werden und dann seine Aktion ausführen
+				checkKollision();
 			}
 			}
 			
@@ -153,12 +127,25 @@ public class Spielfeld extends JPanel implements Runnable{
 	
 	//prüft an 4 Punkten ob sich dort ein Objekt befindet durch das der Spieler nicht laufen darf
 	public static boolean check(int ID){
-		if((getBlockID(spieler.x+6+Frame.dx,spieler.y+26+Frame.dy)!=ID)&&(getBlockID(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy)!=ID)&&(getBlockID(spieler.x+6+Frame.dx,spieler.y+34+Frame.dy)!=ID)
-			&&(getBlockID(spieler.x+26+Frame.dx,spieler.y+34+Frame.dy)!=ID)&&(spieler.x+Frame.dx>0)&&(spieler.y+34+Frame.dy<(Raum.worldHeight*Raum.blockSize)-2)){
+		if((getBlockID(spieler.x+6+Frame.dx,spieler.y+26+Frame.dy)!=ID)&&(getBlockID(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy)!=ID)&&(getBlockID(spieler.x+6+Frame.dx,spieler.y+32+Frame.dy)!=ID)
+			&&(getBlockID(spieler.x+26+Frame.dx,spieler.y+32+Frame.dy)!=ID)&&(spieler.x+Frame.dx>0)&&(spieler.y+32+Frame.dy<(Raum.worldHeight*Raum.blockSize)-2)){
 			return true;
 		} else {
 			return false;
 		}
+	}
+	
+	//prüft am derzeitigen Standort des Spielers an 4 Punkten ob dieser ein Objekt berührt welches eine Aktion ausführt
+	public static void checkKollision(){
+		Elemente.beruehrung = false;
+		Elemente.Aufruf(getBlockID(spieler.x+6+Frame.dx, spieler.y+26+Frame.dy),getBlock(spieler.x+6+Frame.dx, spieler.y+26+Frame.dy));
+        if(Elemente.beruehrung == false){ //zweiten Punkt prüfen
+        	Elemente.Aufruf(getBlockID(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy),getBlock(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy));
+        } else if(Elemente.beruehrung == false){ //dritten Punkt prüfen
+        	Elemente.Aufruf(getBlockID(spieler.x+6+Frame.dx,spieler.y+34+Frame.dy),getBlock(spieler.x+6+Frame.dx,spieler.y+34+Frame.dy));
+        } else if(Elemente.beruehrung == false){ //vierten Punkt prüfen
+        	Elemente.Aufruf(getBlockID(spieler.x+26+Frame.dx,spieler.y+34+Frame.dy),getBlock(spieler.x+26+Frame.dx,spieler.y+34+Frame.dy));
+        }
 	}
 	
 	//liefert die ID des Blocks bei gegebenen x,y Koordinaten eines Punktes auf dem Spielfeld

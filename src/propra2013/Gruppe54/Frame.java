@@ -16,11 +16,13 @@ public class Frame extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	
 	public static String title ="Dungeon Crawler";
-	public static Dimension size = new Dimension(1100,650); 
+	public static Dimension size = new Dimension(1100,600); 
 	
 	public static Frame frame;
 	
     public static Spielfeld spielfeld = new Spielfeld();
+    public static Spielerinfo spielerinfo = new Spielerinfo();
+    
     //Menü
     public static JButton enter = new JButton("Spielen");
 	public static JButton info = new JButton("Info");
@@ -28,6 +30,14 @@ public class Frame extends JFrame implements ActionListener{
 	public static JButton menü = new JButton("Hauptmenü");
 	public static JButton neustart = new JButton("Neustart");
 	public static JButton nextLevel = new JButton("Nächstes Level");
+	//Shop
+	public static JButton shop_zurueck = new JButton("Zurück zum Spiel");
+	public static ImageIcon shop_trank1 = new ImageIcon();
+	public static ImageIcon shop_trank2 = new ImageIcon();
+	public static ImageIcon shop_schwert1 = new ImageIcon();
+	public static ImageIcon shop_schwert2 = new ImageIcon();
+	public static ImageIcon shop_ruestung1 = new ImageIcon();
+	public static ImageIcon shop_ruestung2 = new ImageIcon();
 	//Charakterauswahl
 	public static JLabel charakter = new JLabel();
 	public static JLabel charakterBild = new JLabel();
@@ -44,7 +54,6 @@ public class Frame extends JFrame implements ActionListener{
 	public static int CharakterAuswahl;
 	public static Image image;
 	//Lebensanzeige
-	public static JLabel leben = new JLabel();
 	public static ImageIcon lebensanzeige = new ImageIcon("pics/lebensanzeige.png");
 	
 	public static int spielerx=0,spielery=0;
@@ -63,13 +72,16 @@ public class Frame extends JFrame implements ActionListener{
 		setSize(size);
 		setResizable(false);
 		setLayout(null); 
-		this.setFocusable(true);
+		setFocusable(true);
 		setLocationRelativeTo(null); //Frame in der Mitte
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-
+		
 		//Button Hauptmenü, nur im "Spielmodus" sichtbar
-		menü.setBounds(75,25,130,20);
+		menü.setBounds(25,25,175,20);
 		menü.setVisible(false);
+		
+		shop_zurueck.setBounds(25,25,175,20);
+		shop_zurueck.setVisible(false);
 		
 		//Button Neustart, nur im "Spielmodus" sichtbar wenn der Spieler kein Leben mehr hat
 		neustart.setBounds(220, 25, 100, 20);
@@ -78,11 +90,6 @@ public class Frame extends JFrame implements ActionListener{
 		//Button nächstes Level, nur sichtbar wenn ein Level erfolgreich absolviert wurde
 		nextLevel.setBounds(340,25,150,20);
 		nextLevel.setVisible(false);
-		
-		//Label für die Lebensanzeige
-		leben.setBounds(75,540,spieler.leben*2,10);
-		leben.setIcon(lebensanzeige);
-		leben.setVisible(false);
 		
 		//Label Charakterauswahl
 		charakter.setBounds(460,150,150,30);
@@ -136,16 +143,19 @@ public class Frame extends JFrame implements ActionListener{
 		 */
 		
 		addKeyListener(new KeyListener(){
-			@SuppressWarnings("static-access")
 			public void keyPressed(KeyEvent e){
 		        int key = e.getKeyCode();
 		      //nur bewegen wenn der Spieler aktiv ist
-		      if((Spielfeld.spieler.aktiv)&&(Spielfeld.spieler.beweglich)){
+		      if((spieler.aktiv)&&(Spielfeld.spieler.beweglich)){
 		    	  //prüfen welche ID die stelle an die gegangen werden soll hat und nur laufen wenn es keine Mauer ist
-		         if ((key == KeyEvent.VK_A)&&(spielfeld.getBlockID(Spielfeld.spieler.x+1.5, Spielfeld.spieler.y+26)!=1)&&(spielfeld.getBlockID(Spielfeld.spieler.x+2, Spielfeld.spieler.y+32)!=1)) {
-		            if(spielfeld.getBlockID(Spielfeld.spieler.x, Spielfeld.spieler.y+26)!=1){	
+		         if ((key == KeyEvent.VK_A)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+1.5, Spielfeld.spieler.y+26)!=1)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+2, Spielfeld.spieler.y+32)!=1)) {
+		            if(Spielfeld.getBlockID(Spielfeld.spieler.x, Spielfeld.spieler.y+26)!=1){	
 		        		dx = -1*Spielfeld.spieler.speed;
 		            }
+		            
+		            if((Spielfeld.shop)&&(Spielfeld.check(15))){
+			        	Spielfeld.shop = false;
+			        }
 		            
 		            Spielfeld.spieler.links = true;
 		            Spielfeld.spieler.rechts = false;
@@ -159,10 +169,14 @@ public class Frame extends JFrame implements ActionListener{
 		            }
 		         }
 
-		         if ((key == KeyEvent.VK_D)&&(spielfeld.getBlockID(Spielfeld.spieler.x+30, Spielfeld.spieler.y+26)!=1)&&(spielfeld.getBlockID(Spielfeld.spieler.x+30, Spielfeld.spieler.y+32)!=1)) {
-			        if(spielfeld.getBlockID(Spielfeld.spieler.x+30.5, Spielfeld.spieler.y+26)!=1){
+		         if ((key == KeyEvent.VK_D)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+30, Spielfeld.spieler.y+26)!=1)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+30, Spielfeld.spieler.y+32)!=1)) {
+			        if(Spielfeld.getBlockID(Spielfeld.spieler.x+30.5, Spielfeld.spieler.y+26)!=1){
 		         		dx = 1*Spielfeld.spieler.speed;
 		         	}
+			        
+			        if((Spielfeld.shop)&&(Spielfeld.check(15))){
+			        	Spielfeld.shop = false;
+			        }
 			        
 			        Spielfeld.spieler.links = false;
 		         	Spielfeld.spieler.rechts = true;
@@ -176,9 +190,13 @@ public class Frame extends JFrame implements ActionListener{
 		            }
 		         }
 
-		         if ((key == KeyEvent.VK_W)&&(spielfeld.getBlockID(Spielfeld.spieler.x+6, Spielfeld.spieler.y+23)!=1)&&(spielfeld.getBlockID(Spielfeld.spieler.x+26, Spielfeld.spieler.y+23)!=1)) {
-			        if(spielfeld.getBlockID(Spielfeld.spieler.x+6, Spielfeld.spieler.y+22.5)!=1){
+		         if ((key == KeyEvent.VK_W)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+6, Spielfeld.spieler.y+23)!=1)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+26, Spielfeld.spieler.y+23)!=1)) {
+			        if(Spielfeld.getBlockID(Spielfeld.spieler.x+6, Spielfeld.spieler.y+22.5)!=1){
 			        	dy = -1*Spielfeld.spieler.speed;
+			        }
+			        
+			        if((Spielfeld.shop)&&(Spielfeld.check(15))){
+			        	Spielfeld.shop = false;
 			        }
 			        
 			        Spielfeld.spieler.links = false;
@@ -193,9 +211,13 @@ public class Frame extends JFrame implements ActionListener{
 		            }
 		         }
 		         
-		         if ((key == KeyEvent.VK_S)&&(spielfeld.getBlockID(Spielfeld.spieler.x+6, Spielfeld.spieler.y+36)!=1)&&(spielfeld.getBlockID(Spielfeld.spieler.x+26, Spielfeld.spieler.y+36)!=1)) {
-			        if(spielfeld.getBlockID(Spielfeld.spieler.x+6, Spielfeld.spieler.y+36)!=1){
+		         if ((key == KeyEvent.VK_S)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+6, Spielfeld.spieler.y+36)!=1)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+26, Spielfeld.spieler.y+36)!=1)) {
+			        if(Spielfeld.getBlockID(Spielfeld.spieler.x+6, Spielfeld.spieler.y+36)!=1){
 			        	dy = 1*Spielfeld.spieler.speed;
+			        }
+			        
+			        if((Spielfeld.shop)&&(Spielfeld.check(15))){
+			        	Spielfeld.shop = false;
 			        }
 			        
 			        Spielfeld.spieler.links = false;
@@ -210,12 +232,26 @@ public class Frame extends JFrame implements ActionListener{
 		            }
 		         }
 		         
-		        /* if ((key == KeyEvent.VK_M)&&(Spielfeld.spieler.sprint>20)){
-		        	 if(Spielfeld.spieler.sprint>20){
-		        		 Spielfeld.spieler.sprint--;
-		        		 Spielfeld.spieler.speed = 0.8;
+		         if ((key == KeyEvent.VK_ENTER)&&(Spielfeld.shop)){			//ruft den Shop auf 
+		        	 showShop();
+		        	 Spielerinfo.anzeige = false;
+		         }
+		         
+		         if ((key == KeyEvent.VK_1)&&(spieler.aktiv)&&(spieler.leben<100)&&(Spielfeld.spieler.item_trank>0)){   //Trank
+		        	 spieler.leben += 40;
+		        	 Spielfeld.spieler.item_trank -= 1;
+		        	 if(spieler.leben>100){
+		        		 spieler.leben = 100;
 		        	 }
-		         }*/
+		         }
+		         
+		         if ((key == KeyEvent.VK_2)&&(spieler.aktiv)&&(spieler.mana<100)&&(Spielfeld.spieler.item_mana>0)){		//Mana
+		        	 spieler.mana += 40;
+		        	 Spielfeld.spieler.item_mana -= 1;
+		        	 if(spieler.leben>100){
+		        		 spieler.leben = 100;
+		        	 }
+		         }
 		      }
 			}
 
@@ -232,7 +268,6 @@ public class Frame extends JFrame implements ActionListener{
 
 		        if (key == KeyEvent.VK_A) {
 		            dx = 0;
-		           
 		        }
 
 		        if (key == KeyEvent.VK_D) {
@@ -246,11 +281,6 @@ public class Frame extends JFrame implements ActionListener{
 		        if (key == KeyEvent.VK_S) {
 		            dy = 0;
 		        }
-		        /*
-		        if (key == KeyEvent.VK_M) {
-		        	Spielfeld.spieler.speed = 0.5;
-		        }*/
-				
 			}
 		});
 
@@ -293,6 +323,7 @@ public class Frame extends JFrame implements ActionListener{
 		enter.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				//Buttons ausblenden und entfernen
+				shop_zurueck.setVisible(false);
 				enter.setVisible(false);
 				info.setVisible(false);
 				schließen.setVisible(false);
@@ -300,6 +331,7 @@ public class Frame extends JFrame implements ActionListener{
 				PfeilRechts.setVisible(false);
 				PfeilLinks.setVisible(false);
 				charakterBild.setVisible(false);
+				remove(shop_zurueck);
 				remove(PfeilRechts);
 				remove(PfeilLinks);
 				remove(charakterBild);
@@ -310,26 +342,29 @@ public class Frame extends JFrame implements ActionListener{
 				remove(charakter);
 
 				Spielfeld.current_room=1;
+				Spielfeld.isFirst = true;
+				Spielfeld.loadImages();		//Bilder des Levels laden
 				//Spielfeld anzeigen	
 				spielfeld.define();
-				add(spielfeld);						//hinzufügen
 				spielfeld.setVisible(true);	
+				add(spielfeld);						
+				//Spielerinfo anzeigen
+				spielerinfo.setVisible(true);
+				add(spielerinfo);
 				//Button Hauptmenü hinzufügen
 				add(menü);
 				add(neustart);
 				add(nextLevel);
 				menü.setVisible(true);
 				
-				add(leben);
-				leben.setVisible(true);
-				Spielfeld.isFirst = true;
-				//Bilder des Levels laden
-				Spielfeld.loadImages();
-				
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
+				spieler.aktiv = true;
 				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].getX();
 				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].getY();
 				Spielfeld.spieler.beweglich = true;
+				spieler.leben = 100;
+				spieler.mana = 100;
+				Spielfeld.shop = false;
 			}
 		});
 		
@@ -345,11 +380,14 @@ public class Frame extends JFrame implements ActionListener{
 				spieler.aktiv = true;
 				Spielfeld.spieler.beweglich = true;
 				spieler.leben = 100;
+				spieler.mana = 100;
 				neustart.setVisible(false);
 				nextLevel.setVisible(false);
+				Spielfeld.shop = false;
 			}
 		});
 		
+		//bei Erreichen des Ziels nächstes Level
 		nextLevel.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				Spielfeld.current_lvl += 1;
@@ -369,12 +407,13 @@ public class Frame extends JFrame implements ActionListener{
 			public void actionPerformed(ActionEvent e){
 				menü.setVisible(false);
 				remove(menü);
-				leben.setVisible(false);
-				remove(leben);
 				neustart.setVisible(false);
 				nextLevel.setVisible(false);
 				spielfeld.setVisible(false);
+				spielerinfo.setVisible(false);
 				setLayout(null);
+				shop_zurueck.setVisible(true);
+				add(shop_zurueck);
 				enter.setVisible(true);
 				info.setVisible(true);
 				schließen.setVisible(true);
@@ -393,9 +432,9 @@ public class Frame extends JFrame implements ActionListener{
 				add(charakter);
 				init();
 				spieler.aktiv = false;
-				Spielfeld.spieler.x=0;
-				Spielfeld.spieler.y=0;
+				
 				levelAuswahl.setSelectedItem("Level"+Spielfeld.current_lvl);
+				Spielfeld.shop = false;
 			}
 		});
 		
@@ -406,8 +445,55 @@ public class Frame extends JFrame implements ActionListener{
 			}
 		});
 		
+		//Shop_Button Zurück zum Spielfeld
+		shop_zurueck.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				shop_zurueck.setVisible(false);
+				spielfeld.setVisible(true);
+				spielerinfo.setVisible(true);
+				enter.setVisible(false);
+				info.setVisible(false);
+				schließen.setVisible(false);
+				charakter.setVisible(false);
+				PfeilRechts.setVisible(false);
+				PfeilLinks.setVisible(false);
+				charakterBild.setVisible(false);
+				remove(shop_zurueck);
+				remove(PfeilRechts);
+				remove(PfeilLinks);
+				remove(charakterBild);
+				remove(enter);
+				remove(info);
+				remove(schließen);
+				remove(levelAuswahl);
+				remove(charakter);
+				Spielfeld.spieler.beweglich = true;
+				spieler.aktiv = true;
+				menü.setVisible(true);
+				add(menü);
+			}
+			
+		});
+		
+		
 		
 		init();
+	}
+	
+	/*
+	 * Shop
+	 * 
+	 * */
+	public void showShop(){
+		Spielfeld.spieler.beweglich = false;
+		spieler.aktiv = false;
+		menü.setVisible(false);
+		remove(menü);
+		spielfeld.setVisible(false);
+		shop_zurueck.setVisible(true);
+		add(shop_zurueck);
 	}
 	
 	/**
