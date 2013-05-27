@@ -24,8 +24,8 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static spieler spieler;
 	public static GegnerRL gegnerRL;
 	public static GegnerOU gegnerOU;
-	public static GegnerKreis gegnerKreis;
-
+	//public static GegnerKreis gegnerKreis;
+	public static Endgegner Boss;
 	
 	/**
 	 * Konstruktor
@@ -58,8 +58,8 @@ public class Spielfeld extends JPanel implements Runnable{
 		spieler = new spieler();
 		gegnerRL = new GegnerRL();
 		gegnerOU = new GegnerOU();
-		gegnerKreis = new GegnerKreis();
-		
+		//gegnerKreis = new GegnerKreis();
+		Boss = new Endgegner(0);
 
 		
 		Frame.leben.setText("Leben:   "+propra2013.Gruppe54.spieler.leben+"%");
@@ -86,8 +86,11 @@ public class Spielfeld extends JPanel implements Runnable{
 		if(gegnerOU.aktiv){
 			gegnerOU.draw(g);
 		}
-		if (gegnerKreis.aktiv){
+		/*if (gegnerKreis.aktiv){
 			gegnerKreis.draw(g);
+		}*/
+		if ((Block.Boss_vorhanden==true)&&(Boss.aktiv)){
+			Boss.draw(g);
 		}
 		
 	}

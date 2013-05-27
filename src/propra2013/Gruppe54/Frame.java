@@ -347,6 +347,7 @@ public class Frame extends JFrame implements ActionListener{
 				spieler.leben = 100;
 				neustart.setVisible(false);
 				nextLevel.setVisible(false);
+				Block.Boss_vorhanden=false;
 			}
 		});
 		
@@ -396,6 +397,7 @@ public class Frame extends JFrame implements ActionListener{
 				Spielfeld.spieler.x=0;
 				Spielfeld.spieler.y=0;
 				levelAuswahl.setSelectedItem("Level"+Spielfeld.current_lvl);
+				Block.Boss_vorhanden=false;
 			}
 		});
 		

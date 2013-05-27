@@ -16,6 +16,7 @@ public class Block extends Rectangle {
 	public int counter_gegner10=0;
 	public int counter_gegner11=0;
 	public int counter_gegner12=0;
+	public static boolean Boss_vorhanden=false;
 
 	
 	/**
@@ -80,17 +81,18 @@ public class Block extends Rectangle {
 				Spielfeld.gegnerOU.draw(g);
 			}
 			
-		} else if((ID==12)){		//Gegner 3
+		} else if((ID==12)){		//Endgegner
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
-			
+			Boss_vorhanden=true;
 			if(counter_gegner12==0){	
 				counter_gegner12=1;
-				GegnerKreis.StartX = x;
-				GegnerKreis.StartY = y;
+				Endgegner.StartX = x;
+				Endgegner.StartY = y;
 				
 				} else if (counter_gegner12==1){
-					GegnerKreis.lauf();
-					Spielfeld.gegnerKreis.draw(g);
+					Endgegner.lauf();
+					Spielfeld.Boss.draw(g);
+					//Spielfeld.gegnerKreis.draw(g);
 				}
 			}
 			

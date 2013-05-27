@@ -23,8 +23,8 @@ public class GegnerKreis extends Rectangle {
 	public static boolean aktiv=false; 
 	
 	//Sagt in welche Richtung der Gegner sich bewegt
-	public static boolean gehtRunter=true;
-	public static boolean gehtHoch=false;
+	public static boolean gehtRunter=false;
+	public static boolean gehtHoch=true;
 	public static boolean gehtLinks=false;
 	public static boolean gehtRechts=false;
 	
@@ -40,28 +40,36 @@ public class GegnerKreis extends Rectangle {
 	}
 	
 	public void draw(Graphics g){
-		g.drawImage(new ImageIcon("pics/gegner2.png").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
+		g.drawImage(new ImageIcon("pics/gegnerKreis.png").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
 	}
 	
 	//Gibt die Position des Gegners in Abhängigkeit der Blöcke um ihn herum an
 	public static void position(){
-		if ((Spielfeld.getBlockID(GegnerKreis.StartX+16, GegnerKreis.StartY+32)!=1)&&
-				(Spielfeld.getBlockID(GegnerKreis.StartX+16, GegnerKreis.StartY+32)!=2)){
+		if ((Spielfeld.getBlockID(GegnerKreis.StartX, GegnerKreis.StartY+32+2)!=1)&&
+				(Spielfeld.getBlockID(GegnerKreis.StartX+32, GegnerKreis.StartY+32+2)!=1)&&
+				(Spielfeld.getBlockID(GegnerKreis.StartX, GegnerKreis.StartY+32+2)!=2)&&
+				(Spielfeld.getBlockID(GegnerKreis.StartX+32, GegnerKreis.StartY+32+2)!=2)){
 			unten = false;
 		} else unten = true;
 		
-		if ((Spielfeld.getBlockID(GegnerKreis.StartX+16, GegnerKreis.StartY-2)!=1)&&
-				(Spielfeld.getBlockID(GegnerKreis.StartX+16, GegnerKreis.StartY-2)!=2)){
+		if ((Spielfeld.getBlockID(GegnerKreis.StartX, GegnerKreis.StartY-2)!=1)&&
+				(Spielfeld.getBlockID(GegnerKreis.StartX+32, GegnerKreis.StartY-2)!=1)&&
+				(Spielfeld.getBlockID(GegnerKreis.StartX, GegnerKreis.StartY-2)!=2)&&
+				(Spielfeld.getBlockID(GegnerKreis.StartX+32, GegnerKreis.StartY-2)!=2)){
 			oben = false;
 		} else oben = true;
 		
-		if ((Spielfeld.getBlockID(GegnerKreis.StartX+32, GegnerKreis.StartY+16)!=1)&&
-				(Spielfeld.getBlockID(GegnerKreis.StartX+32, GegnerKreis.StartY+16)!=2)){
+		if ((Spielfeld.getBlockID(GegnerKreis.StartX+32+2, GegnerKreis.StartY)!=1)&&
+				(Spielfeld.getBlockID(GegnerKreis.StartX+32+2, GegnerKreis.StartY+32)!=1)&&
+				(Spielfeld.getBlockID(GegnerKreis.StartX+32+2, GegnerKreis.StartY)!=2)&&
+				(Spielfeld.getBlockID(GegnerKreis.StartX+32+2, GegnerKreis.StartY+32)!=2)){
 			rechts = false;
 		} else rechts = true;
 		
-		if ((Spielfeld.getBlockID(GegnerKreis.StartX-2, GegnerKreis.StartY+16)!=1)&&
-				(Spielfeld.getBlockID(GegnerKreis.StartX-2, GegnerKreis.StartY+16)!=2)){
+		if ((Spielfeld.getBlockID(GegnerKreis.StartX-2, GegnerKreis.StartY)!=1)&&
+				(Spielfeld.getBlockID(GegnerKreis.StartX-2, GegnerKreis.StartY+32)!=1)&&
+				(Spielfeld.getBlockID(GegnerKreis.StartX-2, GegnerKreis.StartY)!=2)&&
+				(Spielfeld.getBlockID(GegnerKreis.StartX-2, GegnerKreis.StartY+32)!=2)){
 			links = false;
 		} else links = true;
 	}
@@ -78,55 +86,68 @@ public class GegnerKreis extends Rectangle {
 
 		GegnerKreis.position();// so weiß ich wie die Umgebung des Gegner aussieht
 		
+		System.out.println(unten+""+rechts+""+links+""+oben);
+		//Problem wenn er im Raum steht
+		
+		//Geht nach Unten
 		if ((gehtRunter=true)&&(links==false)){
-			GegnerKreis.StartX-=1;
 			gehtRunter=false;
 			gehtLinks=true;
 		} else if ((gehtRunter==true)&&(links==true)&&(unten==false)){
 			GegnerKreis.StartY+=1;
+		} else if ((gehtRunter==true)&&(links==true)&&(unten==true)&&(rechts==false)){
+			gehtLinks=false;
+			gehtRechts=true;
+		} else if ((gehtRunter==true)&&(links==true)&&(unten==true)&&(rechts==true)){
+			gehtRunter=false;
+			gehtHoch=true;
 		}
 		
+		//Geht nach Links
 		if ((gehtLinks=true)&&(oben==false)){
-			GegnerKreis.StartY-=1;
 			gehtHoch=true;
 			gehtLinks=false;
 		} else if ((gehtLinks==true)&&(oben==true)&&(links==false)){
 			GegnerKreis.StartX-=1;
 		} else if ((gehtLinks==true)&&(oben==true)&&(links==true)&&(unten==false)){
-			GegnerKreis.StartY+=1;
 			gehtLinks=false;
 			gehtRunter=true;
+		} else if((gehtLinks==true)&&(oben==true)&&(links==true)&&(unten==true)){
+			gehtLinks=false;
+			gehtRechts=true;
 		}
 		
+		//Geht nach Oben
 		if ((gehtHoch==true)&&(rechts==false)){
-			GegnerKreis.StartX+=1;
 			gehtHoch=false;
 			gehtRechts=true;
 		} else if ((gehtHoch ==true)&&(rechts==true)&& (oben==false)){
 			GegnerKreis.StartY-=1;
-		}
+		} else if((gehtHoch=true)&&(rechts==true)&&(oben==true)&&(links==false)){
+			gehtLinks=true;
+			gehtHoch=false;
+		} else if ((gehtHoch=true)&&(rechts==true)&&(oben==true)&&(links==true)){
+			gehtRunter=true;
+			gehtHoch=false;
+		} 
 		
+		//Geht nach Rechts
 		if ((gehtRechts==true)&&(unten==false)){
-			GegnerKreis.StartY-=1;
 			gehtRechts=false;
 			gehtRunter=true;
 		} else if ((gehtRechts==true)&&(unten==true)&&(rechts==false)){
 			GegnerKreis.StartX+=1;
+		} else if((gehtRechts==true)&&(unten==true)&&(rechts==true)&&(oben==false)){
+			gehtHoch=true;
+			gehtRechts=false;
+		} else if ((gehtRechts==true)&&(unten==true)&&(rechts==true)&&(oben==true)){
+			gehtLinks=true;
+			gehtRechts=false;
 		}
 		
 		
-		/*if ((unten== false)&&(u==false)){
-			GegnerKreis.StartY+=1;
-		} else if ((rechts == false)&&(r==false)){
-			GegnerKreis.StartX+=1;
-			u=true;
-		} else if (oben == false){
-			GegnerKreis.StartY-=1;
-			r=true;
-		} else if (links == false){
-			GegnerKreis.StartX-=1;
-		} else u=false; 
-			*/
+		
+	
 	} 
 	
 	//Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
