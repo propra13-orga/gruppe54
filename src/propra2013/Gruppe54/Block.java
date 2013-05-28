@@ -89,14 +89,29 @@ public class Block extends Rectangle {
 				Endgegner.StartX = x;
 				Endgegner.StartY = y;
 				
+
 				} else if (counter_gegner12==1){
 					Endgegner.lauf();
 					Spielfeld.Boss.draw(g);
 					//Spielfeld.gegnerKreis.draw(g);
 				}
-			}
+
 			
-		 else {
+		} else if(ID==15){ 	  //Shopbesitzer, bei berührung soll gefragt werden ob man den Shop betreten möchte
+			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
+			if(Spielfeld.shop){
+				Zustand = 1;
+			} else {
+				Zustand = 0;
+			}
+			if(Zustand==0){
+				g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
+				Spielerinfo.anzeige = false;
+			} else if(Zustand==1) {
+				Spielerinfo.anzeige = true;
+				g.drawImage(new ImageIcon("pics/shopguy_aktiv.png").getImage(),x,y,width,height,null);
+			}
+		} else {
 			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);   //ImageArray elemente[], wird in Spielfeld.define() definiert
 		 }
 	}

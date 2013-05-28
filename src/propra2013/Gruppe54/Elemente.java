@@ -50,11 +50,11 @@ public class Elemente {
 			spieler.leben-=5;
 			if(Spielfeld.spieler.rechts){
 				Spielfeld.spieler.x-=12;
-			} else if(Spielfeld.spieler.links){
+			} else if((Spielfeld.spieler.links)&&(Spielfeld.spieler.rechts==false)){
 				Spielfeld.spieler.x+=12;
-			} else if(Spielfeld.spieler.hoch){
+			} else if((Spielfeld.spieler.hoch)&&(Spielfeld.spieler.links==false)&&(Spielfeld.spieler.rechts==false)){
 				Spielfeld.spieler.y+=12;
-			} else if(Spielfeld.spieler.runter){
+			} else if((Spielfeld.spieler.runter)&&(Spielfeld.spieler.hoch==false)&&(Spielfeld.spieler.links==false)&&(Spielfeld.spieler.rechts==false)){
 				Spielfeld.spieler.y-=12;
 			}
 		}
@@ -62,10 +62,14 @@ public class Elemente {
 	
 	//block muss mit übergeben werden, da das Item ja vom Block entfernt werden soll
 	public static void Item(int ID,Block block){
-		if((ID == 7)&&(spieler.leben<100)){           //trank1
-			spieler.leben+=40;
-			if(spieler.leben>100){
-				spieler.leben = 100;
+		if(ID == 7){           //trank1
+			if(spieler.leben == 100){
+				Spielfeld.spieler.item_trank += 1;
+			} else {
+				spieler.leben+=40;
+				if(spieler.leben>100){
+					spieler.leben = 100;
+				}
 			}
 			block.ID = 0;
 		} else if((ID == 8)&&(spieler.leben<100)&&(block.Zustand==0)){	  //brunnen
@@ -81,6 +85,8 @@ public class Elemente {
 				Frame.nextLevel.setVisible(true);
 			}
 			Frame.neustart.setVisible(true);
+		} else if(ID == 15){						      //Shopbesitzer
+			Spielfeld.shop = true;			//wenn der Benutzer Enter drückt wird der "Shop" betreten
 		}
 	}
 	

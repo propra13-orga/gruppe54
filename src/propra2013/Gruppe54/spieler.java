@@ -10,8 +10,12 @@ public class spieler extends Rectangle {
 	public double y=Raum.Startpunkt[Spielfeld.current_lvl-1].getY(); 
 	
 	public double speed = 0.5;
-	//public int sprint = 100;
-	public static int leben;
+	public int gold = 100;
+	public boolean schwert = false;
+	public int item_trank = 0,item_mana = 0;
+	public int current_schwert = 0;   //gibt an welches Schwert der Spieler gerade hat
+	public static int mana = 100;			  //Zauberkraft
+	public static int leben = 100;
 	public static boolean aktiv = false;
 
 	public boolean beweglich = false;
@@ -31,7 +35,6 @@ public class spieler extends Rectangle {
 
 	public spieler(){
 		setBounds((int)x,(int)y,32,32);
-		leben = 100;		//Lebenspunkte
 		aktiv = true;		//gibt an ob der Spieler im Spiel ist
 		beweglich = true;
 	}

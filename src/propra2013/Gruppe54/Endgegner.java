@@ -18,6 +18,7 @@ public class Endgegner extends Rectangle{
 	public static int leben;
 	public static boolean unten=false;//gibt an ob der Gegner unten an einer Mauer steht
 	public static int schritte=0;
+
 	/**
 	 * @param args
 	 */
@@ -25,10 +26,11 @@ public class Endgegner extends Rectangle{
 		setBounds(StartX,StartY,32,32);
 		Endgegner.ID= ID;
 		aktiv = true;		//gibt an ob der Gegner im Spiel ist
-		leben = 100;
+		leben = 300;
 	}
 	
 	//Zeichnet den Gegner
+	//muss noch ein anderes Bild eingefügt werden
 	public void draw(Graphics g){
 		g.drawImage(new ImageIcon("pics/gegner.gif").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
 	}
@@ -39,47 +41,19 @@ public class Endgegner extends Rectangle{
 			if ((unten==false) &&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY+2+32)!=1)){
 				Kollision();
 				Endgegner.StartY+=1;
-				} else unten = true; schuss();
+				} else unten = true; 
 			if ((unten==true)&& (Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY-2+16)!=1)){
 				Kollision();
 				Endgegner.StartY-=1;
-				} else unten = false; schuss();	
+				} else unten = false; 
 			
 		} else 
 			if(ID==1){
-				if ((unten==false) &&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY+2+32)!=1)){
-					Kollision();
-					Endgegner.StartY+=1;
-					schritte+=1;
-						if (schritte>=10){
-							schuss();
-							schritte=0;
-						}
-					} else unten = true; schuss();
-				if ((unten==true)&& (Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY-2+16)!=1)){
-					Kollision();
-					Endgegner.StartY-=1;
-					schritte+=1;
-					if (schritte>=10){
-						schuss();
-						schritte=0;
-					}
-					} else unten = false; schuss();	
-				
+			/* fehlt noch*/
 			}
 	}
 	
-	//normale Gegner schießen in die Richtung des Spielers
-	//letzte Gegner schießt in alle Richtungen
-	public static void schuss(){
-		if (ID==0){
-			System.out.println("Schuss");
-		} else 
-			if(ID==1){
-				System.out.println("Schuss");
-			}
-		
-	}
+
 	
 	//Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
 	public static void Kollision(){
