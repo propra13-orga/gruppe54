@@ -26,27 +26,40 @@ public class Spielerinfo extends JPanel implements Runnable{
 		g.drawRoundRect(0, 0, 158, 158, 10, 10);
 		g.drawString("Level: "+Spielfeld.current_lvl,4,30);
 		g.drawString("Gold: "+Spielfeld.spieler.gold,4,45);
-		if(spieler.leben>40){
-			g.setColor(Color.green);
-		} else {
-			g.setColor(Color.red);
+		//Lebensanzeige
+		if(spieler.leben>0){
+			if(spieler.leben>40){
+				g.setColor(Color.green);
+			} else {
+				g.setColor(Color.red);
+			}
+			g.fill3DRect(4, 55, (int) (spieler.leben*1.5), 7, true);
 		}
-		g.fill3DRect(4, 55, (int) (spieler.leben*1.5), 7, true);
-		g.setColor(Color.blue);
-		g.fill3DRect(4, 65, (int) (spieler.mana*1.5), 7, true);
+		//Mana
+		if(spieler.mana>0){
+			g.setColor(Color.blue);
+			g.fill3DRect(4, 65, (int) (spieler.mana*1.5), 7, true);
+		}
+		//Rüstung
+		if(spieler.ruestung>0){
+			g.setColor(Color.gray);
+			g.fill3DRect(4, 75, (int) (spieler.ruestung*1.5), 7, true);
+		}
+		//Inventar
 		g.setColor(Color.black);
-		g.drawString("Inventar: ",4,90);
+		g.drawString("Inventar: ",4,100);
 		if((Spielfeld.spieler.item_mana==0)&&(Spielfeld.spieler.item_trank==0)){
-			g.drawString("leer",50,110);
+			g.drawString("leer",50,120);
 		}
 		if(Spielfeld.spieler.item_trank>0){
-			g.drawImage(new ImageIcon("pics/shop_trank.png").getImage(), 4, 95, null);
-			g.drawString(""+Spielfeld.spieler.item_trank, 34, 115);
+			g.drawImage(new ImageIcon("pics/shop_trank.png").getImage(), 4, 105, null);
+			g.drawString(""+Spielfeld.spieler.item_trank, 34, 125);
 		}
 		if(Spielfeld.spieler.item_mana>0){
-			g.drawImage(new ImageIcon("pics/shop_mana.png").getImage(), 59, 95, null);
-			g.drawString(""+Spielfeld.spieler.item_mana, 89, 115);
+			g.drawImage(new ImageIcon("pics/shop_mana.png").getImage(), 59, 105, null);
+			g.drawString(""+Spielfeld.spieler.item_mana, 89, 125);
 		}
+		//Gespräch
 		if(anzeige){
 			g.drawString("Händler: Möchtest du",0,200);
 			g.drawString("zum Shop gebracht",0,215);

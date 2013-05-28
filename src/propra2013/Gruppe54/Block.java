@@ -28,7 +28,7 @@ public class Block extends Rectangle {
 	
 	//zeichnet den Block, Bild wird anhand der ID geladen
 	public void draw(Graphics g){ 
-		if(((ID>1)&&(ID<5))|(ID>5)&&(ID<8)|(ID==9)){      // ID größer als 1, d.h. elemente sind Fallen oder Items
+		if(((ID>1)&&(ID<5))|(ID>5)&&(ID<10)|(ID==14)|(ID==16)){      // ID größer als 1, d.h. elemente sind Fallen oder Items
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
 			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null); //element zeichnen, damit hintergrund richtig angezeigt wird
 		} else if(ID==5){ 	//Falle_speer, wird "einzeln behandelt", da diese zwei Zustände hat (aktiv,inaktiv)

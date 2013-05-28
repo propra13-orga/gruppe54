@@ -33,21 +33,33 @@ public class Elemente {
 		} else if(ID == 4){    //Falle_Feuer
 			feuer++;
 			if(feuer==5){
-				beruehrung = true;		//da z.B. beim hochlaufen zwei Punkte auf Berührung überprüft werden, soll gespeichert werden,
-				spieler.leben -= 1;		//ob bereits eine Falle ausgelöst wurde damit die Punkte nicht doppelt abgezogen werden
+				beruehrung = true;		  //da z.B. beim hochlaufen zwei Punkte auf Berührung überprüft werden, soll gespeichert werden,
+				if(spieler.ruestung<=0){  //ob bereits eine Falle ausgelöst wurde damit die Punkte nicht doppelt abgezogen werden
+					spieler.leben-=1;
+				} else {
+					spieler.ruestung-=1;
+				}		
 				feuer = 0;
 			}
 		} else if(ID == 5){    //Falle_Speer
 			speer++;
 			if(speer==5){
 				beruehrung = true;
-				spieler.leben -= 2;
+				if(spieler.ruestung<=0){
+					spieler.leben-=2;
+				} else {
+					spieler.ruestung-=2;
+				}
 				block.Zustand = 1;	//lädt das aktive Bild der Falle
 				speer = 0;
 			}
 		} else if(ID == 6){    //Falle_Monster
 			beruehrung = true;
-			spieler.leben-=5;
+			if(spieler.ruestung<=0){
+				spieler.leben-=5;
+			} else {
+				spieler.ruestung-=5;
+			}
 			if(Spielfeld.spieler.rechts){
 				Spielfeld.spieler.x-=12;
 			} else if((Spielfeld.spieler.links)&&(Spielfeld.spieler.rechts==false)){
@@ -72,13 +84,23 @@ public class Elemente {
 				}
 			}
 			block.ID = 0;
-		} else if((ID == 8)&&(spieler.leben<100)&&(block.Zustand==0)){	  //brunnen
+		} else if(ID == 8){           //trank1
+			if(spieler.mana == 100){
+				Spielfeld.spieler.item_mana += 1;
+			} else {
+				spieler.mana+=40;
+				if(spieler.mana>100){
+					spieler.mana = 100;
+				}
+			}
+			block.ID = 0;
+		} else if((ID == 9)&&(spieler.leben<100)&&(block.Zustand==0)){	  //brunnen
 			spieler.leben = 100;
 			if(spieler.leben>100){
 				spieler.leben = 100;
 			}
 			block.Zustand = 1;
-		} else if(ID == 9){						      //zepter
+		} else if(ID == 14){						      //zepter
 			Spielfeld.spieler.beweglich = false;
 			block.ID = 0;
 			if(Spielfeld.current_lvl<3){

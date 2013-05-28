@@ -13,7 +13,7 @@ public class Spielfeld extends JPanel implements Runnable{
 
 	public Thread thread = new Thread(this);
 	
-	public static Image[] elemente = new Image[16];
+	public static Image[] elemente = new Image[32];
 	
 	public static int current_lvl=1,current_room=1,current_player=1;
 	
@@ -40,9 +40,9 @@ public class Spielfeld extends JPanel implements Runnable{
 	/*       
 			ID: 0 - Boden   1 - Mauer   2 - Ausgang 
 		        3 - Falle_Loch   4 - Falle_Feuer   5 - Falle_Speer  
-	            7 - Item_Trank   8 - Brunnen       9 - Zepter
+	            7 - Item_Trank   8 - Item_Trank2   9 - Brunnen
 	      		A - Gegner1      B - Gegner2       C - Gegner3
-		  		. . . 			 F - Shopbesitzer						*/
+		  		D				 E - Zepter	   	   F - Shopbesitzer						*/
 	
     //Bilder in Array laden
 	public static void loadImages(){
@@ -54,8 +54,9 @@ public class Spielfeld extends JPanel implements Runnable{
 		elemente[5] = new ImageIcon("pics/falle_speer"+current_lvl+".png").getImage();
 		elemente[6] = new ImageIcon("pics/anim.gif").getImage();
 		elemente[7] = new ImageIcon("pics/item_trank.png").getImage();
-		elemente[8] = new ImageIcon("pics/brunnen_rot.png").getImage();
-		elemente[9] = new ImageIcon("pics/zepter"+current_lvl+".png").getImage();
+		elemente[8] = new ImageIcon("pics/item_trank2.png").getImage();
+		elemente[9] = new ImageIcon("pics/brunnen_rot.png").getImage();
+		elemente[14] = new ImageIcon("pics/zepter"+current_lvl+".png").getImage();
 		elemente[15] = new ImageIcon("pics/shopguy.png").getImage();
 	}
 	
@@ -105,7 +106,7 @@ public class Spielfeld extends JPanel implements Runnable{
 			if(propra2013.Gruppe54.spieler.aktiv){
 			
 			//Steuerung des Spielers
-			if((check(1))&&(check(8))&&(check(15))){		//Mauer, Brunnen und der Shopbesitzer dürfen nicht durchlaufen werden
+			if((check(1))&&(check(9))&&(check(15))){		//Mauer, Brunnen und der Shopbesitzer dürfen nicht durchlaufen werden
 				checkKollision();
 				spieler.x += Frame.dx;
 				spieler.y += Frame.dy;

@@ -291,11 +291,23 @@ public class Frame extends JFrame implements ActionListener{
 				JComboBox<?> selectedChoice = (JComboBox<?>) e.getSource();
 				
 				if("Level1".equals(selectedChoice.getSelectedItem())){				//Listenauswahl: Level1
-					Spielfeld.current_lvl=1;
+					if(Spielfeld.current_lvl!=1){
+						Spielfeld.current_lvl=1;
+						shop_zurueck.setVisible(false);
+						remove(shop_zurueck);
+					}
 				} else if("Level2".equals(selectedChoice.getSelectedItem())){		//Level2
-					Spielfeld.current_lvl=2;
+					if(Spielfeld.current_lvl!=2){
+						Spielfeld.current_lvl=2;
+						shop_zurueck.setVisible(false);
+						remove(shop_zurueck);
+					}
 				} else if("Level3".equals(selectedChoice.getSelectedItem())){		//Level3
-					Spielfeld.current_lvl=3;
+					if(Spielfeld.current_lvl!=3){
+						Spielfeld.current_lvl=3;
+						shop_zurueck.setVisible(false);
+						remove(shop_zurueck);
+					}
 				}
 				
 			}
