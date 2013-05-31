@@ -25,8 +25,8 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static spieler spieler;
 	public static GegnerRL gegnerRL;
 	public static GegnerOU gegnerOU;
-	public static GegnerKreis gegnerKreis;
-
+	public static Endgegner Boss;
+	public static Schuss_Endgegner schuss_endgegner;
 	
 	/**
 	 * Konstruktor
@@ -64,9 +64,12 @@ public class Spielfeld extends JPanel implements Runnable{
 		raum = new Raum();
 		gegnerRL = new GegnerRL();
 		gegnerOU = new GegnerOU();
-		gegnerKreis = new GegnerKreis();
+		Boss = new Endgegner(0);
+
 		loadImages();
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
+		schuss_endgegner = new Schuss_Endgegner();
+		
 	}
 	
 	public void paintComponent(Graphics g){
@@ -85,10 +88,19 @@ public class Spielfeld extends JPanel implements Runnable{
 		if(GegnerOU.aktiv){
 			gegnerOU.draw(g);
 		}
-		if (GegnerKreis.aktiv){
-			gegnerKreis.draw(g);
+
+		if ((Block.Boss_vorhanden==true)&&(Endgegner.aktiv)){
+			Boss.draw(g);
 		}
+		//Schuss wird nur in room 3 gezeichnet
+		if ((current_room==3)&&(Schuss.sichtbar==true)){
+			if (Schuss_Endgegner.checkPos==false){
+				Schuss_Endgegner.checkPos();
+			}
+			Schuss.bewegung();
+			schuss_endgegner.draw(g);
 		
+		}
 	}
 	
 	//Thread
@@ -111,7 +123,7 @@ public class Spielfeld extends JPanel implements Runnable{
 				spieler.x += Frame.dx;
 				spieler.y += Frame.dy;
 				Elemente.beruehrung = false;
-			} else if((check(8)==false)){   //Brunnen soll berührt aber nicht durschritten werden, also wird das Element nur aufgerufen aber der Spieler läuft nicht
+			} else if((check(9)==false)){   //Brunnen soll berührt aber nicht durschritten werden, also wird das Element nur aufgerufen aber der Spieler läuft nicht
 				checkKollision();
 			} else if((check(15)==false)){  //Shopbesitzer soll auch nur berührt werden und dann seine Aktion ausführen
 				checkKollision();

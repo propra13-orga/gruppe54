@@ -60,7 +60,7 @@ public class Spielerinfo extends JPanel implements Runnable{
 			g.drawString(""+Spielfeld.spieler.item_mana, 89, 125);
 		}
 		//Gespräch
-		if(anzeige){
+		if((anzeige)&&(Spielfeld.shop)){
 			g.drawString("Händler: Möchtest du",0,200);
 			g.drawString("zum Shop gebracht",0,215);
 			g.drawString("werden?",0,230);

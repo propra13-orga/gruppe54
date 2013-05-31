@@ -16,6 +16,7 @@ public class Block extends Rectangle {
 	public int counter_gegner10=0;
 	public int counter_gegner11=0;
 	public int counter_gegner12=0;
+	public static boolean Boss_vorhanden=false;
 
 	
 	/**
@@ -28,7 +29,7 @@ public class Block extends Rectangle {
 	
 	//zeichnet den Block, Bild wird anhand der ID geladen
 	public void draw(Graphics g){ 
-		if(((ID>1)&&(ID<5))|(ID>5)&&(ID<10)|(ID==14)|(ID==16)){      // ID größer als 1, d.h. elemente sind Fallen oder Items
+		if(((ID>1)&&(ID<5))|(ID>5)&&(ID<9)|(ID==14)){      // ID größer als 1, d.h. elemente sind Fallen oder Items
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
 			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null); //element zeichnen, damit hintergrund richtig angezeigt wird
 		} else if(ID==5){ 	//Falle_speer, wird "einzeln behandelt", da diese zwei Zustände hat (aktiv,inaktiv)
@@ -38,7 +39,7 @@ public class Block extends Rectangle {
 			} else if(Zustand==1) {
 				g.drawImage(new ImageIcon("pics/falle_speer"+Spielfeld.current_lvl+"_aktiv.png").getImage(),x,y,width,height,null);
 			}
-		} else if(ID==8){ 	
+		} else if(ID==9){		//brunnen 	
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
 			if(Zustand==0){
 				g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
@@ -80,21 +81,25 @@ public class Block extends Rectangle {
 				Spielfeld.gegnerOU.draw(g);
 			}
 			
-		} else if((ID==12)){		//Gegner 3
+		} else if((ID==12)){		//Endgegner
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
-			
+			Boss_vorhanden=true;
 			if(counter_gegner12==0){	
 				counter_gegner12=1;
-				GegnerKreis.StartX = x;
-				GegnerKreis.StartY = y;
+				Endgegner.StartX = x;
+				Endgegner.StartY = y;
 				
-			} else if (counter_gegner12==1){
-					GegnerKreis.lauf();
-					Spielfeld.gegnerKreis.draw(g);
-			}
+
+				} else if (counter_gegner12==1){
+					Endgegner.lauf();
+					Spielfeld.Boss.draw(g);
+					//Spielfeld.gegnerKreis.draw(g);
+				}
+
+			
 		} else if(ID==15){ 	  //Shopbesitzer, bei berührung soll gefragt werden ob man den Shop betreten möchte
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
-			if(Spielfeld.shop){
+			if(Spielfeld.shop){		//wenn spieler daneben steht
 				Zustand = 1;
 			} else {
 				Zustand = 0;

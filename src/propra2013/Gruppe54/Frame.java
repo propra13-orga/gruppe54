@@ -395,7 +395,10 @@ public class Frame extends JFrame implements ActionListener{
 				spieler.mana = 100;
 				neustart.setVisible(false);
 				nextLevel.setVisible(false);
+				Block.Boss_vorhanden=false;
+
 				Spielfeld.shop = false;
+
 			}
 		});
 		
@@ -409,6 +412,7 @@ public class Frame extends JFrame implements ActionListener{
 				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].getY();
 				Spielfeld.spieler.beweglich = true;
 				Spielfeld.loadImages();
+				Block.Boss_vorhanden=false;
 				nextLevel.setVisible(false);
 				neustart.setVisible(false);
 			}
@@ -446,7 +450,10 @@ public class Frame extends JFrame implements ActionListener{
 				spieler.aktiv = false;
 				
 				levelAuswahl.setSelectedItem("Level"+Spielfeld.current_lvl);
+
+				Block.Boss_vorhanden=false;
 				Spielfeld.shop = false;
+
 			}
 		});
 		
@@ -485,6 +492,7 @@ public class Frame extends JFrame implements ActionListener{
 				spieler.aktiv = true;
 				menü.setVisible(true);
 				add(menü);
+				Block.Boss_vorhanden = true;
 			}
 			
 		});
