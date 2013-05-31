@@ -34,7 +34,7 @@ public class GegnerRL extends Rectangle  {
 	public  void draw(Graphics g){
 	
 			
-			g.drawImage(new ImageIcon("pics/gegner.png").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner 
+			g.drawImage(new ImageIcon("pics/gegner1_"+Spielfeld.current_lvl+".png").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner 
 
 	
 	}

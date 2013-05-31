@@ -53,6 +53,18 @@ public class Frame extends JFrame implements ActionListener{
 	public static ImageIcon Figur1_oben = new ImageIcon("pics/Figur1_oben.png");
 	public static int CharakterAuswahl;
 	public static Image image;
+	//Schussauswahl
+	public static JLabel Schuss = new JLabel();
+	public static JLabel SchussBild = new JLabel();
+	public static JButton PfeilRechts2 = new JButton();
+	public static JButton PfeilLinks2 = new JButton();
+	public static ImageIcon Schuss1 = new ImageIcon("pics/schuss1.png");
+	public static ImageIcon Schuss2 = new ImageIcon("pics/schuss2.png");
+	public static ImageIcon Schuss3 = new ImageIcon("pics/schuss3.png");
+	public static ImageIcon Schuss4 = new ImageIcon("pics/schuss4.png");
+	public static int SchussAuswahl;
+	public static Image image2;
+	
 	//Lebensanzeige
 	public static ImageIcon lebensanzeige = new ImageIcon("pics/lebensanzeige.png");
 	
@@ -92,13 +104,13 @@ public class Frame extends JFrame implements ActionListener{
 		nextLevel.setVisible(false);
 		
 		//Label Charakterauswahl
-		charakter.setBounds(460,150,150,30);
+		charakter.setBounds(460,100,150,30);
 		charakter.setText("Charakterauswahl:");
 		charakter.setVisible(true);
 		add(charakter);
 		
 		//Label für das Charakter-Bild
-		charakterBild.setBounds(540, 200, 32, 32);
+		charakterBild.setBounds(540, 150, 32, 32);
 		charakterBild.setVisible(true);
 		charakterBild.setIcon(Figur1_unten);
 		image = Figur1_unten.getImage();
@@ -107,14 +119,39 @@ public class Frame extends JFrame implements ActionListener{
 		CharakterAuswahl = 1;
 		
 		//Buttons zur Charakterauswahl
-		PfeilRechts.setBounds(600, 205, 50, 20);
-		PfeilLinks.setBounds(460, 205, 50, 20);
+		PfeilRechts.setBounds(600, 155, 50, 20);
+		PfeilLinks.setBounds(460, 155, 50, 20);
 		PfeilRechts.setVisible(true);
 		PfeilLinks.setVisible(true);
 		PfeilRechts.setText(">");
 		PfeilLinks.setText("<");
 		add(PfeilLinks);
 		add(PfeilRechts);
+		
+		//Label Schussauswahl
+		Schuss.setBounds(460,200,150,30);
+		Schuss.setText("Fernwaffenauswahl:");
+		Schuss.setVisible(true);
+		add(Schuss);
+		
+		//Label für das Schuss-Bild
+		SchussBild.setBounds(540, 250, 32, 32);
+		SchussBild.setVisible(true);
+		SchussBild.setIcon(Schuss1);
+		image2 = Schuss1.getImage();
+		add(SchussBild);
+		
+		SchussAuswahl = 1;
+		
+		//Buttons zur Schussauswahl
+		PfeilRechts2.setBounds(600, 255, 50, 20);
+		PfeilLinks2.setBounds(460, 255, 50, 20);
+		PfeilRechts2.setVisible(true);
+		PfeilLinks2.setVisible(true);
+		PfeilRechts2.setText(">");
+		PfeilLinks2.setText("<");
+		add(PfeilLinks2);
+		add(PfeilRechts2);
 		
 		//Anzeige des Menüs
 		enter.setBounds(250, 100, 150, 30);		//Button Enter
@@ -252,6 +289,12 @@ public class Frame extends JFrame implements ActionListener{
 		        		 spieler.leben = 100;
 		        	 }
 		         }
+		         //Schuss des Spielers
+		         if ((key == KeyEvent.VK_SPACE)&&(spieler.aktiv)){	
+		        	Schuss_Spieler.sichtbar=true;
+		        	Schuss_Spieler.checkPos=false;
+					Schuss_Spieler.checkRichtung();
+		         }
 		      }
 			}
 
@@ -318,6 +361,47 @@ public class Frame extends JFrame implements ActionListener{
 				CharakterAuswahl =1;
 			}
 		});
+		//Button PfeilRechts2 Click
+		PfeilRechts2.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if(SchussAuswahl==1){
+				SchussBild.setIcon(Schuss2);
+				image2 = Schuss2.getImage();
+				SchussAuswahl = 2;
+				} else
+					if(SchussAuswahl==2){
+						SchussBild.setIcon(Schuss3);
+						image2 = Schuss3.getImage();
+						SchussAuswahl = 3;
+					} else
+						if(SchussAuswahl==3){
+							SchussBild.setIcon(Schuss4);
+							image2 = Schuss4.getImage();
+							SchussAuswahl = 4;
+						}
+			}
+		});
+		
+		//Button PfeilLinks2 Click
+		PfeilLinks2.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if(SchussAuswahl==4){
+				SchussBild.setIcon(Schuss3);
+				image2 = Schuss3.getImage();
+				SchussAuswahl =3;
+				} else
+					if(SchussAuswahl==3){
+					SchussBild.setIcon(Schuss2);
+					image2 = Schuss2.getImage();
+					SchussAuswahl =2;
+					} else
+						if(SchussAuswahl==2){
+							SchussBild.setIcon(Schuss1);
+							image2 = Schuss1.getImage();
+							SchussAuswahl =1;
+							} 
+			}		
+		});
 		
 		//Button Enter Click
 		enter.addActionListener(new ActionListener(){
@@ -340,6 +424,15 @@ public class Frame extends JFrame implements ActionListener{
 				remove(schließen);
 				remove(levelAuswahl);
 				remove(charakter);
+				Schuss.setVisible(false);
+				PfeilRechts2.setVisible(false);
+				PfeilLinks2.setVisible(false);
+				SchussBild.setVisible(false);
+				remove(PfeilRechts2);
+				remove(PfeilLinks2);
+				remove(SchussBild);
+				remove(Schuss);
+				
 
 				Spielfeld.current_room=1;
 				Spielfeld.isFirst = true;
@@ -433,6 +526,14 @@ public class Frame extends JFrame implements ActionListener{
 				add(schließen);
 				add(levelAuswahl);
 				add(charakter);
+				Schuss.setVisible(true);
+				PfeilRechts2.setVisible(true);
+				PfeilLinks2.setVisible(true);
+				SchussBild.setVisible(true);
+				add(PfeilRechts2);
+				add(PfeilLinks2);
+				add(SchussBild);
+				add(Schuss);
 				init();
 				spieler.aktiv = false;
 				
@@ -475,6 +576,14 @@ public class Frame extends JFrame implements ActionListener{
 				remove(schließen);
 				remove(levelAuswahl);
 				remove(charakter);
+				Schuss.setVisible(false);
+				PfeilRechts2.setVisible(false);
+				PfeilLinks2.setVisible(false);
+				SchussBild.setVisible(false);
+				remove(PfeilRechts2);
+				remove(PfeilLinks2);
+				remove(SchussBild);
+				remove(Schuss);
 				Spielfeld.spieler.beweglich = true;
 				spieler.aktiv = true;
 				menü.setVisible(true);

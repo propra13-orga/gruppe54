@@ -27,6 +27,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static GegnerOU gegnerOU;
 	public static Endgegner Boss;
 	public static Schuss_Endgegner schuss_endgegner;
+	public static Schuss_Spieler schuss_spieler;
 	
 	/**
 	 * Konstruktor
@@ -35,6 +36,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		setBounds(200,55,800,480);
 		thread.start();
 		spieler = new spieler();
+		spieler.rechts=true;
 	}
 	
 	/*       
@@ -68,6 +70,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		loadImages();
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
 		schuss_endgegner = new Schuss_Endgegner();
+		schuss_spieler = new Schuss_Spieler();
 		
 	}
 	
@@ -91,13 +94,28 @@ public class Spielfeld extends JPanel implements Runnable{
 		if ((Block.Boss_vorhanden==true)&&(Endgegner.aktiv)){
 			Boss.draw(g);
 		}
+		
 		//Schuss wird nur in room 3 gezeichnet
-		if ((current_room==3)&&(Schuss.sichtbar==true)){
+		if ((current_room==3)&&(Schuss_Endgegner.sichtbar==true)){
 			if (Schuss_Endgegner.checkPos==false){
 				Schuss_Endgegner.checkPos();
 			}
-			Schuss.bewegung();
+			Schuss_Endgegner.bewegung();
 			schuss_endgegner.draw(g);
+		
+		}
+
+		if (Schuss_Spieler.sichtbar==true){
+			if (Schuss_Spieler.checkPos==false){
+				Schuss_Spieler.checkPos();
+			}
+			
+			Schuss_Spieler.SchussRechts();
+			Schuss_Spieler.SchussLinks();
+			Schuss_Spieler.SchussOben();
+			Schuss_Spieler.SchussUnten();
+			
+			schuss_spieler.draw(g);
 		
 		}
 	}
