@@ -32,7 +32,7 @@ public class Endgegner extends Rectangle{
 	//Zeichnet den Gegner
 	//muss noch ein anderes Bild eingefügt werden
 	public void draw(Graphics g){
-		g.drawImage(new ImageIcon("pics/gegner.gif").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
+		g.drawImage(new ImageIcon("pics/gegner3_"+Spielfeld.current_lvl+".png").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
 	}
 	
 	//Gibt an wie sich der Gegner bewegt
