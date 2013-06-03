@@ -13,12 +13,13 @@ public class Spielfeld extends JPanel implements Runnable{
 
 	public Thread thread = new Thread(this);
 	
-	public static Image[] elemente = new Image[32];
+	public static Image[] elemente = new Image[33];
 	
 	public static int current_lvl=1,current_room=1,current_player=1;
+	public static double spieler_preposX=0,spieler_preposY=0;
 	
 	public static boolean isFirst = true; //erster Aufruf
-	public static boolean shop = false;
+	public static boolean shop = false,shop_trank = false,shop_mana = false,shop_ruestung1 = false,shop_ruestung2 = false,shop_stiefel = false;
 	
 	public static Raum raum = new Raum();
 	public static level level = new level();
@@ -60,6 +61,12 @@ public class Spielfeld extends JPanel implements Runnable{
 		elemente[9] = new ImageIcon("pics/brunnen_rot.png").getImage();
 		elemente[14] = new ImageIcon("pics/zepter"+current_lvl+".png").getImage();
 		elemente[15] = new ImageIcon("pics/shopguy.png").getImage();
+		//shop
+		elemente[16] = new ImageIcon("pics/item_trank.png").getImage();
+		elemente[17] = new ImageIcon("pics/item_trank2.png").getImage();
+		elemente[18] = new ImageIcon("pics/item_ruestung1.png").getImage();
+		elemente[19] = new ImageIcon("pics/item_ruestung2.png").getImage();
+		elemente[20] = new ImageIcon("pics/item_stiefel.png").getImage();
 	}
 	
 	public void define(){
@@ -134,17 +141,15 @@ public class Spielfeld extends JPanel implements Runnable{
 			}
 			
 			if(propra2013.Gruppe54.spieler.aktiv){
-			
 			//Steuerung des Spielers
-			if((check(1))&&(check(9))&&(check(15))){		//Mauer, Brunnen und der Shopbesitzer dürfen nicht durchlaufen werden
+			if((check(1))&&(check(9))&&(check(15))&&(check(16))&&(check(17))&&(check(18))&&(check(19))&&(check(20))){		//Mauer, Brunnen und der Shopbesitzer dürfen nicht durchlaufen werden
 				checkKollision();
 				spieler.x += Frame.dx;
 				spieler.y += Frame.dy;
 				Elemente.beruehrung = false;
-			} else if((check(9)==false)){   //Brunnen soll berührt aber nicht durschritten werden, also wird das Element nur aufgerufen aber der Spieler läuft nicht
+			} else if((check(9)==false) | (check(15)==false) | (check(16)==false) | (check(17)==false) | (check(18)==false) | (check(19)==false) | (check(20)==false)){   //Brunnen soll berührt aber nicht durschritten werden, also wird das Element nur aufgerufen aber der Spieler läuft nicht
 				checkKollision();
-			} else if((check(15)==false)){  //Shopbesitzer soll auch nur berührt werden und dann seine Aktion ausführen
-				checkKollision();
+				Elemente.beruehrung = false;
 			}
 			}
 			
@@ -153,7 +158,25 @@ public class Spielfeld extends JPanel implements Runnable{
 			} catch(Exception e){ 
 				e.printStackTrace();
 			}
+		  }
 		}
+	
+	//lädt den Shop auf das Spielfeld
+	public static void showShop(){
+		level.loadLevel(new File("level/level0_0.lvl"));
+		GegnerOU.aktiv = false;
+		GegnerRL.aktiv = false;
+		spieler.x = 150;
+		spieler.y = 150;
+	}
+	
+	//lädt wieder das derzeitige Level auf das Spielfeld
+	public static void hideShop(){
+		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));
+		GegnerOU.aktiv = true;
+		GegnerRL.aktiv = true;
+		spieler.x = Spielfeld.spieler_preposX;
+		spieler.y = Spielfeld.spieler_preposY;
 	}
 	
 	//prüft an 4 Punkten ob sich dort ein Objekt befindet durch das der Spieler nicht laufen darf

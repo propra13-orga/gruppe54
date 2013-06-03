@@ -8,6 +8,7 @@ public class Elemente {
 	public static int feuer = 0,speer = 0; //es soll nicht jeder Schritt über das Feuer Schaden geben, es soll aber Schaden genommen werden wenn der Spieler stehen bleibt
 
 	public static void Aufruf(int ID,Block block){
+		
 		if(ID < 7){
 			
 			Falle(ID,block);
@@ -75,9 +76,9 @@ public class Elemente {
 	//block muss mit übergeben werden, da das Item ja vom Block entfernt werden soll
 	public static void Item(int ID,Block block){
 		if(ID == 7){           //trank1
-			if(spieler.leben == 100){
-				Spielfeld.spieler.item_trank += 1;
-			} else {
+			 if(spieler.leben == 100){
+			 	Spielfeld.spieler.item_trank += 1;
+			 } else {
 				spieler.leben+=40;
 				if(spieler.leben>100){
 					spieler.leben = 100;
@@ -85,14 +86,14 @@ public class Elemente {
 			}
 			block.ID = 0;
 		} else if(ID == 8){           //trank1
-			if(spieler.mana == 100){
+			 if(spieler.mana == 100){
 				Spielfeld.spieler.item_mana += 1;
-			} else {
+			 } else {
 				spieler.mana+=40;
 				if(spieler.mana>100){
 					spieler.mana = 100;
 				}
-			}
+			 }
 			block.ID = 0;
 		} else if((ID == 9)&&(spieler.leben<100)&&(block.Zustand==0)){	  //brunnen
 			spieler.leben = 100;
@@ -108,7 +109,24 @@ public class Elemente {
 			}
 			Frame.neustart.setVisible(true);
 		} else if(ID == 15){						      //Shopbesitzer
-			Spielfeld.shop = true;			//wenn der Benutzer Enter drückt wird der "Shop" betreten
+			Spielfeld.shop = true;					      //wenn der Benutzer Enter drückt wird der "Shop" betreten
+		} else if(ID == 16){
+			Spielfeld.shop_trank = true;
+			Spielerinfo.preis_trank = true;
+		} else if(ID == 17){
+			Spielfeld.shop_mana = true;
+			Spielerinfo.preis_mana = true;
+		} else if(ID == 18){
+			Spielfeld.shop_ruestung1 = true;
+			Spielerinfo.preis_ruestung1 = true;
+		} else if(ID == 19){
+			Spielfeld.shop_ruestung2 = true;
+			Spielerinfo.preis_ruestung2 = true;
+		} else if(ID == 20){
+			Spielfeld.shop_stiefel = true;
+			Spielerinfo.preis_stiefel = true;
+		} else if(ID == 21){				//Ausgang Shop
+			Spielfeld.hideShop();
 		}
 	}
 	

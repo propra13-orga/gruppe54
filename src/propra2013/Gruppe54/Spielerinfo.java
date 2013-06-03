@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 public class Spielerinfo extends JPanel implements Runnable{
 
 	public Thread info = new Thread(this);
-	public static boolean anzeige = false;
+	public static boolean anzeige = false,preis_trank = false,preis_mana = false,preis_ruestung1 = false,preis_ruestung2 = false,preis_stiefel = false,ruestung_voll = false,speed_voll = false,gold = false;
 	
 	/**
 	 * 
@@ -64,6 +64,41 @@ public class Spielerinfo extends JPanel implements Runnable{
 			g.drawString("Händler: Möchtest du",0,200);
 			g.drawString("zum Shop gebracht",0,215);
 			g.drawString("werden?",0,230);
+		}
+		//Preisanzeige Trank
+		if(preis_trank){
+			g.drawString("50 Gold",0,200);
+		}
+		//Preisanzeige Manatrank
+		if(preis_mana){
+			g.drawString("75 Gold",0,200);
+		}
+		//Preisanzeige Manatrank
+		if(preis_ruestung1){
+			g.drawString("150 Gold",0,200);
+			g.drawString("Rüstung 100%",0,215);
+		}
+		//Preisanzeige Manatrank
+		if(preis_ruestung2){
+			g.drawString("100 Gold",0,200);
+			g.drawString("Rüstung +50%",0,215);
+		}
+		//Preisanzeige Stiefel
+		if(preis_stiefel){
+			g.drawString("150 Gold",0,200);
+			g.drawString("Geschwindigkeit +10%",0,215);
+		}
+		if(ruestung_voll){
+			g.drawString("Sie haben bereits volle",0,200);
+			g.drawString("Rüstung",0,215);
+		}
+		if(speed_voll){
+			g.drawString("Sie haben bereits",0,200);
+			g.drawString("maximale Geschwindigkeit",0,215);
+		}
+		if(gold){
+			g.drawString("Sie haben nicht genug",0,200);
+			g.drawString("Gold",0,215);
 		}
 	}
 	

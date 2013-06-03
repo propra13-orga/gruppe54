@@ -25,7 +25,7 @@ public class Raum {
 	public void define(){           
 		block = new Block[worldHeight][worldWidth];
 		
-		for(int y=0;y<block.length;y++){
+		for(int y=0;y<worldHeight;y++){
 			for(int x=0;x<worldWidth;x++){
 				block[y][x] = new Block(x*blockSize,y*blockSize,blockSize,blockSize,0);	// Konstruktor
 			}
@@ -33,7 +33,7 @@ public class Raum {
 	}
 	
 	public void draw(Graphics g){
-		for(int y=0;y<block.length;y++){
+		for(int y=0;y<worldHeight;y++){
 			for(int x=0;x<worldWidth;x++){
 				block[y][x].draw(g);	//zeichnet jeden Block
 			}
