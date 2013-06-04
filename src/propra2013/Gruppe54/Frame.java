@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
 
 import javax.swing.*;
 
@@ -31,7 +30,6 @@ public class Frame extends JFrame implements ActionListener{
 	public static JButton menü = new JButton("Hauptmenü");
 	public static JButton neustart = new JButton("Neustart");
 	public static JButton nextLevel = new JButton("Nächstes Level");
-	public static JButton shop_zurueck = new JButton("Zurück zum Spiel");
 	public static JButton spiel_zurueck = new JButton("Zurück zum Spiel");
 	//Charakterauswahl
 	public static JLabel charakter = new JLabel();
@@ -86,9 +84,6 @@ public class Frame extends JFrame implements ActionListener{
 		//Button Hauptmenü, nur im "Spielmodus" sichtbar
 		menü.setBounds(25,25,175,20);
 		menü.setVisible(false);
-		
-		shop_zurueck.setBounds(25,25,175,20);
-		shop_zurueck.setVisible(false);
 		
 		spiel_zurueck.setBounds(25,25,175,20);
 		spiel_zurueck.setVisible(false);
@@ -201,7 +196,9 @@ public class Frame extends JFrame implements ActionListener{
 			        if((Spielfeld.shop_ruestung2)&&(Spielfeld.check(19))){
 			        	Spielfeld.shop_ruestung2 = false;
 			        }
-			        
+			        if((Spielfeld.shop_stiefel)&&(Spielfeld.check(20))){
+			        	Spielfeld.shop_stiefel = false;
+			        }
 		            
 		            Spielfeld.spieler.links = true;
 		            Spielfeld.spieler.rechts = false;
@@ -241,7 +238,9 @@ public class Frame extends JFrame implements ActionListener{
 			        if((Spielfeld.shop_ruestung2)&&(Spielfeld.check(19))){
 			        	Spielfeld.shop_ruestung2 = false;
 			        }
-			        
+			        if((Spielfeld.shop_stiefel)&&(Spielfeld.check(20))){
+			        	Spielfeld.shop_stiefel = false;
+			        }
 			        
 			        Spielfeld.spieler.links = false;
 		         	Spielfeld.spieler.rechts = true;
@@ -281,7 +280,9 @@ public class Frame extends JFrame implements ActionListener{
 			        if((Spielfeld.shop_ruestung2)&&(Spielfeld.check(19))){
 			        	Spielfeld.shop_ruestung2 = false;
 			        }
-			        
+			        if((Spielfeld.shop_stiefel)&&(Spielfeld.check(20))){
+			        	Spielfeld.shop_stiefel = false;
+			        }
 			        
 			        Spielfeld.spieler.links = false;
 			        Spielfeld.spieler.rechts = false;
@@ -321,6 +322,9 @@ public class Frame extends JFrame implements ActionListener{
 			        if((Spielfeld.shop_ruestung2)&&(Spielfeld.check(19))){
 			        	Spielfeld.shop_ruestung2 = false;
 			        }
+			        if((Spielfeld.shop_stiefel)&&(Spielfeld.check(20))){
+			        	Spielfeld.shop_stiefel = false;
+			        }
 			        
 			        Spielfeld.spieler.links = false;
 			        Spielfeld.spieler.rechts = false;
@@ -345,14 +349,15 @@ public class Frame extends JFrame implements ActionListener{
 		         
 		         if ((key == KeyEvent.VK_ENTER)){			//ruft den Shop auf 
 		        	 if(Spielfeld.shop){
-		        		 menü.setVisible(false);
-		        		 remove(menü);
+		        		 if(Schuss_Spieler.sichtbar){
+		        			 Schuss_Spieler.sichtbar = false;
+		        		 }
 		        		 Spielerinfo.anzeige = false;
 		        		 Spielfeld.spieler_preposX = Spielfeld.spieler.x;
 		        		 Spielfeld.spieler_preposY = Spielfeld.spieler.y;
 		        		 Spielfeld.showShop();
-		        		 add(shop_zurueck);
-		        		 shop_zurueck.setVisible(true);
+		        		 validate();
+		        		 repaint();
 		        	 } else if(Spielfeld.shop_trank){
 		        		 if(Spielfeld.spieler.gold >= 50){
 		    				 Spielfeld.spieler.gold -= 50;
@@ -432,6 +437,10 @@ public class Frame extends JFrame implements ActionListener{
 					if(spieler.mana > 100){
 						spieler.mana = 100;
 					}
+		         }
+		         if((key == KeyEvent.VK_K)&&(spieler.aktiv)){ //kleiner Cheat zu Testzwecken ;D
+		        	 spieler.mana = 100;
+		        	 spieler.leben = 100;
 		         }
 		      }
 			}
@@ -703,29 +712,6 @@ public class Frame extends JFrame implements ActionListener{
 			}
 		});
 		
-		//Shop_Button Zurück zum Spielfeld
-		shop_zurueck.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Spielfeld.hideShop();
-				shop_zurueck.setVisible(false);
-				remove(shop_zurueck);
-				add(menü);
-				menü.setVisible(true);
-				Spielerinfo.anzeige = false;
-				Spielerinfo.preis_mana = false;
-	            Spielerinfo.preis_trank = false;
-	            Spielerinfo.preis_ruestung1 = false;
-	            Spielerinfo.preis_ruestung2 = false;
-	            Spielerinfo.preis_stiefel = false;
-	            Spielerinfo.ruestung_voll = false;
-	            Spielerinfo.speed_voll = false;
-	            Spielerinfo.gold = false;
-			}
-			
-		});
-		
 		//aus dem Hauptmenü zurück ins derzeitige Spiel
 		spiel_zurueck.addActionListener(new ActionListener(){
 
@@ -742,7 +728,6 @@ public class Frame extends JFrame implements ActionListener{
 				PfeilRechts.setVisible(false);
 				PfeilLinks.setVisible(false);
 				charakterBild.setVisible(false);
-				remove(shop_zurueck);
 				remove(PfeilRechts);
 				remove(PfeilLinks);
 				remove(charakterBild);

@@ -14,6 +14,9 @@ public class Elemente {
 			Falle(ID,block);
 		
 		} if((ID == 2)&&(Spielfeld.current_room!=3)) {  //Ausgang
+			if(Schuss_Spieler.sichtbar){
+				Schuss_Spieler.sichtbar = false;
+			}
 			Spielfeld.current_room+=1;
 			Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_"+Spielfeld.current_room+".lvl"));
 			//Spieler auf den Startpunkt des jeweiligen Levels setzen

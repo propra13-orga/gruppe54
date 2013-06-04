@@ -111,6 +111,9 @@ public class Block extends Rectangle {
 				Spielerinfo.anzeige = true;
 				g.drawImage(new ImageIcon("pics/shopguy_aktiv.png").getImage(),x,y,width,height,null);
 			}
+		} else if(ID==22){
+			//leer, ID 22 soll nichts anzeigen
+			//zur "verkleinerung" des Shops
 		} else {
 			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);   //ImageArray elemente[], wird in Spielfeld.define() definiert
 		 }
