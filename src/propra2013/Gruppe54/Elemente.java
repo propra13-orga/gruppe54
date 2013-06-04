@@ -8,33 +8,27 @@ public class Elemente {
 	public static int feuer = 0,speer = 0; //es soll nicht jeder Schritt über das Feuer Schaden geben, es soll aber Schaden genommen werden wenn der Spieler stehen bleibt
 
 	public static void Aufruf(int ID,Block block){
+		switch(ID){
 		
-		if(ID < 7){
-			
-			Falle(ID,block);
-		
-		} if((ID == 2)&&(Spielfeld.current_room!=3)) {  //Ausgang
-			if(Schuss_Spieler.sichtbar){
-				Schuss_Spieler.sichtbar = false;
+		case 2://Ausgang
+			if(Spielfeld.current_room!=3) {  
+				if(Schuss_Spieler.sichtbar){
+					Schuss_Spieler.sichtbar = false;
+				}
+				Spielfeld.current_room+=1;
+				Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_"+Spielfeld.current_room+".lvl"));
+				//Spieler auf den Startpunkt des jeweiligen Levels setzen
+				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
+				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
 			}
-			Spielfeld.current_room+=1;
-			Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_"+Spielfeld.current_room+".lvl"));
-			//Spieler auf den Startpunkt des jeweiligen Levels setzen
+			break;
+			
+		case 3://Falle_Loch - Spieler soll auf den Startpunkt zurück fallen
 			Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
 			Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
+			break;
 		
-		} else {
-		
-			Item(ID,block);
-		
-		}
-	}
-	
-	public static void Falle(int ID,Block block){
-		if(ID == 3){  		   //Falle_Loch - Spieler soll auf den Startpunkt zurück fallen
-			Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
-			Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
-		} else if(ID == 4){    //Falle_Feuer
+		case 4://Falle_Feuer
 			feuer++;
 			if(feuer==5){
 				beruehrung = true;		  //da z.B. beim hochlaufen zwei Punkte auf Berührung überprüft werden, soll gespeichert werden,
@@ -45,7 +39,9 @@ public class Elemente {
 				}		
 				feuer = 0;
 			}
-		} else if(ID == 5){    //Falle_Speer
+			break;
+		
+		case 5://Falle_Speer
 			speer++;
 			if(speer==5){
 				beruehrung = true;
@@ -57,7 +53,9 @@ public class Elemente {
 				block.Zustand = 1;	//lädt das aktive Bild der Falle
 				speer = 0;
 			}
-		} else if(ID == 6){    //Falle_Monster
+			break;
+			
+		case 6://Falle_Monster
 			beruehrung = true;
 			if(spieler.ruestung<=0){
 				spieler.leben-=5;
@@ -73,65 +71,122 @@ public class Elemente {
 			} else if((Spielfeld.spieler.runter)&&(Spielfeld.spieler.hoch==false)&&(Spielfeld.spieler.links==false)&&(Spielfeld.spieler.rechts==false)){
 				Spielfeld.spieler.y-=12;
 			}
-		}
-	}
-	
-	//block muss mit übergeben werden, da das Item ja vom Block entfernt werden soll
-	public static void Item(int ID,Block block){
-		if(ID == 7){           //trank1
-			 if(spieler.leben == 100){
-			 	Spielfeld.spieler.item_trank += 1;
-			 } else {
+			break;
+		
+		case 7://Lebenstrank
+			if(block.Zustand==0){
+			if(spieler.leben == 100){
+				Spielfeld.spieler.item_trank += 1;
+			} else {
 				spieler.leben+=40;
 				if(spieler.leben>100){
 					spieler.leben = 100;
 				}
 			}
-			block.ID = 0;
-		} else if(ID == 8){           //trank1
-			 if(spieler.mana == 100){
+			block.Zustand = 1;
+			}
+			break;
+		
+		case 8://Manatrank
+			if(block.Zustand==0){
+			if(spieler.mana == 100){
 				Spielfeld.spieler.item_mana += 1;
-			 } else {
+			} else {
 				spieler.mana+=40;
 				if(spieler.mana>100){
 					spieler.mana = 100;
 				}
-			 }
-			block.ID = 0;
-		} else if((ID == 9)&&(spieler.leben<100)&&(block.Zustand==0)){	  //brunnen
-			spieler.leben = 100;
-			if(spieler.leben>100){
-				spieler.leben = 100;
 			}
 			block.Zustand = 1;
-		} else if(ID == 14){						      //zepter
+			}
+			break;
+			
+		case 9://brunnen
+			if((spieler.leben<100)&&(block.Zustand==0)){	
+				spieler.leben = 100;
+				if(spieler.leben>100){
+					spieler.leben = 100;
+				}
+				block.Zustand = 1;
+			}
+			break;
+			
+		case 14://zepter
 			Spielfeld.spieler.beweglich = false;
 			block.ID = 0;
 			if(Spielfeld.current_lvl<3){
 				Frame.nextLevel.setVisible(true);
 			}
 			Frame.neustart.setVisible(true);
-		} else if(ID == 15){						      //Shopbesitzer
-			Spielfeld.shop = true;					      //wenn der Benutzer Enter drückt wird der "Shop" betreten
-		} else if(ID == 16){
+			break;
+		
+		case 15://Shopbesitzer
+			Spielfeld.shop = true;
+			break;
+		case 16://Item_Shop_Lebenstrank
 			Spielfeld.shop_trank = true;
 			Spielerinfo.preis_trank = true;
-		} else if(ID == 17){
+			break;
+		
+		case 17://Item_Shop_Manatrank
 			Spielfeld.shop_mana = true;
 			Spielerinfo.preis_mana = true;
-		} else if(ID == 18){
+			break;
+			
+		case 18://Item_Shop_Ruestung1
 			Spielfeld.shop_ruestung1 = true;
 			Spielerinfo.preis_ruestung1 = true;
-		} else if(ID == 19){
+			break;
+			
+		case 19://Item_Shop_Ruestung2
 			Spielfeld.shop_ruestung2 = true;
 			Spielerinfo.preis_ruestung2 = true;
-		} else if(ID == 20){
+			break;
+		
+		case 20://Item_Shop_Stiefel
 			Spielfeld.shop_stiefel = true;
 			Spielerinfo.preis_stiefel = true;
-		} else if(ID == 21){				//Ausgang Shop
+			break;
+			
+		case 21://Ausgang Shop
 			Spielfeld.hideShop();
-		}
+			break;
+		case 23://Schatztruhe
+			if(block.Zustand == 0){
+				Spielfeld.spieler.gold += 150;
+				block.Zustand = 1;
+				Spielfeld.anzeige = true;
+				Spielfeld.text_anzeige = "+150 Gold";
+			}
+		case 24://Gold
+			int i = (int) (Math.random()*3+1);		//Zufallszahl zwischen 1 und 3 erzeugen
+			if(block.Zustand == 0){
+				switch(i){
+				case 1:
+					Spielfeld.spieler.gold += 50;
+					Spielfeld.text_anzeige = "+50 Gold";
+					break;
+				case 2:
+					Spielfeld.spieler.gold += 20;
+					Spielfeld.text_anzeige = "+20 Gold";
+					break;
+				case 3:
+					Spielfeld.spieler.gold += 10;
+					Spielfeld.text_anzeige = "+10 Gold";
+					break;
+				default:
+					Spielfeld.spieler.gold += 50;
+					Spielfeld.text_anzeige = "+50 Gold";
+					break;
+				}
+				block.Zustand = 1;
+				Spielfeld.anzeige = true;
+			}
+		default:
+			//
+			break;
 	}
+}
 	
 	/**
 	 * @param args
