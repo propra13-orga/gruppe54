@@ -13,7 +13,7 @@ public class Schuss_Endgegner extends Rectangle {
 	public static boolean sichtbar=false;
 
 
-	//ID==1 heißt dass der Schuss für den Gegner ist
+	
 	public Schuss_Endgegner() {
 		setBounds(StartX,StartY,32,32);
 		sichtbar=true;

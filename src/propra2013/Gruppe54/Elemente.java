@@ -20,6 +20,9 @@ public class Elemente {
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
 				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
 				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
+				GegnerOU.aktiv=true;
+				GegnerRL.aktiv=true;
+				Endgegner.leben=300;
 			}
 			break;
 			
@@ -120,12 +123,14 @@ public class Elemente {
 			break;
 			
 		case 14://zepter
+			if(Endgegner.leben<1){
 			Spielfeld.spieler.beweglich = false;
 			block.ID = 0;
 			if(Spielfeld.current_lvl<3){
 				Frame.nextLevel.setVisible(true);
 			}
 			Frame.neustart.setVisible(true);
+			}
 			break;
 		
 		case 15://Shopbesitzer
