@@ -62,14 +62,22 @@ public class Elemente {
 			} else {
 				spieler.ruestung-=5;
 			}
-			if(Spielfeld.spieler.rechts){
+			if((Spielfeld.spieler.rechts)&&(Spielfeld.spieler.hoch == false)){
 				Spielfeld.spieler.x-=12;
 			} else if((Spielfeld.spieler.links)&&(Spielfeld.spieler.rechts==false)){
 				Spielfeld.spieler.x+=12;
+			} else if((Spielfeld.spieler.rechts)&&(Spielfeld.spieler.links==false)){
+				Spielfeld.spieler.x-=12;
 			} else if((Spielfeld.spieler.hoch)&&(Spielfeld.spieler.links==false)&&(Spielfeld.spieler.rechts==false)){
 				Spielfeld.spieler.y+=12;
 			} else if((Spielfeld.spieler.runter)&&(Spielfeld.spieler.hoch==false)&&(Spielfeld.spieler.links==false)&&(Spielfeld.spieler.rechts==false)){
 				Spielfeld.spieler.y-=12;
+			} else if((Spielfeld.spieler.links)&&(Spielfeld.spieler.hoch==false)){
+				Spielfeld.spieler.x+=12;
+			} else if((Spielfeld.spieler.links)&&(Spielfeld.spieler.runter==false)){
+				Spielfeld.spieler.x+=12;
+			} else if((Spielfeld.spieler.rechts)&&(Spielfeld.spieler.runter==false)){
+				Spielfeld.spieler.x-=12;
 			}
 			break;
 		

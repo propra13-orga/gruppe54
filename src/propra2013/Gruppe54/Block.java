@@ -25,6 +25,7 @@ public class Block extends Rectangle {
 	public Block(int x, int y, int width, int height, int ID){
 		setBounds(x,y,width,height);
 		this.ID = ID;
+		this.Zustand = 0;
 	}
 	
 	//zeichnet den Block, Bild wird anhand der ID geladen

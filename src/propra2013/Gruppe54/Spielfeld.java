@@ -87,22 +87,14 @@ public class Spielfeld extends JPanel implements Runnable{
 		schuss_spieler = new Schuss_Spieler();
 	}
 	
-	public void draw(Graphics g){
-		if((anzeige)&&(counter_anzeige<=300)){
-			g.setColor(Color.white);
-			g.setFont(font);
-			g.drawString(text_anzeige, (int)spieler.x, (int)spieler.y-10);
-			counter_anzeige++;
-		}
-	}
-	
 	public void paintComponent(Graphics g){
 		if(isFirst){ //Erstinitialisierung
+			anzeige = true;
 			define();
 			isFirst=false;
+			anzeige = false;
 		}
 		raum.draw(g); //zeichnet den raum
-	
 		if(propra2013.Gruppe54.spieler.aktiv){
 			spieler.draw(g);  //zeichnet den Spieler
 		}
@@ -117,7 +109,7 @@ public class Spielfeld extends JPanel implements Runnable{
 			Boss.draw(g);
 		}
 		
-		//Schuss wird nur in raum 3 gezeichnet
+		//Schuss vom Endgegner wird nur in raum 3 gezeichnet
 		if ((current_room==3)&&(Schuss_Endgegner.sichtbar==true)){
 			if (Schuss_Endgegner.checkPos==false){
 				Schuss_Endgegner.checkPos();
@@ -138,7 +130,12 @@ public class Spielfeld extends JPanel implements Runnable{
 			
 			schuss_spieler.draw(g);
 		}
-		draw(g);
+		if((anzeige)&&(counter_anzeige<=300)){   //Anzeige über dem Spieler wenn etwas eingesammelt wurde
+			g.setColor(Color.white);
+			g.setFont(font);
+			g.drawString(text_anzeige, (int)spieler.x, (int)spieler.y-10);
+			counter_anzeige++;
+		}
 	}
 	
 	//Thread

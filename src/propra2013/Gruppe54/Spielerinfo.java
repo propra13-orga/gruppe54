@@ -89,15 +89,15 @@ public class Spielerinfo extends JPanel implements Runnable{
 			g.drawString("Geschwindigkeit +10%",0,215);
 		}
 		if(ruestung_voll){
-			g.drawString("Sie haben bereits volle",0,200);
+			g.drawString("Du hast bereits volle",0,200);
 			g.drawString("Rüstung",0,215);
 		}
 		if(speed_voll){
-			g.drawString("Sie haben bereits",0,200);
+			g.drawString("Du hast bereits",0,200);
 			g.drawString("maximale Geschwindigkeit",0,215);
 		}
 		if(gold){
-			g.drawString("Sie haben nicht genug",0,200);
+			g.drawString("Du hast nicht genug",0,200);
 			g.drawString("Gold",0,215);
 		}
 	}
