@@ -101,24 +101,27 @@ public class Schuss_Spieler extends Rectangle {
 			(Schuss_Spieler.StartY+31 >= Endgegner.StartY)  &&
 			(Schuss_Spieler.StartY <= Endgegner.StartY+31)){		
 			
-			Endgegner.leben -= 1;	
-		}
+			
+			Endgegner.leben-=1;
+			
+		} else
 		
 		if( (Schuss_Spieler.StartX+31 >= GegnerRL.StartX)     && 
 				(Schuss_Spieler.StartX <= GegnerRL.StartX+31)  &&
 				(Schuss_Spieler.StartY+31 >= GegnerRL.StartY)  &&
 				(Schuss_Spieler.StartY <= GegnerRL.StartY+31)){		
 				
-				GegnerRL.aktiv=false;
-				
-			}
+			
+			GegnerRL.aktiv=false;
+			
+			} else
 		if( (Schuss_Spieler.StartX+31 >= GegnerOU.StartX)     && 
 				(Schuss_Spieler.StartX <= GegnerOU.StartX+31)  &&
 				(Schuss_Spieler.StartY+31 >= GegnerOU.StartY)  &&
 				(Schuss_Spieler.StartY <= GegnerOU.StartY+31)){		
 				
+					
 				GegnerOU.aktiv=false;
-				
 			}
 	}
 

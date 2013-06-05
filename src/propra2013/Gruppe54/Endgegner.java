@@ -12,7 +12,6 @@ public class Endgegner extends Rectangle{
 	 */
 	private static final long serialVersionUID = 1L;
 	public static int ID; //ID==0 normaler Engegener ID==1 letzte Endgegner
-	public static boolean aktiv=false; 
 	public static int StartX;
 	public static int StartY;
 	public static int leben;
@@ -25,7 +24,6 @@ public class Endgegner extends Rectangle{
 	public Endgegner(int ID){
 		setBounds(StartX,StartY,32,32);
 		Endgegner.ID= ID;
-		aktiv = true;		//gibt an ob der Gegner im Spiel ist
 		leben = 300;
 	}
 	

@@ -41,6 +41,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		thread.start();
 		spieler = new spieler();
 		spieler.rechts=true;
+		Boss = new Endgegner(0);
 	}
 	
 	/*       
@@ -80,11 +81,14 @@ public class Spielfeld extends JPanel implements Runnable{
 		raum = new Raum();
 		gegnerRL = new GegnerRL();
 		gegnerOU = new GegnerOU();
-		Boss = new Endgegner(0);
+		
 		loadImages();
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
 		schuss_endgegner = new Schuss_Endgegner();
 		schuss_spieler = new Schuss_Spieler();
+		GegnerOU.aktiv=true;
+		GegnerRL.aktiv=true;
+		Endgegner.leben=300;
 	}
 	
 	public void draw(Graphics g){
@@ -106,19 +110,19 @@ public class Spielfeld extends JPanel implements Runnable{
 		if(propra2013.Gruppe54.spieler.aktiv){
 			spieler.draw(g);  //zeichnet den Spieler
 		}
-		if(GegnerRL.aktiv){
+		if(GegnerRL.aktiv==true){
 			gegnerRL.draw(g);
 		}
-		if(GegnerOU.aktiv){
+		if(GegnerOU.aktiv==true){
 			gegnerOU.draw(g);
 		}
 
-		if ((Block.Boss_vorhanden==true)&&(Endgegner.aktiv)){
+		if ((Block.Boss_vorhanden==true)&&(Endgegner.leben>0)){
 			Boss.draw(g);
 		}
 		
 		//Schuss wird nur in raum 3 gezeichnet
-		if ((current_room==3)&&(Schuss_Endgegner.sichtbar==true)){
+		if ((current_room==3)&&(Schuss_Endgegner.sichtbar==true)&&(Endgegner.leben>0)){
 			if (Schuss_Endgegner.checkPos==false){
 				Schuss_Endgegner.checkPos();
 			}
@@ -131,6 +135,7 @@ public class Spielfeld extends JPanel implements Runnable{
 			if (Schuss_Spieler.checkPos==false){
 				Schuss_Spieler.checkPos();
 			}
+			
 			Schuss_Spieler.SchussRechts();
 			Schuss_Spieler.SchussLinks();
 			Schuss_Spieler.SchussOben();
