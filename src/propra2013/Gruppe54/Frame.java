@@ -180,25 +180,7 @@ public class Frame extends JFrame implements ActionListener{
 		    	  //prüfen welche ID die stelle an die gegangen werden soll hat und nur laufen wenn es keine Mauer ist
 		         if ((key == KeyEvent.VK_A)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+1.5, Spielfeld.spieler.y+26)!=1)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+2, Spielfeld.spieler.y+32)!=1)) {
 		        	dx = -1*Spielfeld.spieler.speed;
-		            
-		            if((Spielfeld.shop)&&(Spielfeld.check(15))){
-			        	Spielfeld.shop = false;
-			        }
-		            if((Spielfeld.shop_trank)&&(Spielfeld.check(16))){
-			        	Spielfeld.shop_trank = false;
-			        }
-			        if((Spielfeld.shop_mana)&&(Spielfeld.check(17))){
-			        	Spielfeld.shop_mana = false;
-			        }
-			        if((Spielfeld.shop_ruestung1)&&(Spielfeld.check(18))){
-			        	Spielfeld.shop_ruestung1 = false;
-			        }
-			        if((Spielfeld.shop_ruestung2)&&(Spielfeld.check(19))){
-			        	Spielfeld.shop_ruestung2 = false;
-			        }
-			        if((Spielfeld.shop_stiefel)&&(Spielfeld.check(20))){
-			        	Spielfeld.shop_stiefel = false;
-			        }
+		            Spielfeld.checkShopItems();
 		            
 		            Spielfeld.spieler.links = true;
 		            Spielfeld.spieler.rechts = false;
@@ -222,25 +204,7 @@ public class Frame extends JFrame implements ActionListener{
 
 		         if ((key == KeyEvent.VK_D)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+30, Spielfeld.spieler.y+26)!=1)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+30, Spielfeld.spieler.y+32)!=1)) {
 			        dx = 1*Spielfeld.spieler.speed;
-			        
-			        if((Spielfeld.shop)&&(Spielfeld.check(15))){
-			        	Spielfeld.shop = false;
-			        }
-			        if((Spielfeld.shop_trank)&&(Spielfeld.check(16))){
-			        	Spielfeld.shop_trank = false;
-			        }
-			        if((Spielfeld.shop_mana)&&(Spielfeld.check(17))){
-			        	Spielfeld.shop_mana = false;
-			        }
-			        if((Spielfeld.shop_ruestung1)&&(Spielfeld.check(18))){
-			        	Spielfeld.shop_ruestung1 = false;
-			        }
-			        if((Spielfeld.shop_ruestung2)&&(Spielfeld.check(19))){
-			        	Spielfeld.shop_ruestung2 = false;
-			        }
-			        if((Spielfeld.shop_stiefel)&&(Spielfeld.check(20))){
-			        	Spielfeld.shop_stiefel = false;
-			        }
+			        Spielfeld.checkShopItems();
 			        
 			        Spielfeld.spieler.links = false;
 		         	Spielfeld.spieler.rechts = true;
@@ -265,25 +229,7 @@ public class Frame extends JFrame implements ActionListener{
 		         if ((key == KeyEvent.VK_W)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+6, Spielfeld.spieler.y+26)!=1)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+26, Spielfeld.spieler.y+23)!=1)) {
 			        dy = -1*Spielfeld.spieler.speed;
 
-			        if((Spielfeld.shop)&&(Spielfeld.check(15))){
-			        	Spielfeld.shop = false;
-			        }
-			        if((Spielfeld.shop_trank)&&(Spielfeld.check(16))){
-			        	Spielfeld.shop_trank = false;
-			        }
-			        if((Spielfeld.shop_mana)&&(Spielfeld.check(17))){
-			        	Spielfeld.shop_mana = false;
-			        }
-			        if((Spielfeld.shop_ruestung1)&&(Spielfeld.check(18))){
-			        	Spielfeld.shop_ruestung1 = false;
-			        }
-			        if((Spielfeld.shop_ruestung2)&&(Spielfeld.check(19))){
-			        	Spielfeld.shop_ruestung2 = false;
-			        }
-			        if((Spielfeld.shop_stiefel)&&(Spielfeld.check(20))){
-			        	Spielfeld.shop_stiefel = false;
-			        }
-			        
+			        Spielfeld.checkShopItems();
 			        Spielfeld.spieler.links = false;
 			        Spielfeld.spieler.rechts = false;
 			        Spielfeld.spieler.hoch = true;
@@ -306,25 +252,7 @@ public class Frame extends JFrame implements ActionListener{
 		         
 		         if ((key == KeyEvent.VK_S)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+6, Spielfeld.spieler.y+32)!=1)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+26, Spielfeld.spieler.y+32)!=1)) {
 			        dy = 1*Spielfeld.spieler.speed;
-			        			        
-			        if((Spielfeld.shop)&&(Spielfeld.check(15))){
-			        	Spielfeld.shop = false;
-			        }
-			        if((Spielfeld.shop_trank)&&(Spielfeld.check(16))){
-			        	Spielfeld.shop_trank = false;
-			        }
-			        if((Spielfeld.shop_mana)&&(Spielfeld.check(17))){
-			        	Spielfeld.shop_mana = false;
-			        }
-			        if((Spielfeld.shop_ruestung1)&&(Spielfeld.check(18))){
-			        	Spielfeld.shop_ruestung1 = false;
-			        }
-			        if((Spielfeld.shop_ruestung2)&&(Spielfeld.check(19))){
-			        	Spielfeld.shop_ruestung2 = false;
-			        }
-			        if((Spielfeld.shop_stiefel)&&(Spielfeld.check(20))){
-			        	Spielfeld.shop_stiefel = false;
-			        }
+			        Spielfeld.checkShopItems();
 			        
 			        Spielfeld.spieler.links = false;
 			        Spielfeld.spieler.rechts = false;
@@ -449,7 +377,6 @@ public class Frame extends JFrame implements ActionListener{
 			@Override
 			public void keyTyped(KeyEvent e) {
 				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
@@ -527,17 +454,15 @@ public class Frame extends JFrame implements ActionListener{
 				SchussBild.setIcon(Schuss2);
 				image2 = Schuss2.getImage();
 				SchussAuswahl = 2;
-				} else
-					if(SchussAuswahl==2){
-						SchussBild.setIcon(Schuss3);
-						image2 = Schuss3.getImage();
-						SchussAuswahl = 3;
-					} else
-						if(SchussAuswahl==3){
-							SchussBild.setIcon(Schuss4);
-							image2 = Schuss4.getImage();
-							SchussAuswahl = 4;
-						}
+				} else if(SchussAuswahl==2){
+					SchussBild.setIcon(Schuss3);
+					image2 = Schuss3.getImage();
+					SchussAuswahl = 3;
+				} else if(SchussAuswahl==3){
+					SchussBild.setIcon(Schuss4);
+					image2 = Schuss4.getImage();
+					SchussAuswahl = 4;
+				}
 			}
 		});
 		
@@ -548,17 +473,15 @@ public class Frame extends JFrame implements ActionListener{
 				SchussBild.setIcon(Schuss3);
 				image2 = Schuss3.getImage();
 				SchussAuswahl =3;
-				} else
-					if(SchussAuswahl==3){
+				} else if(SchussAuswahl==3){
 					SchussBild.setIcon(Schuss2);
 					image2 = Schuss2.getImage();
 					SchussAuswahl =2;
-					} else
-						if(SchussAuswahl==2){
-							SchussBild.setIcon(Schuss1);
-							image2 = Schuss1.getImage();
-							SchussAuswahl =1;
-							} 
+				} else if(SchussAuswahl==2){
+					SchussBild.setIcon(Schuss1);
+					image2 = Schuss1.getImage();
+					SchussAuswahl =1;
+				} 
 			}		
 		});
 		
@@ -591,7 +514,6 @@ public class Frame extends JFrame implements ActionListener{
 				remove(PfeilLinks2);
 				remove(SchussBild);
 				remove(Schuss);
-				
 
 				Spielfeld.current_room=1;
 				Spielfeld.isFirst = true;
@@ -694,7 +616,6 @@ public class Frame extends JFrame implements ActionListener{
 				add(PfeilLinks2);
 				add(SchussBild);
 				add(Schuss);
-				init();
 				spieler.aktiv = false;
 				
 				levelAuswahl.setSelectedItem("Level"+Spielfeld.current_lvl);
@@ -757,17 +678,10 @@ public class Frame extends JFrame implements ActionListener{
 			
 		});
 		
-		init();
-	}//Frame ende
-	
-	/**
-	 * Initialisierung
-	 */
-	public void init(){
 		validate();
 		repaint();
 		setVisible(true);
-	}
+	}//Frame ende
 	
 	/**
 	 * @param args

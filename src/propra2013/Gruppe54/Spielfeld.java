@@ -15,11 +15,14 @@ public class Spielfeld extends JPanel implements Runnable{
 	
 	public static Image[] elemente = new Image[33];
 	
-	public static int current_lvl=1,current_room=1,current_player=1;
+	public static int current_lvl=1,current_room=1,current_player=1,counter_anzeige = 0;
 	public static double spieler_preposX=0,spieler_preposY=0;
 	
 	public static boolean isFirst = true; //erster Aufruf
-	public static boolean shop = false,shop_trank = false,shop_mana = false,shop_ruestung1 = false,shop_ruestung2 = false,shop_stiefel = false;
+	public static boolean shop = false,shop_trank = false,shop_mana = false,shop_ruestung1 = false,shop_ruestung2 = false,shop_stiefel = false,anzeige = false;
+	public static String text_anzeige;
+	
+	public Font font = new Font("Lucida Sans Typewriter",Font.PLAIN,8);
 	
 	public static Raum raum = new Raum();
 	public static level level = new level();
@@ -61,12 +64,16 @@ public class Spielfeld extends JPanel implements Runnable{
 		elemente[9] = new ImageIcon("pics/brunnen_rot.png").getImage();
 		elemente[14] = new ImageIcon("pics/zepter"+current_lvl+".png").getImage();
 		elemente[15] = new ImageIcon("pics/shopguy.png").getImage();
-		//shop
+		//Shopelemente
 		elemente[16] = new ImageIcon("pics/item_trank.png").getImage();
 		elemente[17] = new ImageIcon("pics/item_trank2.png").getImage();
 		elemente[18] = new ImageIcon("pics/item_ruestung1.png").getImage();
 		elemente[19] = new ImageIcon("pics/item_ruestung2.png").getImage();
 		elemente[20] = new ImageIcon("pics/item_stiefel.png").getImage();
+		//ID 21 Ausgang Shop, hat kein Image
+		//ID 22 leeres Feld, um Shop zu "verkleinern"
+		elemente[23] = new ImageIcon("pics/truhe_zu.png").getImage();
+		elemente[24] = new ImageIcon("pics/gold.png").getImage();
 	}
 	
 	public void define(){
@@ -74,12 +81,19 @@ public class Spielfeld extends JPanel implements Runnable{
 		gegnerRL = new GegnerRL();
 		gegnerOU = new GegnerOU();
 		Boss = new Endgegner(0);
-
 		loadImages();
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
 		schuss_endgegner = new Schuss_Endgegner();
 		schuss_spieler = new Schuss_Spieler();
-		
+	}
+	
+	public void draw(Graphics g){
+		if((anzeige)&&(counter_anzeige<=300)){
+			g.setColor(Color.white);
+			g.setFont(font);
+			g.drawString(text_anzeige, (int)spieler.x, (int)spieler.y-10);
+			counter_anzeige++;
+		}
 	}
 	
 	public void paintComponent(Graphics g){
@@ -103,7 +117,7 @@ public class Spielfeld extends JPanel implements Runnable{
 			Boss.draw(g);
 		}
 		
-		//Schuss wird nur in room 3 gezeichnet
+		//Schuss wird nur in raum 3 gezeichnet
 		if ((current_room==3)&&(Schuss_Endgegner.sichtbar==true)){
 			if (Schuss_Endgegner.checkPos==false){
 				Schuss_Endgegner.checkPos();
@@ -117,15 +131,14 @@ public class Spielfeld extends JPanel implements Runnable{
 			if (Schuss_Spieler.checkPos==false){
 				Schuss_Spieler.checkPos();
 			}
-			
 			Schuss_Spieler.SchussRechts();
 			Schuss_Spieler.SchussLinks();
 			Schuss_Spieler.SchussOben();
 			Schuss_Spieler.SchussUnten();
 			
 			schuss_spieler.draw(g);
-		
 		}
+		draw(g);
 	}
 	
 	//Thread
@@ -140,14 +153,21 @@ public class Spielfeld extends JPanel implements Runnable{
 				Frame.neustart.setVisible(true);
 			}
 			
+			if(counter_anzeige==300){
+				anzeige = false;
+				counter_anzeige = 0;
+			}
+			
 			if(propra2013.Gruppe54.spieler.aktiv){
 			//Steuerung des Spielers
-			if((check(1))&&(check(9))&&(check(15))&&(check(16))&&(check(17))&&(check(18))&&(check(19))&&(check(20))){		//Mauer, Brunnen und der Shopbesitzer dürfen nicht durchlaufen werden
+			if((check(1))&&(check(9))&&(check(15))&&(check(16))&&(check(17))
+					&&(check(18))&&(check(19))&&(check(20))&&(check(23))){		//prüfen ob Elemente vom Spieler durchschritten werden dürfen
 				checkKollision();
 				spieler.x += Frame.dx;
 				spieler.y += Frame.dy;
 				Elemente.beruehrung = false;
-			} else if((check(9)==false) | (check(15)==false) | (check(16)==false) | (check(17)==false) | (check(18)==false) | (check(19)==false) | (check(20)==false)){   //Brunnen soll berührt aber nicht durschritten werden, also wird das Element nur aufgerufen aber der Spieler läuft nicht
+			} else if((check(9)==false) | (check(15)==false) | (check(16)==false) | (check(17)==false)
+					| (check(18)==false) | (check(19)==false) | (check(20)==false) | (check(23)==false)){	//wenn nicht, dann wird nur die Aktion des Elements ausgeführt, der Spieler geht aber nicht weiter
 				checkKollision();
 				Elemente.beruehrung = false;
 			}
@@ -177,6 +197,28 @@ public class Spielfeld extends JPanel implements Runnable{
 		GegnerRL.aktiv = true;
 		spieler.x = Spielfeld.spieler_preposX;
 		spieler.y = Spielfeld.spieler_preposY;
+	}
+	
+	//prüft ob die boolean Variablen noch auf "true" gesetzt sind obwohl der Spieler nicht mehr vor dem Item steht
+	public static void checkShopItems(){
+		if((Spielfeld.shop)&&(Spielfeld.check(15))){
+        	Spielfeld.shop = false;
+        }
+        if((Spielfeld.shop_trank)&&(Spielfeld.check(16))){
+        	Spielfeld.shop_trank = false;
+        }
+        if((Spielfeld.shop_mana)&&(Spielfeld.check(17))){
+        	Spielfeld.shop_mana = false;
+        }
+        if((Spielfeld.shop_ruestung1)&&(Spielfeld.check(18))){
+        	Spielfeld.shop_ruestung1 = false;
+        }
+        if((Spielfeld.shop_ruestung2)&&(Spielfeld.check(19))){
+        	Spielfeld.shop_ruestung2 = false;
+        }
+        if((Spielfeld.shop_stiefel)&&(Spielfeld.check(20))){
+        	Spielfeld.shop_stiefel = false;
+        }
 	}
 	
 	//prüft an 4 Punkten ob sich dort ein Objekt befindet durch das der Spieler nicht laufen darf
