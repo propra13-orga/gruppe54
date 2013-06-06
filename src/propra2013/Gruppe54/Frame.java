@@ -357,11 +357,11 @@ public class Frame extends JFrame implements ActionListener{
 		        	 }
 		         }
 		         //Schuss des Spielers
-		         if ((key == KeyEvent.VK_SPACE)&&(spieler.aktiv)&&(spieler.mana>=20)){	
+		         if ((key == KeyEvent.VK_SPACE)&&(spieler.aktiv)&&(spieler.mana>=10)){	
 		        	Schuss_Spieler.sichtbar=true;
 		        	Schuss_Spieler.checkPos=false;
 					Schuss_Spieler.checkRichtung();
-					spieler.mana -= 20;
+					spieler.mana -= 10;
 					if(spieler.mana > 100){
 						spieler.mana = 100;
 					}
