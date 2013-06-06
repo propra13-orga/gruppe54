@@ -46,6 +46,9 @@ public class Frame extends JFrame implements ActionListener{
 	public static ImageIcon Figur1_oben = new ImageIcon("pics/Figur1_oben.png");
 	public static int CharakterAuswahl;
 	public static Image image;
+	public static ImageIcon Sieger = new ImageIcon();
+	public static ImageIcon Shopguy = new ImageIcon("pics/shopguy.png");
+	
 	//Schussauswahl
 	public static JLabel Schuss = new JLabel();
 	public static JLabel SchussBild = new JLabel();
@@ -57,6 +60,9 @@ public class Frame extends JFrame implements ActionListener{
 	public static ImageIcon Schuss4 = new ImageIcon("pics/schuss4.png");
 	public static int SchussAuswahl;
 	public static Image image2;
+	
+
+	
 	
 	//Lebensanzeige
 	public static ImageIcon lebensanzeige = new ImageIcon("pics/lebensanzeige.png");
@@ -108,6 +114,7 @@ public class Frame extends JFrame implements ActionListener{
 		charakterBild.setIcon(Figur1_unten);
 		image = Figur1_unten.getImage();
 		add(charakterBild);
+		Sieger =Figur1_unten;
 		
 		CharakterAuswahl = 1;
 		
@@ -146,6 +153,8 @@ public class Frame extends JFrame implements ActionListener{
 		add(PfeilLinks2);
 		add(PfeilRechts2);
 		
+		//Gewonnen Fenster
+	
 		//Anzeige des Menüs
 		enter.setBounds(250, 100, 150, 30);		//Button Enter
 		enter.setVisible(true);
@@ -275,10 +284,14 @@ public class Frame extends JFrame implements ActionListener{
 		            }
 		         }
 		         
-		         if ((key == KeyEvent.VK_ENTER)){			//ruft den Shop auf 
+		         //ruft den Shop auf
+		         if ((key == KeyEvent.VK_ENTER)){			
 		        	 if(Spielfeld.shop){
 		        		 if(Schuss_Spieler.sichtbar){
 		        			 Schuss_Spieler.sichtbar = false;
+		        		 }
+		        		 if(Schuss_Endgegner.sichtbar){
+		        			 Schuss_Endgegner.sichtbar=false;
 		        		 }
 		        		 Spielerinfo.anzeige = false;
 		        		 Spielfeld.spieler_preposX = Spielfeld.spieler.x;
@@ -357,11 +370,11 @@ public class Frame extends JFrame implements ActionListener{
 		        	 }
 		         }
 		         //Schuss des Spielers
-		         if ((key == KeyEvent.VK_SPACE)&&(spieler.aktiv)&&(spieler.mana>=20)){	
+		         if ((key == KeyEvent.VK_SPACE)&&(spieler.aktiv)&&(spieler.mana>=10)){	
 		        	Schuss_Spieler.sichtbar=true;
 		        	Schuss_Spieler.checkPos=false;
 					Schuss_Spieler.checkRichtung();
-					spieler.mana -= 20;
+					spieler.mana -= 10;
 					if(spieler.mana > 100){
 						spieler.mana = 100;
 					}
@@ -436,6 +449,7 @@ public class Frame extends JFrame implements ActionListener{
 				charakterBild.setIcon(Figur2_unten);
 				image = Figur2_unten.getImage();
 				CharakterAuswahl = 2;
+				Sieger =Figur2_unten;
 			}
 		});
 		
@@ -445,6 +459,7 @@ public class Frame extends JFrame implements ActionListener{
 				charakterBild.setIcon(Figur1_unten);
 				image = Figur1_unten.getImage();
 				CharakterAuswahl =1;
+				Sieger =Figur1_unten;
 			}
 		});
 		//Button PfeilRechts2 Click
@@ -579,6 +594,15 @@ public class Frame extends JFrame implements ActionListener{
 				neustart.setVisible(false);
 			}
 		});
+		
+		// Button Info Click
+		info.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+			JOptionPane.showMessageDialog(null, "Probier's doch erstmal ohne Infos :)","", JOptionPane.INFORMATION_MESSAGE,Shopguy);
+			
+			}
+			});
+		
 		
 		//Button Hauptmenü Click
 		menü.addActionListener(new ActionListener(){

@@ -17,12 +17,12 @@ public class Spielerinfo extends JPanel implements Runnable{
 	private static final long serialVersionUID = 1L;
 
 	public Spielerinfo(){
-		setBounds(25,55,160,250);
+		setBounds(25,55,160,400);
 		info.start();
 	}
 	
 	public void paintComponent(Graphics g){
-		g.clearRect(0, 0, 160, 250);
+		g.clearRect(0, 0, 160, 300);
 		g.drawRoundRect(0, 0, 158, 158, 10, 10);
 		g.drawString("Level: "+Spielfeld.current_lvl,4,30);
 		g.drawString("Gold: "+Spielfeld.spieler.gold,4,45);
@@ -35,6 +35,7 @@ public class Spielerinfo extends JPanel implements Runnable{
 			}
 			g.fill3DRect(4, 55, (int) (spieler.leben*1.5), 7, true);
 		}
+	
 		//Mana
 		if(spieler.mana>0){
 			g.setColor(Color.blue);

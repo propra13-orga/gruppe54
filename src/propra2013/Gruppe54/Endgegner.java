@@ -11,20 +11,33 @@ public class Endgegner extends Rectangle{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public static int ID; //ID==0 normaler Engegener ID==1 letzte Endgegner
 	public static int StartX;
 	public static int StartY;
 	public static int leben;
 	public static boolean unten=false;//gibt an ob der Gegner unten an einer Mauer steht
+	public static boolean rechts=false;//gibt an ob der Gegner rechts an einer Mauer steht
 	public static int schritte=0;
+	public static int StartLeben;
+	public static int Faktor;
 
 	/**
 	 * @param args
 	 */
-	public Endgegner(int ID){
+	public Endgegner(){
 		setBounds(StartX,StartY,32,32);
-		Endgegner.ID= ID;
-		leben = 300;
+		if (Spielfeld.current_lvl==1){
+			StartLeben=300;
+			Faktor=10;
+		} else 
+			if(Spielfeld.current_lvl==2){
+				StartLeben=400;
+				Faktor=12;
+			} else
+				if(Spielfeld.current_lvl==3){
+					StartLeben=500;
+					Faktor=16;
+				}
+		leben=StartLeben;
 	}
 	
 	//Zeichnet den Gegner
@@ -35,7 +48,7 @@ public class Endgegner extends Rectangle{
 	
 	//Gibt an wie sich der Gegner bewegt
 	public static void lauf(){
-		if (ID==0){
+		//Hoch-runter
 			if ((unten==false) &&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY+2+32)!=1)){
 				Kollision();
 				Endgegner.StartY+=1;
@@ -45,10 +58,8 @@ public class Endgegner extends Rectangle{
 				Endgegner.StartY-=1;
 				} else unten = false; 
 			
-		} else 
-			if(ID==1){
-			/* fehlt noch*/
-			}
+	
+			
 	}
 	
 
@@ -61,7 +72,9 @@ public class Endgegner extends Rectangle{
 				(Endgegner.StartY+31 >= Spielfeld.spieler.y)  &&
 				(Endgegner.StartY <= Spielfeld.spieler.y+31)){		
 				
-				spieler.leben -= 1;
+				if (spieler.ruestung>0){
+					spieler.ruestung-=1;
+				} else spieler.leben -= 1;
 				
 			}
 	}

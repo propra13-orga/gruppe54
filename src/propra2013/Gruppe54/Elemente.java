@@ -2,6 +2,8 @@ package propra2013.Gruppe54;
 
 import java.io.File;
 
+import javax.swing.JOptionPane;
+
 public class Elemente {
 	
 	public static boolean beruehrung = false;
@@ -20,9 +22,9 @@ public class Elemente {
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
 				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
 				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
-				GegnerOU.aktiv=true;
-				GegnerRL.aktiv=true;
-				Endgegner.leben=300;
+				GegnerOU.leben=GegnerOU.StartLeben;
+				GegnerRL.leben=GegnerRL.StartLeben;
+				Endgegner.leben=Endgegner.StartLeben;
 			}
 			break;
 			
@@ -120,8 +122,13 @@ public class Elemente {
 			block.ID = 0;
 			if(Spielfeld.current_lvl<3){
 				Frame.nextLevel.setVisible(true);
+			} else if(Spielfeld.current_lvl==3){
+				JOptionPane.showMessageDialog(null, "Du hast gewonnen!","",JOptionPane.PLAIN_MESSAGE, Frame.Sieger);
 			}
 			Frame.neustart.setVisible(true);
+			GegnerRL.leben=0;
+			GegnerOU.leben=0;
+			
 			}
 			break;
 		

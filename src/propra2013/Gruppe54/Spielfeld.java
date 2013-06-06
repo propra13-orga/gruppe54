@@ -32,6 +32,9 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static Endgegner Boss;
 	public static Schuss_Endgegner schuss_endgegner;
 	public static Schuss_Spieler schuss_spieler;
+	public static int EndgegnerLeben;
+	public static int GegnerRLLeben;
+	public static int GegnerOULeben;
 	
 	/**
 	 * Konstruktor
@@ -41,7 +44,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		thread.start();
 		spieler = new spieler();
 		spieler.rechts=true;
-		Boss = new Endgegner(0);
+		Boss = new Endgegner();
 	}
 	
 	/*       
@@ -86,19 +89,12 @@ public class Spielfeld extends JPanel implements Runnable{
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
 		schuss_endgegner = new Schuss_Endgegner();
 		schuss_spieler = new Schuss_Spieler();
-		GegnerOU.aktiv=true;
-		GegnerRL.aktiv=true;
-		Endgegner.leben=300;
+		GegnerOU.leben=GegnerOU.StartLeben;
+		GegnerRL.leben=GegnerRL.StartLeben;
+		Endgegner.leben=Endgegner.StartLeben;
 	}
 	
-	public void draw(Graphics g){
-		if((anzeige)&&(counter_anzeige<=300)){
-			g.setColor(Color.white);
-			g.setFont(font);
-			g.drawString(text_anzeige, (int)spieler.x, (int)spieler.y-10);
-			counter_anzeige++;
-		}
-	}
+
 	
 	public void paintComponent(Graphics g){
 		if(isFirst){ //Erstinitialisierung
@@ -110,10 +106,10 @@ public class Spielfeld extends JPanel implements Runnable{
 		if(propra2013.Gruppe54.spieler.aktiv){
 			spieler.draw(g);  //zeichnet den Spieler
 		}
-		if(GegnerRL.aktiv==true){
+		if(GegnerRL.leben>0){
 			gegnerRL.draw(g);
 		}
-		if(GegnerOU.aktiv==true){
+		if(GegnerOU.leben>0){
 			gegnerOU.draw(g);
 		}
 
@@ -143,7 +139,30 @@ public class Spielfeld extends JPanel implements Runnable{
 			
 			schuss_spieler.draw(g);
 		}
-		draw(g);
+		if((anzeige)&&(counter_anzeige<=300)){
+			g.setColor(Color.white);
+			g.setFont(font);
+			g.drawString(text_anzeige, (int)spieler.x, (int)spieler.y-10);
+			counter_anzeige++;
+		}
+		//Lebensanzeige Endgegner
+		if ((current_room==3)&&(Endgegner.leben>0)){
+			g.setColor(Color.red);
+			g.fill3DRect(Endgegner.StartX, Endgegner.StartY-10,Endgegner.leben/Endgegner.Faktor,3,true);
+				
+		}
+		//Lebensanzeige GegnerOU
+		if (GegnerOU.leben>0){
+			g.setColor(Color.red);
+			g.fill3DRect(GegnerOU.StartX, GegnerOU.StartY-10,GegnerOU.leben/GegnerOU.Faktor,3,true);
+				
+		}
+		//Lebensanzeige GegnerRL
+		if (GegnerRL.leben>0){
+			g.setColor(Color.red);
+			g.fill3DRect(GegnerRL.StartX, GegnerRL.StartY-10,GegnerRL.leben/GegnerRL.Faktor,3,true);
+				
+		}
 	}
 	
 	//Thread
@@ -188,20 +207,27 @@ public class Spielfeld extends JPanel implements Runnable{
 	
 	//lädt den Shop auf das Spielfeld
 	public static void showShop(){
+		GegnerOULeben=GegnerOU.leben;
+		GegnerRLLeben=GegnerRL.leben;
+		EndgegnerLeben=Endgegner.leben;
 		level.loadLevel(new File("level/level0_0.lvl"));
-		GegnerOU.aktiv = false;
-		GegnerRL.aktiv = false;
+		GegnerOU.leben=0;
+		GegnerRL.leben =0;
+		Endgegner.leben=0;
+		Schuss_Endgegner.sichtbar=false;
 		spieler.x = 150;
 		spieler.y = 150;
 	}
 	
 	//lädt wieder das derzeitige Level auf das Spielfeld
 	public static void hideShop(){
+		GegnerOU.leben=GegnerOULeben;
+		GegnerRL.leben=GegnerRLLeben;
+		Endgegner.leben=EndgegnerLeben;
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));
-		GegnerOU.aktiv = true;
-		GegnerRL.aktiv = true;
 		spieler.x = Spielfeld.spieler_preposX;
 		spieler.y = Spielfeld.spieler_preposY;
+		Schuss_Endgegner.sichtbar=true;
 	}
 	
 	//prüft ob die boolean Variablen noch auf "true" gesetzt sind obwohl der Spieler nicht mehr vor dem Item steht
