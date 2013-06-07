@@ -13,7 +13,7 @@ public class Spielfeld extends JPanel implements Runnable{
 
 	public Thread thread = new Thread(this);
 	
-	public static Image[] elemente = new Image[33];
+	public static Image[] elemente = new Image[32];
 	
 	public static int current_lvl=1,current_room=1,current_player=1,counter_anzeige = 0;
 	public static double spieler_preposX=0,spieler_preposY=0;
@@ -45,7 +45,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		thread.start();
 		spieler = new spieler();
 		spieler.rechts=true;
-		Boss = new Endgegner();
+
 	}
 	
 	/*       
@@ -75,10 +75,13 @@ public class Spielfeld extends JPanel implements Runnable{
 		elemente[18] = new ImageIcon("pics/item_ruestung1.png").getImage();
 		elemente[19] = new ImageIcon("pics/item_ruestung2.png").getImage();
 		elemente[20] = new ImageIcon("pics/item_stiefel.png").getImage();
-		//ID 21 Ausgang Shop, hat kein Image
-		//ID 22 leeres Feld, um Shop zu "verkleinern"
+		elemente[21] = new ImageIcon("pics/eingang_shop.png").getImage();
+		elemente[22] = new ImageIcon("pics/ausgang_shop.png").getImage();
+		//Schatzelemente
 		elemente[23] = new ImageIcon("pics/truhe_zu.png").getImage();
 		elemente[24] = new ImageIcon("pics/gold.png").getImage();
+		elemente[27] = new ImageIcon("pics/checkpoint.png").getImage();
+		elemente[31] = new ImageIcon("pics/leer.png").getImage();
 	}
 	
 	public void define(){
@@ -86,6 +89,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		gegnerRL = new GegnerRL();
 		gegnerOU = new GegnerOU();
 		falle = new Falle();
+		Boss = new Endgegner();
 		
 		loadImages();
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
@@ -96,22 +100,22 @@ public class Spielfeld extends JPanel implements Runnable{
 		Endgegner.leben=Endgegner.StartLeben;
 		
 	}
-	
 
-	
 	public void paintComponent(Graphics g){
 		if(isFirst){ //Erstinitialisierung
 			define();
 			isFirst=false;
 		}
 		raum.draw(g); //zeichnet den raum
-	
+		
 		if(propra2013.Gruppe54.spieler.aktiv){
 			spieler.draw(g);  //zeichnet den Spieler
 		}
+
 		if((GegnerRL.leben>0)&&(GegnerRL.aktiv)){
 			gegnerRL.draw(g);
 		}
+		
 		if((GegnerOU.leben>0)&&(GegnerOU.aktiv)){
 			gegnerOU.draw(g);
 		}
@@ -120,12 +124,14 @@ public class Spielfeld extends JPanel implements Runnable{
 			falle.draw(g);
 		}
 
-		if ((Block.Boss_vorhanden==true)&&(Endgegner.leben>0)){
+		if ((Endgegner.leben>0)&&(Endgegner.aktiv)){
 			Boss.draw(g);
 		}
 		
+
 		//SchussEndgegner wird nur in raum 3 gezeichnet
 		if ((current_room==3)&&(Schuss_Endgegner.sichtbar==true)&&(Endgegner.leben>0)&&(Schuss_Endgegner.aktiv)){
+
 			if (Schuss_Endgegner.checkPos==false){
 				Schuss_Endgegner.checkPos();
 			}
@@ -146,6 +152,7 @@ public class Spielfeld extends JPanel implements Runnable{
 			
 			schuss_spieler.draw(g);
 		}
+
 		//Anzeige von Schatzelementen
 		if((anzeige)&&(counter_anzeige<=300)){
 			g.setColor(Color.white);
@@ -153,23 +160,40 @@ public class Spielfeld extends JPanel implements Runnable{
 			g.drawString(text_anzeige, (int)spieler.x, (int)spieler.y-10);
 			counter_anzeige++;
 		}
+		
 		//Lebensanzeige Endgegner
-		if ((current_room==3)&&(Endgegner.leben>0)){
-			g.setColor(Color.red);
+		if ((current_room==3)&&(Endgegner.leben>0)&&(Endgegner.aktiv)){
+			if(Endgegner.leben>Endgegner.StartLeben/4){
+				g.setColor(Color.green);
+			} else {
+				g.setColor(Color.red);
+			}
 			g.fill3DRect(Endgegner.StartX, Endgegner.StartY-10,Endgegner.leben/Endgegner.Faktor,3,true);
 				
 		}
 		//Lebensanzeige GegnerOU
 		if ((GegnerOU.aktiv)&&(GegnerOU.leben>0)){
-			g.setColor(Color.red);
+
+			if(GegnerOU.leben>GegnerOU.StartLeben/4){
+				g.setColor(Color.green);
+			} else {
+				g.setColor(Color.red);
+			}
+
 			g.fill3DRect(GegnerOU.StartX, GegnerOU.StartY-10,GegnerOU.leben/GegnerOU.Faktor,3,true);
 				
 		}
 		//Lebensanzeige GegnerRL
+
 		if ((GegnerRL.leben>0)&&(GegnerRL.aktiv)){
-			g.setColor(Color.red);
+
+			if(GegnerRL.leben>GegnerOU.StartLeben/4){
+				g.setColor(Color.green);
+			} else {
+				g.setColor(Color.red);
+			}
+
 			g.fill3DRect(GegnerRL.StartX, GegnerRL.StartY-10,GegnerRL.leben/GegnerRL.Faktor,3,true);
-				
 		}
 	}
 	
@@ -178,9 +202,19 @@ public class Spielfeld extends JPanel implements Runnable{
 		while(true){
 			validate();
 			repaint();
-
-			//Button Neustart anzeigen wenn der Spieler keine Lebenspunkte mehr hat
-			if((propra2013.Gruppe54.spieler.leben <= 0)&&(propra2013.Gruppe54.spieler.aktiv)){
+			
+			if((propra2013.Gruppe54.spieler.leben <= 0)&&(propra2013.Gruppe54.spieler.superleben > 0)){
+				propra2013.Gruppe54.spieler.superleben -= 1;
+				propra2013.Gruppe54.spieler.leben = 100;
+				if(current_room == propra2013.Gruppe54.spieler.check_room){
+					level.loadLevel(new File("level/level"+current_lvl+"_"+propra2013.Gruppe54.spieler.check_room+".lvl"));
+				} else if(current_room != propra2013.Gruppe54.spieler.check_room){
+					current_room = propra2013.Gruppe54.spieler.check_room;
+					define();
+				}
+				spieler.x = propra2013.Gruppe54.spieler.checkpoint.getX();
+				spieler.y = propra2013.Gruppe54.spieler.checkpoint.getY();
+			} else if((propra2013.Gruppe54.spieler.leben <= 0)&&(propra2013.Gruppe54.spieler.superleben == 0)){
 				propra2013.Gruppe54.spieler.aktiv = false;
 				Frame.neustart.setVisible(true);
 			}
@@ -224,7 +258,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		GegnerRL.leben =0;
 		Endgegner.leben=0;
 		Schuss_Endgegner.sichtbar=false;
-		spieler.x = 150;
+		spieler.x = 100;
 		spieler.y = 150;
 	}
 	

@@ -1,6 +1,7 @@
 package propra2013.Gruppe54;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
 
 public class spieler extends Rectangle {
@@ -16,9 +17,12 @@ public class spieler extends Rectangle {
 	public int item_trank = 0,item_mana = 0;
 	public static int ruestung = 50;
 	public static int mana = 100;			  //Zauberkraft
-	public static int leben = 100;
+	public static int leben = 100,superleben = 3;
 	public static boolean aktiv = false;
 	public static int Lebenspunkte;
+	public static Point checkpoint;
+	public static int check_room = 1;
+
 
 	public boolean beweglich = false;
 

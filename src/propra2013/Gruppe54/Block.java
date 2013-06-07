@@ -17,7 +17,7 @@ public class Block extends Rectangle {
 	public int counter_gegner11=0;
 	public int counter_gegner12=0;
 	public int counter_falle=0;
-	public static boolean Boss_vorhanden=false;
+
 
 	
 	/**
@@ -26,11 +26,12 @@ public class Block extends Rectangle {
 	public Block(int x, int y, int width, int height, int ID){
 		setBounds(x,y,width,height);
 		this.ID = ID;
+		this.Zustand = 0;
 	}
 	
 	//zeichnet den Block, Bild wird anhand der ID geladen
 	public void draw(Graphics g){ 
-		if(((ID>1)&&(ID<5))|(ID>5)&&(ID<7)|(ID==14)|((ID>15)&&(ID<22)|(ID>22))){      
+		if(((ID>1)&&(ID<5))|(ID>5)&&(ID<7)|(ID==14)|((ID>15)&&(ID<31))){      
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
 			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null); //element zeichnen, damit hintergrund richtig angezeigt wird
 		} 
@@ -107,12 +108,12 @@ public class Block extends Rectangle {
 		case 12:	//Endgegner
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
 			Schuss_Endgegner.aktiv=true;
-			Boss_vorhanden=true;
-			if((counter_gegner12==0)&&(Endgegner.leben>0)){	
+			Endgegner.aktiv=true;
+			if((counter_gegner12==0)&&(Endgegner.leben>0)&&(Endgegner.aktiv)){	
 			counter_gegner12=1;
 			Endgegner.StartX = x;
 			Endgegner.StartY = y;
-			} else if ((Endgegner.leben>0)&&(counter_gegner12==1)){
+			} else if ((Endgegner.leben>0)&&(counter_gegner12==1)&&(Endgegner.aktiv)){
 				Endgegner.lauf();
 				Spielfeld.Boss.draw(g);
 			}
@@ -156,6 +157,7 @@ public class Block extends Rectangle {
 				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);
 			}
 			break;
+
 		case 28:	//bewegliche Falle
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
 			/*der counter wird auf eins gesetz wenn ein gegner gezeichnet wurde und ab da
@@ -173,6 +175,20 @@ public class Block extends Rectangle {
 					Spielfeld.falle.draw(g);
 				}
 				break;
+		
+		case 27:
+			if(Zustand==0){
+				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null); 
+				g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
+			} else if(Zustand==1) {
+				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);
+				g.drawImage(new ImageIcon("pics/checkpoint_aktiv.png").getImage(),x,y,width,height,null);
+			}
+			break;
+			
+		case 31:
+			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
+			break;
 			
 		default:
 			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);   //ImageArray elemente[], wird in Spielfeld.define() definiert

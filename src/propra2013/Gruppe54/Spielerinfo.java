@@ -36,6 +36,11 @@ public class Spielerinfo extends JPanel implements Runnable{
 			g.fill3DRect(4, 55, (int) (spieler.leben*1.5), 7, true);
 		}
 	
+		if(spieler.superleben > 0){
+			g.setColor(Color.black);
+			g.drawString("Leben: "+spieler.superleben,4,150);
+		}
+		
 		//Mana
 		if(spieler.mana>0){
 			g.setColor(Color.blue);
@@ -90,15 +95,15 @@ public class Spielerinfo extends JPanel implements Runnable{
 			g.drawString("Geschwindigkeit +10%",0,215);
 		}
 		if(ruestung_voll){
-			g.drawString("Sie haben bereits volle",0,200);
+			g.drawString("Du hast bereits volle",0,200);
 			g.drawString("Rüstung",0,215);
 		}
 		if(speed_voll){
-			g.drawString("Sie haben bereits",0,200);
+			g.drawString("Du hast bereits",0,200);
 			g.drawString("maximale Geschwindigkeit",0,215);
 		}
 		if(gold){
-			g.drawString("Sie haben nicht genug",0,200);
+			g.drawString("Du hast nicht genug",0,200);
 			g.drawString("Gold",0,215);
 		}
 	}
