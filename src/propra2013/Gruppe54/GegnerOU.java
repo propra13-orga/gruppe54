@@ -22,6 +22,7 @@ public class GegnerOU extends Rectangle{
 	public static int x,y;
 	public static int StartLeben;
 	public static int Faktor; //zum zeichen der Lebensanzeige
+	public static boolean aktiv;
 	/**
 	 * @param args
 	 */
@@ -41,6 +42,7 @@ public class GegnerOU extends Rectangle{
 					Faktor=10;
 				}
 		leben=StartLeben;		
+		aktiv=false;
 	}
 	
 	public void draw(Graphics g){

@@ -11,12 +11,14 @@ public class Schuss_Endgegner extends Rectangle {
 	public static boolean checkPos=false;
 	public static int StartX,StartY;
 	public static boolean sichtbar=false;
+	public static boolean aktiv;
 
 
 	
 	public Schuss_Endgegner() {
 		setBounds(StartX,StartY,32,32);
 		sichtbar=true;
+		aktiv=false;
 	}
 	
 	//Zeichnet einen Schuss

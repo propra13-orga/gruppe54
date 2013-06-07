@@ -22,6 +22,7 @@ public class GegnerRL extends Rectangle  {
 	public static int x,y;
 	public static int StartLeben;
 	public static int Faktor;
+	public static boolean aktiv;//zur abfrage ob die ID in der Datei steht
 	
 	/**
 	 * @param args
@@ -42,6 +43,7 @@ public class GegnerRL extends Rectangle  {
 					Faktor=10;
 				}
 		leben=StartLeben;
+		aktiv=false;
 	}
 	
 	

@@ -18,6 +18,7 @@ public class spieler extends Rectangle {
 	public static int mana = 100;			  //Zauberkraft
 	public static int leben = 100;
 	public static boolean aktiv = false;
+	public static int Lebenspunkte;
 
 	public boolean beweglich = false;
 
@@ -38,6 +39,8 @@ public class spieler extends Rectangle {
 		setBounds((int)x,(int)y,32,32);
 		aktiv = true;		//gibt an ob der Spieler im Spiel ist
 		beweglich = true;
+		Lebenspunkte=3; //Wenn man stirbt sollen sie sich um 1 verringern,
+						//wenn alle drei Punkte weg sind, game over
 	}
 	
 	public void draw(Graphics g){

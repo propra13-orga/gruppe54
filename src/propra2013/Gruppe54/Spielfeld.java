@@ -35,6 +35,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static int EndgegnerLeben;
 	public static int GegnerRLLeben;
 	public static int GegnerOULeben;
+	public static Falle falle;
 	
 	/**
 	 * Konstruktor
@@ -84,6 +85,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		raum = new Raum();
 		gegnerRL = new GegnerRL();
 		gegnerOU = new GegnerOU();
+		falle = new Falle();
 		
 		loadImages();
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
@@ -92,6 +94,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		GegnerOU.leben=GegnerOU.StartLeben;
 		GegnerRL.leben=GegnerRL.StartLeben;
 		Endgegner.leben=Endgegner.StartLeben;
+		
 	}
 	
 
@@ -106,19 +109,23 @@ public class Spielfeld extends JPanel implements Runnable{
 		if(propra2013.Gruppe54.spieler.aktiv){
 			spieler.draw(g);  //zeichnet den Spieler
 		}
-		if(GegnerRL.leben>0){
+		if((GegnerRL.leben>0)&&(GegnerRL.aktiv)){
 			gegnerRL.draw(g);
 		}
-		if(GegnerOU.leben>0){
+		if((GegnerOU.leben>0)&&(GegnerOU.aktiv)){
 			gegnerOU.draw(g);
+		}
+		
+		if(Falle.aktiv){
+			falle.draw(g);
 		}
 
 		if ((Block.Boss_vorhanden==true)&&(Endgegner.leben>0)){
 			Boss.draw(g);
 		}
 		
-		//Schuss wird nur in raum 3 gezeichnet
-		if ((current_room==3)&&(Schuss_Endgegner.sichtbar==true)&&(Endgegner.leben>0)){
+		//SchussEndgegner wird nur in raum 3 gezeichnet
+		if ((current_room==3)&&(Schuss_Endgegner.sichtbar==true)&&(Endgegner.leben>0)&&(Schuss_Endgegner.aktiv)){
 			if (Schuss_Endgegner.checkPos==false){
 				Schuss_Endgegner.checkPos();
 			}
@@ -126,7 +133,7 @@ public class Spielfeld extends JPanel implements Runnable{
 			schuss_endgegner.draw(g);
 		
 		}
-
+		//Schuss Spieler
 		if (Schuss_Spieler.sichtbar==true){
 			if (Schuss_Spieler.checkPos==false){
 				Schuss_Spieler.checkPos();
@@ -139,6 +146,7 @@ public class Spielfeld extends JPanel implements Runnable{
 			
 			schuss_spieler.draw(g);
 		}
+		//Anzeige von Schatzelementen
 		if((anzeige)&&(counter_anzeige<=300)){
 			g.setColor(Color.white);
 			g.setFont(font);
@@ -152,13 +160,13 @@ public class Spielfeld extends JPanel implements Runnable{
 				
 		}
 		//Lebensanzeige GegnerOU
-		if (GegnerOU.leben>0){
+		if ((GegnerOU.aktiv)&&(GegnerOU.leben>0)){
 			g.setColor(Color.red);
 			g.fill3DRect(GegnerOU.StartX, GegnerOU.StartY-10,GegnerOU.leben/GegnerOU.Faktor,3,true);
 				
 		}
 		//Lebensanzeige GegnerRL
-		if (GegnerRL.leben>0){
+		if ((GegnerRL.leben>0)&&(GegnerRL.aktiv)){
 			g.setColor(Color.red);
 			g.fill3DRect(GegnerRL.StartX, GegnerRL.StartY-10,GegnerRL.leben/GegnerRL.Faktor,3,true);
 				
@@ -210,6 +218,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		GegnerOULeben=GegnerOU.leben;
 		GegnerRLLeben=GegnerRL.leben;
 		EndgegnerLeben=Endgegner.leben;
+		Falle.aktiv=false;
 		level.loadLevel(new File("level/level0_0.lvl"));
 		GegnerOU.leben=0;
 		GegnerRL.leben =0;
@@ -224,6 +233,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		GegnerOU.leben=GegnerOULeben;
 		GegnerRL.leben=GegnerRLLeben;
 		Endgegner.leben=EndgegnerLeben;
+		Falle.aktiv=false;
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));
 		spieler.x = Spielfeld.spieler_preposX;
 		spieler.y = Spielfeld.spieler_preposY;

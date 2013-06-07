@@ -18,6 +18,8 @@ public class Elemente {
 					Schuss_Spieler.sichtbar = false;
 				}
 				Spielfeld.current_room+=1;
+				Falle.aktiv=false;
+				Schuss_Endgegner.aktiv=false;
 				Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_"+Spielfeld.current_room+".lvl"));
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
 				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
@@ -25,6 +27,7 @@ public class Elemente {
 				GegnerOU.leben=GegnerOU.StartLeben;
 				GegnerRL.leben=GegnerRL.StartLeben;
 				Endgegner.leben=Endgegner.StartLeben;
+				
 			}
 			break;
 			
@@ -169,7 +172,8 @@ public class Elemente {
 				block.Zustand = 1;
 				Spielfeld.anzeige = true;
 				Spielfeld.text_anzeige = "+150 Gold";
-			}
+			} 
+			break;
 		case 24://Gold
 			int i = (int) (Math.random()*3+1);		//Zufallszahl zwischen 1 und 3 erzeugen
 			if(block.Zustand == 0){
@@ -191,9 +195,12 @@ public class Elemente {
 					Spielfeld.text_anzeige = "+50 Gold";
 					break;
 				}
+
 				block.Zustand = 1;
 				Spielfeld.anzeige = true;
 			}
+			break;
+			
 		default:
 			//
 			break;

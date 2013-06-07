@@ -353,16 +353,16 @@ public class Frame extends JFrame implements ActionListener{
 		        		 }
 		        	 }
 		         }
-		         
-		         if ((key == KeyEvent.VK_1)&&(spieler.aktiv)&&(spieler.leben<100)&&(Spielfeld.spieler.item_trank>0)){   //Trank
+		         //Lebenstrank nehmen
+		         if ((key == KeyEvent.VK_N)&&(spieler.aktiv)&&(spieler.leben<100)&&(Spielfeld.spieler.item_trank>0)){   //Trank
 		        	 spieler.leben += 40;
 		        	 Spielfeld.spieler.item_trank -= 1;
 		        	 if(spieler.leben>100){
 		        		 spieler.leben = 100;
 		        	 }
 		         }
-		         
-		         if ((key == KeyEvent.VK_2)&&(spieler.aktiv)&&(spieler.mana<100)&&(Spielfeld.spieler.item_mana>0)){		//Mana
+		         //Mana Trank nehmen
+		         if ((key == KeyEvent.VK_M)&&(spieler.aktiv)&&(spieler.mana<100)&&(Spielfeld.spieler.item_mana>0)){		//Mana
 		        	 spieler.mana += 40;
 		        	 Spielfeld.spieler.item_mana -= 1;
 		        	 if(spieler.mana>100){
