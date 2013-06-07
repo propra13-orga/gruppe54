@@ -2,6 +2,7 @@ package propra2013.Gruppe54;
 
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -46,6 +47,9 @@ public class Frame extends JFrame implements ActionListener{
 	public static ImageIcon Figur1_oben = new ImageIcon("pics/Figur1_oben.png");
 	public static int CharakterAuswahl;
 	public static Image image;
+	public static ImageIcon Sieger = new ImageIcon();
+	public static ImageIcon Shopguy = new ImageIcon("pics/shopguy.png");
+	
 	//Schussauswahl
 	public static JLabel Schuss = new JLabel();
 	public static JLabel SchussBild = new JLabel();
@@ -57,6 +61,9 @@ public class Frame extends JFrame implements ActionListener{
 	public static ImageIcon Schuss4 = new ImageIcon("pics/schuss4.png");
 	public static int SchussAuswahl;
 	public static Image image2;
+	
+
+	
 	
 	//Lebensanzeige
 	public static ImageIcon lebensanzeige = new ImageIcon("pics/lebensanzeige.png");
@@ -108,6 +115,7 @@ public class Frame extends JFrame implements ActionListener{
 		charakterBild.setIcon(Figur1_unten);
 		image = Figur1_unten.getImage();
 		add(charakterBild);
+		Sieger =Figur1_unten;
 		
 		CharakterAuswahl = 1;
 		
@@ -146,6 +154,8 @@ public class Frame extends JFrame implements ActionListener{
 		add(PfeilLinks2);
 		add(PfeilRechts2);
 		
+		//Gewonnen Fenster
+	
 		//Anzeige des Menüs
 		enter.setBounds(250, 100, 150, 30);		//Button Enter
 		enter.setVisible(true);
@@ -275,10 +285,14 @@ public class Frame extends JFrame implements ActionListener{
 		            }
 		         }
 		         
-		         if ((key == KeyEvent.VK_ENTER)){			//ruft den Shop auf 
+		         //ruft den Shop auf
+		         if ((key == KeyEvent.VK_ENTER)){			
 		        	 if(Spielfeld.shop){
 		        		 if(Schuss_Spieler.sichtbar){
 		        			 Schuss_Spieler.sichtbar = false;
+		        		 }
+		        		 if(Schuss_Endgegner.sichtbar){
+		        			 Schuss_Endgegner.sichtbar=false;
 		        		 }
 		        		 Spielerinfo.anzeige = false;
 		        		 Spielfeld.spieler_preposX = Spielfeld.spieler.x;
@@ -436,6 +450,7 @@ public class Frame extends JFrame implements ActionListener{
 				charakterBild.setIcon(Figur2_unten);
 				image = Figur2_unten.getImage();
 				CharakterAuswahl = 2;
+				Sieger =Figur2_unten;
 			}
 		});
 		
@@ -445,6 +460,7 @@ public class Frame extends JFrame implements ActionListener{
 				charakterBild.setIcon(Figur1_unten);
 				image = Figur1_unten.getImage();
 				CharakterAuswahl =1;
+				Sieger =Figur1_unten;
 			}
 		});
 		//Button PfeilRechts2 Click
@@ -530,6 +546,8 @@ public class Frame extends JFrame implements ActionListener{
 				add(neustart);
 				add(nextLevel);
 				menü.setVisible(true);
+				spieler.checkpoint = new Point(Raum.Startpunkt[Spielfeld.current_lvl-1].x,Raum.Startpunkt[Spielfeld.current_lvl-1].y);
+				spieler.check_room = 1;
 				
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
 				spieler.aktiv = true;
@@ -555,6 +573,7 @@ public class Frame extends JFrame implements ActionListener{
 				Spielfeld.spieler.beweglich = true;
 				spieler.leben = 100;
 				spieler.mana = 100;
+				spieler.superleben = 3;
 				neustart.setVisible(false);
 				nextLevel.setVisible(false);
 				Block.Boss_vorhanden=false;
@@ -569,6 +588,8 @@ public class Frame extends JFrame implements ActionListener{
 			public void actionPerformed(ActionEvent e){
 				Spielfeld.current_lvl += 1;
 				Spielfeld.current_room = 1; 
+				spieler.checkpoint = new Point(Raum.Startpunkt[Spielfeld.current_lvl-1].x,Raum.Startpunkt[Spielfeld.current_lvl-1].y);
+				spieler.check_room = 1;
 				spielfeld.define();
 				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].getX();
 				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].getY();
@@ -579,6 +600,15 @@ public class Frame extends JFrame implements ActionListener{
 				neustart.setVisible(false);
 			}
 		});
+		
+		// Button Info Click
+		info.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+			JOptionPane.showMessageDialog(null, "Probier's doch erstmal ohne Infos :)","", JOptionPane.INFORMATION_MESSAGE,Shopguy);
+			
+			}
+			});
+		
 		
 		//Button Hauptmenü Click
 		menü.addActionListener(new ActionListener(){
@@ -677,7 +707,6 @@ public class Frame extends JFrame implements ActionListener{
 			}
 			
 		});
-		
 		validate();
 		repaint();
 		setVisible(true);
@@ -688,13 +717,11 @@ public class Frame extends JFrame implements ActionListener{
 	 */
 	public static void main(String[] args) {
 		Frame frame = new Frame();
-		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		
 	}
 	
 	}

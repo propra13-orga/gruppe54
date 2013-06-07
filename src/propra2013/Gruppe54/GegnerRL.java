@@ -16,10 +16,12 @@ public class GegnerRL extends Rectangle  {
 	 */
 	public static boolean unten=false; // gibt an, ob der Gegener unten an eine Wand stößt
 	public static boolean rechts=false; // gibt an, ob der Gegener rechts an eine Wand stößt  
-	public static boolean aktiv=false; 
+	public static int leben; 
 	public static int StartX;
 	public static int StartY;
 	public static int x,y;
+	public static int StartLeben;
+	public static int Faktor;
 	
 	/**
 	 * @param args
@@ -27,7 +29,19 @@ public class GegnerRL extends Rectangle  {
 	
 	public GegnerRL() {
 		setBounds(StartX,StartY,32,32);
-		aktiv = true;		//gibt an ob der Gegner im Spiel ist
+		if (Spielfeld.current_lvl==1){
+			StartLeben=100;
+			Faktor=3;
+		} else 
+			if(Spielfeld.current_lvl==2){
+				StartLeben=200;
+				Faktor=6;
+			} else
+				if(Spielfeld.current_lvl==3){
+					StartLeben=300;
+					Faktor=10;
+				}
+		leben=StartLeben;
 	}
 	
 	
@@ -63,7 +77,9 @@ public static void Kollision2(){
 			(GegnerRL.StartY+31 >= Spielfeld.spieler.y)  &&
 			(GegnerRL.StartY <= Spielfeld.spieler.y+31)){		
 			
-			spieler.leben -= 1;
+			if (spieler.ruestung>0){
+				spieler.ruestung-=1;
+			} else spieler.leben -= 1;
 			
 		}
 }

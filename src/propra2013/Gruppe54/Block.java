@@ -30,7 +30,7 @@ public class Block extends Rectangle {
 	
 	//zeichnet den Block, Bild wird anhand der ID geladen
 	public void draw(Graphics g){ 
-		if(((ID>1)&&(ID<5))|(ID>5)&&(ID<7)|(ID==14)|((ID>15)&&(ID<22)|(ID>22))){      
+		if(((ID>1)&&(ID<5))|(ID>5)&&(ID<7)|(ID==14)|((ID>15)&&(ID<31))){      
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
 			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null); //element zeichnen, damit hintergrund richtig angezeigt wird
 		} 
@@ -77,11 +77,11 @@ public class Block extends Rectangle {
 			/*der counter wird auf eins gesetz wenn ein gegner gezeichnet wurde und ab da
 			 * soll er nur noch laufen und nicht ständig an den start punkt gezeichnet werden
 				*/
-			if((counter_gegner10==0)&&(GegnerRL.aktiv)){
+			if((counter_gegner10==0)&&(GegnerRL.leben>0)){
 			counter_gegner10=1;
 			GegnerRL.StartX = x;
 			GegnerRL.StartY = y;
-			} else if ((GegnerRL.aktiv)&&(counter_gegner10==1)){
+			} else if ((GegnerRL.leben>0)&&(counter_gegner10==1)){
 				GegnerRL.lauf();
 				Spielfeld.gegnerRL.draw(g);
 			}
@@ -92,11 +92,11 @@ public class Block extends Rectangle {
 		/*der counter wird auf eins gesetz wenn ein gegner gezeichnet wurde und ab da
 		 * soll er nur noch laufen und nicht ständig an den start punkt gezeichnet werden
 			*/
-			if((GegnerOU.aktiv)&&(counter_gegner11==0)){	
+			if((GegnerOU.leben>0)&&(counter_gegner11==0)){	
 			counter_gegner11=1;
 			GegnerOU.StartX = x;
 			GegnerOU.StartY = y;
-			} else if ((counter_gegner11==1)&&(GegnerOU.aktiv)){
+			} else if ((counter_gegner11==1)&&(GegnerOU.leben>0)){
 				GegnerOU.lauf();
 				Spielfeld.gegnerOU.draw(g);
 			}
@@ -152,6 +152,20 @@ public class Block extends Rectangle {
 			} else if(Zustand==1) {
 				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);
 			}
+			break;
+		
+		case 27:
+			if(Zustand==0){
+				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null); 
+				g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
+			} else if(Zustand==1) {
+				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);
+				g.drawImage(new ImageIcon("pics/checkpoint_aktiv.png").getImage(),x,y,width,height,null);
+			}
+			break;
+			
+		case 31:
+			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
 			break;
 			
 		default:

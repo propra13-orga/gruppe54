@@ -44,7 +44,9 @@ public class Schuss_Endgegner extends Rectangle {
 				(Schuss_Endgegner.StartY+31 >= Spielfeld.spieler.y)  &&
 				(Schuss_Endgegner.StartY <= Spielfeld.spieler.y+31)){		
 				
-				spieler.leben -= 1;
+			if (spieler.ruestung>0){
+				spieler.ruestung-=1;
+			} else spieler.leben -= 1;
 		    } 
 	} 
 	

@@ -1,6 +1,9 @@
 package propra2013.Gruppe54;
 
+import java.awt.Point;
 import java.io.File;
+
+import javax.swing.JOptionPane;
 
 public class Elemente {
 	
@@ -20,9 +23,9 @@ public class Elemente {
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
 				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
 				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
-				GegnerOU.aktiv=true;
-				GegnerRL.aktiv=true;
-				Endgegner.leben=300;
+				GegnerOU.leben=GegnerOU.StartLeben;
+				GegnerRL.leben=GegnerRL.StartLeben;
+				Endgegner.leben=Endgegner.StartLeben;
 			}
 			break;
 			
@@ -128,8 +131,13 @@ public class Elemente {
 			block.ID = 0;
 			if(Spielfeld.current_lvl<3){
 				Frame.nextLevel.setVisible(true);
+			} else if(Spielfeld.current_lvl==3){
+				JOptionPane.showMessageDialog(null, "Du hast gewonnen!","",JOptionPane.PLAIN_MESSAGE, Frame.Sieger);
 			}
 			Frame.neustart.setVisible(true);
+			GegnerRL.leben=0;
+			GegnerOU.leben=0;
+			
 			}
 			break;
 		
@@ -161,7 +169,19 @@ public class Elemente {
 			Spielerinfo.preis_stiefel = true;
 			break;
 			
-		case 21://Ausgang Shop
+		case 21://Eingang Shop
+			if(Schuss_Spieler.sichtbar){
+   			 Schuss_Spieler.sichtbar = false;
+   		 	}
+   		 	if(Schuss_Endgegner.sichtbar){
+   			 Schuss_Endgegner.sichtbar=false;
+   		 	}
+   		 	Spielerinfo.anzeige = false;
+   		 	Spielfeld.spieler_preposX = Spielfeld.spieler.x;
+   		 	Spielfeld.spieler_preposY = Spielfeld.spieler.y;
+   		 	Spielfeld.showShop();
+			break;
+		case 22:
 			Spielfeld.hideShop();
 			break;
 		case 23://Schatztruhe
@@ -171,6 +191,7 @@ public class Elemente {
 				Spielfeld.anzeige = true;
 				Spielfeld.text_anzeige = "+150 Gold";
 			}
+			break;
 		case 24://Gold
 			int i = (int) (Math.random()*3+1);		//Zufallszahl zwischen 1 und 3 erzeugen
 			if(block.Zustand == 0){
@@ -195,6 +216,14 @@ public class Elemente {
 				block.Zustand = 1;
 				Spielfeld.anzeige = true;
 			}
+			break;
+		case 27:
+			if(block.Zustand == 0){
+				spieler.checkpoint = new Point(block.x,block.y);
+				spieler.check_room = Spielfeld.current_room;
+				block.Zustand = 1;
+			}
+			break;
 		default:
 			//
 			break;

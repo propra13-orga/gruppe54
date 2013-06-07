@@ -16,17 +16,31 @@ public class GegnerOU extends Rectangle{
 	 */
 	public static boolean unten=false; // gibt an, ob der Gegener unten an eine Wand stößt
 	public static boolean rechts=false; // gibt an, ob der Gegener rechts an eine Wand stößt
-	public static boolean aktiv=false; 
+	public static int leben; 
 	public static int StartX;
 	public static int StartY;
 	public static int x,y;
+	public static int StartLeben;
+	public static int Faktor; //zum zeichen der Lebensanzeige
 	/**
 	 * @param args
 	 */
 	
 	public GegnerOU() {
 		setBounds(StartX,StartY,32,32);
-		aktiv = true;		//gibt an ob der Gegner im Spiel ist
+		if (Spielfeld.current_lvl==1){
+			StartLeben=100;
+			Faktor=3;
+		} else 
+			if(Spielfeld.current_lvl==2){
+				StartLeben=200;
+				Faktor=6;
+			} else
+				if(Spielfeld.current_lvl==3){
+					StartLeben=300;
+					Faktor=10;
+				}
+		leben=StartLeben;		
 	}
 	
 	public void draw(Graphics g){
@@ -54,7 +68,9 @@ public static void Kollision2(){
 			(GegnerOU.StartY+31 >= Spielfeld.spieler.y)  &&
 			(GegnerOU.StartY <= Spielfeld.spieler.y+31)){		
 			
-			spieler.leben -= 1;
+			if (spieler.ruestung>0){
+				spieler.ruestung-=1;
+			} else spieler.leben -= 1;
 			
 		}
 }

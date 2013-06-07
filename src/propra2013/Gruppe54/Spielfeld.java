@@ -13,7 +13,7 @@ public class Spielfeld extends JPanel implements Runnable{
 
 	public Thread thread = new Thread(this);
 	
-	public static Image[] elemente = new Image[33];
+	public static Image[] elemente = new Image[32];
 	
 	public static int current_lvl=1,current_room=1,current_player=1,counter_anzeige = 0;
 	public static double spieler_preposX=0,spieler_preposY=0;
@@ -32,6 +32,9 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static Endgegner Boss;
 	public static Schuss_Endgegner schuss_endgegner;
 	public static Schuss_Spieler schuss_spieler;
+	public static int EndgegnerLeben;
+	public static int GegnerRLLeben;
+	public static int GegnerOULeben;
 	
 	/**
 	 * Konstruktor
@@ -41,7 +44,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		thread.start();
 		spieler = new spieler();
 		spieler.rechts=true;
-		Boss = new Endgegner(0);
+		Boss = new Endgegner();
 	}
 	
 	/*       
@@ -71,10 +74,13 @@ public class Spielfeld extends JPanel implements Runnable{
 		elemente[18] = new ImageIcon("pics/item_ruestung1.png").getImage();
 		elemente[19] = new ImageIcon("pics/item_ruestung2.png").getImage();
 		elemente[20] = new ImageIcon("pics/item_stiefel.png").getImage();
-		//ID 21 Ausgang Shop, hat kein Image
-		//ID 22 leeres Feld, um Shop zu "verkleinern"
+		elemente[21] = new ImageIcon("pics/eingang_shop.png").getImage();
+		elemente[22] = new ImageIcon("pics/ausgang_shop.png").getImage();
+		//Schatzelemente
 		elemente[23] = new ImageIcon("pics/truhe_zu.png").getImage();
 		elemente[24] = new ImageIcon("pics/gold.png").getImage();
+		elemente[27] = new ImageIcon("pics/checkpoint.png").getImage();
+		elemente[31] = new ImageIcon("pics/leer.png").getImage();
 	}
 	
 	public void define(){
@@ -86,26 +92,26 @@ public class Spielfeld extends JPanel implements Runnable{
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
 		schuss_endgegner = new Schuss_Endgegner();
 		schuss_spieler = new Schuss_Spieler();
-		GegnerOU.aktiv=true;
-		GegnerRL.aktiv=true;
-		Endgegner.leben=300;
+		GegnerOU.leben=GegnerOU.StartLeben;
+		GegnerRL.leben=GegnerRL.StartLeben;
+		Endgegner.leben=Endgegner.StartLeben;
 	}
-	
+
 	public void paintComponent(Graphics g){
 		if(isFirst){ //Erstinitialisierung
-			anzeige = true;
 			define();
 			isFirst=false;
-			anzeige = false;
 		}
 		raum.draw(g); //zeichnet den raum
+		
 		if(propra2013.Gruppe54.spieler.aktiv){
 			spieler.draw(g);  //zeichnet den Spieler
 		}
-		if(GegnerRL.aktiv==true){
+		
+		if(GegnerRL.leben>0){
 			gegnerRL.draw(g);
 		}
-		if(GegnerOU.aktiv==true){
+		if(GegnerOU.leben>0){
 			gegnerOU.draw(g);
 		}
 
@@ -135,11 +141,43 @@ public class Spielfeld extends JPanel implements Runnable{
 			
 			schuss_spieler.draw(g);
 		}
+
 		if((anzeige)&&(counter_anzeige<=300)){   //Anzeige über dem Spieler wenn etwas eingesammelt wurde
+		if((anzeige)&&(counter_anzeige<=300)){
 			g.setColor(Color.white);
 			g.setFont(font);
 			g.drawString(text_anzeige, (int)spieler.x, (int)spieler.y-10);
 			counter_anzeige++;
+		}
+		}
+		//Lebensanzeige Endgegner
+		if ((current_room==3)&&(Endgegner.leben>0)){
+			if(Endgegner.leben>Endgegner.StartLeben/4){
+				g.setColor(Color.green);
+			} else {
+				g.setColor(Color.red);
+			}
+			g.fill3DRect(Endgegner.StartX, Endgegner.StartY-10,Endgegner.leben/Endgegner.Faktor,3,true);
+				
+		}
+		//Lebensanzeige GegnerOU
+		if (GegnerOU.leben>0){
+			if(GegnerOU.leben>GegnerOU.StartLeben/4){
+				g.setColor(Color.green);
+			} else {
+				g.setColor(Color.red);
+			}
+			g.fill3DRect(GegnerOU.StartX, GegnerOU.StartY-10,GegnerOU.leben/GegnerOU.Faktor,3,true);
+				
+		}
+		//Lebensanzeige GegnerRL
+		if (GegnerRL.leben>0){
+			if(GegnerRL.leben>GegnerOU.StartLeben/4){
+				g.setColor(Color.green);
+			} else {
+				g.setColor(Color.red);
+			}
+			g.fill3DRect(GegnerRL.StartX, GegnerRL.StartY-10,GegnerRL.leben/GegnerRL.Faktor,3,true);
 		}
 	}
 	
@@ -148,9 +186,19 @@ public class Spielfeld extends JPanel implements Runnable{
 		while(true){
 			validate();
 			repaint();
-
-			//Button Neustart anzeigen wenn der Spieler keine Lebenspunkte mehr hat
-			if((propra2013.Gruppe54.spieler.leben <= 0)&&(propra2013.Gruppe54.spieler.aktiv)){
+			
+			if((propra2013.Gruppe54.spieler.leben <= 0)&&(propra2013.Gruppe54.spieler.superleben > 0)){
+				propra2013.Gruppe54.spieler.superleben -= 1;
+				propra2013.Gruppe54.spieler.leben = 100;
+				if(current_room == propra2013.Gruppe54.spieler.check_room){
+					level.loadLevel(new File("level/level"+current_lvl+"_"+propra2013.Gruppe54.spieler.check_room+".lvl"));
+				} else if(current_room != propra2013.Gruppe54.spieler.check_room){
+					current_room = propra2013.Gruppe54.spieler.check_room;
+					define();
+				}
+				spieler.x = propra2013.Gruppe54.spieler.checkpoint.getX();
+				spieler.y = propra2013.Gruppe54.spieler.checkpoint.getY();
+			} else if((propra2013.Gruppe54.spieler.leben <= 0)&&(propra2013.Gruppe54.spieler.superleben == 0)){
 				propra2013.Gruppe54.spieler.aktiv = false;
 				Frame.neustart.setVisible(true);
 			}
@@ -185,20 +233,27 @@ public class Spielfeld extends JPanel implements Runnable{
 	
 	//lädt den Shop auf das Spielfeld
 	public static void showShop(){
+		GegnerOULeben=GegnerOU.leben;
+		GegnerRLLeben=GegnerRL.leben;
+		EndgegnerLeben=Endgegner.leben;
 		level.loadLevel(new File("level/level0_0.lvl"));
-		GegnerOU.aktiv = false;
-		GegnerRL.aktiv = false;
-		spieler.x = 150;
+		GegnerOU.leben=0;
+		GegnerRL.leben =0;
+		Endgegner.leben=0;
+		Schuss_Endgegner.sichtbar=false;
+		spieler.x = 100;
 		spieler.y = 150;
 	}
 	
 	//lädt wieder das derzeitige Level auf das Spielfeld
 	public static void hideShop(){
+		GegnerOU.leben=GegnerOULeben;
+		GegnerRL.leben=GegnerRLLeben;
+		Endgegner.leben=EndgegnerLeben;
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));
-		GegnerOU.aktiv = true;
-		GegnerRL.aktiv = true;
 		spieler.x = Spielfeld.spieler_preposX;
 		spieler.y = Spielfeld.spieler_preposY;
+		Schuss_Endgegner.sichtbar=true;
 	}
 	
 	//prüft ob die boolean Variablen noch auf "true" gesetzt sind obwohl der Spieler nicht mehr vor dem Item steht

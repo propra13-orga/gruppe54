@@ -52,7 +52,7 @@ public class Schuss_Spieler extends Rectangle {
 		//Wie der Schuss sich bewegt wenn der Spieler nach rechts schaut
 		public static void SchussRechts(){
 	       	 if ((Richtung==1)&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=1)&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=2)){
-	       		 StartX+=1;
+	       		 StartX+=2;
 	       		 Kollision();
 	       	 } else 
 	       		 if(Richtung==1){
@@ -63,7 +63,7 @@ public class Schuss_Spieler extends Rectangle {
 		//Wie der Schuss sich bewegt wenn der Spieler nach links schaut
 		public static void SchussLinks(){
 	       	 if((Richtung==3)&&(Spielfeld.getBlockID(StartX,StartY+16)!=1)&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=2)){
-	       		 StartX-=1;
+	       		 StartX-=2;
 	       		 Kollision();
 	       	 } else 
 	       		 if (Richtung==3){
@@ -74,7 +74,7 @@ public class Schuss_Spieler extends Rectangle {
 		//Wie der Schuss sich bewegt wenn der Spieler nach oben schaut
 		public static void SchussOben(){
 	       	 if((Richtung==4)&&(Spielfeld.getBlockID(StartX+16,StartY)!=1)&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=2)){
-	       		 StartY-=1;
+	       		 StartY-=2;
 	       		 Kollision();
 	       	 } else 
 	       		 if (Richtung==4){
@@ -85,7 +85,7 @@ public class Schuss_Spieler extends Rectangle {
 		//Wie der Schuss sich bewegt wenn der Spieler nach unten schaut
 		public static void SchussUnten(){
 	       	 if((Richtung==2)&&(Spielfeld.getBlockID(StartX+16,StartY+32)!=1)&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=2)){
-	       		 StartY+=1;
+	       		 StartY+=2;
 	       		 Kollision();
 	       	 } else 
 	       		 if(Richtung==2){
@@ -112,7 +112,7 @@ public class Schuss_Spieler extends Rectangle {
 				(Schuss_Spieler.StartY <= GegnerRL.StartY+31)){		
 				
 			
-			GegnerRL.aktiv=false;
+			GegnerRL.leben-=1;
 			
 			} else
 		if( (Schuss_Spieler.StartX+31 >= GegnerOU.StartX)     && 
@@ -121,7 +121,7 @@ public class Schuss_Spieler extends Rectangle {
 				(Schuss_Spieler.StartY <= GegnerOU.StartY+31)){		
 				
 					
-				GegnerOU.aktiv=false;
+				GegnerOU.leben-=1;
 			}
 	}
 
