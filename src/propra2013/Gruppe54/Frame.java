@@ -569,6 +569,7 @@ public class Frame extends JFrame implements ActionListener{
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
 				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].getX();
 				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].getY();
+				spieler.checkpoint = new Point(Raum.Startpunkt[Spielfeld.current_lvl-1].x,Raum.Startpunkt[Spielfeld.current_lvl-1].y);
 				spieler.aktiv = true;
 				Spielfeld.spieler.beweglich = true;
 				spieler.leben = 100;

@@ -37,8 +37,16 @@ public class Spielerinfo extends JPanel implements Runnable{
 		}
 	
 		if(spieler.superleben > 0){
-			g.setColor(Color.black);
-			g.drawString("Leben: "+spieler.superleben,4,150);
+			if(spieler.superleben == 1){
+				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 4, 140, null, null);
+			} else if(spieler.superleben == 2){
+				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 4, 140, null, null);
+				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 23, 140, null, null);
+			} else if(spieler.superleben == 3){
+				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 4, 140, null, null);
+				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 23, 140, null, null);
+				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 42, 140, null, null);
+			}
 		}
 		
 		//Mana

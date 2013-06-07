@@ -3,8 +3,6 @@ package propra2013.Gruppe54;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-import javax.swing.ImageIcon;
-
 public class Schuss_Spieler extends Rectangle {
 
 

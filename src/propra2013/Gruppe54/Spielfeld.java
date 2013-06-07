@@ -87,7 +87,6 @@ public class Spielfeld extends JPanel implements Runnable{
 		raum = new Raum();
 		gegnerRL = new GegnerRL();
 		gegnerOU = new GegnerOU();
-		
 		loadImages();
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
 		schuss_endgegner = new Schuss_Endgegner();
@@ -184,17 +183,22 @@ public class Spielfeld extends JPanel implements Runnable{
 	//Thread
 	public void run(){
 		while(true){
-			validate();
-			repaint();
-			
 			if((propra2013.Gruppe54.spieler.leben <= 0)&&(propra2013.Gruppe54.spieler.superleben > 0)){
 				propra2013.Gruppe54.spieler.superleben -= 1;
 				propra2013.Gruppe54.spieler.leben = 100;
 				if(current_room == propra2013.Gruppe54.spieler.check_room){
 					level.loadLevel(new File("level/level"+current_lvl+"_"+propra2013.Gruppe54.spieler.check_room+".lvl"));
 				} else if(current_room != propra2013.Gruppe54.spieler.check_room){
+					GegnerRL.aktiv = false;
+					GegnerOU.aktiv = false;
+					Endgegner.aktiv = false;
 					current_room = propra2013.Gruppe54.spieler.check_room;
-					define();
+					level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
+					schuss_endgegner = new Schuss_Endgegner();
+					schuss_spieler = new Schuss_Spieler();
+					GegnerOU.leben=GegnerOU.StartLeben;
+					GegnerRL.leben=GegnerRL.StartLeben;
+					Endgegner.leben=Endgegner.StartLeben;
 				}
 				spieler.x = propra2013.Gruppe54.spieler.checkpoint.getX();
 				spieler.y = propra2013.Gruppe54.spieler.checkpoint.getY();
@@ -222,7 +226,8 @@ public class Spielfeld extends JPanel implements Runnable{
 				Elemente.beruehrung = false;
 			}
 			}
-			
+			validate();
+			repaint();
 			try{
 				Thread.sleep(5);
 			} catch(Exception e){ 
