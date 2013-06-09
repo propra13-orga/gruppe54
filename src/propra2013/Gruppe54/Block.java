@@ -16,7 +16,8 @@ public class Block extends Rectangle {
 	public int counter_gegner10=0;
 	public int counter_gegner11=0;
 	public int counter_gegner12=0;
-	public static boolean Boss_vorhanden=false;
+	public int counter_falle=0;
+
 
 	
 	/**
@@ -77,11 +78,12 @@ public class Block extends Rectangle {
 			/*der counter wird auf eins gesetz wenn ein gegner gezeichnet wurde und ab da
 			 * soll er nur noch laufen und nicht ständig an den start punkt gezeichnet werden
 				*/
-			if((counter_gegner10==0)&&(GegnerRL.leben>0)){
+			GegnerRL.aktiv=true;
+			if((GegnerRL.aktiv)&&(counter_gegner10==0)&&(GegnerRL.leben>0)){
 			counter_gegner10=1;
 			GegnerRL.StartX = x;
 			GegnerRL.StartY = y;
-			} else if ((GegnerRL.leben>0)&&(counter_gegner10==1)){
+			} else if ((GegnerRL.aktiv)&&(GegnerRL.leben>0)&&(counter_gegner10==1)){
 				GegnerRL.lauf();
 				Spielfeld.gegnerRL.draw(g);
 			}
@@ -92,11 +94,12 @@ public class Block extends Rectangle {
 		/*der counter wird auf eins gesetz wenn ein gegner gezeichnet wurde und ab da
 		 * soll er nur noch laufen und nicht ständig an den start punkt gezeichnet werden
 			*/
-			if((GegnerOU.leben>0)&&(counter_gegner11==0)){	
+		GegnerOU.aktiv=true;
+			if((GegnerOU.aktiv)&&(GegnerOU.leben>0)&&(counter_gegner11==0)){	
 			counter_gegner11=1;
 			GegnerOU.StartX = x;
 			GegnerOU.StartY = y;
-			} else if ((counter_gegner11==1)&&(GegnerOU.leben>0)){
+			} else if ((GegnerOU.aktiv)&&(counter_gegner11==1)&&(GegnerOU.leben>0)){
 				GegnerOU.lauf();
 				Spielfeld.gegnerOU.draw(g);
 			}
@@ -104,12 +107,13 @@ public class Block extends Rectangle {
 			
 		case 12:	//Endgegner
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
-			Boss_vorhanden=true;
-			if((counter_gegner12==0)&&(Endgegner.leben>0)){	
+			Schuss_Endgegner.aktiv=true;
+			Endgegner.aktiv=true;
+			if((counter_gegner12==0)&&(Endgegner.leben>0)&&(Endgegner.aktiv)){	
 			counter_gegner12=1;
 			Endgegner.StartX = x;
 			Endgegner.StartY = y;
-			} else if ((Endgegner.leben>0)&&(counter_gegner12==1)){
+			} else if ((Endgegner.leben>0)&&(counter_gegner12==1)&&(Endgegner.aktiv)){
 				Endgegner.lauf();
 				Spielfeld.Boss.draw(g);
 			}
@@ -164,7 +168,39 @@ public class Block extends Rectangle {
 			}
 			break;
 			
+		case 28:	//bewegliche Falle
+			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
+			/*der counter wird auf eins gesetz wenn ein gegner gezeichnet wurde und ab da
+			 * soll er nur noch laufen und nicht ständig an den start punkt gezeichnet werden
+				*/
+			Falle.aktiv=true;
+				if((Falle.aktiv)&&(counter_falle==0)){	
+				counter_falle=1;
+				Falle.StartX = x;
+				Falle.StartY = y;
+				Falle.StartPunktX=x;
+				Falle.StartPunktY=y;
+				} else if ((counter_falle==1)&&(Falle.aktiv)){
+					Falle.bewegung();
+					Spielfeld.falle.draw(g);
+				}
+			break;
+		
+		case 29:
+			if(Zustand==0){
+				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null); 
+				g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
+			} else if(Zustand==1) {
+				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);
+			}
+			break;
+			
 		case 31:
+			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
+			break;
+		
+		case 32:
+			g.drawImage(Spielfeld.elemente[1],x,y,width,height,null); 
 			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
 			break;
 			

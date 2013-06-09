@@ -19,6 +19,7 @@ public class Endgegner extends Rectangle{
 	public static int schritte=0;
 	public static int StartLeben;
 	public static int Faktor;
+	public static boolean aktiv;
 
 	/**
 	 * @param args
@@ -38,6 +39,7 @@ public class Endgegner extends Rectangle{
 					Faktor=16;
 				}
 		leben=StartLeben;
+		aktiv=false;
 	}
 	
 	//Zeichnet den Gegner

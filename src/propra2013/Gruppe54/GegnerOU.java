@@ -22,6 +22,7 @@ public class GegnerOU extends Rectangle{
 	public static int x,y;
 	public static int StartLeben;
 	public static int Faktor; //zum zeichen der Lebensanzeige
+	public static boolean aktiv;
 	/**
 	 * @param args
 	 */
@@ -41,6 +42,7 @@ public class GegnerOU extends Rectangle{
 					Faktor=10;
 				}
 		leben=StartLeben;		
+		aktiv=false;
 	}
 	
 	public void draw(Graphics g){
@@ -63,10 +65,10 @@ public class GegnerOU extends Rectangle{
 //Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
 public static void Kollision2(){
 
-		if( (GegnerOU.StartX+31 >= Spielfeld.spieler.x)     && 
-			(GegnerOU.StartX <= Spielfeld.spieler.x+31)  &&
-			(GegnerOU.StartY+31 >= Spielfeld.spieler.y)  &&
-			(GegnerOU.StartY <= Spielfeld.spieler.y+31)){		
+		if( (GegnerOU.StartX+26 >= Spielfeld.spieler.x)     && 
+			(GegnerOU.StartX <= Spielfeld.spieler.x+26)  &&
+			(GegnerOU.StartY+26 >= Spielfeld.spieler.y)  &&
+			(GegnerOU.StartY <= Spielfeld.spieler.y+26)){		
 			
 			if (spieler.ruestung>0){
 				spieler.ruestung-=1;

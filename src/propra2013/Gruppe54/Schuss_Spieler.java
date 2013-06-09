@@ -99,8 +99,8 @@ public class Schuss_Spieler extends Rectangle {
 			(Schuss_Spieler.StartY+31 >= Endgegner.StartY)  &&
 			(Schuss_Spieler.StartY <= Endgegner.StartY+31)){		
 			
-			
-			Endgegner.leben-=1;
+			sichtbar=false;
+			Endgegner.leben-=25;
 			
 		} else
 		
@@ -109,8 +109,8 @@ public class Schuss_Spieler extends Rectangle {
 				(Schuss_Spieler.StartY+31 >= GegnerRL.StartY)  &&
 				(Schuss_Spieler.StartY <= GegnerRL.StartY+31)){		
 				
-			
-			GegnerRL.leben-=1;
+			sichtbar=false;
+			GegnerRL.leben-=25;
 			
 			} else
 		if( (Schuss_Spieler.StartX+31 >= GegnerOU.StartX)     && 
@@ -118,9 +118,25 @@ public class Schuss_Spieler extends Rectangle {
 				(Schuss_Spieler.StartY+31 >= GegnerOU.StartY)  &&
 				(Schuss_Spieler.StartY <= GegnerOU.StartY+31)){		
 				
-					
-				GegnerOU.leben-=1;
-			}
+				sichtbar=false;	
+				GegnerOU.leben-=25;
+			}else
+		if( (Schuss_Spieler.StartX+31 >= Schuss_Endgegner.StartX)     && 
+				(Schuss_Spieler.StartX <= Schuss_Endgegner.StartX+31)  &&
+				(Schuss_Spieler.StartY+31 >= Schuss_Endgegner.StartY)  &&
+				(Schuss_Spieler.StartY <= Schuss_Endgegner.StartY+31)){		
+				
+				sichtbar=false;	
+				Schuss_Endgegner.StartX=Endgegner.StartX;
+				Schuss_Endgegner.StartY=Endgegner.StartY;
+			} else
+		if( (Schuss_Spieler.StartX+31 >= Falle.StartX)     && 
+				(Schuss_Spieler.StartX <= Falle.StartX+31)  &&
+				(Schuss_Spieler.StartY+31 >= Falle.StartY)  &&
+				(Schuss_Spieler.StartY <= Falle.StartY+31)){		
+						
+				sichtbar=false;	
+					}
 	}
 
 	public static void main(String[] args) {

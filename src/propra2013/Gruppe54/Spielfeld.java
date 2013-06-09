@@ -13,13 +13,13 @@ public class Spielfeld extends JPanel implements Runnable{
 
 	public Thread thread = new Thread(this);
 	
-	public static Image[] elemente = new Image[32];
+	public static Image[] elemente = new Image[40];
 	
 	public static int current_lvl=1,current_room=1,current_player=1,counter_anzeige = 0;
 	public static double spieler_preposX=0,spieler_preposY=0;
 	
 	public static boolean isFirst = true; //erster Aufruf
-	public static boolean shop = false,shop_trank = false,shop_mana = false,shop_ruestung1 = false,shop_ruestung2 = false,shop_stiefel = false,anzeige = false;
+	public static boolean shop = false,shop_trank = false,shop_mana = false,shop_ruestung1 = false,shop_ruestung2 = false,shop_stiefel = false,shop_axt = false,anzeige = false;
 	public static String text_anzeige;
 	
 	public Font font = new Font("Lucida Sans Typewriter",Font.PLAIN,8);
@@ -35,6 +35,9 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static int EndgegnerLeben;
 	public static int GegnerRLLeben;
 	public static int GegnerOULeben;
+	public static int counter_angriff;
+	public static Falle falle;
+	public static Waffe waffe;
 	
 	/**
 	 * Konstruktor
@@ -43,8 +46,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		setBounds(200,55,800,480);
 		thread.start();
 		spieler = new spieler();
-		spieler.rechts=true;
-		Boss = new Endgegner();
+		spieler.runter=true;
 	}
 	
 	/*       
@@ -80,13 +82,19 @@ public class Spielfeld extends JPanel implements Runnable{
 		elemente[23] = new ImageIcon("pics/truhe_zu.png").getImage();
 		elemente[24] = new ImageIcon("pics/gold.png").getImage();
 		elemente[27] = new ImageIcon("pics/checkpoint.png").getImage();
+		elemente[29] = new ImageIcon("pics/herz_element.png").getImage();
+		elemente[30] = new ImageIcon("pics/item_axt.png").getImage();
 		elemente[31] = new ImageIcon("pics/leer.png").getImage();
+		elemente[32] = new ImageIcon("pics/fackel.gif").getImage();
 	}
 	
 	public void define(){
 		raum = new Raum();
 		gegnerRL = new GegnerRL();
 		gegnerOU = new GegnerOU();
+		falle = new Falle();
+		Boss = new Endgegner();
+		waffe = new Waffe();
 		loadImages();
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
 		schuss_endgegner = new Schuss_Endgegner();
@@ -94,6 +102,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		GegnerOU.leben=GegnerOU.StartLeben;
 		GegnerRL.leben=GegnerRL.StartLeben;
 		Endgegner.leben=Endgegner.StartLeben;
+		Waffe.ID = spieler.waffe;
 	}
 
 	public void paintComponent(Graphics g){
@@ -102,24 +111,43 @@ public class Spielfeld extends JPanel implements Runnable{
 			isFirst=false;
 		}
 		raum.draw(g); //zeichnet den raum
-		
 		if(propra2013.Gruppe54.spieler.aktiv){
 			spieler.draw(g);  //zeichnet den Spieler
-		}
-		
-		if(GegnerRL.leben>0){
-			gegnerRL.draw(g);
-		}
-		if(GegnerOU.leben>0){
-			gegnerOU.draw(g);
+			//Waffe des Spielers
+			if((spieler.schwert)){
+				Waffe.ID = spieler.waffe;
+				Waffe.draw(g);
+			}
+			if(Waffe.angriff){
+				if(counter_angriff == 0){
+					Waffe.Kollision();
+				}
+				counter_angriff++;
+				if(counter_angriff == 10000){
+					counter_angriff = 0;
+				}
+			}
 		}
 
-		if ((Block.Boss_vorhanden==true)&&(Endgegner.leben>0)){
+		if((GegnerRL.leben>0)&&(GegnerRL.aktiv)){
+			gegnerRL.draw(g);
+		}
+		
+		if((GegnerOU.leben>0)&&(GegnerOU.aktiv)){
+			gegnerOU.draw(g);
+		}
+		
+		if(Falle.aktiv){
+			falle.draw(g);
+		}
+
+		if ((Endgegner.leben>0)&&(Endgegner.aktiv)){
 			Boss.draw(g);
 		}
 		
-		//Schuss vom Endgegner wird nur in raum 3 gezeichnet
-		if ((current_room==3)&&(Schuss_Endgegner.sichtbar==true)&&(Endgegner.leben>0)){
+		//SchussEndgegner wird nur in raum 3 gezeichnet
+		if ((current_room==3)&&(Schuss_Endgegner.sichtbar==true)&&(Endgegner.leben>0)&&(Schuss_Endgegner.aktiv)){
+
 			if (Schuss_Endgegner.checkPos==false){
 				Schuss_Endgegner.checkPos();
 			}
@@ -127,7 +155,7 @@ public class Spielfeld extends JPanel implements Runnable{
 			schuss_endgegner.draw(g);
 		
 		}
-
+		//Schuss Spieler
 		if (Schuss_Spieler.sichtbar==true){
 			if (Schuss_Spieler.checkPos==false){
 				Schuss_Spieler.checkPos();
@@ -141,16 +169,16 @@ public class Spielfeld extends JPanel implements Runnable{
 			schuss_spieler.draw(g);
 		}
 
-		if((anzeige)&&(counter_anzeige<=300)){   //Anzeige über dem Spieler wenn etwas eingesammelt wurde
-		if((anzeige)&&(counter_anzeige<=300)){
+		//Anzeige von Schatzelementen
+		if((anzeige)&&(counter_anzeige<=300)&&(propra2013.Gruppe54.spieler.aktiv)){
 			g.setColor(Color.white);
 			g.setFont(font);
 			g.drawString(text_anzeige, (int)spieler.x, (int)spieler.y-10);
 			counter_anzeige++;
 		}
-		}
+		
 		//Lebensanzeige Endgegner
-		if ((current_room==3)&&(Endgegner.leben>0)){
+		if ((current_room==3)&&(Endgegner.leben>0)&&(Endgegner.aktiv)){
 			if(Endgegner.leben>Endgegner.StartLeben/4){
 				g.setColor(Color.green);
 			} else {
@@ -160,22 +188,27 @@ public class Spielfeld extends JPanel implements Runnable{
 				
 		}
 		//Lebensanzeige GegnerOU
-		if (GegnerOU.leben>0){
+		if ((GegnerOU.aktiv)&&(GegnerOU.leben>0)){
+
 			if(GegnerOU.leben>GegnerOU.StartLeben/4){
 				g.setColor(Color.green);
 			} else {
 				g.setColor(Color.red);
 			}
+
 			g.fill3DRect(GegnerOU.StartX, GegnerOU.StartY-10,GegnerOU.leben/GegnerOU.Faktor,3,true);
 				
 		}
 		//Lebensanzeige GegnerRL
-		if (GegnerRL.leben>0){
+
+		if ((GegnerRL.leben>0)&&(GegnerRL.aktiv)){
+
 			if(GegnerRL.leben>GegnerOU.StartLeben/4){
 				g.setColor(Color.green);
 			} else {
 				g.setColor(Color.red);
 			}
+
 			g.fill3DRect(GegnerRL.StartX, GegnerRL.StartY-10,GegnerRL.leben/GegnerRL.Faktor,3,true);
 		}
 	}
@@ -183,27 +216,23 @@ public class Spielfeld extends JPanel implements Runnable{
 	//Thread
 	public void run(){
 		while(true){
-			if((propra2013.Gruppe54.spieler.leben <= 0)&&(propra2013.Gruppe54.spieler.superleben > 0)){
-				propra2013.Gruppe54.spieler.superleben -= 1;
-				propra2013.Gruppe54.spieler.leben = 100;
-				if(current_room == propra2013.Gruppe54.spieler.check_room){
-					level.loadLevel(new File("level/level"+current_lvl+"_"+propra2013.Gruppe54.spieler.check_room+".lvl"));
-				} else if(current_room != propra2013.Gruppe54.spieler.check_room){
-					GegnerRL.aktiv = false;
-					GegnerOU.aktiv = false;
-					Endgegner.aktiv = false;
-					current_room = propra2013.Gruppe54.spieler.check_room;
-					level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
-					schuss_endgegner = new Schuss_Endgegner();
-					schuss_spieler = new Schuss_Spieler();
-					GegnerOU.leben=GegnerOU.StartLeben;
-					GegnerRL.leben=GegnerRL.StartLeben;
-					Endgegner.leben=Endgegner.StartLeben;
-				}
-				spieler.x = propra2013.Gruppe54.spieler.checkpoint.getX();
-				spieler.y = propra2013.Gruppe54.spieler.checkpoint.getY();
-			} else if((propra2013.Gruppe54.spieler.leben <= 0)&&(propra2013.Gruppe54.spieler.superleben == 0)){
+			validate();
+			repaint();
+			
+			if((propra2013.Gruppe54.spieler.leben <= 0)&&(propra2013.Gruppe54.spieler.superleben >= 1)&&(propra2013.Gruppe54.spieler.aktiv)){
 				propra2013.Gruppe54.spieler.aktiv = false;
+				anzeige = false;
+				Waffe.angriff = false;
+				if(propra2013.Gruppe54.spieler.checkpoint.getX() != Raum.Startpunkt[Spielfeld.current_lvl-1].getX()){
+					Frame.checkpoint.setVisible(true);
+				} else if(propra2013.Gruppe54.spieler.checkpoint.getX() == Raum.Startpunkt[Spielfeld.current_lvl-1].getX()){
+					Frame.neustart.setVisible(true);	
+				}
+				propra2013.Gruppe54.spieler.superleben -= 1;
+			} else if((propra2013.Gruppe54.spieler.leben <= 0)&&(propra2013.Gruppe54.spieler.superleben <= 0)&&(propra2013.Gruppe54.spieler.aktiv)){
+				propra2013.Gruppe54.spieler.aktiv = false;
+				anzeige = false;
+				Waffe.angriff = false;
 				Frame.neustart.setVisible(true);
 			}
 			
@@ -215,19 +244,17 @@ public class Spielfeld extends JPanel implements Runnable{
 			if(propra2013.Gruppe54.spieler.aktiv){
 			//Steuerung des Spielers
 			if((check(1))&&(check(9))&&(check(15))&&(check(16))&&(check(17))
-					&&(check(18))&&(check(19))&&(check(20))&&(check(23))){		//prüfen ob Elemente vom Spieler durchschritten werden dürfen
+					&&(check(18))&&(check(19))&&(check(20))&&(check(23)&&(check(30))&&(check(32)))){		//prüfen ob Elemente vom Spieler durchschritten werden dürfen
 				checkKollision();
 				spieler.x += Frame.dx;
 				spieler.y += Frame.dy;
 				Elemente.beruehrung = false;
 			} else if((check(9)==false) | (check(15)==false) | (check(16)==false) | (check(17)==false)
-					| (check(18)==false) | (check(19)==false) | (check(20)==false) | (check(23)==false)){	//wenn nicht, dann wird nur die Aktion des Elements ausgeführt, der Spieler geht aber nicht weiter
+					| (check(18)==false) | (check(19)==false) | (check(20)==false) | (check(23)==false) | (check(30)==false)){	//wenn nicht, dann wird nur die Aktion des Elements ausgeführt, der Spieler geht aber nicht weiter
 				checkKollision();
 				Elemente.beruehrung = false;
 			}
 			}
-			validate();
-			repaint();
 			try{
 				Thread.sleep(5);
 			} catch(Exception e){ 
@@ -241,6 +268,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		GegnerOULeben=GegnerOU.leben;
 		GegnerRLLeben=GegnerRL.leben;
 		EndgegnerLeben=Endgegner.leben;
+		Falle.aktiv=false;
 		level.loadLevel(new File("level/level0_0.lvl"));
 		GegnerOU.leben=0;
 		GegnerRL.leben =0;
@@ -255,6 +283,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		GegnerOU.leben=GegnerOULeben;
 		GegnerRL.leben=GegnerRLLeben;
 		Endgegner.leben=EndgegnerLeben;
+		Falle.aktiv=false;
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));
 		spieler.x = Spielfeld.spieler_preposX;
 		spieler.y = Spielfeld.spieler_preposY;
@@ -262,6 +291,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	}
 	
 	//prüft ob die boolean Variablen noch auf "true" gesetzt sind obwohl der Spieler nicht mehr vor dem Item steht
+	//damit die Anzeige ausgeblendet wird
 	public static void checkShopItems(){
 		if((Spielfeld.shop)&&(Spielfeld.check(15))){
         	Spielfeld.shop = false;
@@ -280,6 +310,9 @@ public class Spielfeld extends JPanel implements Runnable{
         }
         if((Spielfeld.shop_stiefel)&&(Spielfeld.check(20))){
         	Spielfeld.shop_stiefel = false;
+        }
+        if((Spielfeld.shop_axt)&&(Spielfeld.check(20))){
+        	Spielfeld.shop_axt = false;
         }
 	}
 	

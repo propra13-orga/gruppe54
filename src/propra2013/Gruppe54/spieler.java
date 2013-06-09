@@ -13,7 +13,8 @@ public class spieler extends Rectangle {
 	public double speed = 0.5;
 	public int gold = 500;
 	public int current_schwert = 0;   //gibt an welches Schwert der Spieler gerade hat
-	public boolean schwert = false;
+	public boolean schwert = true;
+	public int waffe = 0,ausrüstung = 1;
 	public int item_trank = 0,item_mana = 0;
 	public static int ruestung = 50;
 	public static int mana = 100;			  //Zauberkraft
@@ -21,15 +22,11 @@ public class spieler extends Rectangle {
 	public static boolean aktiv = false;
 	public static Point checkpoint;
 	public static int check_room = 1;
-
+	
 	public boolean beweglich = false;
-
 	public boolean rechts = false;
-
 	public boolean links = false;
-
 	public boolean hoch = false;
-
 	public boolean runter = false; 
 	
 	/**

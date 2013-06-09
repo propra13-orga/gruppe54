@@ -22,6 +22,7 @@ public class GegnerRL extends Rectangle  {
 	public static int x,y;
 	public static int StartLeben;
 	public static int Faktor;
+	public static boolean aktiv;//zur abfrage ob die ID in der Datei steht
 	
 	/**
 	 * @param args
@@ -42,6 +43,7 @@ public class GegnerRL extends Rectangle  {
 					Faktor=10;
 				}
 		leben=StartLeben;
+		aktiv=false;
 	}
 	
 	
@@ -72,10 +74,10 @@ public class GegnerRL extends Rectangle  {
 //Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
 public static void Kollision2(){
 
-		if( (GegnerRL.StartX+31 >= Spielfeld.spieler.x)     && 
-			(GegnerRL.StartX <= Spielfeld.spieler.x+31)  &&
-			(GegnerRL.StartY+31 >= Spielfeld.spieler.y)  &&
-			(GegnerRL.StartY <= Spielfeld.spieler.y+31)){		
+		if( (GegnerRL.StartX+26 >= Spielfeld.spieler.x)     && 
+			(GegnerRL.StartX <= Spielfeld.spieler.x+26)  &&
+			(GegnerRL.StartY+26 >= Spielfeld.spieler.y)  &&
+			(GegnerRL.StartY <= Spielfeld.spieler.y+26)){		
 			
 			if (spieler.ruestung>0){
 				spieler.ruestung-=1;

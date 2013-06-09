@@ -32,6 +32,7 @@ public class Frame extends JFrame implements ActionListener{
 	public static JButton neustart = new JButton("Neustart");
 	public static JButton nextLevel = new JButton("Nächstes Level");
 	public static JButton spiel_zurueck = new JButton("Zurück zum Spiel");
+	public static JButton checkpoint = new JButton("Zum Checkpoint");
 	//Charakterauswahl
 	public static JLabel charakter = new JLabel();
 	public static JLabel charakterBild = new JLabel();
@@ -98,6 +99,10 @@ public class Frame extends JFrame implements ActionListener{
 		//Button Neustart, nur im "Spielmodus" sichtbar wenn der Spieler kein Leben mehr hat
 		neustart.setBounds(220, 25, 100, 20);
 		neustart.setVisible(false);
+		
+		//Button Checkpoint, nur im "Spielmodus" sichtbar wenn der Spieler kein Leben mehr hat
+		checkpoint.setBounds(220, 25, 150, 20);
+		checkpoint.setVisible(false);
 		
 		//Button nächstes Level, nur sichtbar wenn ein Level erfolgreich absolviert wurde
 		nextLevel.setBounds(340,25,150,20);
@@ -204,6 +209,8 @@ public class Frame extends JFrame implements ActionListener{
 		            Spielerinfo.ruestung_voll = false;
 		            Spielerinfo.speed_voll = false;
 		            Spielerinfo.gold = false;
+		            Spielerinfo.preis_axt = false;
+		            Spielerinfo.item_vorhanden = false;
 		            
 		            if (CharakterAuswahl==2){
 		            	image = Figur2_links.getImage();
@@ -228,6 +235,8 @@ public class Frame extends JFrame implements ActionListener{
 		            Spielerinfo.ruestung_voll = false;
 		            Spielerinfo.speed_voll = false;
 		            Spielerinfo.gold = false;
+		            Spielerinfo.preis_axt = false;
+		            Spielerinfo.item_vorhanden = false;
 		            
 		            if (CharakterAuswahl==2){
 		            	image = Figur2_rechts.getImage();
@@ -252,6 +261,8 @@ public class Frame extends JFrame implements ActionListener{
 		            Spielerinfo.ruestung_voll = false;
 		            Spielerinfo.speed_voll = false;
 		            Spielerinfo.gold = false;
+		            Spielerinfo.preis_axt = false;
+		            Spielerinfo.item_vorhanden = false;
 		            
 		            if (CharakterAuswahl==2){
 		            	image = Figur2_oben.getImage();
@@ -277,6 +288,8 @@ public class Frame extends JFrame implements ActionListener{
 		            Spielerinfo.ruestung_voll = false;
 		            Spielerinfo.speed_voll = false;
 		            Spielerinfo.gold = false;
+		            Spielerinfo.preis_axt = false;
+		            Spielerinfo.item_vorhanden = false;
 			        
 			        if (CharakterAuswahl==2){
 		            	image = Figur2_unten.getImage();
@@ -352,18 +365,30 @@ public class Frame extends JFrame implements ActionListener{
 		        			 Spielerinfo.gold = true;
 		        			 Spielerinfo.preis_stiefel = false;
 		        		 }
+		        	 } else if(Spielfeld.shop_axt){
+		        		 if(Spielfeld.spieler.ausrüstung == 2){
+		        			 Spielerinfo.item_vorhanden = true;
+		        			 Spielerinfo.preis_axt = false;
+		        		 } else if(Spielfeld.spieler.gold >= 500){
+		        			 Spielfeld.spieler.ausrüstung += 1;
+		        			 Spielfeld.spieler.gold -= 500;
+		        			 Spielfeld.spieler.waffe = 1;
+		        		 } else if(Spielfeld.spieler.gold-500 <= 0) {
+		        			 Spielerinfo.gold = true;
+		        			 Spielerinfo.preis_axt = false;
+		        		 }
 		        	 }
 		         }
-		         
-		         if ((key == KeyEvent.VK_1)&&(spieler.aktiv)&&(spieler.leben<100)&&(Spielfeld.spieler.item_trank>0)){   //Trank
+		         //Lebenstrank nehmen
+		         if ((key == KeyEvent.VK_N)&&(spieler.aktiv)&&(spieler.leben<100)&&(Spielfeld.spieler.item_trank>0)){   //Trank
 		        	 spieler.leben += 40;
 		        	 Spielfeld.spieler.item_trank -= 1;
 		        	 if(spieler.leben>100){
 		        		 spieler.leben = 100;
 		        	 }
 		         }
-		         
-		         if ((key == KeyEvent.VK_2)&&(spieler.aktiv)&&(spieler.mana<100)&&(Spielfeld.spieler.item_mana>0)){		//Mana
+		         //Mana Trank nehmen
+		         if ((key == KeyEvent.VK_M)&&(spieler.aktiv)&&(spieler.mana<100)&&(Spielfeld.spieler.item_mana>0)){		//Mana
 		        	 spieler.mana += 40;
 		        	 Spielfeld.spieler.item_mana -= 1;
 		        	 if(spieler.mana>100){
@@ -383,7 +408,22 @@ public class Frame extends JFrame implements ActionListener{
 		         if((key == KeyEvent.VK_K)&&(spieler.aktiv)){ //kleiner Cheat zu Testzwecken ;D
 		        	 spieler.mana = 100;
 		        	 spieler.leben = 100;
+		        	 spieler.ruestung = 100;
 		         }
+		         //Angriff
+		         if((key == KeyEvent.VK_B)&&(spieler.aktiv)&&(Spielfeld.spieler.schwert)){
+		        	if(Waffe.angriff == false){
+		        		Waffe.angriff = true;
+		        	}
+		         }
+		         if((key == KeyEvent.VK_1)&&(spieler.aktiv)&&(Spielfeld.spieler.schwert)){
+			       	Spielfeld.spieler.waffe = 0;
+			     }
+		         if((key == KeyEvent.VK_2)&&(spieler.aktiv)&&(Spielfeld.spieler.schwert)){
+		        	if(Spielfeld.spieler.ausrüstung >= 2){
+		        		Spielfeld.spieler.waffe = 1;
+		        	}
+				 }
 		      }
 			}
 
@@ -411,6 +451,10 @@ public class Frame extends JFrame implements ActionListener{
 
 		        if (key == KeyEvent.VK_S) {
 		            dy = 0;
+		        }
+		        if((key == KeyEvent.VK_B)&&(spieler.aktiv)){
+		        	Waffe.angriff = false;
+		        	Spielfeld.counter_angriff = 0;
 		        }
 			}
 		});
@@ -545,12 +589,14 @@ public class Frame extends JFrame implements ActionListener{
 				add(menü);
 				add(neustart);
 				add(nextLevel);
+				add(checkpoint);
 				menü.setVisible(true);
 				spieler.checkpoint = new Point(Raum.Startpunkt[Spielfeld.current_lvl-1].x,Raum.Startpunkt[Spielfeld.current_lvl-1].y);
 				spieler.check_room = 1;
 				
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
 				spieler.aktiv = true;
+				Spielfeld.spieler.rechts = true;
 				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].getX();
 				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].getY();
 				Spielfeld.spieler.beweglich = true;
@@ -563,24 +609,52 @@ public class Frame extends JFrame implements ActionListener{
 		//Button Neustart Click
 		neustart.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				//aktuelles Level in Raum 1 neu laden
-				Spielfeld.current_room = 1;
+				if(spieler.superleben >= 1){
+					Spielfeld.current_room = propra2013.Gruppe54.spieler.check_room;
+					spielfeld.define();
+					Spielfeld.spieler.x = spieler.checkpoint.getX();
+					Spielfeld.spieler.y = spieler.checkpoint.getY();
+					neustart.setVisible(false);
+					checkpoint.setVisible(false);
+					Spielfeld.shop = false;
+					spieler.leben = 100;
+					spieler.mana = 100;
+					spieler.aktiv = true;
+				} else if(spieler.superleben <= 0){
+					//aktuelles Level in Raum 1 neu laden
+					Spielfeld.current_room = 1;
+					spielfeld.define();
+					//Spieler auf den Startpunkt des jeweiligen Levels setzen
+					Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].getX();
+					Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].getY();
+					spieler.checkpoint = new Point(Raum.Startpunkt[Spielfeld.current_lvl-1].x,Raum.Startpunkt[Spielfeld.current_lvl-1].y);
+					spieler.check_room = Spielfeld.current_room;
+					spieler.aktiv = true;
+					Spielfeld.spieler.beweglich = true;
+					spieler.leben = 100;
+					spieler.mana = 100;
+					spieler.superleben = 3;
+					neustart.setVisible(false);
+					nextLevel.setVisible(false);
+					checkpoint.setVisible(false);
+					Spielfeld.shop = false;
+				}
+			}
+		});
+		
+		//Button Checkpoint Click
+		checkpoint.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				Spielfeld.current_room = propra2013.Gruppe54.spieler.check_room;
 				spielfeld.define();
-				//Spieler auf den Startpunkt des jeweiligen Levels setzen
-				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].getX();
-				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].getY();
-				spieler.checkpoint = new Point(Raum.Startpunkt[Spielfeld.current_lvl-1].x,Raum.Startpunkt[Spielfeld.current_lvl-1].y);
-				spieler.aktiv = true;
-				Spielfeld.spieler.beweglich = true;
+				Spielfeld.spieler.x = spieler.checkpoint.getX();
+				Spielfeld.spieler.y = spieler.checkpoint.getY();
+				neustart.setVisible(false);
+				checkpoint.setVisible(false);
+				Spielfeld.shop = false;
 				spieler.leben = 100;
 				spieler.mana = 100;
-				spieler.superleben = 3;
-				neustart.setVisible(false);
-				nextLevel.setVisible(false);
-				Block.Boss_vorhanden=false;
-
-				Spielfeld.shop = false;
-
+				spieler.aktiv = true;
 			}
 		});
 		
@@ -596,7 +670,6 @@ public class Frame extends JFrame implements ActionListener{
 				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].getY();
 				Spielfeld.spieler.beweglich = true;
 				Spielfeld.loadImages();
-				Block.Boss_vorhanden=false;
 				nextLevel.setVisible(false);
 				neustart.setVisible(false);
 			}
@@ -606,7 +679,6 @@ public class Frame extends JFrame implements ActionListener{
 		info.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 			JOptionPane.showMessageDialog(null, "Probier's doch erstmal ohne Infos :)","", JOptionPane.INFORMATION_MESSAGE,Shopguy);
-			
 			}
 			});
 		
@@ -618,6 +690,7 @@ public class Frame extends JFrame implements ActionListener{
 				remove(menü);
 				neustart.setVisible(false);
 				nextLevel.setVisible(false);
+				checkpoint.setVisible(false);
 				spielfeld.setVisible(false);
 				spielerinfo.setVisible(false);
 				setLayout(null);
@@ -650,8 +723,6 @@ public class Frame extends JFrame implements ActionListener{
 				spieler.aktiv = false;
 				
 				levelAuswahl.setSelectedItem("Level"+Spielfeld.current_lvl);
-
-				Block.Boss_vorhanden=false;
 				Spielfeld.shop = false;
 
 			}
@@ -700,11 +771,6 @@ public class Frame extends JFrame implements ActionListener{
 				spieler.aktiv = true;
 				menü.setVisible(true);
 				add(menü);
-				
-				if(Spielfeld.current_lvl == 3){
-					Block.Boss_vorhanden = true;
-				}
-				
 			}
 			
 		});
