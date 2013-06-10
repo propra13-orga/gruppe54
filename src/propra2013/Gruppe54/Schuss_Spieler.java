@@ -49,50 +49,68 @@ public class Schuss_Spieler extends Rectangle {
 						}
 		}
 		
+		/*
+		 * Elemente ckeckKollision 
+		 * 
+		 * 
+		 * 
+		 * 
+		 */
+		
+		//prüft an 4 Punkten ob sich dort ein Objekt befindet durch das der Schuss nicht fliegen darf
+		public static boolean check(int ID){
+			if((Spielfeld.getBlockID(Schuss_Spieler.StartX+3,Schuss_Spieler.StartY+29)!=ID)&& //unten links
+				(Spielfeld.getBlockID(Schuss_Spieler.StartX+29,Schuss_Spieler.StartY+29)!=ID)&& //unten rechts
+				(Spielfeld.getBlockID(Schuss_Spieler.StartX+3,Schuss_Spieler.StartY+26)!=ID)&& //oben links
+				(Spielfeld.getBlockID(Schuss_Spieler.StartX+29,Schuss_Spieler.StartY+26)!=ID)){ //oben rechts
+				return true;
+			} else 
+				return false;
+		}
+		
 		//Wie der Schuss sich bewegt wenn der Spieler nach rechts schaut
 		public static void SchussRechts(){
-	       	 if ((Richtung==1)&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=1)&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=2)){
-	       		 StartX+=2;
-	       		 Kollision();
-	       	 } else 
-	       		 if(Richtung==1){
-	       			 sichtbar=false; 			
-	       		 }
+			if ((Richtung==1)&&(check(1))&&check(2)&&(check(6)&&(check(9))&&(check(15)))){
+				StartX+=2;
+				Kollision();
+			} else
+				if(Richtung==1){
+					sichtbar=false;
+				}
 		}
-		
+
 		//Wie der Schuss sich bewegt wenn der Spieler nach links schaut
 		public static void SchussLinks(){
-	       	 if((Richtung==3)&&(Spielfeld.getBlockID(StartX,StartY+16)!=1)&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=2)){
-	       		 StartX-=2;
-	       		 Kollision();
-	       	 } else 
-	       		 if (Richtung==3){
-	       			 sichtbar=false;			
-	       		 }
+			if((Richtung==3)&&(check(1))&&check(2)&&(check(6)&&(check(9))&&(check(15)))){
+				StartX-=2;
+				Kollision();
+			} else
+				if (Richtung==3){
+					sichtbar=false;	
+				}
 		}
-		
+
 		//Wie der Schuss sich bewegt wenn der Spieler nach oben schaut
 		public static void SchussOben(){
-	       	 if((Richtung==4)&&(Spielfeld.getBlockID(StartX+16,StartY)!=1)&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=2)){
-	       		 StartY-=2;
-	       		 Kollision();
-	       	 } else 
-	       		 if (Richtung==4){
-	       			 sichtbar=false;
-	       		 }
+			if((Richtung==4)&&(check(1))&&check(2)&&(check(6)&&(check(9))&&(check(15)))){
+				StartY-=2;
+				Kollision();
+			} else
+				if (Richtung==4){
+					sichtbar=false;
+				}
 		}
-		
+
 		//Wie der Schuss sich bewegt wenn der Spieler nach unten schaut
 		public static void SchussUnten(){
-	       	 if((Richtung==2)&&(Spielfeld.getBlockID(StartX+16,StartY+32)!=1)&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=2)){
-	       		 StartY+=2;
-	       		 Kollision();
-	       	 } else 
-	       		 if(Richtung==2){
-	       			 sichtbar=false;
-	       		 }
-		}
-			
+			if((Richtung==2)&&(check(1))&&check(2)&&(check(6)&&(check(9))&&(check(15)))){
+				StartY+=2;
+				Kollision();
+			} else
+				if(Richtung==2){
+					sichtbar=false;
+				}
+		}	
 			
 	public static void Kollision(){
 		//Kollision funktioniert noch nicht
@@ -138,6 +156,7 @@ public class Schuss_Spieler extends Rectangle {
 				(Schuss_Spieler.StartY <= Falle.StartY+31)){		
 						
 				sichtbar=false;	
+	
 					}
 	}
 

@@ -225,7 +225,7 @@ public class Elemente {
 			}
 			break;
 
-		case 27:
+		case 27: //checkpoint
 			if(block.Zustand == 0){
 				spieler.checkpoint = new Point(block.x,block.y);
 				spieler.check_room = Spielfeld.current_room;

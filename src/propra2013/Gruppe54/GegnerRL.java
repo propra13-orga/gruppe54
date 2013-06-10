@@ -23,6 +23,7 @@ public class GegnerRL extends Rectangle  {
 	public static int StartLeben;
 	public static int Faktor;
 	public static boolean aktiv;//zur abfrage ob die ID in der Datei steht
+	//public static boolean berührung=false;
 	
 	/**
 	 * @param args
@@ -59,26 +60,28 @@ public class GegnerRL extends Rectangle  {
 	
 	public static void lauf(){
 		//Gegner läuft von rechts nach links
-	
+			 //berührung=false;
+			 Kollision();
+		// if (berührung==false){
         	 if ((rechts==false) &&(Spielfeld.getBlockID(GegnerRL.StartX+24, GegnerRL.StartY+16)!=1)){
-        		Kollision2();
-        		GegnerRL.StartX+=1;
+          		GegnerRL.StartX+=1;
         	 } else rechts = true;
         	 if ((rechts==true)&& (Spielfeld.getBlockID(GegnerRL.StartX-2, GegnerRL.StartY+16)!=1)){
-        		Kollision2();
         		 GegnerRL.StartX-=1;
-        	 } else rechts = false;  
-		} 
+        	 } else rechts = false;
+		// }
+	} 
 	
 
 //Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
-public static void Kollision2(){
+public static void Kollision(){
 
 		if( (GegnerRL.StartX+31 >= Spielfeld.spieler.x)     && 
 			(GegnerRL.StartX <= Spielfeld.spieler.x+31)  &&
 			(GegnerRL.StartY+31 >= Spielfeld.spieler.y)  &&
 			(GegnerRL.StartY <= Spielfeld.spieler.y+31)){		
 			
+			//berührung=true;
 			if (spieler.ruestung>0){
 				spieler.ruestung-=1;
 			} else spieler.leben -= 1;
