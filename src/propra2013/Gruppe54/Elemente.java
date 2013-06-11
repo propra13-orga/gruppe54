@@ -71,13 +71,13 @@ public class Elemente {
 			} else {
 				spieler.ruestung-=5;
 			}
-			if((Spielfeld.spieler.rechts)){
+			if((Spielfeld.spieler.rechts)&&(Spielfeld.check((int)Spielfeld.spieler.x-12+32))){
 				Spielfeld.spieler.x-=12;
-			} else if((Spielfeld.spieler.links)){
+			} else if((Spielfeld.spieler.links)&&(Spielfeld.check((int)Spielfeld.spieler.x+12+32))){
 				Spielfeld.spieler.x+=12;
-			} else if((Spielfeld.spieler.hoch)){
+			} else if((Spielfeld.spieler.hoch)&&(Spielfeld.check((int)Spielfeld.spieler.y+12+32))){
 				Spielfeld.spieler.y+=12;
-			} else if((Spielfeld.spieler.runter)){
+			} else if((Spielfeld.spieler.runter)&&(Spielfeld.check((int)Spielfeld.spieler.y-12+32))){
 				Spielfeld.spieler.y-=12;
 			}
 			break;

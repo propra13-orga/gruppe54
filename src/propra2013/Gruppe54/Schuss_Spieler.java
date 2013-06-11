@@ -75,10 +75,12 @@ public class Schuss_Spieler extends Rectangle {
 				if(Richtung==1){
 					sichtbar=false;
 				}
+
 		}
 
 		//Wie der Schuss sich bewegt wenn der Spieler nach links schaut
 		public static void SchussLinks(){
+
 			if((Richtung==3)&&(check(1))&&check(2)&&(check(6)&&(check(9))&&(check(15)))){
 				StartX-=2;
 				Kollision();
@@ -86,6 +88,7 @@ public class Schuss_Spieler extends Rectangle {
 				if (Richtung==3){
 					sichtbar=false;	
 				}
+
 		}
 
 		//Wie der Schuss sich bewegt wenn der Spieler nach oben schaut
@@ -109,6 +112,7 @@ public class Schuss_Spieler extends Rectangle {
 					sichtbar=false;
 				}
 		}	
+
 			
 	public static void Kollision(){
 		//Kollision funktioniert noch nicht
