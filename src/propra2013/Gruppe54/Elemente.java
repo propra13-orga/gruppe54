@@ -232,6 +232,7 @@ public class Elemente {
 			}
 			break;
 
+
 		case 27://Checkpoint
 			if(block.Zustand == 0){
 				spieler.checkpoint = new Point(block.x,block.y);
