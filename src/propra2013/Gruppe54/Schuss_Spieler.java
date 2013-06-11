@@ -49,7 +49,8 @@ public class Schuss_Spieler extends Rectangle {
 		
 		//Wie der Schuss sich bewegt wenn der Spieler nach rechts schaut
 		public static void SchussRechts(){
-	       	 if ((Richtung==1)&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=1)&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=2)){
+	       	 if ((Richtung==1)&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=1)&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=2)
+	       			&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=6)){
 	       		 StartX+=2;
 	       		 Kollision();
 	       	 } else 
@@ -60,7 +61,8 @@ public class Schuss_Spieler extends Rectangle {
 		
 		//Wie der Schuss sich bewegt wenn der Spieler nach links schaut
 		public static void SchussLinks(){
-	       	 if((Richtung==3)&&(Spielfeld.getBlockID(StartX,StartY+16)!=1)&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=2)){
+	       	 if((Richtung==3)&&(Spielfeld.getBlockID(StartX,StartY+16)!=1)&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=2)
+	       			 &&(Spielfeld.getBlockID(StartX+32,StartY+16)!=6)){
 	       		 StartX-=2;
 	       		 Kollision();
 	       	 } else 
@@ -71,7 +73,8 @@ public class Schuss_Spieler extends Rectangle {
 		
 		//Wie der Schuss sich bewegt wenn der Spieler nach oben schaut
 		public static void SchussOben(){
-	       	 if((Richtung==4)&&(Spielfeld.getBlockID(StartX+16,StartY)!=1)&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=2)){
+	       	 if((Richtung==4)&&(Spielfeld.getBlockID(StartX+16,StartY)!=1)&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=2)
+	       			&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=6)){
 	       		 StartY-=2;
 	       		 Kollision();
 	       	 } else 
@@ -82,7 +85,8 @@ public class Schuss_Spieler extends Rectangle {
 		
 		//Wie der Schuss sich bewegt wenn der Spieler nach unten schaut
 		public static void SchussUnten(){
-	       	 if((Richtung==2)&&(Spielfeld.getBlockID(StartX+16,StartY+32)!=1)&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=2)){
+	       	 if((Richtung==2)&&(Spielfeld.getBlockID(StartX+16,StartY+32)!=1)&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=2)
+	       			&&(Spielfeld.getBlockID(StartX+32,StartY+16)!=6)){
 	       		 StartY+=2;
 	       		 Kollision();
 	       	 } else 

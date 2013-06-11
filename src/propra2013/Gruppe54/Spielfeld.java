@@ -21,9 +21,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static boolean isFirst = true; //erster Aufruf
 	public static boolean shop = false,shop_trank = false,shop_mana = false,shop_ruestung1 = false,shop_ruestung2 = false,shop_stiefel = false,shop_axt = false,anzeige = false;
 	public static String text_anzeige;
-	
 	public Font font = new Font("Lucida Sans Typewriter",Font.PLAIN,8);
-	
 	public static Raum raum = new Raum();
 	public static level level = new level();
 	public static spieler spieler;
@@ -352,7 +350,11 @@ public class Spielfeld extends JPanel implements Runnable{
 				break;
 			}
 		}
-		return Raum.block[i][j].ID;
+		if(Raum.block[i][j] != null){  //Nullpointerexception abfangen
+			return Raum.block[i][j].ID;
+		} else {
+			return 0;
+		}
 	}
 		
 	//liefert den Block bei gegebenen x,y Koordinaten eines Punktes auf dem Spielfeld
@@ -368,7 +370,11 @@ public class Spielfeld extends JPanel implements Runnable{
 				break;
 			}
 		}
-		return Raum.block[i][j];
+		if(Raum.block[i][j] != null){  //Nullpointerexception abfangen
+			return Raum.block[i][j];
+		} else {
+			return Raum.block[0][0];
+		}
 	}
 	
 	/**
