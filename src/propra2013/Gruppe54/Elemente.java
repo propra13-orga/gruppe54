@@ -29,7 +29,6 @@ public class Elemente {
 				GegnerOU.leben=GegnerOU.StartLeben;
 				GegnerRL.leben=GegnerRL.StartLeben;
 				Endgegner.leben=Endgegner.StartLeben;
-				
 			}
 			break;
 			
@@ -72,22 +71,14 @@ public class Elemente {
 			} else {
 				spieler.ruestung-=5;
 			}
-			if((Spielfeld.spieler.rechts)&&(Spielfeld.spieler.hoch == false)){
+			if((Spielfeld.spieler.rechts)){
 				Spielfeld.spieler.x-=12;
-			} else if((Spielfeld.spieler.links)&&(Spielfeld.spieler.rechts==false)){
+			} else if((Spielfeld.spieler.links)){
 				Spielfeld.spieler.x+=12;
-			} else if((Spielfeld.spieler.rechts)&&(Spielfeld.spieler.links==false)){
-				Spielfeld.spieler.x-=12;
-			} else if((Spielfeld.spieler.hoch)&&(Spielfeld.spieler.links==false)&&(Spielfeld.spieler.rechts==false)){
+			} else if((Spielfeld.spieler.hoch)){
 				Spielfeld.spieler.y+=12;
-			} else if((Spielfeld.spieler.runter)&&(Spielfeld.spieler.hoch==false)&&(Spielfeld.spieler.links==false)&&(Spielfeld.spieler.rechts==false)){
+			} else if((Spielfeld.spieler.runter)){
 				Spielfeld.spieler.y-=12;
-			} else if((Spielfeld.spieler.links)&&(Spielfeld.spieler.hoch==false)){
-				Spielfeld.spieler.x+=12;
-			} else if((Spielfeld.spieler.links)&&(Spielfeld.spieler.runter==false)){
-				Spielfeld.spieler.x+=12;
-			} else if((Spielfeld.spieler.rechts)&&(Spielfeld.spieler.runter==false)){
-				Spielfeld.spieler.x-=12;
 			}
 			break;
 		
@@ -185,23 +176,39 @@ public class Elemente {
    		 	Spielfeld.spieler_preposY = Spielfeld.spieler.y;
    		 	Spielfeld.showShop();
 			break;
-		case 22:
+		case 22://Ausgang Shop
 			Spielfeld.hideShop();
 			break;
 		case 23://Schatztruhe
-			if(block.Zustand == 0){
-				Spielfeld.spieler.gold += 150;
-				block.Zustand = 1;
-				Spielfeld.anzeige = true;
-				Spielfeld.text_anzeige = "+150 Gold";
-
-			} 
-
-			break;
-		case 24://Gold
 			int i = (int) (Math.random()*3+1);		//Zufallszahl zwischen 1 und 3 erzeugen
 			if(block.Zustand == 0){
 				switch(i){
+				case 1:
+					Spielfeld.spieler.gold += 150;
+					Spielfeld.text_anzeige = "+150 Gold";
+					break;
+				case 2:
+					Spielfeld.spieler.gold += 80;
+					Spielfeld.text_anzeige = "+80 Gold";
+					break;
+				case 3:
+					Spielfeld.spieler.gold += 120;
+					Spielfeld.text_anzeige = "+120 Gold";
+					break;
+				default:
+					Spielfeld.spieler.gold += 150;
+					Spielfeld.text_anzeige = "+150 Gold";
+					break;
+				}
+
+				block.Zustand = 1;
+				Spielfeld.anzeige = true;
+			}
+			break;
+		case 24://Gold
+			int j = (int) (Math.random()*3+1);		//Zufallszahl zwischen 1 und 3 erzeugen
+			if(block.Zustand == 0){
+				switch(j){
 				case 1:
 					Spielfeld.spieler.gold += 50;
 					Spielfeld.text_anzeige = "+50 Gold";
@@ -225,14 +232,25 @@ public class Elemente {
 			}
 			break;
 
-		case 27: //checkpoint
+
+		case 27://Checkpoint
 			if(block.Zustand == 0){
 				spieler.checkpoint = new Point(block.x,block.y);
 				spieler.check_room = Spielfeld.current_room;
 				block.Zustand = 1;
 			}
 			break;
-
+			
+		case 29://Herz
+			if(block.Zustand == 0){
+				spieler.superleben += 1;
+				block.Zustand = 1;
+			}
+			break;
+		case 30://Item_Shop Axt
+			Spielfeld.shop_axt = true;
+			Spielerinfo.preis_axt = true;
+			break;
 		default:
 			//
 			break;

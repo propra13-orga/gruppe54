@@ -13,25 +13,20 @@ public class spieler extends Rectangle {
 	public double speed = 0.5;
 	public int gold = 500;
 	public int current_schwert = 0;   //gibt an welches Schwert der Spieler gerade hat
-	public boolean schwert = false;
+	public boolean schwert = true;
+	public int waffe = 0,ausrüstung = 1;
 	public int item_trank = 0,item_mana = 0;
 	public static int ruestung = 50;
 	public static int mana = 100;			  //Zauberkraft
 	public static int leben = 100,superleben = 3;
 	public static boolean aktiv = false;
-	public static int Lebenspunkte;
 	public static Point checkpoint;
 	public static int check_room = 1;
-
-
+	
 	public boolean beweglich = false;
-
 	public boolean rechts = false;
-
 	public boolean links = false;
-
 	public boolean hoch = false;
-
 	public boolean runter = false; 
 	
 	/**
@@ -43,8 +38,6 @@ public class spieler extends Rectangle {
 		setBounds((int)x,(int)y,32,32);
 		aktiv = true;		//gibt an ob der Spieler im Spiel ist
 		beweglich = true;
-		Lebenspunkte=3; //Wenn man stirbt sollen sie sich um 1 verringern,
-						//wenn alle drei Punkte weg sind, game over
 	}
 	
 	public void draw(Graphics g){

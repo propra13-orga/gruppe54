@@ -157,7 +157,17 @@ public class Block extends Rectangle {
 				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);
 			}
 			break;
-
+		
+		case 27:
+			if(Zustand==0){
+				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null); 
+				g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
+			} else if(Zustand==1) {
+				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);
+				g.drawImage(new ImageIcon("pics/checkpoint_aktiv.png").getImage(),x,y,width,height,null);
+			}
+			break;
+			
 		case 28:	//bewegliche Falle
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
 			/*der counter wird auf eins gesetz wenn ein gegner gezeichnet wurde und ab da
@@ -174,19 +184,23 @@ public class Block extends Rectangle {
 					Falle.bewegung();
 					Spielfeld.falle.draw(g);
 				}
-				break;
+			break;
 		
-		case 27:
+		case 29:
 			if(Zustand==0){
 				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null); 
 				g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
 			} else if(Zustand==1) {
 				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);
-				g.drawImage(new ImageIcon("pics/checkpoint_aktiv.png").getImage(),x,y,width,height,null);
 			}
 			break;
 			
 		case 31:
+			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
+			break;
+		
+		case 32:
+			g.drawImage(Spielfeld.elemente[1],x,y,width,height,null); 
 			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
 			break;
 			

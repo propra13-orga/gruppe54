@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 public class Spielerinfo extends JPanel implements Runnable{
 
 	public Thread info = new Thread(this);
-	public static boolean anzeige = false,preis_trank = false,preis_mana = false,preis_ruestung1 = false,preis_ruestung2 = false,preis_stiefel = false,ruestung_voll = false,speed_voll = false,gold = false;
+	public static boolean anzeige = false,preis_axt = false,item_vorhanden = false,preis_trank = false,preis_mana = false,preis_ruestung1 = false,preis_ruestung2 = false,preis_stiefel = false,ruestung_voll = false,speed_voll = false,gold = false;
 	
 	/**
 	 * 
@@ -23,7 +23,7 @@ public class Spielerinfo extends JPanel implements Runnable{
 	
 	public void paintComponent(Graphics g){
 		g.clearRect(0, 0, 160, 300);
-		g.drawRoundRect(0, 0, 158, 158, 10, 10);
+		g.drawRoundRect(0, 0, 158, 200, 10, 10);
 		g.drawString("Level: "+Spielfeld.current_lvl,4,30);
 		g.drawString("Gold: "+Spielfeld.spieler.gold,4,45);
 		//Lebensanzeige
@@ -37,8 +37,21 @@ public class Spielerinfo extends JPanel implements Runnable{
 		}
 	
 		if(spieler.superleben > 0){
-			g.setColor(Color.black);
-			g.drawString("Leben: "+spieler.superleben,4,150);
+			if(spieler.superleben == 1){
+				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 24, 145, null, null);
+			} else if(spieler.superleben == 2){
+				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 24, 145, null, null);
+				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 47, 145, null, null);
+			} else if(spieler.superleben == 3){
+				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 24, 145, null, null);
+				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 47, 145, null, null);
+				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 70, 145, null, null);
+			} else if(spieler.superleben == 4){
+				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 24, 145, null, null);
+				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 47, 145, null, null);
+				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 70, 145, null, null);
+				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 93, 145, null, null);
+			}
 		}
 		
 		//Mana
@@ -67,44 +80,52 @@ public class Spielerinfo extends JPanel implements Runnable{
 		}
 		//Gespräch
 		if((anzeige)&&(Spielfeld.shop)){
-			g.drawString("Händler: Möchtest du",0,200);
-			g.drawString("zum Shop gebracht",0,215);
-			g.drawString("werden?",0,230);
+			g.drawString("Händler: Möchtest du",0,250);
+			g.drawString("zum Shop gebracht",0,265);
+			g.drawString("werden?",0,280);
 		}
 		//Preisanzeige Trank
 		if(preis_trank){
-			g.drawString("50 Gold",0,200);
+			g.drawString("50 Gold",0,250);
 		}
 		//Preisanzeige Manatrank
 		if(preis_mana){
-			g.drawString("75 Gold",0,200);
+			g.drawString("75 Gold",0,250);
 		}
 		//Preisanzeige Manatrank
 		if(preis_ruestung1){
-			g.drawString("150 Gold",0,200);
-			g.drawString("Rüstung 100%",0,215);
+			g.drawString("150 Gold",0,250);
+			g.drawString("Rüstung 100%",0,265);
 		}
 		//Preisanzeige Manatrank
 		if(preis_ruestung2){
-			g.drawString("100 Gold",0,200);
-			g.drawString("Rüstung +50%",0,215);
+			g.drawString("100 Gold",0,250);
+			g.drawString("Rüstung +50%",0,265);
 		}
 		//Preisanzeige Stiefel
 		if(preis_stiefel){
-			g.drawString("150 Gold",0,200);
-			g.drawString("Geschwindigkeit +10%",0,215);
+			g.drawString("150 Gold",0,250);
+			g.drawString("Geschwindigkeit +10%",0,265);
+		}
+		//Preisanzeige Stiefel
+		if(preis_axt){
+			g.drawString("500 Gold",0,250);
+		}
+		if(item_vorhanden){
+			g.drawString("Du besitzt dieses Item",0,250);
+			g.drawString("bereits",0,265);
 		}
 		if(ruestung_voll){
-			g.drawString("Du hast bereits volle",0,200);
-			g.drawString("Rüstung",0,215);
+			g.drawString("Du hast bereits volle",0,250);
+			g.drawString("Rüstung",0,265);
 		}
 		if(speed_voll){
-			g.drawString("Du hast bereits",0,200);
-			g.drawString("maximale Geschwindigkeit",0,215);
+			g.drawString("Du hast bereits",0,250);
+			g.drawString("maximale Geschwindigkeit",0,265);
 		}
 		if(gold){
-			g.drawString("Du hast nicht genug",0,200);
-			g.drawString("Gold",0,215);
+			g.drawString("Du hast nicht genug",0,250);
+			g.drawString("Gold",0,265);
 		}
 	}
 	
