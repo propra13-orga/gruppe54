@@ -56,8 +56,9 @@ public class GegnerKI extends Rectangle{
 	
 	//Zeichnet den Gegner
 	public void draw(Graphics g){
+		if((GegnerKI.aktiv)&&(GegnerKI.StartX!=0)&&(GegnerKI.StartY!=0)){
 		g.drawImage(new ImageIcon("pics/GegnerKI_1"/*+Spielfeld.current_lvl*/+".png").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
-	}
+	}}
 	
 	//Funktion die den nächsten schritt berechnet
 	public static void nächsterSchritt(){

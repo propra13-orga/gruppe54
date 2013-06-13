@@ -37,7 +37,7 @@ public class Falle extends Rectangle {
 	}
 
 	public void draw(Graphics g){
-		if(aktiv){
+		if((Falle.StartX!=0)&&(Falle.StartY!=0)){
 		g.drawImage(new ImageIcon("pics/falle_beweglich_unten_"+Spielfeld.current_lvl+".png").getImage(), StartX, StartY, 32, 32, null);
 	}}
 

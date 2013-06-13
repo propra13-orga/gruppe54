@@ -212,7 +212,7 @@ public class Block extends Rectangle {
 			counter_gegner40=1;
 			GegnerKI.StartX = x;
 			GegnerKI.StartY = y;
-			} else if ((GegnerKI.leben>0)&&(counter_gegner40==1)&&(GegnerKI.aktiv)){
+			} else if ((GegnerKI.leben>0)&&(counter_gegner40==1)){
 				GegnerKI.lauf();
 				Spielfeld.gegnerKI.draw(g);
 			}

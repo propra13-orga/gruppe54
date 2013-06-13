@@ -36,6 +36,10 @@ public class Elemente {
 				Spielfeld.Endgegner_counter = 0;
 				Endgegner.leben=Endgegner.StartLeben;
 				GegnerKI.leben=GegnerKI.StartLeben;
+				GegnerKI.StartX=0;
+				GegnerKI.StartY=0;
+				Falle.StartX=0;
+				Falle.StartY=0;
 			}
 			break;
 			

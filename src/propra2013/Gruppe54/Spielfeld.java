@@ -177,10 +177,12 @@ public class Spielfeld extends JPanel implements Runnable{
 			GegnerOU.StartY = 0;
 		}
 		
+		//Falle
 		if((Falle.aktiv)&&(Spielfeld.shop == false)){
 			falle.draw(g);
 		}
-
+		
+		//Endgegner
 		if ((Endgegner.leben>0)&&(Endgegner.aktiv)){
 			Boss.draw(g);
 		} else if((Endgegner.leben <= 0)&&(Endgegner_counter == 0)&&(shop == false)){ // "   "
