@@ -27,7 +27,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static GegnerRL gegnerRL;
 	public static GegnerOU gegnerOU;
 	public static Endgegner Boss;
-	public static int GegnerRL_counter = 0,GegnerOU_counter = 0,Endgegner_counter = 0;
+	public static int GegnerRL_counter = 0,GegnerOU_counter = 0,Endgegner_counter = 0;  //damit das Item, dass man nach besiegen eines Gegner erhält, nur einmal abgelegt wird
 	public static Schuss_Endgegner schuss_endgegner;
 	public static Schuss_Spieler schuss_spieler;
 	public static Pfeil pfeil;
