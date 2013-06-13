@@ -29,15 +29,16 @@ public class Endgegner extends Rectangle{
 		if (Spielfeld.current_lvl==1){
 			StartLeben=300;
 			Faktor=10;
-		} else 
-			if(Spielfeld.current_lvl==2){
-				StartLeben=400;
-				Faktor=12;
-			} else
-				if(Spielfeld.current_lvl==3){
-					StartLeben=500;
-					Faktor=16;
-				}
+		} else if(Spielfeld.current_lvl==2){
+			StartLeben=400;
+			Faktor=12;
+		} else if(Spielfeld.current_lvl==3){
+			StartLeben=500;
+			Faktor=16;
+		} else if(Spielfeld.current_lvl==4){
+			StartLeben=300;
+			Faktor=10;
+		}
 		leben=StartLeben;
 		aktiv=false;
 	}
@@ -51,31 +52,34 @@ public class Endgegner extends Rectangle{
 	//Gibt an wie sich der Gegner bewegt
 	public static void lauf(){
 		//Hoch-runter
-			if ((unten==false) &&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY+2+32)!=1)){
-				Kollision();
-				Endgegner.StartY+=1;
-				} else unten = true; 
-			if ((unten==true)&& (Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY-2+16)!=1)){
-				Kollision();
-				Endgegner.StartY-=1;
-				} else unten = false; 
+		if ((unten==false)&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY+2+32)!=1)&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY+2+32)!=41)
+				&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY+2+32)!=42)&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY+2+32)!=43)
+				&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY+2+32)!=4)){
+			Kollision();
+			Endgegner.StartY+=1;
+		} else {
+			unten = true; 
+		}
+		if ((unten==true)&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY-2+16)!=1)&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY-2+16)!=41)
+				&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY-2+16)!=42)&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY-2+16)!=43)
+				&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY-2+16)!=4)){
+			Kollision();
+			Endgegner.StartY-=1;
+		} else {
+			unten = false; 
+		}
 	}
-	
-
 	
 	//Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
 	public static void Kollision(){
-
-			if( (Endgegner.StartX+31 >= Spielfeld.spieler.x)     && 
-				(Endgegner.StartX <= Spielfeld.spieler.x+31)  &&
-				(Endgegner.StartY+31 >= Spielfeld.spieler.y)  &&
-				(Endgegner.StartY <= Spielfeld.spieler.y+31)){		
-				
-				if (spieler.ruestung>0){
-					spieler.ruestung-=1;
-				} else spieler.leben -= 1;
-				
+		if((Endgegner.StartX+31 >= Spielfeld.spieler.x)&&(Endgegner.StartX <= Spielfeld.spieler.x+31)&&
+			(Endgegner.StartY+31 >= Spielfeld.spieler.y)&&(Endgegner.StartY <= Spielfeld.spieler.y+31)){		
+			if (spieler.ruestung>0){
+				spieler.ruestung-=1;
+			} else {
+				spieler.leben -= 1;
 			}
+		}
 	}
 	
 	public static void main(String[] args) {

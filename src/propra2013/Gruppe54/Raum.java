@@ -8,7 +8,7 @@ public class Raum {
 	public static int worldHeight=15; //Höhe Spielfelds
 	public static int blockSize=32;   //Größe eines Blocks
 	
-	public static Point[] Startpunkt = {new Point(5,185),new Point(5,277),new Point(675,435)};
+	public static Point[] Startpunkt = {new Point(5,185),new Point(5,277),new Point(675,435),new Point(5,280)};
 	public static int anzahl_gegner=0;
 	
 	

@@ -1,6 +1,7 @@
 package propra2013.Gruppe54;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
 import javax.swing.ImageIcon;
@@ -9,21 +10,22 @@ import javax.swing.JPanel;
 public class Spielerinfo extends JPanel implements Runnable{
 
 	public Thread info = new Thread(this);
-	public static boolean anzeige = false,preis_axt = false,item_vorhanden = false,preis_trank = false,preis_mana = false,preis_ruestung1 = false,preis_ruestung2 = false,preis_stiefel = false,ruestung_voll = false,speed_voll = false,gold = false;
-	
+	public static boolean npc = false,preis = false,item_vorhanden = false,ruestung_voll = false,speed_voll = false,gold = false;
+	public static String preis_anzeige;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	public Spielerinfo(){
-		setBounds(25,55,160,400);
+		setBounds(25,55,180,400);
 		info.start();
 	}
 	
 	public void paintComponent(Graphics g){
-		g.clearRect(0, 0, 160, 300);
+		g.clearRect(0, 0, 180, 300);
 		g.drawRoundRect(0, 0, 158, 200, 10, 10);
+		g.setFont(new Font("Lucida Sans Typewriter",Font.PLAIN,11));
 		g.drawString("Level: "+Spielfeld.current_lvl,4,30);
 		g.drawString("Gold: "+Spielfeld.spieler.gold,4,45);
 		//Lebensanzeige
@@ -67,7 +69,7 @@ public class Spielerinfo extends JPanel implements Runnable{
 		//Inventar
 		g.setColor(Color.black);
 		g.drawString("Inventar: ",4,100);
-		if((Spielfeld.spieler.item_mana==0)&&(Spielfeld.spieler.item_trank==0)){
+		if((Spielfeld.spieler.item_mana==0)&&(Spielfeld.spieler.item_trank==0)&&(Spielfeld.spieler.item_supertrank==0)){
 			g.drawString("leer",50,120);
 		}
 		if(Spielfeld.spieler.item_trank>0){
@@ -78,38 +80,19 @@ public class Spielerinfo extends JPanel implements Runnable{
 			g.drawImage(new ImageIcon("pics/shop_mana.png").getImage(), 59, 105, null);
 			g.drawString(""+Spielfeld.spieler.item_mana, 89, 125);
 		}
+		if(Spielfeld.spieler.item_supertrank>0){
+			g.drawImage(new ImageIcon("pics/shop_supertrank.png").getImage(), 109, 105, null);
+			g.drawString(""+Spielfeld.spieler.item_supertrank, 139, 125);
+		}
 		//Gespräch
-		if((anzeige)&&(Spielfeld.shop)){
-			g.drawString("Händler: Möchtest du",0,250);
-			g.drawString("zum Shop gebracht",0,265);
-			g.drawString("werden?",0,280);
+		if(npc){
+			g.drawString("Willkommen im Dungeon Wald.",0,250);
+			g.drawString("Pass nur auf, es lauern",0,265);
+			g.drawString("überall Gefahren!",0,280);
 		}
 		//Preisanzeige Trank
-		if(preis_trank){
-			g.drawString("50 Gold",0,250);
-		}
-		//Preisanzeige Manatrank
-		if(preis_mana){
-			g.drawString("75 Gold",0,250);
-		}
-		//Preisanzeige Manatrank
-		if(preis_ruestung1){
-			g.drawString("150 Gold",0,250);
-			g.drawString("Rüstung 100%",0,265);
-		}
-		//Preisanzeige Manatrank
-		if(preis_ruestung2){
-			g.drawString("100 Gold",0,250);
-			g.drawString("Rüstung +50%",0,265);
-		}
-		//Preisanzeige Stiefel
-		if(preis_stiefel){
-			g.drawString("150 Gold",0,250);
-			g.drawString("Geschwindigkeit +10%",0,265);
-		}
-		//Preisanzeige Stiefel
-		if(preis_axt){
-			g.drawString("500 Gold",0,250);
+		if(preis){
+			g.drawString(preis_anzeige,0,250);
 		}
 		if(item_vorhanden){
 			g.drawString("Du besitzt dieses Item",0,250);

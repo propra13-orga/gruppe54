@@ -34,26 +34,23 @@ public class GegnerRL extends Rectangle  {
 		if (Spielfeld.current_lvl==1){
 			StartLeben=100;
 			Faktor=3;
-		} else 
-			if(Spielfeld.current_lvl==2){
-				StartLeben=200;
-				Faktor=6;
-			} else
-				if(Spielfeld.current_lvl==3){
-					StartLeben=300;
-					Faktor=10;
-				}
+		} else if(Spielfeld.current_lvl==2){
+			StartLeben=200;
+			Faktor=6;
+		} else if(Spielfeld.current_lvl==3){
+			StartLeben=300;
+			Faktor=10;
+		} else if(Spielfeld.current_lvl==4){
+			StartLeben=300;
+			Faktor=10;
+		}
 		leben=StartLeben;
 		aktiv=false;
 	}
 	
 	
 	public  void draw(Graphics g){
-	
-			
-			g.drawImage(new ImageIcon("pics/gegner1_"+Spielfeld.current_lvl+".png").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner 
-
-	
+		g.drawImage(new ImageIcon("pics/gegner1_"+Spielfeld.current_lvl+".png").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner 	
 	}
 	
 	
@@ -63,10 +60,14 @@ public class GegnerRL extends Rectangle  {
 			 //berührung=false;
 			 Kollision();
 		// if (berührung==false){
-        	 if ((rechts==false) &&(Spielfeld.getBlockID(GegnerRL.StartX+24, GegnerRL.StartY+16)!=1)){
+        	 if ((rechts==false)&&(Spielfeld.getBlockID(GegnerRL.StartX+24, GegnerRL.StartY+16)!=1)&&(Spielfeld.getBlockID(GegnerRL.StartX+24, GegnerRL.StartY+16)!=41)
+        			 &&(Spielfeld.getBlockID(GegnerRL.StartX+24, GegnerRL.StartY+16)!=42)&&(Spielfeld.getBlockID(GegnerRL.StartX+24, GegnerRL.StartY+16)!=43)
+        			 &&(Spielfeld.getBlockID(GegnerRL.StartX+24, GegnerRL.StartY+16)!=4)){
           		GegnerRL.StartX+=1;
         	 } else rechts = true;
-        	 if ((rechts==true)&& (Spielfeld.getBlockID(GegnerRL.StartX-2, GegnerRL.StartY+16)!=1)){
+        	 if ((rechts==true)&&(Spielfeld.getBlockID(GegnerRL.StartX-2, GegnerRL.StartY+16)!=1)&&(Spielfeld.getBlockID(GegnerRL.StartX+-2, GegnerRL.StartY+16)!=41)
+        			 &&(Spielfeld.getBlockID(GegnerRL.StartX-2, GegnerRL.StartY+16)!=42)&&(Spielfeld.getBlockID(GegnerRL.StartX-2, GegnerRL.StartY+16)!=43)
+        			 &&(Spielfeld.getBlockID(GegnerRL.StartX-2, GegnerRL.StartY+16)!=4)){
         		 GegnerRL.StartX-=1;
         	 } else rechts = false;
 		// }
@@ -76,16 +77,14 @@ public class GegnerRL extends Rectangle  {
 //Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
 public static void Kollision(){
 
-		if( (GegnerRL.StartX+26 >= Spielfeld.spieler.x)     && 
-			(GegnerRL.StartX <= Spielfeld.spieler.x+26)  &&
-			(GegnerRL.StartY+26 >= Spielfeld.spieler.y)  &&
-			(GegnerRL.StartY <= Spielfeld.spieler.y+26)){		
-			
+		if((GegnerRL.StartX+26 >= Spielfeld.spieler.x)&&(GegnerRL.StartX <= Spielfeld.spieler.x+26)&&
+			(GegnerRL.StartY+26 >= Spielfeld.spieler.y)&&(GegnerRL.StartY <= Spielfeld.spieler.y+26)){		
 			//berührung=true;
 			if (spieler.ruestung>0){
 				spieler.ruestung-=1;
-			} else spieler.leben -= 1;
-			
+			} else {
+				spieler.leben -= 1;
+			}
 		}
 }
 	public static void main(String[] args) {

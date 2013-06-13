@@ -49,22 +49,7 @@ public class Frame extends JFrame implements ActionListener{
 	public static int CharakterAuswahl;
 	public static Image image;
 	public static ImageIcon Sieger = new ImageIcon();
-	public static ImageIcon Shopguy = new ImageIcon("pics/shopguy.png");
-	
-	//Schussauswahl
-	public static JLabel Schuss = new JLabel();
-	public static JLabel SchussBild = new JLabel();
-	public static JButton PfeilRechts2 = new JButton();
-	public static JButton PfeilLinks2 = new JButton();
-	public static ImageIcon Schuss1 = new ImageIcon("pics/schuss1.png");
-	public static ImageIcon Schuss2 = new ImageIcon("pics/schuss2.png");
-	public static ImageIcon Schuss3 = new ImageIcon("pics/schuss3.png");
-	public static ImageIcon Schuss4 = new ImageIcon("pics/schuss4.png");
-	public static int SchussAuswahl;
-	public static Image image2;
-	
-
-	
+	public static ImageIcon Shopguy = new ImageIcon("pics/shopguy.png");	
 	
 	//Lebensanzeige
 	public static ImageIcon lebensanzeige = new ImageIcon("pics/lebensanzeige.png");
@@ -73,7 +58,7 @@ public class Frame extends JFrame implements ActionListener{
 	public static double dx=0,dy=0;
 	
 	//Levelauswahl
-	public static String auswahl[] = {"Level1","Level2","Level3"};
+	public static String auswahl[] = {"Level1","Level2","Level3","Level4"};
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static JComboBox levelAuswahl = new JComboBox(auswahl);
 	
@@ -133,33 +118,6 @@ public class Frame extends JFrame implements ActionListener{
 		PfeilLinks.setText("<");
 		add(PfeilLinks);
 		add(PfeilRechts);
-		
-		//Label Schussauswahl
-		Schuss.setBounds(460,200,150,30);
-		Schuss.setText("Fernwaffenauswahl:");
-		Schuss.setVisible(true);
-		add(Schuss);
-		
-		//Label für das Schuss-Bild
-		SchussBild.setBounds(540, 250, 32, 32);
-		SchussBild.setVisible(true);
-		SchussBild.setIcon(Schuss1);
-		image2 = Schuss1.getImage();
-		add(SchussBild);
-		
-		SchussAuswahl = 1;
-		
-		//Buttons zur Schussauswahl
-		PfeilRechts2.setBounds(600, 255, 50, 20);
-		PfeilLinks2.setBounds(460, 255, 50, 20);
-		PfeilRechts2.setVisible(true);
-		PfeilLinks2.setVisible(true);
-		PfeilRechts2.setText(">");
-		PfeilLinks2.setText("<");
-		add(PfeilLinks2);
-		add(PfeilRechts2);
-		
-		//Gewonnen Fenster
 	
 		//Anzeige des Menüs
 		enter.setBounds(250, 100, 150, 30);		//Button Enter
@@ -177,7 +135,6 @@ public class Frame extends JFrame implements ActionListener{
 		levelAuswahl.setBounds(250, 250, 150, 30);	//ComboBox Levelauswahl
 		levelAuswahl.setVisible(true);
 		add(levelAuswahl);
-		
 		
 		/*
 		 * 
@@ -201,15 +158,11 @@ public class Frame extends JFrame implements ActionListener{
 		            Spielfeld.spieler.rechts = false;
 		            Spielfeld.spieler.hoch = false;
 		            Spielfeld.spieler.runter = false;
-		            Spielerinfo.preis_mana = false;
-		            Spielerinfo.preis_trank = false;
-		            Spielerinfo.preis_ruestung1 = false;
-		            Spielerinfo.preis_ruestung2 = false;
-		            Spielerinfo.preis_stiefel = false;
+		            Spielerinfo.npc = false;
+		            Spielerinfo.preis = false;
 		            Spielerinfo.ruestung_voll = false;
 		            Spielerinfo.speed_voll = false;
 		            Spielerinfo.gold = false;
-		            Spielerinfo.preis_axt = false;
 		            Spielerinfo.item_vorhanden = false;
 		            
 		            if (CharakterAuswahl==2){
@@ -227,15 +180,11 @@ public class Frame extends JFrame implements ActionListener{
 		         	Spielfeld.spieler.rechts = true;
 		         	Spielfeld.spieler.hoch = false;
 		         	Spielfeld.spieler.runter = false;
-		            Spielerinfo.preis_mana = false;
-		            Spielerinfo.preis_trank = false;
-		            Spielerinfo.preis_ruestung1 = false;
-		            Spielerinfo.preis_ruestung2 = false;
-		            Spielerinfo.preis_stiefel = false;
+		         	Spielerinfo.npc = false;
+		         	Spielerinfo.preis = false;
 		            Spielerinfo.ruestung_voll = false;
 		            Spielerinfo.speed_voll = false;
 		            Spielerinfo.gold = false;
-		            Spielerinfo.preis_axt = false;
 		            Spielerinfo.item_vorhanden = false;
 		            
 		            if (CharakterAuswahl==2){
@@ -253,15 +202,11 @@ public class Frame extends JFrame implements ActionListener{
 			        Spielfeld.spieler.rechts = false;
 			        Spielfeld.spieler.hoch = true;
 			        Spielfeld.spieler.runter = false;
-		            Spielerinfo.preis_mana = false;
-		            Spielerinfo.preis_trank = false;
-		            Spielerinfo.preis_ruestung1 = false;
-		            Spielerinfo.preis_ruestung2 = false;
-		            Spielerinfo.preis_stiefel = false;
+			        Spielerinfo.npc = false;
+		            Spielerinfo.preis = false;
 		            Spielerinfo.ruestung_voll = false;
 		            Spielerinfo.speed_voll = false;
 		            Spielerinfo.gold = false;
-		            Spielerinfo.preis_axt = false;
 		            Spielerinfo.item_vorhanden = false;
 		            
 		            if (CharakterAuswahl==2){
@@ -279,16 +224,11 @@ public class Frame extends JFrame implements ActionListener{
 			        Spielfeld.spieler.rechts = false;
 			        Spielfeld.spieler.hoch = false;
 			        Spielfeld.spieler.runter = true;
-			        
-		            Spielerinfo.preis_mana = false;
-		            Spielerinfo.preis_trank = false;
-		            Spielerinfo.preis_ruestung1 = false;
-		            Spielerinfo.preis_ruestung2 = false;
-		            Spielerinfo.preis_stiefel = false;
+			        Spielerinfo.npc = false;
+		            Spielerinfo.preis = false;
 		            Spielerinfo.ruestung_voll = false;
 		            Spielerinfo.speed_voll = false;
 		            Spielerinfo.gold = false;
-		            Spielerinfo.preis_axt = false;
 		            Spielerinfo.item_vorhanden = false;
 			        
 			        if (CharakterAuswahl==2){
@@ -300,26 +240,13 @@ public class Frame extends JFrame implements ActionListener{
 		         
 		         //ruft den Shop auf
 		         if ((key == KeyEvent.VK_ENTER)){			
-		        	 if(Spielfeld.shop){
-		        		 if(Schuss_Spieler.sichtbar){
-		        			 Schuss_Spieler.sichtbar = false;
-		        		 }
-		        		 if(Schuss_Endgegner.sichtbar){
-		        			 Schuss_Endgegner.sichtbar=false;
-		        		 }
-		        		 Spielerinfo.anzeige = false;
-		        		 Spielfeld.spieler_preposX = Spielfeld.spieler.x;
-		        		 Spielfeld.spieler_preposY = Spielfeld.spieler.y;
-		        		 Spielfeld.showShop();
-		        		 validate();
-		        		 repaint();
-		        	 } else if(Spielfeld.shop_trank){
+		        	 if(Spielfeld.shop_trank){
 		        		 if(Spielfeld.spieler.gold >= 50){
 		    				 Spielfeld.spieler.gold -= 50;
 		    				 Spielfeld.spieler.item_trank += 1;
 		    			 } else if(Spielfeld.spieler.gold-50 <= 0){
 		    				 Spielerinfo.gold = true;
-		        			 Spielerinfo.preis_trank = false;
+		        			 Spielerinfo.preis = false;
 		    			 }
 		        	 } else if(Spielfeld.shop_mana){
 		        		 if(Spielfeld.spieler.gold >= 75){
@@ -327,23 +254,31 @@ public class Frame extends JFrame implements ActionListener{
 		    				 Spielfeld.spieler.item_mana += 1;
 		    			 } else if(Spielfeld.spieler.gold-75 <= 0){
 		    				 Spielerinfo.gold = true;
-		        			 Spielerinfo.preis_mana = false;
+		        			 Spielerinfo.preis = false;
+		    			 }
+		        	 } else if(Spielfeld.shop_supertrank){
+		        		 if(Spielfeld.spieler.gold >= 100){
+		    				 Spielfeld.spieler.gold -= 100;
+		    				 Spielfeld.spieler.item_supertrank += 1;
+		    			 } else if(Spielfeld.spieler.gold-100 <= 0){
+		    				 Spielerinfo.gold = true;
+		        			 Spielerinfo.preis = false;
 		    			 }
 		        	 } else if(Spielfeld.shop_ruestung1){
 		        		 if(spieler.ruestung == 100){
 		        			 Spielerinfo.ruestung_voll = true;
-		        			 Spielerinfo.preis_ruestung1 = false;
+		        			 Spielerinfo.preis = false;
 		        		 } else if(Spielfeld.spieler.gold >= 150) {
 		        			 spieler.ruestung = 100;
 		        			 Spielfeld.spieler.gold -= 150;
 		        		 } else if(Spielfeld.spieler.gold-150 <= 0){
 		        			 Spielerinfo.gold = true;
-		        			 Spielerinfo.preis_ruestung1 = false;
+		        			 Spielerinfo.preis = false;
 		        		 }
 		        	 } else if(Spielfeld.shop_ruestung2){
 		        		 if(spieler.ruestung == 100){
 		        			 Spielerinfo.ruestung_voll = true;
-		        			 Spielerinfo.preis_ruestung2 = false;
+		        			 Spielerinfo.preis = false;
 		        		 } else if(Spielfeld.spieler.gold >= 100){
 		        			 spieler.ruestung += 50;
 		        			 Spielfeld.spieler.gold -= 100;
@@ -352,30 +287,30 @@ public class Frame extends JFrame implements ActionListener{
 		        			 }
 		        		 } else if(Spielfeld.spieler.gold-100 <= 0) {
 		        			 Spielerinfo.gold = true;
-		        			 Spielerinfo.preis_ruestung2 = false;
+		        			 Spielerinfo.preis = false;
 		        		 }
 		        	 } else if(Spielfeld.shop_stiefel){
 		        		 if(Spielfeld.spieler.speed == 0.55){
 		        			 Spielerinfo.speed_voll = true;
-		        			 Spielerinfo.preis_stiefel = false;
+		        			 Spielerinfo.preis = false;
 		        		 } else if(Spielfeld.spieler.gold >= 150){
 		        			 Spielfeld.spieler.speed = 0.55;
 		        			 Spielfeld.spieler.gold -= 150;
 		        		 } else if(Spielfeld.spieler.gold-150 <= 0) {
 		        			 Spielerinfo.gold = true;
-		        			 Spielerinfo.preis_stiefel = false;
+		        			 Spielerinfo.preis = false;
 		        		 }
 		        	 } else if(Spielfeld.shop_axt){
 		        		 if(Spielfeld.spieler.ausrüstung == 2){
 		        			 Spielerinfo.item_vorhanden = true;
-		        			 Spielerinfo.preis_axt = false;
+		        			 Spielerinfo.preis = false;
 		        		 } else if(Spielfeld.spieler.gold >= 500){
 		        			 Spielfeld.spieler.ausrüstung += 1;
 		        			 Spielfeld.spieler.gold -= 500;
 		        			 Spielfeld.spieler.waffe = 1;
 		        		 } else if(Spielfeld.spieler.gold-500 <= 0) {
 		        			 Spielerinfo.gold = true;
-		        			 Spielerinfo.preis_axt = false;
+		        			 Spielerinfo.preis = false;
 		        		 }
 		        	 }
 		         }
@@ -394,6 +329,18 @@ public class Frame extends JFrame implements ActionListener{
 		        	 if(spieler.mana>100){
 		        		 spieler.mana = 100;
 		        	 }
+		         }
+		       //Supertrank nehmen
+		         if ((key == KeyEvent.VK_J)&&(spieler.aktiv)&&((spieler.mana<100)|(spieler.leben<100))&&(Spielfeld.spieler.item_supertrank>0)){		//Mana
+		        	 Spielfeld.spieler.item_supertrank -= 1;
+		        	 spieler.mana+=40;
+					 if(spieler.mana>100){
+						 spieler.mana = 100;
+					 }
+					 spieler.leben += 40;
+					 if(spieler.leben>100){
+						spieler.leben = 100;
+					 }
 		         }
 		         //Schuss des Spielers
 		         if ((key == KeyEvent.VK_SPACE)&&(spieler.aktiv)&&(spieler.mana>=10)){	
@@ -483,6 +430,12 @@ public class Frame extends JFrame implements ActionListener{
 						spiel_zurueck.setVisible(false);
 						remove(spiel_zurueck);
 					}
+				} else if("Level4".equals(selectedChoice.getSelectedItem())){		//Level4
+					if(Spielfeld.current_lvl!=4){
+						Spielfeld.current_lvl=4;
+						spiel_zurueck.setVisible(false);
+						remove(spiel_zurueck);
+					}
 				}
 				
 			}
@@ -507,43 +460,6 @@ public class Frame extends JFrame implements ActionListener{
 				Sieger =Figur1_unten;
 			}
 		});
-		//Button PfeilRechts2 Click
-		PfeilRechts2.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				if(SchussAuswahl==1){
-				SchussBild.setIcon(Schuss2);
-				image2 = Schuss2.getImage();
-				SchussAuswahl = 2;
-				} else if(SchussAuswahl==2){
-					SchussBild.setIcon(Schuss3);
-					image2 = Schuss3.getImage();
-					SchussAuswahl = 3;
-				} else if(SchussAuswahl==3){
-					SchussBild.setIcon(Schuss4);
-					image2 = Schuss4.getImage();
-					SchussAuswahl = 4;
-				}
-			}
-		});
-		
-		//Button PfeilLinks2 Click
-		PfeilLinks2.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				if(SchussAuswahl==4){
-				SchussBild.setIcon(Schuss3);
-				image2 = Schuss3.getImage();
-				SchussAuswahl =3;
-				} else if(SchussAuswahl==3){
-					SchussBild.setIcon(Schuss2);
-					image2 = Schuss2.getImage();
-					SchussAuswahl =2;
-				} else if(SchussAuswahl==2){
-					SchussBild.setIcon(Schuss1);
-					image2 = Schuss1.getImage();
-					SchussAuswahl =1;
-				} 
-			}		
-		});
 		
 		//Button Enter Click
 		enter.addActionListener(new ActionListener(){
@@ -566,18 +482,9 @@ public class Frame extends JFrame implements ActionListener{
 				remove(schließen);
 				remove(levelAuswahl);
 				remove(charakter);
-				Schuss.setVisible(false);
-				PfeilRechts2.setVisible(false);
-				PfeilLinks2.setVisible(false);
-				SchussBild.setVisible(false);
-				remove(PfeilRechts2);
-				remove(PfeilLinks2);
-				remove(SchussBild);
-				remove(Schuss);
-
+			
 				Spielfeld.current_room=1;
 				Spielfeld.isFirst = true;
-				Spielfeld.loadImages();		//Bilder des Levels laden
 				//Spielfeld anzeigen	
 				spielfeld.define();
 				spielfeld.setVisible(true);	
@@ -593,6 +500,9 @@ public class Frame extends JFrame implements ActionListener{
 				menü.setVisible(true);
 				spieler.checkpoint = new Point(Raum.Startpunkt[Spielfeld.current_lvl-1].x,Raum.Startpunkt[Spielfeld.current_lvl-1].y);
 				spieler.check_room = 1;
+				Spielfeld.GegnerRL_counter = 0;
+				Spielfeld.GegnerOU_counter = 0;
+				Spielfeld.Endgegner_counter = 0;
 				
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
 				spieler.aktiv = true;
@@ -665,11 +575,11 @@ public class Frame extends JFrame implements ActionListener{
 				Spielfeld.current_room = 1; 
 				spieler.checkpoint = new Point(Raum.Startpunkt[Spielfeld.current_lvl-1].x,Raum.Startpunkt[Spielfeld.current_lvl-1].y);
 				spieler.check_room = 1;
+				Spielfeld.loadImages();
 				spielfeld.define();
 				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].getX();
 				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].getY();
 				Spielfeld.spieler.beweglich = true;
-				Spielfeld.loadImages();
 				nextLevel.setVisible(false);
 				neustart.setVisible(false);
 			}
@@ -712,19 +622,9 @@ public class Frame extends JFrame implements ActionListener{
 				add(schließen);
 				add(levelAuswahl);
 				add(charakter);
-				Schuss.setVisible(true);
-				PfeilRechts2.setVisible(true);
-				PfeilLinks2.setVisible(true);
-				SchussBild.setVisible(true);
-				add(PfeilRechts2);
-				add(PfeilLinks2);
-				add(SchussBild);
-				add(Schuss);
 				spieler.aktiv = false;
-				
 				levelAuswahl.setSelectedItem("Level"+Spielfeld.current_lvl);
 				Spielfeld.shop = false;
-
 			}
 		});
 		
@@ -759,20 +659,11 @@ public class Frame extends JFrame implements ActionListener{
 				remove(schließen);
 				remove(levelAuswahl);
 				remove(charakter);
-				Schuss.setVisible(false);
-				PfeilRechts2.setVisible(false);
-				PfeilLinks2.setVisible(false);
-				SchussBild.setVisible(false);
-				remove(PfeilRechts2);
-				remove(PfeilLinks2);
-				remove(SchussBild);
-				remove(Schuss);
 				Spielfeld.spieler.beweglich = true;
 				spieler.aktiv = true;
 				menü.setVisible(true);
 				add(menü);
 			}
-			
 		});
 		validate();
 		repaint();
