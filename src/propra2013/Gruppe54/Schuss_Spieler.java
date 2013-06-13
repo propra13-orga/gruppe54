@@ -57,10 +57,11 @@ public class Schuss_Spieler extends Rectangle {
 		
 		//prüft an 4 Punkten ob sich dort ein Objekt befindet durch das der Schuss nicht fliegen darf
 		public static boolean check(int ID){
-			if((Spielfeld.getBlockID(Schuss_Spieler.StartX+3,Schuss_Spieler.StartY+29)!=ID)&& //unten links
-				(Spielfeld.getBlockID(Schuss_Spieler.StartX+29,Schuss_Spieler.StartY+29)!=ID)&& //unten rechts
-				(Spielfeld.getBlockID(Schuss_Spieler.StartX+3,Schuss_Spieler.StartY+26)!=ID)&& //oben links
-				(Spielfeld.getBlockID(Schuss_Spieler.StartX+29,Schuss_Spieler.StartY+26)!=ID)){ //oben rechts
+			if((Spielfeld.getBlockID(Schuss_Spieler.StartX+10,Schuss_Spieler.StartY+27)!=ID)&& //unten links
+				(Spielfeld.getBlockID(Schuss_Spieler.StartX+25,Schuss_Spieler.StartY+27)!=ID)&& //unten rechts
+				(Spielfeld.getBlockID(Schuss_Spieler.StartX+10,Schuss_Spieler.StartY+30)!=ID)&& //oben links
+				(Spielfeld.getBlockID(Schuss_Spieler.StartX+20,Schuss_Spieler.StartY+30)!=ID)&&//oben rechts
+				(Schuss_Spieler.StartX>0)&&(Schuss_Spieler.StartX<800)&&(Schuss_Spieler.StartY>0)&&(Schuss_Spieler.StartY<480)){ 
 				return true;
 			} else 
 				return false;
@@ -115,7 +116,7 @@ public class Schuss_Spieler extends Rectangle {
 
 			
 	public static void Kollision(){
-		//Kollision funktioniert noch nicht
+	
 		if( (Schuss_Spieler.StartX+31 >= Endgegner.StartX)     && 
 			(Schuss_Spieler.StartX <= Endgegner.StartX+31)  &&
 			(Schuss_Spieler.StartY+31 >= Endgegner.StartY)  &&
@@ -159,7 +160,15 @@ public class Schuss_Spieler extends Rectangle {
 						
 				sichtbar=false;	
 	
-					}
+					}else
+		if( (Schuss_Spieler.StartX+31 >= GegnerKI.StartX)     && 
+				(Schuss_Spieler.StartX <= GegnerKI.StartX+31)  &&
+				(Schuss_Spieler.StartY+31 >= GegnerKI.StartY)  &&
+				(Schuss_Spieler.StartY <= GegnerKI.StartY+31)){		
+								
+				sichtbar=false;	
+				GegnerKI.leben-=25;
+		}
 	}
 
 	public static void main(String[] args) {

@@ -28,11 +28,13 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static GegnerRL gegnerRL;
 	public static GegnerOU gegnerOU;
 	public static Endgegner Boss;
+	public static GegnerKI gegnerKI;
 	public static Schuss_Endgegner schuss_endgegner;
 	public static Schuss_Spieler schuss_spieler;
 	public static int EndgegnerLeben;
 	public static int GegnerRLLeben;
 	public static int GegnerOULeben;
+	public static int GegnerKILeben;
 	public static int counter_angriff;
 	public static Falle falle;
 	public static Waffe waffe;
@@ -92,6 +94,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		gegnerOU = new GegnerOU();
 		falle = new Falle();
 		Boss = new Endgegner();
+		gegnerKI = new GegnerKI();
 		waffe = new Waffe();
 		loadImages();
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
@@ -100,6 +103,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		GegnerOU.leben=GegnerOU.StartLeben;
 		GegnerRL.leben=GegnerRL.StartLeben;
 		Endgegner.leben=Endgegner.StartLeben;
+		GegnerKI.leben=GegnerKI.StartLeben;
 		Waffe.ID = spieler.waffe;
 	}
 
@@ -141,6 +145,10 @@ public class Spielfeld extends JPanel implements Runnable{
 
 		if ((Endgegner.leben>0)&&(Endgegner.aktiv)){
 			Boss.draw(g);
+		}
+		
+		if((GegnerKI.leben>0)&&(GegnerKI.aktiv)){
+			gegnerKI.draw(g);
 		}
 		
 		//SchussEndgegner wird nur in raum 3 gezeichnet
@@ -209,6 +217,19 @@ public class Spielfeld extends JPanel implements Runnable{
 
 			g.fill3DRect(GegnerRL.StartX, GegnerRL.StartY-10,GegnerRL.leben/GegnerRL.Faktor,3,true);
 		}
+		
+		//Lebensanzeige GegnerKI
+		if ((GegnerKI.aktiv)&&(GegnerKI.leben>0)){
+
+			if(GegnerKI.leben>GegnerKI.StartLeben/4){
+				g.setColor(Color.green);
+			} else {
+				g.setColor(Color.red);
+			}
+
+			g.fill3DRect(GegnerKI.StartX, GegnerKI.StartY-10,GegnerKI.leben/GegnerKI.Faktor,3,true);
+				
+		}
 	}
 	
 	//Thread
@@ -238,6 +259,12 @@ public class Spielfeld extends JPanel implements Runnable{
 				anzeige = false;
 				counter_anzeige = 0;
 			}
+			GegnerKI.counter_gegnerKI ++;
+			GegnerKI.laufen=false;
+			if(GegnerKI.counter_gegnerKI==3){
+				GegnerKI.laufen=true;
+				GegnerKI.counter_gegnerKI=0;
+			}
 			
 			if(propra2013.Gruppe54.spieler.aktiv){
 			//Steuerung des Spielers
@@ -266,11 +293,13 @@ public class Spielfeld extends JPanel implements Runnable{
 		GegnerOULeben=GegnerOU.leben;
 		GegnerRLLeben=GegnerRL.leben;
 		EndgegnerLeben=Endgegner.leben;
-		Falle.aktiv=false;
+		GegnerKILeben=GegnerKI.leben;
 		level.loadLevel(new File("level/level0_0.lvl"));
 		GegnerOU.leben=0;
 		GegnerRL.leben =0;
 		Endgegner.leben=0;
+		GegnerKI.leben=0;
+		Falle.aktiv=false;
 		Schuss_Endgegner.sichtbar=false;
 		spieler.x = 100;
 		spieler.y = 150;
@@ -281,7 +310,8 @@ public class Spielfeld extends JPanel implements Runnable{
 		GegnerOU.leben=GegnerOULeben;
 		GegnerRL.leben=GegnerRLLeben;
 		Endgegner.leben=EndgegnerLeben;
-		Falle.aktiv=false;
+		GegnerKI.leben=GegnerKILeben;
+		Falle.aktiv=true;
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));
 		spieler.x = Spielfeld.spieler_preposX;
 		spieler.y = Spielfeld.spieler_preposY;

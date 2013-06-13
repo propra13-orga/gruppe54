@@ -39,8 +39,10 @@ public class Falle extends Rectangle {
 	}
 
 	public void draw(Graphics g){
+		if(aktiv){
 		g.drawImage(new ImageIcon("pics/falle_beweglich_unten_"+Spielfeld.current_lvl+".png").getImage(), StartX, StartY, 32, 32, null);
-	}
+	}}
+		
 	
 	public static void bewegung(){
 
@@ -62,8 +64,8 @@ public class Falle extends Rectangle {
 				(Falle.StartY <= Spielfeld.spieler.y+31)){		
 				
 				if (spieler.ruestung>0){
-					spieler.ruestung-=1;
-				} else spieler.leben -= 1;
+					spieler.ruestung-=Schaden;
+				} else spieler.leben -= Schaden;
 				
 			}	
 	}
