@@ -27,7 +27,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static GegnerRL gegnerRL;
 	public static GegnerOU gegnerOU;
 	public static Endgegner Boss;
-	public static int GegnerRL_counter = 0,GegnerOU_counter = 0,Endgegner_counter = 0;  //damit das Item, dass man nach besiegen eines Gegner erhält, nur einmal abgelegt wird
+	public static int GegnerKI_counter=0, GegnerRL_counter = 0,GegnerOU_counter = 0,Endgegner_counter = 0;  //damit das Item, dass man nach besiegen eines Gegner erhält, nur einmal abgelegt wird
 	public static GegnerKI gegnerKI;
 	public static Schuss_Endgegner schuss_endgegner;
 	public static Schuss_Spieler schuss_spieler;
@@ -161,20 +161,10 @@ public class Spielfeld extends JPanel implements Runnable{
 		}
 		if((GegnerRL.leben>0)&&(GegnerRL.aktiv)){
 			gegnerRL.draw(g);
-		} else if((GegnerRL.leben <= 0)&&(GegnerRL_counter == 0)&&(shop == false)){	//wenn der Gegner besiegt wurde müssen seine Koordinaten auf 0 gesetzt werden
-			getBlock(GegnerRL.StartX+16,GegnerRL.StartY+16).ID = 32;				//der counter ist dafür, dass beim besiegen des Gegners nur einmal ein Schatz liegt
-			GegnerRL_counter = 1;
-			GegnerRL.StartX = 0;
-			GegnerRL.StartY = 0;
 		}
 		
 		if((GegnerOU.leben>0)&&(GegnerOU.aktiv)){
 			gegnerOU.draw(g);
-		} else if((GegnerOU.leben <= 0)&&(GegnerOU_counter == 0)&&(shop == false)){ // "   " 
-			getBlock(GegnerOU.StartX+16,GegnerOU.StartY+16).ID = 14;
-			GegnerOU_counter = 1;
-			GegnerOU.StartX = 0;
-			GegnerOU.StartY = 0;
 		}
 		
 		if((Falle.aktiv)&&(Spielfeld.shop == false)){
@@ -183,41 +173,30 @@ public class Spielfeld extends JPanel implements Runnable{
 
 		if ((Endgegner.leben>0)&&(Endgegner.aktiv)){
 			Boss.draw(g);
-		} else if((Endgegner.leben <= 0)&&(Endgegner_counter == 0)&&(shop == false)){ // "   "
-			getBlock(Endgegner.StartX+16,Endgegner.StartY+16).ID = 13;
-			Endgegner_counter = 1;
-			Endgegner.StartX = 0;
-			Endgegner.StartY = 0;
 		}
-		
+		//GegnerKI
 		if((GegnerKI.leben>0)&&(GegnerKI.aktiv)){
 			gegnerKI.draw(g);
 		}
-		
 		//SchussEndgegner wird nur in raum 3 gezeichnet
 		if ((current_room==3)&&(Schuss_Endgegner.sichtbar==true)&&(Endgegner.leben>0)&&(Schuss_Endgegner.aktiv)){
-
 			if (Schuss_Endgegner.checkPos==false){
 				Schuss_Endgegner.checkPos();
 			}
 			Schuss_Endgegner.bewegung();
 			schuss_endgegner.draw(g);
-		
 		}
 		//Schuss Spieler
 		if (Schuss_Spieler.sichtbar==true){
 			if (Schuss_Spieler.checkPos==false){
 				Schuss_Spieler.checkPos();
 			}
-			
 			Schuss_Spieler.SchussRechts();
 			Schuss_Spieler.SchussLinks();
 			Schuss_Spieler.SchussOben();
 			Schuss_Spieler.SchussUnten();
-			
 			schuss_spieler.draw(g);
 		}
-
 		//Anzeige von Schatzelementen
 		if((anzeige)&&(counter_anzeige<=300)&&(propra2013.Gruppe54.spieler.aktiv)){
 			g.setColor(Color.white);
@@ -225,7 +204,6 @@ public class Spielfeld extends JPanel implements Runnable{
 			g.drawString(text_anzeige, (int)spieler.x, (int)spieler.y-10);
 			counter_anzeige++;
 		}
-		
 		//Lebensanzeige Endgegner
 		if ((current_room==3)&&(Endgegner.leben>0)&&(Endgegner.aktiv)){
 			if(Endgegner.leben>Endgegner.StartLeben/4){
@@ -237,40 +215,30 @@ public class Spielfeld extends JPanel implements Runnable{
 		}
 		//Lebensanzeige GegnerOU
 		if ((GegnerOU.aktiv)&&(GegnerOU.leben>0)){
-
 			if(GegnerOU.leben>GegnerOU.StartLeben/4){
 				g.setColor(Color.green);
 			} else {
 				g.setColor(Color.red);
 			}
-
-			g.fill3DRect(GegnerOU.StartX, GegnerOU.StartY-10,GegnerOU.leben/GegnerOU.Faktor,3,true);
-				
+			g.fill3DRect(GegnerOU.StartX, GegnerOU.StartY-10,GegnerOU.leben/GegnerOU.Faktor,3,true);	
 		}
 		//Lebensanzeige GegnerRL
-
 		if ((GegnerRL.leben>0)&&(GegnerRL.aktiv)){
-
 			if(GegnerRL.leben>GegnerOU.StartLeben/4){
 				g.setColor(Color.green);
 			} else {
 				g.setColor(Color.red);
 			}
-
 			g.fill3DRect(GegnerRL.StartX, GegnerRL.StartY-10,GegnerRL.leben/GegnerRL.Faktor,3,true);
 		}
-		
 		//Lebensanzeige GegnerKI
 		if ((GegnerKI.aktiv)&&(GegnerKI.leben>0)){
-
 			if(GegnerKI.leben>GegnerKI.StartLeben/4){
 				g.setColor(Color.green);
 			} else {
 				g.setColor(Color.red);
 			}
-
-			g.fill3DRect(GegnerKI.StartX, GegnerKI.StartY-10,GegnerKI.leben/GegnerKI.Faktor,3,true);
-				
+			g.fill3DRect(GegnerKI.StartX, GegnerKI.StartY-10,GegnerKI.leben/GegnerKI.Faktor,3,true);	
 		}
 	}
 	
@@ -295,6 +263,42 @@ public class Spielfeld extends JPanel implements Runnable{
 				anzeige = false;
 				Waffe.angriff = false;
 				Frame.neustart.setVisible(true);
+			}
+			if ((GegnerOU.aktiv)&&(Block.counter_gegner11==1)&&(GegnerOU.leben>0)){
+				GegnerOU.lauf();
+			}
+			if ((Endgegner.leben>0)&&(Block.counter_gegner12==1)&&(Endgegner.aktiv)){
+				Endgegner.lauf();
+			}
+			if ((GegnerRL.aktiv)&&(GegnerRL.leben>0)&&(Block.counter_gegner10==1)){
+				GegnerRL.lauf();
+			}
+			if ((GegnerKI.leben>0)&&(Block.counter_gegner40==1)&&(GegnerKI.aktiv)){
+				GegnerKI.lauf();
+			}
+			if((GegnerRL.leben <= 0)&&(GegnerRL_counter == 0)&&(shop == false)){	//wenn der Gegner besiegt wurde müssen seine Koordinaten auf 0 gesetzt werden
+				getBlock(GegnerRL.StartX+16,GegnerRL.StartY+16).ID = 32;				//der counter ist dafür, dass beim besiegen des Gegners nur einmal ein Schatz liegt
+				GegnerRL_counter = 1;
+				GegnerRL.StartX = 0;
+				GegnerRL.StartY = 0;
+			}
+			if((GegnerOU.leben <= 0)&&(GegnerOU_counter == 0)&&(shop == false)){ // "   " 
+				getBlock(GegnerOU.StartX+16,GegnerOU.StartY+16).ID = 14;
+				GegnerOU_counter = 1;
+				GegnerOU.StartX = 0;
+				GegnerOU.StartY = 0;
+			}
+			if((Endgegner.leben <= 0)&&(Endgegner_counter == 0)&&(shop == false)){ // "   "
+				getBlock(Endgegner.StartX+16,Endgegner.StartY+16).ID = 13;
+				Endgegner_counter = 1;
+				Endgegner.StartX = 0;
+				Endgegner.StartY = 0;
+			} 
+			if((GegnerKI.leben <= 0)&&(GegnerKI_counter == 0)&&(shop == false)){ // "   "
+				getBlock(GegnerKI.StartX+16,GegnerKI.StartY+16).ID = 13;
+				GegnerKI_counter = 1;
+				GegnerKI.StartX = 0;
+				GegnerKI.StartY = 0;
 			}
 			
 			if(counter_anzeige==300){  //String über dem Spieler zur Ausgabe eingesammelter Werte

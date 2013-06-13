@@ -12,10 +12,10 @@ public class Block extends Rectangle {
 	
     int ID,Zustand=0;				//0 - inaktiv, 1 - aktiv
 
-	public int counter_gegner10=0;
-	public int counter_gegner11=0;
-	public int counter_gegner12=0;
-	public int counter_gegner40=0;
+	public static int counter_gegner10=0;
+	public static int counter_gegner11=0;
+	public static int counter_gegner12=0;
+	public static int counter_gegner40=0;
 	public int counter_falle=0;
 	
 	/**
@@ -151,10 +151,8 @@ public class Block extends Rectangle {
 			counter_gegner10=1;
 			GegnerRL.StartX = x;
 			GegnerRL.StartY = y;
-			} else if ((GegnerRL.aktiv)&&(GegnerRL.leben>0)&&(counter_gegner10==1)){
-				GegnerRL.lauf();
-				Spielfeld.gegnerRL.draw(g);
 			}
+			Spielfeld.gegnerRL.draw(g);
 			break;
 			
 		case 36:	//Gegner 2 
@@ -162,15 +160,13 @@ public class Block extends Rectangle {
 		/*der counter wird auf eins gesetz wenn ein gegner gezeichnet wurde und ab da
 		 * soll er nur noch laufen und nicht ständig an den start punkt gezeichnet werden
 			*/
-		GegnerOU.aktiv=true;
-			if((GegnerOU.aktiv)&&(GegnerOU.leben>0)&&(counter_gegner11==0)){	
-			counter_gegner11=1;
-			GegnerOU.StartX = x;
-			GegnerOU.StartY = y;
-			} else if ((GegnerOU.aktiv)&&(counter_gegner11==1)&&(GegnerOU.leben>0)){
-				GegnerOU.lauf();
-				Spielfeld.gegnerOU.draw(g);
+			GegnerOU.aktiv=true;
+			if((GegnerOU.aktiv)&&(GegnerOU.leben>0)&&(Block.counter_gegner11==0)){	
+				Block.counter_gegner11=1;
+				GegnerOU.StartX = x;
+				GegnerOU.StartY = y;
 			}
+			Spielfeld.gegnerOU.draw(g);
 			break;
 			
 		case 37:	//Endgegner
@@ -181,10 +177,8 @@ public class Block extends Rectangle {
 			counter_gegner12=1;
 			Endgegner.StartX = x;
 			Endgegner.StartY = y;
-			} else if ((Endgegner.leben>0)&&(counter_gegner12==1)&&(Endgegner.aktiv)){
-				Endgegner.lauf();
-				Spielfeld.Boss.draw(g);
-			}
+			} 
+			Spielfeld.Boss.draw(g);
 			break;
 			
 		case 38:	//bewegliche Falle
@@ -212,10 +206,8 @@ public class Block extends Rectangle {
 			counter_gegner40=1;
 			GegnerKI.StartX = x;
 			GegnerKI.StartY = y;
-			} else if ((GegnerKI.leben>0)&&(counter_gegner40==1)&&(GegnerKI.aktiv)){
-				GegnerKI.lauf();
-				Spielfeld.gegnerKI.draw(g);
 			}
+			Spielfeld.gegnerKI.draw(g);
 			break;
 			
 		default:

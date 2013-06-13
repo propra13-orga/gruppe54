@@ -297,10 +297,8 @@ public class GegnerKI extends Rectangle{
 	//Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
 	public static void Kollision(){
 
-			if( (GegnerKI.StartX+31 >= Spielfeld.spieler.x)     && 
-				(GegnerKI.StartX <= Spielfeld.spieler.x+31)  &&
-				(GegnerKI.StartY+31 >= Spielfeld.spieler.y)  &&
-				(GegnerKI.StartY <= Spielfeld.spieler.y+31)){		
+			if( (GegnerKI.StartX+31 >= Spielfeld.spieler.x)&&(GegnerKI.StartX <= Spielfeld.spieler.x+31)&&
+				(GegnerKI.StartY+31 >= Spielfeld.spieler.y)&&(GegnerKI.StartY <= Spielfeld.spieler.y+31)){		
 				
 				if (spieler.ruestung>0){
 					spieler.ruestung-=Schaden;
