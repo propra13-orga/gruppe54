@@ -28,7 +28,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static GegnerOU gegnerOU;
 	public static Endgegner Boss;
 	public static GegnerKI gegnerKI;
-	public static int GegnerRL_counter = 0,GegnerOU_counter = 0,Endgegner_counter = 0;
+	public static int GegnerRL_counter = 0,GegnerOU_counter = 0,Endgegner_counter = 0, GegnerKI_counter=0;
 	public static Schuss_Endgegner schuss_endgegner;
 	public static Schuss_Spieler schuss_spieler;
 	public static Pfeil pfeil;
@@ -189,9 +189,14 @@ public class Spielfeld extends JPanel implements Runnable{
 			Endgegner.StartX = 0;
 			Endgegner.StartY = 0;
 		}
-		
+		//GegnerKI
 		if((GegnerKI.leben>0)&&(GegnerKI.aktiv)){
 			gegnerKI.draw(g);
+		}else if((GegnerKI.leben <= 0)&&(GegnerKI_counter == 0)&&(shop == false)){ // "   "
+			getBlock(GegnerKI.StartX+16,GegnerKI.StartY+16).ID = 13;
+			GegnerKI_counter = 1;
+			GegnerKI.StartX = 0;
+			GegnerKI.StartY = 0;
 		}
 		
 		//SchussEndgegner wird nur in raum 3 gezeichnet

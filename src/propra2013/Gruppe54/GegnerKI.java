@@ -290,7 +290,7 @@ public class GegnerKI extends Rectangle{
 		}
 		Kollision();
 		
-		System.out.println(frei+" "+Fall+" "+nächsterSchrittX+nächsterSchrittY+StartX+StartY+" "+aktiv);
+		//System.out.println(frei+" "+Fall+" "+nächsterSchrittX+nächsterSchrittY+StartX+StartY+" "+aktiv);
 		}
 	}
 	
