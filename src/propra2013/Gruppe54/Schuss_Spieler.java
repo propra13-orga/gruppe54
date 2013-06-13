@@ -47,9 +47,10 @@ public class Schuss_Spieler extends Rectangle {
 		//prüft an 4 Punkten ob sich dort ein Objekt befindet durch das der Schuss nicht fliegen darf
 		public static boolean check(int ID){
 			if((Spielfeld.getBlockID(Schuss_Spieler.StartX+10,Schuss_Spieler.StartY+27)!=ID)&& //unten links
-				(Spielfeld.getBlockID(Schuss_Spieler.StartX+27,Schuss_Spieler.StartY+27)!=ID)&& //unten rechts
-				(Spielfeld.getBlockID(Schuss_Spieler.StartX+10,Schuss_Spieler.StartY+27)!=ID)&& //oben links
-				(Spielfeld.getBlockID(Schuss_Spieler.StartX+27,Schuss_Spieler.StartY+27)!=ID)){ //oben rechts
+				(Spielfeld.getBlockID(Schuss_Spieler.StartX+25,Schuss_Spieler.StartY+27)!=ID)&& //unten rechts
+				(Spielfeld.getBlockID(Schuss_Spieler.StartX+10,Schuss_Spieler.StartY+30)!=ID)&& //oben links
+				(Spielfeld.getBlockID(Schuss_Spieler.StartX+20,Schuss_Spieler.StartY+30)!=ID)&&//oben rechts
+				(Schuss_Spieler.StartX>0)&&(Schuss_Spieler.StartX<800)&&(Schuss_Spieler.StartY>0)&&(Schuss_Spieler.StartY<480)){ 
 				return true;
 			} else { 
 				return false;
@@ -94,6 +95,7 @@ public class Schuss_Spieler extends Rectangle {
 
 			
 	public static void Kollision(){
+
 		//Endgegner
 		if((Schuss_Spieler.StartX+31 >= Endgegner.StartX)&&(Schuss_Spieler.StartX <= Endgegner.StartX+31)&&
 		   (Schuss_Spieler.StartY+31 >= Endgegner.StartY)&&(Schuss_Spieler.StartY <= Endgegner.StartY+31)){		
@@ -109,6 +111,7 @@ public class Schuss_Spieler extends Rectangle {
         		  (Schuss_Spieler.StartY+31 >= GegnerOU.StartY)&&(Schuss_Spieler.StartY <= GegnerOU.StartY+31)){		
 				sichtbar=false;	
 				GegnerOU.leben-=25;
+
 		//Schuss_Endgegner
 		}else if((Schuss_Spieler.StartX+31 >= Schuss_Endgegner.StartX)&&(Schuss_Spieler.StartX <= Schuss_Endgegner.StartX+31)  &&
 				 (Schuss_Spieler.StartY+31 >= Schuss_Endgegner.StartY)&&(Schuss_Spieler.StartY <= Schuss_Endgegner.StartY+31)){		
@@ -119,9 +122,14 @@ public class Schuss_Spieler extends Rectangle {
 		} else if((Schuss_Spieler.StartX+31 >= Falle.StartX)&&(Schuss_Spieler.StartX <= Falle.StartX+31)  &&
 				 (Schuss_Spieler.StartY+31 >= Falle.StartY)&&(Schuss_Spieler.StartY <= Falle.StartY+31)){		
 			sichtbar=false;	
-		}
+		//GegnerKI
+		}else
+			if( (Schuss_Spieler.StartX+31 >= GegnerKI.StartX)&&(Schuss_Spieler.StartX <= GegnerKI.StartX+31)  &&
+					(Schuss_Spieler.StartY+31 >= GegnerKI.StartY)&&(Schuss_Spieler.StartY <= GegnerKI.StartY+31)){		
+					sichtbar=false;	
+					GegnerKI.leben-=25;
 	}
-
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 

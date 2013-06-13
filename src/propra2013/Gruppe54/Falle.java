@@ -38,9 +38,9 @@ public class Falle extends Rectangle {
 
 	public void draw(Graphics g){
 		if(aktiv){
-			g.drawImage(new ImageIcon("pics/falle_beweglich_unten_"+Spielfeld.current_lvl+".png").getImage(), StartX, StartY, 32, 32, null);
-		}
-	}
+		g.drawImage(new ImageIcon("pics/falle_beweglich_unten_"+Spielfeld.current_lvl+".png").getImage(), StartX, StartY, 32, 32, null);
+	}}
+
 	
 	public static void bewegung(){
 		if ((Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=1)&&(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=4)){
@@ -54,12 +54,13 @@ public class Falle extends Rectangle {
 	}
 	
 	public static void Kollision(){
+
 		if((Falle.StartX+31 >= Spielfeld.spieler.x)&&(Falle.StartX <= Spielfeld.spieler.x+31)  &&
 			(Falle.StartY+31 >= Spielfeld.spieler.y)&&(Falle.StartY <= Spielfeld.spieler.y+31)){		
 			if (spieler.ruestung>0){
-				spieler.ruestung-=1;
+				spieler.ruestung-=Schaden;
 			} else {
-				spieler.leben -= 1;
+				spieler.leben -= Schaden;
 			}	
 		}	
 	}

@@ -229,6 +229,21 @@ public class Waffe extends Rectangle {
 			break;
 			}
 		}
+		if((((x+28 >= GegnerKI.StartX)&&(x+28 <= GegnerKI.StartX+32))
+				&&((y+30 >= GegnerKI.StartY)&&(y+30 <= GegnerKI.StartY+32)))||
+		   (((x-4 >= GegnerKI.StartX)&&(x-4 <= GegnerKI.StartX+32))
+				&&((y+30 >= GegnerKI.StartY)&&(y+30 <= GegnerKI.StartY+32)))||
+		   (((x-4 >= GegnerKI.StartX)&&(x-4 <= GegnerKI.StartX+32))
+				&&((y+4 >= GegnerKI.StartY)&&(y+4 <= GegnerKI.StartY+32)))||
+		   (((x+28 >= GegnerKI.StartX)&&(x+28 <= GegnerKI.StartX+32))
+				&&((y+4 >= GegnerKI.StartY)&&(y+4 <= GegnerKI.StartY+32)))){
+			switch(ID){
+			case 0: GegnerKI.leben -= 10;
+				break;
+			case 1: GegnerKI.leben -= 15;
+			break;
+			}
+		}
 	}
 	
 	/**

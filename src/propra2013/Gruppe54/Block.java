@@ -15,6 +15,7 @@ public class Block extends Rectangle {
 	public int counter_gegner10=0;
 	public int counter_gegner11=0;
 	public int counter_gegner12=0;
+	public int counter_gegner40=0;
 	public int counter_falle=0;
 	
 	/**
@@ -202,6 +203,19 @@ public class Block extends Rectangle {
 					Falle.bewegung();
 					Spielfeld.falle.draw(g);
 				}
+			break;
+			
+		case 39:	//GegnerKI
+			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
+			GegnerKI.aktiv=true;
+			if((counter_gegner40==0)&&(GegnerKI.leben>0)&&(GegnerKI.aktiv)){	
+			counter_gegner40=1;
+			GegnerKI.StartX = x;
+			GegnerKI.StartY = y;
+			} else if ((GegnerKI.leben>0)&&(counter_gegner40==1)&&(GegnerKI.aktiv)){
+				GegnerKI.lauf();
+				Spielfeld.gegnerKI.draw(g);
+			}
 			break;
 			
 		default:
