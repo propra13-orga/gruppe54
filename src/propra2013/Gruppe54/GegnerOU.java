@@ -32,15 +32,16 @@ public class GegnerOU extends Rectangle{
 		if (Spielfeld.current_lvl==1){
 			StartLeben=100;
 			Faktor=3;
-		} else 
-			if(Spielfeld.current_lvl==2){
-				StartLeben=200;
-				Faktor=6;
-			} else
-				if(Spielfeld.current_lvl==3){
-					StartLeben=300;
-					Faktor=10;
-				}
+		} else if(Spielfeld.current_lvl==2){
+			StartLeben=200;
+			Faktor=6;
+		} else if(Spielfeld.current_lvl==3){
+			StartLeben=300;
+			Faktor=10;
+		} else if(Spielfeld.current_lvl==4){
+			StartLeben=300;
+			Faktor=10;
+		}
 		leben=StartLeben;		
 		aktiv=false;
 	}
@@ -51,11 +52,15 @@ public class GegnerOU extends Rectangle{
 	
 	public static void lauf(){
 		//Gegner läuft hoch und runter
-			if ((unten==false) &&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY+2+32)!=1)){
+			if ((unten==false)&&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY+2+32)!=1)&&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY+2+32)!=41)
+					&&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY+2+32)!=42)&&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY+2+32)!=43)
+					&&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY+2+32)!=4)){
 				Kollision2();
 				GegnerOU.StartY+=1;
 				} else unten = true;
-			if ((unten==true)&& (Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY-2+16)!=1)){
+			if ((unten==true)&&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY-2+16)!=1)&&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY-2+16)!=41)
+					&&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY-2+16)!=42)&&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY-2+16)!=43)
+					&&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY+2+32)!=4)){
 				Kollision2();
 				GegnerOU.StartY-=1;
 				} else unten = false;	
@@ -64,16 +69,13 @@ public class GegnerOU extends Rectangle{
 
 //Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
 public static void Kollision2(){
-
-		if( (GegnerOU.StartX+26 >= Spielfeld.spieler.x)     && 
-			(GegnerOU.StartX <= Spielfeld.spieler.x+26)  &&
-			(GegnerOU.StartY+26 >= Spielfeld.spieler.y)  &&
-			(GegnerOU.StartY <= Spielfeld.spieler.y+26)){		
-			
+		if( (GegnerOU.StartX+26 >= Spielfeld.spieler.x)&&(GegnerOU.StartX <= Spielfeld.spieler.x+26)&&
+			(GegnerOU.StartY+26 >= Spielfeld.spieler.y)&&(GegnerOU.StartY <= Spielfeld.spieler.y+26)){		
 			if (spieler.ruestung>0){
 				spieler.ruestung-=1;
-			} else spieler.leben -= 1;
-			
+			} else {
+				spieler.leben -= 1;
+			}
 		}
 }
 	public static void main(String[] args) {
