@@ -161,6 +161,7 @@ public class Elemente {
 			}
 			GegnerRL.leben=0;
 			GegnerOU.leben=0;
+
 			}
 			break;
 		
