@@ -39,24 +39,28 @@ public class GegnerKI extends Rectangle{
 			StartLeben=100;
 			Faktor=3;
 			Schaden=1;
-		} else 
-			if(Spielfeld.current_lvl==2){
-				StartLeben=200;
-				Faktor=6;
-				Schaden=2;
-			} else
-				if(Spielfeld.current_lvl==3){
-					StartLeben=300;
-					Faktor=10;
-					Schaden=3;
-				}
+		} else if(Spielfeld.current_lvl==2){
+			StartLeben=200;
+			Faktor=6;
+			Schaden=2;
+		} else if(Spielfeld.current_lvl==3){
+			StartLeben=300;
+			Faktor=10;
+			Schaden=3;
+		} else if(Spielfeld.current_lvl==4){
+			StartLeben=300;
+			Faktor=10;
+			Schaden=3;
+		}
 		leben=StartLeben;
 		aktiv=false;
 	}
 	
 	//Zeichnet den Gegner
 	public void draw(Graphics g){
-		g.drawImage(new ImageIcon("pics/GegnerKI_1"/*+Spielfeld.current_lvl*/+".png").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
+		if((GegnerKI.aktiv)&&(GegnerKI.StartX!=0)&&(GegnerKI.StartY!=0)){
+			g.drawImage(new ImageIcon("pics/GegnerKI_1"/*+Spielfeld.current_lvl*/+".png").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
+		}
 	}
 	
 	//Funktion die den nächsten schritt berechnet
@@ -296,15 +300,14 @@ public class GegnerKI extends Rectangle{
 	
 	//Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
 	public static void Kollision(){
-
-			if( (GegnerKI.StartX+31 >= Spielfeld.spieler.x)&&(GegnerKI.StartX <= Spielfeld.spieler.x+31)&&
-				(GegnerKI.StartY+31 >= Spielfeld.spieler.y)&&(GegnerKI.StartY <= Spielfeld.spieler.y+31)){		
-				
-				if (spieler.ruestung>0){
-					spieler.ruestung-=Schaden;
-				} else spieler.leben -= Schaden;
-				
+		if( (GegnerKI.StartX+26 >= Spielfeld.spieler.x)&&(GegnerKI.StartX <= Spielfeld.spieler.x+26)&&
+			(GegnerKI.StartY+26 >= Spielfeld.spieler.y)&&(GegnerKI.StartY <= Spielfeld.spieler.y+26)){		
+			if (spieler.ruestung>0){
+				spieler.ruestung-=Schaden;
+			} else {
+				spieler.leben -= Schaden;
 			}
+		}
 	}
 	
 	public static void main(String[] args) {

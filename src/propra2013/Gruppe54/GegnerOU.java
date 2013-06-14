@@ -47,7 +47,9 @@ public class GegnerOU extends Rectangle{
 	}
 	
 	public void draw(Graphics g){
-		g.drawImage(new ImageIcon("pics/gegner2_"+Spielfeld.current_lvl+".png").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
+		if((GegnerOU.aktiv)&&(GegnerOU.StartX!=0)&&(GegnerOU.StartY!=0)){
+			g.drawImage(new ImageIcon("pics/gegner2_"+Spielfeld.current_lvl+".png").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
+		}
 	}
 	
 	public static void lauf(){

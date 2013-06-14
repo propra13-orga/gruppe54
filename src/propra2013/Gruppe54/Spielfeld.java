@@ -44,7 +44,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	 * Konstruktor
 	 */
 	public Spielfeld(){
-		setBounds(230,55,800,480);
+		setBounds(25,55,800,480);
 		thread.start();
 		spieler = new spieler();
 		spieler.runter=true;
@@ -130,6 +130,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		Spielfeld.GegnerRL_counter = 0;
 		Spielfeld.GegnerOU_counter = 0;
 		Spielfeld.Endgegner_counter = 0;
+		Spielfeld.GegnerKI_counter = 0;
 		Waffe.ID = spieler.waffe;
 	}
 
@@ -167,10 +168,12 @@ public class Spielfeld extends JPanel implements Runnable{
 			gegnerOU.draw(g);
 		}
 		
+		//Falle
 		if((Falle.aktiv)&&(Spielfeld.shop == false)){
 			falle.draw(g);
 		}
-
+		
+		//Endgegner
 		if ((Endgegner.leben>0)&&(Endgegner.aktiv)){
 			Boss.draw(g);
 		}
@@ -264,16 +267,7 @@ public class Spielfeld extends JPanel implements Runnable{
 				Waffe.angriff = false;
 				Frame.neustart.setVisible(true);
 			}
-			if ((GegnerOU.aktiv)&&(Block.counter_gegner11==1)&&(GegnerOU.leben>0)){
-				GegnerOU.lauf();
-			}
-			if ((Endgegner.leben>0)&&(Block.counter_gegner12==1)&&(Endgegner.aktiv)){
-				Endgegner.lauf();
-			}
-			if ((GegnerRL.aktiv)&&(GegnerRL.leben>0)&&(Block.counter_gegner10==1)){
-				GegnerRL.lauf();
-			}
-			if ((GegnerKI.leben>0)&&(Block.counter_gegner40==1)&&(GegnerKI.aktiv)){
+			if ((GegnerKI.leben>0)&&(GegnerKI.aktiv)&&(GegnerKI.StartX !=0)&&(GegnerKI.StartY !=0)){
 				GegnerKI.lauf();
 			}
 			if((GegnerRL.leben <= 0)&&(GegnerRL_counter == 0)&&(shop == false)){	//wenn der Gegner besiegt wurde müssen seine Koordinaten auf 0 gesetzt werden
@@ -388,6 +382,9 @@ public class Spielfeld extends JPanel implements Runnable{
         }
         if((Spielfeld.shop_axt)&&(Spielfeld.check(28))){
         	Spielfeld.shop_axt = false;
+        }
+        if((Spielfeld.shop_supertrank)&&(Spielfeld.check(29))){
+        	Spielfeld.shop_supertrank = false;
         }
 	}
 	
