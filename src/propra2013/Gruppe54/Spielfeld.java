@@ -31,6 +31,8 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static GegnerKI gegnerKI;
 	public static Schuss_Endgegner schuss_endgegner;
 	public static Schuss_Spieler schuss_spieler;
+	public static int counter_schuss = 0; //wird auf 1 gesetzt wenn der Spieler schießt, damit die Position des Schusses sich während dem Flug nicht 
+										  //weiterhin der Position des Spielers anpasst
 	public static Pfeil pfeil;
 	public static int EndgegnerLeben;
 	public static int GegnerRLLeben;
@@ -49,14 +51,6 @@ public class Spielfeld extends JPanel implements Runnable{
 		spieler = new spieler();
 		spieler.runter=true;
 	}
-	
-	/*       
-			ID: 0 - Boden   1 - Mauer   2 - Ausgang 
-		        3 - Falle_Loch   4 - Falle_Feuer   5 - Falle_Speer  
-	            7 - Item_Trank   8 - Item_Trank2   9 - Brunnen
-	      		A - Gegner1      B - Gegner2       C - Gegner3
-		  		D				 E - Zepter	   	   F - Shopbesitzer						*/
-	
     //Bilder in Array laden
 	public static void loadImages(){
 		elemente[0] = new ImageIcon("pics/boden"+current_lvl+".png").getImage(); 
@@ -127,8 +121,8 @@ public class Spielfeld extends JPanel implements Runnable{
 		GegnerRL.leben=GegnerRL.StartLeben;
 		Endgegner.leben=Endgegner.StartLeben;
 		GegnerKI.leben=GegnerKI.StartLeben;
-		Spielfeld.GegnerRL_counter = 0;
-		Spielfeld.GegnerOU_counter = 0;
+		Spielfeld.GegnerRL_counter = 0;	//counter ist 1 wenn der jeweilige Gegner besiegt wurde,
+		Spielfeld.GegnerOU_counter = 0;	//damit nur einmal ein Item als Belohnung abgelegt wird
 		Spielfeld.Endgegner_counter = 0;
 		Spielfeld.GegnerKI_counter = 0;
 		Waffe.ID = spieler.waffe;
@@ -183,21 +177,10 @@ public class Spielfeld extends JPanel implements Runnable{
 		}
 		//SchussEndgegner wird nur in raum 3 gezeichnet
 		if ((current_room==3)&&(Schuss_Endgegner.sichtbar==true)&&(Endgegner.leben>0)&&(Schuss_Endgegner.aktiv)){
-			if (Schuss_Endgegner.checkPos==false){
-				Schuss_Endgegner.checkPos();
-			}
-			Schuss_Endgegner.bewegung();
 			schuss_endgegner.draw(g);
 		}
 		//Schuss Spieler
-		if (Schuss_Spieler.sichtbar==true){
-			if (Schuss_Spieler.checkPos==false){
-				Schuss_Spieler.checkPos();
-			}
-			Schuss_Spieler.SchussRechts();
-			Schuss_Spieler.SchussLinks();
-			Schuss_Spieler.SchussOben();
-			Schuss_Spieler.SchussUnten();
+		if (Schuss_Spieler.sichtbar){
 			schuss_spieler.draw(g);
 		}
 		//Anzeige von Schatzelementen
@@ -214,7 +197,7 @@ public class Spielfeld extends JPanel implements Runnable{
 			} else {
 				g.setColor(Color.red);
 			}
-			g.fill3DRect(Endgegner.StartX, Endgegner.StartY-10,Endgegner.leben/Endgegner.Faktor,3,true);
+			g.fill3DRect((int)Endgegner.StartX, (int)Endgegner.StartY-10,Endgegner.leben/Endgegner.Faktor,3,true);
 		}
 		//Lebensanzeige GegnerOU
 		if ((GegnerOU.aktiv)&&(GegnerOU.leben>0)){
@@ -223,7 +206,7 @@ public class Spielfeld extends JPanel implements Runnable{
 			} else {
 				g.setColor(Color.red);
 			}
-			g.fill3DRect(GegnerOU.StartX, GegnerOU.StartY-10,GegnerOU.leben/GegnerOU.Faktor,3,true);	
+			g.fill3DRect((int)GegnerOU.StartX, (int)GegnerOU.StartY-10,GegnerOU.leben/GegnerOU.Faktor,3,true);	
 		}
 		//Lebensanzeige GegnerRL
 		if ((GegnerRL.leben>0)&&(GegnerRL.aktiv)){
@@ -232,7 +215,7 @@ public class Spielfeld extends JPanel implements Runnable{
 			} else {
 				g.setColor(Color.red);
 			}
-			g.fill3DRect(GegnerRL.StartX, GegnerRL.StartY-10,GegnerRL.leben/GegnerRL.Faktor,3,true);
+			g.fill3DRect((int)GegnerRL.StartX, (int)GegnerRL.StartY-10,GegnerRL.leben/GegnerRL.Faktor,3,true);
 		}
 		//Lebensanzeige GegnerKI
 		if ((GegnerKI.aktiv)&&(GegnerKI.leben>0)){
@@ -267,8 +250,39 @@ public class Spielfeld extends JPanel implements Runnable{
 				Waffe.angriff = false;
 				Frame.neustart.setVisible(true);
 			}
+			//GegnerKI Bewegung
 			if ((GegnerKI.leben>0)&&(GegnerKI.aktiv)&&(GegnerKI.StartX !=0)&&(GegnerKI.StartY !=0)){
 				GegnerKI.lauf();
+			}
+			//GegnerRL Bewegung
+			if ((GegnerRL.aktiv)&&(GegnerRL.leben>0)&&(GegnerRL.StartX !=0)&&(GegnerRL.StartY !=0)){
+				GegnerRL.lauf();
+			}
+			//GegnerOU Bewegung
+			if ((GegnerOU.aktiv)&&(GegnerOU.leben>0)&&(GegnerOU.StartX !=0)&&(GegnerOU.StartY !=0)){
+				GegnerOU.lauf();
+			}
+			//Endgegner Bewegung
+			if ((Endgegner.leben>0)&&(Endgegner.aktiv)&&(Endgegner.StartX !=0)&&(Endgegner.StartY !=0)){
+				Endgegner.lauf();
+			}
+			if((Falle.aktiv)&&(Falle.StartX != 0)&&(Falle.StartY != 0)){
+				Falle.bewegung();
+			}
+			//Schuss vom Spieler
+			if((Schuss_Spieler.sichtbar)){
+				if (Schuss_Spieler.setPos==false){
+					Schuss_Spieler.setPos();
+				}
+				Schuss_Spieler.Schuss();
+				counter_schuss = 1;
+			}
+			//Schuss vom Endgegner
+			if ((current_room==3)&&(Schuss_Endgegner.sichtbar==true)&&(Endgegner.leben>0)&&(Schuss_Endgegner.aktiv)){
+				if (Schuss_Endgegner.checkPos==false){
+					Schuss_Endgegner.checkPos();
+				}
+				Schuss_Endgegner.bewegung();
 			}
 			if((GegnerRL.leben <= 0)&&(GegnerRL_counter == 0)&&(shop == false)){	//wenn der Gegner besiegt wurde müssen seine Koordinaten auf 0 gesetzt werden
 				getBlock(GegnerRL.StartX+16,GegnerRL.StartY+16).ID = 32;				//der counter ist dafür, dass beim besiegen des Gegners nur einmal ein Schatz liegt
@@ -344,8 +358,8 @@ public class Spielfeld extends JPanel implements Runnable{
 		Falle.aktiv=false;
 		Schuss_Endgegner.sichtbar=false;
 		Spielfeld.shop = true;
-		spieler.x = 100;
-		spieler.y = 150;
+		spieler.x = 235;
+		spieler.y = 315;
 	}
 	
 	//lädt wieder das derzeitige Level auf das Spielfeld

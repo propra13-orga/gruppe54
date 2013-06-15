@@ -33,8 +33,8 @@ public class Schuss_Endgegner extends Rectangle {
 	        	 StartX+=1;
 	        	 Kollision();
 	        } else {
-	       		 StartX=Endgegner.StartX;
-	     	     StartY=Endgegner.StartY;
+	       		 StartX=(int)Endgegner.StartX;
+	     	     StartY=(int)Endgegner.StartY;
 	        }
 		}
 		
@@ -51,8 +51,8 @@ public class Schuss_Endgegner extends Rectangle {
 	
 	//schaut nach wo der Endgegner steht (nur ein mal)
 	public static void checkPos(){
-		StartX=Endgegner.StartX;
-		StartY=Endgegner.StartY;
+		StartX=(int)Endgegner.StartX;
+		StartY=(int)Endgegner.StartY;
 		checkPos=true;
 	}
 	

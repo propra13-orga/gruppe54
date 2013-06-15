@@ -24,6 +24,7 @@ public class GegnerKI extends Rectangle{
 	public static int Schaden;		//Schaden im verhältnis zum level
 	public static int nächsterSchrittX=0;
 	public static int nächsterSchrittY=0;
+	public static int counter_kollision = 0;
 	public static int a=0; //zum prüfen in check
 	public static int Fall=0;
 	public static boolean frei=false;
@@ -301,11 +302,14 @@ public class GegnerKI extends Rectangle{
 	//Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
 	public static void Kollision(){
 		if( (GegnerKI.StartX+26 >= Spielfeld.spieler.x)&&(GegnerKI.StartX <= Spielfeld.spieler.x+26)&&
-			(GegnerKI.StartY+26 >= Spielfeld.spieler.y)&&(GegnerKI.StartY <= Spielfeld.spieler.y+26)){		
-			if (spieler.ruestung>0){
+			(GegnerKI.StartY+26 >= Spielfeld.spieler.y)&&(GegnerKI.StartY <= Spielfeld.spieler.y+26)){	
+			counter_kollision ++;
+			if ((spieler.ruestung>0)&&(counter_kollision == 4)){	//counter_kollision damit nicht zuviel Leben abgezogen wird
 				spieler.ruestung-=Schaden;
-			} else {
+				counter_kollision = 0;
+			} else if((spieler.ruestung<=0)&&(counter_kollision == 4)) {
 				spieler.leben -= Schaden;
+				counter_kollision = 0;
 			}
 		}
 	}

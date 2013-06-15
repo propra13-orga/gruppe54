@@ -152,7 +152,6 @@ public class Block extends Rectangle {
 				GegnerRL.StartX = x;
 				GegnerRL.StartY = y;
 			} else if ((GegnerRL.aktiv)&&(GegnerRL.leben>0)&&(counter_gegner10==1)){
-				GegnerRL.lauf();
 				Spielfeld.gegnerRL.draw(g);
 			}
 			break;
@@ -168,7 +167,6 @@ public class Block extends Rectangle {
 				GegnerOU.StartX = x;
 				GegnerOU.StartY = y;
 			} else if ((GegnerOU.aktiv)&&(counter_gegner11==1)&&(GegnerOU.leben>0)){
-				GegnerOU.lauf();
 				Spielfeld.gegnerOU.draw(g);
 			}
 			break;
@@ -182,7 +180,6 @@ public class Block extends Rectangle {
 			Endgegner.StartX = x;
 			Endgegner.StartY = y;
 			} else if ((Endgegner.leben>0)&&(counter_gegner12==1)&&(Endgegner.aktiv)){
-				Endgegner.lauf();
 				Spielfeld.Boss.draw(g);
 			}
 			break;
@@ -200,7 +197,6 @@ public class Block extends Rectangle {
 				Falle.StartPunktX=x;
 				Falle.StartPunktY=y;
 				} else if((counter_falle==1)&&(Falle.aktiv)){
-					Falle.bewegung();
 					Spielfeld.falle.draw(g);
 				}
 			break;
