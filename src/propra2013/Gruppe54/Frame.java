@@ -17,7 +17,7 @@ public class Frame extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	
 	public static String title ="Dungeon Crawler";
-	public static Dimension size = new Dimension(1100,600); 
+	public static Dimension size = new Dimension(850,670); 
 	
 	public static Frame frame;
 	

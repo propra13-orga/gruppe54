@@ -148,9 +148,9 @@ public class Block extends Rectangle {
 				*/
 			GegnerRL.aktiv=true;
 			if((GegnerRL.aktiv)&&(counter_gegner10==0)&&(GegnerRL.leben>0)){
-			counter_gegner10=1;
-			GegnerRL.StartX = x;
-			GegnerRL.StartY = y;
+				counter_gegner10=1;
+				GegnerRL.StartX = x;
+				GegnerRL.StartY = y;
 			} else if ((GegnerRL.aktiv)&&(GegnerRL.leben>0)&&(counter_gegner10==1)){
 				GegnerRL.lauf();
 				Spielfeld.gegnerRL.draw(g);
@@ -162,11 +162,11 @@ public class Block extends Rectangle {
 		/*der counter wird auf eins gesetz wenn ein gegner gezeichnet wurde und ab da
 		 * soll er nur noch laufen und nicht ständig an den start punkt gezeichnet werden
 			*/
-		GegnerOU.aktiv=true;
+			GegnerOU.aktiv=true;
 			if((GegnerOU.aktiv)&&(GegnerOU.leben>0)&&(counter_gegner11==0)){	
-			counter_gegner11=1;
-			GegnerOU.StartX = x;
-			GegnerOU.StartY = y;
+				counter_gegner11=1;
+				GegnerOU.StartX = x;
+				GegnerOU.StartY = y;
 			} else if ((GegnerOU.aktiv)&&(counter_gegner11==1)&&(GegnerOU.leben>0)){
 				GegnerOU.lauf();
 				Spielfeld.gegnerOU.draw(g);
@@ -199,7 +199,7 @@ public class Block extends Rectangle {
 				Falle.StartY = y;
 				Falle.StartPunktX=x;
 				Falle.StartPunktY=y;
-				} else if ((counter_falle==1)&&(Falle.aktiv)){
+				} else if((counter_falle==1)&&(Falle.aktiv)){
 					Falle.bewegung();
 					Spielfeld.falle.draw(g);
 				}
@@ -212,8 +212,7 @@ public class Block extends Rectangle {
 			counter_gegner40=1;
 			GegnerKI.StartX = x;
 			GegnerKI.StartY = y;
-			} else if ((GegnerKI.leben>0)&&(counter_gegner40==1)){
-				GegnerKI.lauf();
+			} else if((GegnerKI.leben>0)&&(counter_gegner40==1)){
 				Spielfeld.gegnerKI.draw(g);
 			}
 			break;

@@ -39,17 +39,19 @@ public class GegnerKI extends Rectangle{
 			StartLeben=100;
 			Faktor=3;
 			Schaden=1;
-		} else 
-			if(Spielfeld.current_lvl==2){
-				StartLeben=200;
-				Faktor=6;
-				Schaden=2;
-			} else
-				if(Spielfeld.current_lvl==3){
-					StartLeben=300;
-					Faktor=10;
-					Schaden=3;
-				}
+		} else if(Spielfeld.current_lvl==2){
+			StartLeben=200;
+			Faktor=6;
+			Schaden=2;
+		} else if(Spielfeld.current_lvl==3){
+			StartLeben=300;
+			Faktor=10;
+			Schaden=3;
+		} else if(Spielfeld.current_lvl==4){
+			StartLeben=300;
+			Faktor=10;
+			Schaden=3;
+		}
 		leben=StartLeben;
 		aktiv=false;
 	}
@@ -57,8 +59,9 @@ public class GegnerKI extends Rectangle{
 	//Zeichnet den Gegner
 	public void draw(Graphics g){
 		if((GegnerKI.aktiv)&&(GegnerKI.StartX!=0)&&(GegnerKI.StartY!=0)){
-		g.drawImage(new ImageIcon("pics/GegnerKI_1"/*+Spielfeld.current_lvl*/+".png").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
-	}}
+			g.drawImage(new ImageIcon("pics/GegnerKI_1"/*+Spielfeld.current_lvl*/+".png").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
+		}
+	}
 	
 	//Funktion die den nächsten schritt berechnet
 	public static void nächsterSchritt(){
@@ -97,6 +100,22 @@ public class GegnerKI extends Rectangle{
 		if (Fall==9){
 			nächsterSchrittX=0;
 			nächsterSchrittY=0;
+		} else
+		if(Fall==10){
+			nächsterSchrittX=0;
+			nächsterSchrittY=1;
+		}else
+		if(Fall==11){
+			nächsterSchrittX=-1;
+			nächsterSchrittY=0;
+		} else
+		if(Fall==12){
+			nächsterSchrittX=1;
+			nächsterSchrittY=0;
+		}else
+		if(Fall==13){
+			nächsterSchrittX=0;
+			nächsterSchrittY=-1;
 		}
 		
 	}
@@ -144,15 +163,18 @@ public class GegnerKI extends Rectangle{
 	//Gibt aus ob der weg, je nach fall frei ist
 	public static void check(int ID, int Case){
 		a=0;
+		switch (Case){
 		//Spieler steht unten links vom Gegner
-		if(Case==1){ 
-		  for (int i=1;i<33;i++){
+		case 1: 
+		  for (int i=1;i<17;i++){
 			//senkrecht links nach unten verschoben
-			if (Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+i)!=ID){
+			if (Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+15+i)!=ID){
 				if(a==0){
 				frei=true;
 				} 
 			} else a=1;
+		  }
+		  for (int i=1;i<33;i++){
 			//waagerecht unten nach links verschoben
 			if (Spielfeld.getBlockID(GegnerKI.StartX-2+i, GegnerKI.StartY+32)!=ID){
 				if(a==0){
@@ -160,17 +182,35 @@ public class GegnerKI extends Rectangle{
 				} 
 			} else a=1;
 		  }	
-		} else
+		  if (a==1){//wenn diagonal nicht geht alternativen prüfen
+			for (int i=1;i<33;i++){//ist unten frei?
+				if(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+32)!=ID){
+					Fall=10;
+					a=0;
+					frei=true;
+				} else 
+					for(int j=1;j<18;j++){//ist links frei?
+					if(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+j)!=ID){
+						Fall=11;
+						a=0;
+						frei=true;
+					}}
+			}
+		  }
+		  
+		  break;
+		
 		
 		//Spieler steht unten rechts
-		if(Case==2){
-		   for (int i=1;i<33;i++){
+		case 2:
+		   for (int i=1;i<17;i++){
 			 //senkrecht rechts nach unten verschoben
-			 if(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+i)!=ID){
+			 if(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+15+i)!=ID){
 				 if(a==0){
 					 frei=true;
 				 }
-			 } else a=1;
+			 } else a=1;}
+		   for (int i=1;i<33;i++){
 			 //waagerecht unten nach rechts verschoben
 			 if (Spielfeld.getBlockID(GegnerKI.StartX+i, GegnerKI.StartY+32)!=ID){
 					if(a==0){
@@ -178,99 +218,148 @@ public class GegnerKI extends Rectangle{
 					} 
 				} else a=1;
 		   }
-		} else
+		   if (a==1){//wenn diagonal nicht geht alternativen prüfen
+				for (int i=1;i<33;i++){//ist unten frei?
+					if(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+32)!=ID){
+						Fall=10;
+						a=0;
+						frei=true;
+					} else 
+						for(int j=1;j<18;j++){//ist rechts frei?
+						if(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+14+j)!=ID){
+							Fall=12;
+							a=0;
+							frei=true;
+						}}
+				}
+			}
+		   break;
 		
 		//Spieler steht oben rechts
-		if(Case==3){
-		  for (int i=1;i<33;i++){
+		case 3:
+		  for (int i=1;i<18;i++){
 			  //senkrecht rechts nach oben verschoben
-			  if(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY-2+i)!=ID){
+			  if(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+13+i)!=ID){
 				if(a==0){
 				 frei=true;
 				}
-			  } else a=1;
+			  } else a=1;}
+		  for(int i=1;i<33;i++){
 			  //waagerecht oben nach rechts verschoben
-			  if (Spielfeld.getBlockID(GegnerKI.StartX+i, GegnerKI.StartY-1)!=ID){
+			  if (Spielfeld.getBlockID(GegnerKI.StartX+i, GegnerKI.StartY+14)!=ID){
 				  if(a==0){
 					frei=true;
 				  } 
 			  } else a=1;
 		   }
-		} else
+		   if (a==1){//wenn diagonal nicht geht alternativen prüfen
+				for (int i=1;i<33;i++){//ist oben frei?
+					if(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=ID){
+						Fall=13;
+						a=0;
+						frei=true;
+					} else 
+						for(int j=1;j<18;j++){//ist rechts frei?
+						if(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+j)!=ID){
+							Fall=12;
+							a=0;
+							frei=true;
+						}}
+				}
+			}
+		  break;
+		
 		
 		//Spieler steht oben links
-		if (Case==4){
-			for (int i=1;i<33;i++){
+		case 4:
+			for (int i=1;i<18;i++){
 				 //senkrecht links nach oben verschoben
-				 if(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY-2+i)!=ID){
+				 if(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+13+i)!=ID){
 					 if(a==0){
 					   frei=true;
 					 }
-				 } else a=1;
+				 } else a=1;}
+			for (int i=1;i<33;i++){
 				 //waagerecht oben nach links verschoben
-				 if (Spielfeld.getBlockID(GegnerKI.StartX-2+i, GegnerKI.StartY-1)!=ID){
+				 if (Spielfeld.getBlockID(GegnerKI.StartX-2+i, GegnerKI.StartY+14)!=ID){
 					if(a==0){
 				   	frei=true;
 					} 
 				} else a=1;
-			}	
-		} else
+			}
+		   if (a==1){//wenn diagonal nicht geht alternativen prüfen
+				for (int i=1;i<33;i++){//ist oben frei?
+					if(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=ID){
+						Fall=13;
+						a=0;
+						frei=true;
+					} else 
+						for(int j=1;j<18;j++){//ist links frei?
+						if(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+j)!=ID){
+							Fall=11;
+							a=0;
+							frei=true;
+						}}
+				}
+			}
+		   break;
 			
 		//Spieler steht unten mitte
-		if (Case==5){
+		case 5:
 		  for (int i=1;i<33;i++){
 			 //waagerecht unten
-			 if (Spielfeld.getBlockID(GegnerKI.StartX-+i, GegnerKI.StartY+32)!=ID){
+			 if (Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+32)!=ID){
 				if(a==0){
 			   	frei=true;
 				} 
 			 } else a=1;
 		   } 
-		} else
+		break;
 			
 		//Spieler steht rechts mitte
-		if(Case==6){
-		  for (int i=1;i<33;i++){
+		case 6:
+		  for (int i=1;i<18;i++){
 			 //senkrecht rechts
-			 if (Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY-1+i)!=ID){
+			 if (Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+14+i)!=ID){
 				if(a==0){
 			   	frei=true;
 				} 
 			 }else a=1;
 		   } 
-		} else
+		break;
 		
 		//Spieler steht oben mitte
-		if(Case==7){
+		case 7:
 		  for (int i=1;i<33;i++){
 			 //waagerecht oben
-			 if (Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY-1)!=ID){
+			 if (Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=ID){
 				if(a==0){
 			   	frei=true;
 				} 
 			 } else a=1;
 		   } 	
-		} else
+		break;
 			
 		//Spieler steht links mitte
-		if(Case==8){
-		  for (int i=1;i<33;i++){
+		case 8:
+		  for (int i=1;i<18;i++){
 			 //senkrecht links
-			 if (Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY-1+i)!=ID){
+			 if (Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+i)!=ID){
 				if(a==0){
 			   	frei=true;
 				} 
 			 } else a=1;
 		   } 	
-		} else
+		break;
 		
 		//Spieler steht da wo Gegner steht
-		if(Case==9){
+		case 9:
 			frei=true;
 			/*
 			 * Hier soll er sich nicht bewegen
 			 * dehalb brauchen wir auch nichts prüfen
 			 */
+		break;
 		}
 		if(a==1){
 			frei=false;
@@ -282,35 +371,36 @@ public class GegnerKI extends Rectangle{
 	//Gibt an wie sich der Gegner bewegt
 	public static void lauf(){
 		if(laufen){
-		checkFall();	//wo ist der Spieler?
-		check(1,Fall);		//Kann ich in seine Richtung gehen?
+		checkFall();	
+		check(1,Fall);	
+		/*if(frei){check(4,Fall);}
+		if(frei){check(41,Fall);}
+		if(frei){check(42,Fall);}*/
 		nächsterSchritt();
 		if (frei){
 			StartX+=nächsterSchrittX;
 			StartY+=nächsterSchrittY;
 		}
 		Kollision();
-		
-		//System.out.println(frei+" "+Fall+" "+nächsterSchrittX+nächsterSchrittY+StartX+StartY+" "+aktiv);
 		}
+		
 	}
 	
 
 	
 	//Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
 	public static void Kollision(){
-
-			if( (GegnerKI.StartX+31 >= Spielfeld.spieler.x)     && 
-				(GegnerKI.StartX <= Spielfeld.spieler.x+31)  &&
-				(GegnerKI.StartY+31 >= Spielfeld.spieler.y)  &&
-				(GegnerKI.StartY <= Spielfeld.spieler.y+31)){		
-				
-				if (spieler.ruestung>0){
-					spieler.ruestung-=Schaden;
-				} else spieler.leben -= Schaden;
-				
+		if( (GegnerKI.StartX+26 >= Spielfeld.spieler.x)&&(GegnerKI.StartX <= Spielfeld.spieler.x+26)&&
+			(GegnerKI.StartY+26 >= Spielfeld.spieler.y)&&(GegnerKI.StartY <= Spielfeld.spieler.y+26)){		
+			if (spieler.ruestung>0){
+				spieler.ruestung-=Schaden;
+			} else {
+				spieler.leben -= Schaden;
 			}
+		}
 	}
+	
+
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

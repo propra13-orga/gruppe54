@@ -18,7 +18,6 @@ public class Elemente {
 				if(Schuss_Spieler.sichtbar){
 					Schuss_Spieler.sichtbar = false;
 				}
-				
 				Falle.aktiv=false;
 				GegnerKI.leben=0;
 				Endgegner.aktiv=false;
@@ -311,6 +310,7 @@ public class Elemente {
 				Falle.aktiv=false;
 				Endgegner.aktiv=false;
 				Schuss_Endgegner.aktiv=false;
+				GegnerKI.aktiv = false;
 				Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_"+Spielfeld.current_room+".lvl"));
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
 				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
@@ -321,6 +321,11 @@ public class Elemente {
 				Spielfeld.GegnerOU_counter = 0;
 				Spielfeld.Endgegner_counter = 0;
 				Endgegner.leben=Endgegner.StartLeben;
+				GegnerKI.leben=GegnerKI.StartLeben;
+				GegnerKI.StartX=0;
+				GegnerKI.StartY=0;
+				Falle.StartX=0;
+				Falle.StartY=0;
 			}
 			break;
 		

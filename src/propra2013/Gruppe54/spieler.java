@@ -15,7 +15,7 @@ public class spieler extends Rectangle {
 	public int current_schwert = 0;   //gibt an welches Schwert der Spieler gerade hat
 	public boolean schwert = true;
 	public int waffe = 0,ausrüstung = 1;
-	public int item_trank = 0,item_mana = 0,item_supertrank = 0;
+	public int item_trank = 1,item_mana = 1,item_supertrank = 1;
 	public static int ruestung = 50;
 	public static int mana = 100;			  //Zauberkraft
 	public static int leben = 100,superleben = 3;
