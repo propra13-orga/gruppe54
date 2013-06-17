@@ -195,7 +195,7 @@ public class GegnerKI extends Rectangle{
 						elf=1;
 						a=0;
 						frei=true;
-					}
+					}else a=1;
 			}
 		  }}
 		  
@@ -206,14 +206,14 @@ public class GegnerKI extends Rectangle{
 		case 2:
 		   for (int i=1;i<17;i++){
 			 //senkrecht rechts nach unten verschoben
-			 if((Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+15+i)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+15+i)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+15+i)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+15+i)!=42)){
+			 if((Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+15+i)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+15+i)!=2)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+15+i)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+15+i)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+15+i)!=42)){
 				 if(a==0){
 					 frei=true;
 				 }
 			 } else a=1;}
 		   for (int i=1;i<33;i++){
 			 //waagerecht unten nach rechts verschoben
-			 if ((Spielfeld.getBlockID(GegnerKI.StartX+i, GegnerKI.StartY+32)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX+i, GegnerKI.StartY+32)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX+i, GegnerKI.StartY+32)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX+i, GegnerKI.StartY+32)!=42)){
+			 if ((Spielfeld.getBlockID(GegnerKI.StartX+i, GegnerKI.StartY+32)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX+i, GegnerKI.StartY+32)!=2)&&(Spielfeld.getBlockID(GegnerKI.StartX+i, GegnerKI.StartY+32)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX+i, GegnerKI.StartY+32)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX+i, GegnerKI.StartY+32)!=42)){
 					if(a==0){
 						frei=true;
 					} 
@@ -221,18 +221,18 @@ public class GegnerKI extends Rectangle{
 		   }
 		   if (a==1){//wenn diagonal nicht geht alternativen prüfen
 				for (int i=1;i<33;i++){//ist unten frei?
-					if((Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+32)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+32)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+32)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+32)!=42)){
+					if((Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+32)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+32)!=2)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+32)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+32)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+32)!=42)){
 						zehn=1;
 						a=0;
 						frei=true;
 					} else 
 						for(int j=1;j<18;j++){//ist rechts frei?
-						if((Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+14+j)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+14+j)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+14+j)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+14+j)!=42)){
+						if((Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+14+j)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+14+j)!=2)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+14+j)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+14+j)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+14+j)!=42)){
 							zwölf=1;
 							a=0;
 							frei=true;
-						}}
-				}
+						}else a=1;
+				}}
 			}
 		   break;
 		
@@ -240,14 +240,14 @@ public class GegnerKI extends Rectangle{
 		case 3:
 		  for (int i=1;i<18;i++){
 			  //senkrecht rechts nach oben verschoben
-			  if((Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+13+i)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+13+i)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+13+i)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+13+i)!=42)){
+			  if((Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+13+i)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+13+i)!=2)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+13+i)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+13+i)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+13+i)!=42)){
 				if(a==0){
 				 frei=true;
 				}
 			  } else a=1;}
 		  for(int i=1;i<33;i++){
 			  //waagerecht oben nach rechts verschoben
-			  if ((Spielfeld.getBlockID(GegnerKI.StartX+i, GegnerKI.StartY+14)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX+i, GegnerKI.StartY+14)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX+i, GegnerKI.StartY+14)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX+i, GegnerKI.StartY+14)!=42)){
+			  if ((Spielfeld.getBlockID(GegnerKI.StartX+i, GegnerKI.StartY+14)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX+i, GegnerKI.StartY+14)!=2)&&(Spielfeld.getBlockID(GegnerKI.StartX+i, GegnerKI.StartY+14)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX+i, GegnerKI.StartY+14)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX+i, GegnerKI.StartY+14)!=42)){
 				  if(a==0){
 					frei=true;
 				  } 
@@ -255,17 +255,17 @@ public class GegnerKI extends Rectangle{
 		   }
 		   if (a==1){//wenn diagonal nicht geht alternativen prüfen
 				for (int i=1;i<33;i++){//ist oben frei?
-					if((Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=42)){
+					if((Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=2)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=42)){
 						dreizehn=1;
 						a=0;
 						frei=true;
 					} else 
 						for(int j=1;j<18;j++){//ist rechts frei?
-						if((Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+j)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+j)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+j)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+j)!=42)){
+						if((Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+j)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+j)!=2)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+j)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+j)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+j)!=42)){
 							zwölf=1;
 							a=0;
 							frei=true;
-						}}
+						}else a=1;}
 				}
 			}
 		  break;
@@ -275,14 +275,14 @@ public class GegnerKI extends Rectangle{
 		case 4:
 			for (int i=1;i<18;i++){
 				 //senkrecht links nach oben verschoben
-				 if((Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+13+i)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+13+i)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+13+i)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+13+i)!=42)){
+				 if((Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+13+i)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+13+i)!=2)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+13+i)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+13+i)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+13+i)!=42)){
 					 if(a==0){
 					   frei=true;
 					 }
 				 } else a=1;}
 			for (int i=1;i<33;i++){
 				 //waagerecht oben nach links verschoben
-				 if ((Spielfeld.getBlockID(GegnerKI.StartX-2+i, GegnerKI.StartY+14)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX-2+i, GegnerKI.StartY+14)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX-2+i, GegnerKI.StartY+14)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX-2+i, GegnerKI.StartY+14)!=42)){
+				 if ((Spielfeld.getBlockID(GegnerKI.StartX-2+i, GegnerKI.StartY+14)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX-2+i, GegnerKI.StartY+14)!=2)&&(Spielfeld.getBlockID(GegnerKI.StartX-2+i, GegnerKI.StartY+14)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX-2+i, GegnerKI.StartY+14)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX-2+i, GegnerKI.StartY+14)!=42)){
 					if(a==0){
 				   	frei=true;
 					} 
@@ -290,17 +290,17 @@ public class GegnerKI extends Rectangle{
 			}
 		   if (a==1){//wenn diagonal nicht geht alternativen prüfen
 				for (int i=1;i<33;i++){//ist oben frei?
-					if((Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=42)){
+					if((Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=2)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=42)){
 						dreizehn=1;
 						a=0;
 						frei=true;
 					} else 
 						for(int j=1;j<18;j++){//ist links frei?
-						if((Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+j)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+j)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+j)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+j)!=42)){
+						if((Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+j)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+j)!=2)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+j)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+j)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+j)!=42)){
 							elf=1;
 							a=0;
 							frei=true;
-						}}
+						}else a=1;}
 				}
 			}
 		   break;
@@ -309,7 +309,7 @@ public class GegnerKI extends Rectangle{
 		case 5:
 		  for (int i=1;i<33;i++){
 			 //waagerecht unten
-			 if ((Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+32)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+32)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+32)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+32)!=42)){
+			 if ((Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+32)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+32)!=2)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+32)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+32)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+32)!=42)){
 				if(a==0){
 			   	frei=true;
 				} 
@@ -321,7 +321,7 @@ public class GegnerKI extends Rectangle{
 		case 6:
 		  for (int i=1;i<18;i++){
 			 //senkrecht rechts
-			 if ((Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+14+i)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+14+i)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+14+i)!=5)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+14+i)!=6)){
+			 if ((Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+14+i)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+14+i)!=2)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+14+i)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+14+i)!=5)&&(Spielfeld.getBlockID(GegnerKI.StartX+32, GegnerKI.StartY+14+i)!=6)){
 				if(a==0){
 			   	frei=true;
 				} 
@@ -333,7 +333,7 @@ public class GegnerKI extends Rectangle{
 		case 7:
 		  for (int i=1;i<33;i++){
 			 //waagerecht oben
-			 if ((Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=42)){
+			 if ((Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=2)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX-1+i, GegnerKI.StartY+14)!=42)){
 				if(a==0){
 			   	frei=true;
 				} 
@@ -345,7 +345,7 @@ public class GegnerKI extends Rectangle{
 		case 8:
 		  for (int i=1;i<18;i++){
 			 //senkrecht links
-			 if ((Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+i)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+i)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+i)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+i)!=42)){
+			 if ((Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+i)!=1)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+i)!=2)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+i)!=4)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+i)!=41)&&(Spielfeld.getBlockID(GegnerKI.StartX-1, GegnerKI.StartY+14+i)!=42)){
 				if(a==0){
 			   	frei=true;
 				} 
