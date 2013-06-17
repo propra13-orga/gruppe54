@@ -11,8 +11,9 @@ public class Endgegner extends Rectangle{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public static int StartX;
-	public static int StartY;
+	public static double StartX;
+	public static double StartY;
+	public static double speed = 0.4;
 	public static int leben;
 	public static boolean unten=false;//gibt an ob der Gegner unten an einer Mauer steht
 	public static boolean rechts=false;//gibt an ob der Gegner rechts an einer Mauer steht
@@ -25,7 +26,7 @@ public class Endgegner extends Rectangle{
 	 * @param args
 	 */
 	public Endgegner(){
-		setBounds(StartX,StartY,32,32);
+		setBounds((int)StartX,(int)StartY,32,32);
 		if (Spielfeld.current_lvl==1){
 			StartLeben=300;
 			Faktor=10;
@@ -46,7 +47,7 @@ public class Endgegner extends Rectangle{
 	//Zeichnet den Gegner
 	//muss noch ein anderes Bild eingefügt werden
 	public void draw(Graphics g){
-		g.drawImage(new ImageIcon("pics/gegner3_"+Spielfeld.current_lvl+".png").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
+		g.drawImage(new ImageIcon("pics/gegner3_"+Spielfeld.current_lvl+".png").getImage(), (int)StartX, (int)StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
 	}
 	
 	//Gibt an wie sich der Gegner bewegt
@@ -56,7 +57,7 @@ public class Endgegner extends Rectangle{
 				&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY+2+32)!=42)&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY+2+32)!=43)
 				&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY+2+32)!=4)){
 			Kollision();
-			Endgegner.StartY+=1;
+			Endgegner.StartY+=1*speed;
 		} else {
 			unten = true; 
 		}
@@ -64,7 +65,7 @@ public class Endgegner extends Rectangle{
 				&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY-2+16)!=42)&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY-2+16)!=43)
 				&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY-2+16)!=4)){
 			Kollision();
-			Endgegner.StartY-=1;
+			Endgegner.StartY-=1*speed;
 		} else {
 			unten = false; 
 		}

@@ -345,12 +345,10 @@ public class Frame extends JFrame implements ActionListener{
 		         //Schuss des Spielers
 		         if ((key == KeyEvent.VK_SPACE)&&(spieler.aktiv)&&(spieler.mana>=10)){	
 		        	Schuss_Spieler.sichtbar=true;
-		        	Schuss_Spieler.checkPos=false;
+		        	Schuss_Spieler.setPos=false;
 					Schuss_Spieler.checkRichtung();
 					spieler.mana -= 10;
-					if(spieler.mana > 100){
-						spieler.mana = 100;
-					}
+					Spielfeld.counter_schuss = 0;
 		         }
 		         if((key == KeyEvent.VK_K)&&(spieler.aktiv)){ //kleiner Cheat zu Testzwecken ;D
 		        	 spieler.mana = 100;
@@ -486,8 +484,7 @@ public class Frame extends JFrame implements ActionListener{
 				Spielfeld.current_room=1;
 				Spielfeld.isFirst = true;
 				//Spielfeld anzeigen	
-				spielfeld.define();
-				spielfeld.setVisible(true);	
+				spielfeld.define();	
 				add(spielfeld);						
 				//Spielerinfo anzeigen
 				spielerinfo.setVisible(true);
@@ -513,6 +510,7 @@ public class Frame extends JFrame implements ActionListener{
 				spieler.leben = 100;
 				spieler.mana = 100;
 				Spielfeld.shop = false;
+				spielfeld.setVisible(true);
 			}
 		});
 		

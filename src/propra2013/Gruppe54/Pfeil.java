@@ -69,8 +69,8 @@ public class Pfeil extends Rectangle{
 			}else if((x+16 >= Schuss_Endgegner.StartX)&&(x <= Schuss_Endgegner.StartX+31)&&
 					 (y+16 >= Schuss_Endgegner.StartY)&&(y <= Schuss_Endgegner.StartY+31)){		
 				aktiv=false;	
-				Schuss_Endgegner.StartX=Endgegner.StartX;
-				Schuss_Endgegner.StartY=Endgegner.StartY;
+				Schuss_Endgegner.StartX=(int)Endgegner.StartX;
+				Schuss_Endgegner.StartY=(int)Endgegner.StartY;
 			//Bewegliche Falle
 			} else if((x+16 >= Falle.StartX)&&(x <= Falle.StartX+31)&&
 					  (y+16 >= Falle.StartY)&&(y <= Falle.StartY+31)){		

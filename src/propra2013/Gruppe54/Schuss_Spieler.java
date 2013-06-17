@@ -8,39 +8,43 @@ import javax.swing.ImageIcon;
 public class Schuss_Spieler extends Rectangle {
 
 	private static final long serialVersionUID = 1L;
-	public static boolean checkPos=false;
-	public static int StartX,StartY;
+	public static boolean setPos=false;
+	public static double StartX,StartY;
+	public static double speed = 0.7;
 	public static boolean sichtbar=false;
-	public static int Richtung=0;
-
+	public boolean checkRichtung = false;
+	public static int Richtung = 0;
 	
 	public Schuss_Spieler() {
-		setBounds(StartX,StartY,32,32);
+		setBounds((int)StartX,(int)StartY,32,32);
 		sichtbar=false;
 	}
 
 	//schaut nach wo der Spieler steht 
-		public static void checkPos(){
-			StartX=(int)Spielfeld.spieler.x;
-			StartY=(int)Spielfeld.spieler.y;
-			checkPos=true;
+		public static void setPos(){
+			if(setPos == false){
+			StartX=Spielfeld.spieler.x;
+			StartY=Spielfeld.spieler.y;
+			setPos=true;
+			}
 		}
 		
 	//Zeichnet einen Schuss
 	//muss noch ein anderes Bild eingefügt werden
 		public void draw(Graphics g){
-			g.drawImage(new ImageIcon("pics/schuss1.png").getImage(), StartX, StartY, 32, 32, null); 
-		
+			g.drawImage(new ImageIcon("pics/schuss1.png").getImage(), (int)StartX, (int)StartY, 32, 32, null); 
 		}
-		public static void checkRichtung(){
+		public static int checkRichtung(){
 			if (Spielfeld.spieler.rechts==true){
-				Richtung=1;
+				return 1;
 			} else if(Spielfeld.spieler.links==true){
-				Richtung=3;
+				return 3;
 			} else if (Spielfeld.spieler.hoch==true){
-				Richtung=4;
+				return 4;
 			} else if (Spielfeld.spieler.runter==true){
-				Richtung=2;
+				return 2;
+			} else {
+				return 0;
 			}
 		}
 		
@@ -57,45 +61,34 @@ public class Schuss_Spieler extends Rectangle {
 			}
 		}
 		//Wie der Schuss sich bewegt wenn der Spieler nach rechts schaut
-		public static void SchussRechts(){
-			if ((Richtung==1)&&(check(1))&&check(2)&&(check(4))&&(check(6)&&(check(10))&&(check(15))&&(check(41))&&(check(42))&&(check(43)))){
-				StartX+=2;
+		public static void Schuss(){
+			if(Spielfeld.counter_schuss == 0){
+				Richtung = checkRichtung();
+			}
+			if ((Richtung==1)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)){
+				StartX+=1*speed;
 				Kollision();
 			} else if(Richtung==1){
 				sichtbar=false;
-			}
-		}
-		//Wie der Schuss sich bewegt wenn der Spieler nach links schaut
-		public static void SchussLinks(){
-			if((Richtung==3)&&(check(1))&&check(2)&&(check(4))&&(check(6)&&(check(10))&&(check(15))&&(check(41))&&(check(42))&&(check(43)))){
-				StartX-=2;
+			} else if((Richtung==2)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)){
+				StartY+=1*speed;
+				Kollision();
+			} else if(Richtung==2){
+				sichtbar=false;
+			} else if((Richtung==3)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)){
+				StartX-=1*speed;
 				Kollision();
 			} else if (Richtung==3){
 				sichtbar=false;	
-			}
-		}
-		//Wie der Schuss sich bewegt wenn der Spieler nach oben schaut
-		public static void SchussOben(){
-			if((Richtung==4)&&(check(1))&&check(2)&&(check(4))&&(check(6)&&(check(10))&&(check(15))&&(check(41))&&(check(42))&&(check(43)))){
-				StartY-=2;
+			} else if((Richtung==4)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)){
+				StartY-=1*speed;
 				Kollision();
 			} else if (Richtung==4){
 				sichtbar=false;
 			}
 		}
-		//Wie der Schuss sich bewegt wenn der Spieler nach unten schaut
-		public static void SchussUnten(){
-			if((Richtung==2)&&(check(1))&&check(2)&&(check(4))&&(check(6)&&(check(10))&&(check(15))&&(check(41))&&(check(42))&&(check(43)))){
-				StartY+=2;
-				Kollision();
-			} else if(Richtung==2){
-				sichtbar=false;
-			}
-		}	
-
 			
 	public static void Kollision(){
-
 		//Endgegner
 		if((Schuss_Spieler.StartX+31 >= Endgegner.StartX)&&(Schuss_Spieler.StartX <= Endgegner.StartX+31)&&
 		   (Schuss_Spieler.StartY+31 >= Endgegner.StartY)&&(Schuss_Spieler.StartY <= Endgegner.StartY+31)){		
@@ -103,32 +96,30 @@ public class Schuss_Spieler extends Rectangle {
 			Endgegner.leben-=25;
 		//GegnerRL
 		} else if((Schuss_Spieler.StartX+31 >= GegnerRL.StartX)&&(Schuss_Spieler.StartX <= GegnerRL.StartX+31)  &&
-		          (Schuss_Spieler.StartY+31 >= GegnerRL.StartY)&&(Schuss_Spieler.StartY <= GegnerRL.StartY+31)){			
+		      (Schuss_Spieler.StartY+31 >= GegnerRL.StartY)&&(Schuss_Spieler.StartY <= GegnerRL.StartY+31)){			
 			sichtbar=false;
 			GegnerRL.leben-=25;
 		//GegnerOU
 		} else if((Schuss_Spieler.StartX+31 >= GegnerOU.StartX)&&(Schuss_Spieler.StartX <= GegnerOU.StartX+31)&&
-        		  (Schuss_Spieler.StartY+31 >= GegnerOU.StartY)&&(Schuss_Spieler.StartY <= GegnerOU.StartY+31)){		
-				sichtbar=false;	
-				GegnerOU.leben-=25;
-
+        	  (Schuss_Spieler.StartY+31 >= GegnerOU.StartY)&&(Schuss_Spieler.StartY <= GegnerOU.StartY+31)){		
+			sichtbar=false;	
+			GegnerOU.leben-=25;
 		//Schuss_Endgegner
 		}else if((Schuss_Spieler.StartX+31 >= Schuss_Endgegner.StartX)&&(Schuss_Spieler.StartX <= Schuss_Endgegner.StartX+31)  &&
-				 (Schuss_Spieler.StartY+31 >= Schuss_Endgegner.StartY)&&(Schuss_Spieler.StartY <= Schuss_Endgegner.StartY+31)){		
+			 (Schuss_Spieler.StartY+31 >= Schuss_Endgegner.StartY)&&(Schuss_Spieler.StartY <= Schuss_Endgegner.StartY+31)){		
 			sichtbar=false;	
-			Schuss_Endgegner.StartX=Endgegner.StartX;
-			Schuss_Endgegner.StartY=Endgegner.StartY;
+			Schuss_Endgegner.StartX=(int)Endgegner.StartX;
+			Schuss_Endgegner.StartY=(int)Endgegner.StartY;
 		//Bewegliche Falle
 		} else if((Schuss_Spieler.StartX+31 >= Falle.StartX)&&(Schuss_Spieler.StartX <= Falle.StartX+31)  &&
-				 (Schuss_Spieler.StartY+31 >= Falle.StartY)&&(Schuss_Spieler.StartY <= Falle.StartY+31)){		
+			 (Schuss_Spieler.StartY+31 >= Falle.StartY)&&(Schuss_Spieler.StartY <= Falle.StartY+31)){		
 			sichtbar=false;	
 		//GegnerKI
-		}else
-			if( (Schuss_Spieler.StartX+31 >= GegnerKI.StartX)&&(Schuss_Spieler.StartX <= GegnerKI.StartX+31)  &&
-					(Schuss_Spieler.StartY+31 >= GegnerKI.StartY)&&(Schuss_Spieler.StartY <= GegnerKI.StartY+31)){		
-					sichtbar=false;	
-					GegnerKI.leben-=25;
-	}
+		} else if( (Schuss_Spieler.StartX+31 >= GegnerKI.StartX)&&(Schuss_Spieler.StartX <= GegnerKI.StartX+31)  &&
+			  (Schuss_Spieler.StartY+31 >= GegnerKI.StartY)&&(Schuss_Spieler.StartY <= GegnerKI.StartY+31)){		
+			sichtbar=false;	
+			GegnerKI.leben-=25;
+		}
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

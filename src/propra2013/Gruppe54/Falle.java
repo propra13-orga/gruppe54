@@ -15,17 +15,18 @@ public class Falle extends Rectangle {
 	/**
 	 * @param args
 	 */
-	public static int StartX;
-	public static int StartY;
+	public static double StartX;
+	public static double StartY;
+	public static double speed = 0.5;
 	public static int Schaden; //Schaden der die Falle anrichtet
 	public static boolean unten;
 	public static boolean aktiv;
 	public static boolean status = false;
-	public static int StartPunktX;
-	public static int StartPunktY;
+	public static double StartPunktX;
+	public static double StartPunktY;
 	
 	public Falle(){
-		setBounds(StartX,StartY,32,32);
+		setBounds((int)StartX,(int)StartY,32,32);
 		if (Spielfeld.current_lvl==1){
 			Schaden=1;
 		} else if(Spielfeld.current_lvl==2){
@@ -38,13 +39,13 @@ public class Falle extends Rectangle {
 
 	public void draw(Graphics g){
 		if((Falle.StartX!=0)&&(Falle.StartY!=0)){
-		g.drawImage(new ImageIcon("pics/falle_beweglich_unten_"+Spielfeld.current_lvl+".png").getImage(), StartX, StartY, 32, 32, null);
+		g.drawImage(new ImageIcon("pics/falle_beweglich_unten_"+Spielfeld.current_lvl+".png").getImage(), (int)StartX, (int)StartY, 32, 32, null);
 	}}
 
 	
 	public static void bewegung(){
 		if ((Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=1)&&(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=4)){
-       	 Falle.StartY+=1;
+       	 Falle.StartY+=1*speed;
        	 Kollision();
        	 } else if((Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)==1)|(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)==4)){
        		 Falle.StartX=Falle.StartPunktX;

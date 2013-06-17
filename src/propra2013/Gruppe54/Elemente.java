@@ -81,13 +81,18 @@ public class Elemente {
 			} else {
 				spieler.ruestung-=5;
 			}
-			if((Spielfeld.spieler.rechts)&&(Spielfeld.check((int)Spielfeld.spieler.x-12+32))){
+			if(Spielfeld.spieler.rechts){
 				Spielfeld.spieler.x-=12;
-			} else if((Spielfeld.spieler.links)&&(Spielfeld.check((int)Spielfeld.spieler.x+12+32))){
+				//Spielfeld.check prüft ob der Spieler sich dort hin bewegen kann, damit die Falle den Spieler nicht in die Mauer wirft
+				//wenn dann wird der Schritt wieder zurück gegangen
+				/*if((Spielfeld.check(1)==false)||(Spielfeld.check(4)==false)||(Spielfeld.check(41)==false)||(Spielfeld.check(42)==false)){
+					Spielfeld.spieler.x+=12;
+				}*/
+			} else if(Spielfeld.spieler.links){
 				Spielfeld.spieler.x+=12;
-			} else if((Spielfeld.spieler.hoch)&&(Spielfeld.check((int)Spielfeld.spieler.y+12+32))){
+			} else if(Spielfeld.spieler.hoch){
 				Spielfeld.spieler.y+=12;
-			} else if((Spielfeld.spieler.runter)&&(Spielfeld.check((int)Spielfeld.spieler.y-12+32))){
+			} else if(Spielfeld.spieler.runter){
 				Spielfeld.spieler.y-=12;
 			}
 			break;
@@ -218,7 +223,6 @@ public class Elemente {
    		 	} else if(Falle.aktiv == false){
    		 		Falle.status = false;
    		 	}
-   		 	Spielerinfo.npc = false;
    		 	Spielfeld.spieler_preposX = Spielfeld.spieler.x;
    		 	Spielfeld.spieler_preposY = Spielfeld.spieler.y;
    		 	Spielfeld.showShop();
