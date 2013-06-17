@@ -45,6 +45,7 @@ public class Elemente {
 		case 7://Falle_Loch - Spieler soll auf den Startpunkt zurück fallen
 			Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
 			Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
+			block.Zustand = 1;
 			break;
 		
 		case 8://Falle_Feuer
@@ -76,24 +77,13 @@ public class Elemente {
 			
 		case 10://Falle_Monster
 			beruehrung = true;
-			if(spieler.ruestung<=0){
-				spieler.leben-=5;
-			} else {
-				spieler.ruestung-=5;
-			}
-			if(Spielfeld.spieler.rechts){
-				Spielfeld.spieler.x-=12;
-				//Spielfeld.check prüft ob der Spieler sich dort hin bewegen kann, damit die Falle den Spieler nicht in die Mauer wirft
-				//wenn dann wird der Schritt wieder zurück gegangen
-				/*if((Spielfeld.check(1)==false)||(Spielfeld.check(4)==false)||(Spielfeld.check(41)==false)||(Spielfeld.check(42)==false)){
-					Spielfeld.spieler.x+=12;
-				}*/
-			} else if(Spielfeld.spieler.links){
-				Spielfeld.spieler.x+=12;
-			} else if(Spielfeld.spieler.hoch){
-				Spielfeld.spieler.y+=12;
-			} else if(Spielfeld.spieler.runter){
-				Spielfeld.spieler.y-=12;
+			Spielfeld.Falle_counter++;
+			if((spieler.ruestung<=0)&&(Spielfeld.Falle_counter==5)){
+				spieler.leben-=1;
+				Spielfeld.Falle_counter = 0;
+			} else if(Spielfeld.Falle_counter==5){
+				spieler.ruestung-=1;
+				Spielfeld.Falle_counter = 0;
 			}
 			break;
 		
@@ -125,7 +115,7 @@ public class Elemente {
 			}
 			break;
 			
-		case 15://brunnen
+		case 15://brunnen lebensenergie
 			if((spieler.leben<100)&&(block.Zustand==0)){	
 				spieler.leben = 100;
 				if(spieler.leben>100){
@@ -150,6 +140,16 @@ public class Elemente {
 				}
 			}
 			block.Zustand = 1;
+			}
+			break;
+		
+		case 17://brunnen mana
+			if((spieler.mana<100)&&(block.Zustand==0)){	
+				spieler.mana = 100;
+				if(spieler.mana>100){
+					spieler.mana = 100;
+				}
+				block.Zustand = 1;
 			}
 			break;
 			

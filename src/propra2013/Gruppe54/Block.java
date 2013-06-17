@@ -29,7 +29,7 @@ public class Block extends Rectangle {
 	
 	//zeichnet den Block, Bild wird anhand der ID geladen
 	public void draw(Graphics g){ 
-		if((ID==0)|(ID==2)|(ID==5)|(ID==7)|(ID==8)|(ID==10)|(ID==18)|((ID>20)&&(ID<31))|((ID>=40))){      
+		if((ID==0)|(ID==2)|(ID==5)|(ID==8)|(ID==10)|(ID==18)|((ID>20)&&(ID<31))|((ID>=40))){      
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
 			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null); //element zeichnen, damit hintergrund richtig angezeigt wird
 		} 
@@ -42,7 +42,16 @@ public class Block extends Rectangle {
 		case 3:
 			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
 			break;
-				
+		
+		case 7: //Loch
+			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
+			if(Zustand==0){
+				g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
+			} else if(Zustand==1) {
+				g.drawImage(new ImageIcon("pics/falle_loch.png").getImage(),x,y,width,height,null);
+			}
+			break;
+		
 		case 9: //Falle_speer, wird "einzeln behandelt", da diese zwei Zustände hat (aktiv,inaktiv)
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
 			if(Zustand==0){
@@ -70,7 +79,7 @@ public class Block extends Rectangle {
 			}
 			break;
 			
-		case 15:	//brunnen 	
+		case 15:	//brunnen lebensenergie
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
 			if(Zustand==0){
 				g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
@@ -85,6 +94,15 @@ public class Block extends Rectangle {
 				g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
 			} else if(Zustand==1) {
 				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null); 
+			}
+			break;
+			
+		case 17:	//brunnen mana
+			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
+			if(Zustand==0){
+				g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
+			} else if(Zustand==1) {
+				g.drawImage(new ImageIcon("pics/brunnen_leer.png").getImage(),x,y,width,height,null);
 			}
 			break;
 			
