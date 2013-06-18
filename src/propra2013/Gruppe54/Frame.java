@@ -196,8 +196,8 @@ public class Frame extends JFrame implements ActionListener{
 
 		         if ((key == KeyEvent.VK_W)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+6, Spielfeld.spieler.y+26)!=1)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+26, Spielfeld.spieler.y+23)!=1)) {
 			        dy = -1*Spielfeld.spieler.speed;
-
 			        Spielfeld.checkShopItems();
+			        
 			        Spielfeld.spieler.links = false;
 			        Spielfeld.spieler.rechts = false;
 			        Spielfeld.spieler.hoch = true;

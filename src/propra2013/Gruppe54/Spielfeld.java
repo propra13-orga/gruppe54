@@ -27,7 +27,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static GegnerRL gegnerRL;
 	public static GegnerOU gegnerOU;
 	public static Endgegner Boss;
-	public static int GegnerKI_counter=0, GegnerRL_counter = 0,GegnerOU_counter = 0,Endgegner_counter = 0;  //damit das Item, dass man nach besiegen eines Gegner erhält, nur einmal abgelegt wird
+	public static int GegnerKI_counter=0, GegnerRL_counter = 0,GegnerOU_counter = 0,Endgegner_counter = 0,Falle_counter = 0;  //damit das Item, dass man nach besiegen eines Gegner erhält, nur einmal abgelegt wird
 	public static GegnerKI gegnerKI;
 	public static Schuss_Endgegner schuss_endgegner;
 	public static Schuss_Spieler schuss_spieler;
@@ -61,8 +61,8 @@ public class Spielfeld extends JPanel implements Runnable{
 		elemente[5] = new ImageIcon("pics/ausgang.png").getImage();
 		//6
 		//Fallen
-		elemente[7] = new ImageIcon("pics/falle_loch.png").getImage();
-		elemente[8] = new ImageIcon("pics/falle_feuer"+current_lvl+".png").getImage();
+		elemente[7] = new ImageIcon("pics/falle_loch_inaktiv.png").getImage();
+		elemente[8] = new ImageIcon("pics/feuer.gif").getImage();
 		elemente[9] = new ImageIcon("pics/falle_speer"+current_lvl+".png").getImage();
 		elemente[10] = new ImageIcon("pics/anim.gif").getImage();
 		//11
@@ -72,7 +72,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		elemente[14] = new ImageIcon("pics/item_trank2.png").getImage();
 		elemente[15] = new ImageIcon("pics/brunnen_rot.png").getImage();
 		elemente[16] = new ImageIcon("pics/item_trank3.png").getImage();
-		//17
+		elemente[17] = new ImageIcon("pics/brunnen_blau.png").getImage();
 		elemente[18] = new ImageIcon("pics/zepter"+current_lvl+".png").getImage();
 		elemente[19] = new ImageIcon("pics/checkpoint.png").getImage();
 		elemente[20] = new ImageIcon("pics/npc.png").getImage();
@@ -322,16 +322,16 @@ public class Spielfeld extends JPanel implements Runnable{
 			
 			if(propra2013.Gruppe54.spieler.aktiv){
 			//Steuerung des Spielers
-			if((check(1))&&(check(15))&&(check(18))&&(check(20))&&(check(21))
+			if((check(1))&&(check(15))&&(check(18))&&(check(20))&&(check(21))&&(check(10))
 					&&(check(22))&&(check(23))&&(check(24))&&(check(25))&&(check(28))&&(check(31))
-					&&(check(41))&&(check(42))&&(check(43))&&(check(2))&&(check(4))&&(check(29))){		//prüfen ob Elemente vom Spieler durchschritten werden dürfen
+					&&(check(41))&&(check(42))&&(check(43))&&(check(2))&&(check(4))&&(check(29))&&(check(17))){//prüfen ob Elemente vom Spieler durchschritten werden dürfen
 				checkKollision();
 				spieler.x += Frame.dx;
 				spieler.y += Frame.dy;
 				Elemente.beruehrung = false;
 			} else if((check(15)==false) | (check(18)==false) | (check(20)==false) | (check(21)==false) | (check(22)==false)
 					| (check(23)==false) | (check(24)==false) | (check(25)==false) | (check(28)==false) | (check(31)==false)
-					| (check(29)==false)){	//wenn nicht, dann wird nur die Aktion des Elements ausgeführt, der Spieler geht aber nicht weiter
+					| (check(29)==false) | (check(17)==false) | (check(10)==false)){	//wenn nicht, dann wird nur die Aktion des Elements ausgeführt, der Spieler geht aber nicht weiter
 				checkKollision();
 				Elemente.beruehrung = false;
 			}
@@ -420,9 +420,9 @@ public class Spielfeld extends JPanel implements Runnable{
         if(Elemente.beruehrung == false){ //zweiten Punkt prüfen
         	Elemente.Aufruf(getBlockID(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy),getBlock(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy));
         } else if(Elemente.beruehrung == false){ //dritten Punkt prüfen
-        	Elemente.Aufruf(getBlockID(spieler.x+6+Frame.dx,spieler.y+34+Frame.dy),getBlock(spieler.x+6+Frame.dx,spieler.y+34+Frame.dy));
+        	Elemente.Aufruf(getBlockID(spieler.x+6+Frame.dx,spieler.y+36+Frame.dy),getBlock(spieler.x+6+Frame.dx,spieler.y+36+Frame.dy));
         } else if(Elemente.beruehrung == false){ //vierten Punkt prüfen
-        	Elemente.Aufruf(getBlockID(spieler.x+26+Frame.dx,spieler.y+34+Frame.dy),getBlock(spieler.x+26+Frame.dx,spieler.y+34+Frame.dy));
+        	Elemente.Aufruf(getBlockID(spieler.x+26+Frame.dx,spieler.y+36+Frame.dy),getBlock(spieler.x+26+Frame.dx,spieler.y+36+Frame.dy));
         }
 	}
 	
