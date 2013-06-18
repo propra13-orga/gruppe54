@@ -186,7 +186,9 @@ public class Spielfeld extends JPanel implements Runnable{
 		//Anzeige von Schatzelementen
 		if((anzeige)&&(counter_anzeige<=300)&&(propra2013.Gruppe54.spieler.aktiv)){
 			g.setColor(Color.white);
-			g.setFont(new Font("Lucida Sans Typewriter",Font.PLAIN,8));
+			if(g.getFont() != new Font("Lucida Sans Typewriter",Font.PLAIN,8)){
+				g.setFont(new Font("Lucida Sans Typewriter",Font.PLAIN,8));
+			}
 			g.drawString(text_anzeige, (int)spieler.x, (int)spieler.y-10);
 			counter_anzeige++;
 		}
