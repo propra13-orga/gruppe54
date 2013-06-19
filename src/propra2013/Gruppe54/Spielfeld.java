@@ -113,6 +113,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		gegnerKI = new GegnerKI();
 		waffe = new Waffe();
 		loadImages();
+		current_room=3;//direkt in raum 3
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
 		schuss_endgegner = new Schuss_Endgegner();
 		schuss_spieler = new Schuss_Spieler();

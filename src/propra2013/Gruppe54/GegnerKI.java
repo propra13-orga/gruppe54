@@ -43,15 +43,15 @@ public class GegnerKI extends Rectangle{
 		} else if(Spielfeld.current_lvl==2){
 			StartLeben=200;
 			Faktor=6;
-			Schaden=2;
+			Schaden=1;
 		} else if(Spielfeld.current_lvl==3){
 			StartLeben=300;
 			Faktor=10;
-			Schaden=3;
+			Schaden=2;
 		} else if(Spielfeld.current_lvl==4){
 			StartLeben=300;
 			Faktor=10;
-			Schaden=3;
+			Schaden=2;
 		}
 		leben=StartLeben;
 		aktiv=false;
@@ -125,24 +125,7 @@ public class GegnerKI extends Rectangle{
 		if (Fall==9){
 			nächsterSchrittX=0;
 			nächsterSchrittY=0;
-		}/* else
-		if(Fall==10){			//unten
-			nächsterSchrittX=0;
-			nächsterSchrittY=1;
-		}else
-		if(Fall==11){			//links
-			nächsterSchrittX=-1;
-			nächsterSchrittY=0;
-		} else
-		if(Fall==12){			//rechts
-			nächsterSchrittX=1;
-			nächsterSchrittY=0;
-		}else				
-		if(Fall==13){			//oben
-			nächsterSchrittX=0;
-			nächsterSchrittY=-1;
-		}*/
-		
+		}		
 	}
 	
 	//Überprüft wo sich der Spieler befindet, wenn Gegner in 9 steht
