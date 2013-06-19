@@ -30,26 +30,26 @@ public class Spielerinfo extends JPanel implements Runnable{
 		g.drawString("Raum: "+Spielfeld.current_room,8,35);
 		g.drawString("Gold: "+Spielfeld.spieler.gold,8,50);
 		//Lebensanzeige
-		if(spieler.leben>0){
-			if(spieler.leben>40){
+		if(Spieler.leben>0){
+			if(Spieler.leben>40){
 				g.setColor(Color.green);
 			} else {
 				g.setColor(Color.red);
 			}
-			g.fill3DRect(75, 15, (int) (spieler.leben*1.5), 7, true);
+			g.fill3DRect(75, 15, (int) (Spieler.leben*1.5), 7, true);
 		}
 	
-		if(spieler.superleben > 0){
-			if(spieler.superleben == 1){
+		if(Spieler.superleben > 0){
+			if(Spieler.superleben == 1){
 				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 75, 45, null, null);
-			} else if(spieler.superleben == 2){
+			} else if(Spieler.superleben == 2){
 				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 75, 45, null, null);
 				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 90, 45, null, null);
-			} else if(spieler.superleben == 3){
+			} else if(Spieler.superleben == 3){
 				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 75, 45, null, null);
 				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 90, 45, null, null);
 				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 105, 45, null, null);
-			} else if(spieler.superleben == 4){
+			} else if(Spieler.superleben == 4){
 				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 75, 45, null, null);
 				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 90, 45, null, null);
 				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 105, 45, null, null);
@@ -58,14 +58,14 @@ public class Spielerinfo extends JPanel implements Runnable{
 		}
 		
 		//Mana
-		if(spieler.mana>0){
+		if(Spieler.mana>0){
 			g.setColor(Color.blue);
-			g.fill3DRect(75, 25, (int) (spieler.mana*1.5), 7, true);
+			g.fill3DRect(75, 25, (int) (Spieler.mana*1.5), 7, true);
 		}
 		//Rüstung
-		if(spieler.ruestung>0){
+		if(Spieler.ruestung>0){
 			g.setColor(Color.gray);
-			g.fill3DRect(75, 35, (int) (spieler.ruestung*1.5), 7, true);
+			g.fill3DRect(75, 35, (int) (Spieler.ruestung*1.5), 7, true);
 		}
 		//Inventar
 		g.setColor(Color.black);

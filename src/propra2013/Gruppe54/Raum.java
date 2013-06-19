@@ -11,7 +11,6 @@ public class Raum {
 	public static Point[] Startpunkt = {new Point(5,185),new Point(5,277),new Point(675,435),new Point(5,280)};
 	public static int anzahl_gegner=0;
 	
-	
 	public static Block[][] block; 
 	
 	/**
@@ -35,7 +34,7 @@ public class Raum {
 	public void draw(Graphics g){
 		for(int y=0;y<worldHeight;y++){
 			for(int x=0;x<worldWidth;x++){
-				block[y][x].draw(g);	//zeichnet jeden Block
+				block[y][x].draw(g);	//zeichnet die Blöcke anhand der ID
 			}
 		}
 	}
