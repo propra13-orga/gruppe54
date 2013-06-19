@@ -19,8 +19,8 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static double spieler_preposX=0,spieler_preposY=0;
 	
 	public static boolean isFirst = true; //erster Aufruf
-	public static boolean shop = false,shop_trank = false,shop_mana = false,shop_supertrank = false,shop_ruestung1 = false,shop_ruestung2 = false,shop_stiefel = false,shop_axt = false,anzeige = false;
-	public static String text_anzeige;
+	public static boolean preis_shop = false,shop = false,shop_trank = false,shop_mana = false,shop_supertrank = false,shop_ruestung1 = false,shop_ruestung2 = false,shop_stiefel = false,shop_axt = false,anzeige = false;
+	public static String text_anzeige,preis_anzeige;
 	public static Raum raum;
 	public static Level level = new Level();
 	public static Spieler spieler;
@@ -131,7 +131,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	//Hier nur zeichnen, berechnungen oder sonstiges im Thread ausführen
 	public void paintComponent(Graphics g){
 		raum.draw(g); //zeichnet den raum
-		if(propra2013.Gruppe54.Spieler.aktiv){
+		if(spieler.aktiv){
 			spieler.draw(g);  //zeichnet den Spieler
 			//Waffe des Spielers
 			if((spieler.schwert)){
@@ -141,13 +141,48 @@ public class Spielfeld extends JPanel implements Runnable{
 			if((spieler.waffe == 3)&&(Waffe.angriff)){
 				Waffe.draw(g);
 			}
+			//Anzeige von Schatzelementen
+			if((anzeige)&&(counter_anzeige<=300)){
+				g.setColor(Color.white);
+				if(g.getFont() != new Font("Lucida Sans Typewriter",Font.PLAIN,8)){
+					g.setFont(new Font("Lucida Sans Typewriter",Font.PLAIN,8));
+				}
+				g.drawString(text_anzeige, (int)spieler.x, (int)spieler.y-10);
+				counter_anzeige++;
+			}
+			if(preis_shop){
+				g.setColor(Color.white);
+				if(g.getFont() != new Font("Lucida Sans Typewriter",Font.PLAIN,8)){
+					g.setFont(new Font("Lucida Sans Typewriter",Font.PLAIN,8));
+				}
+				g.drawString(preis_anzeige, (int)spieler.x, (int)spieler.y-10);
+			}
+			//Schuss Spieler
+			if (Schuss_Spieler.sichtbar){
+				schuss_spieler.draw(g);
+			}
 		}
+		//Gegner1
 		if((GegnerRL.leben>0)&&(GegnerRL.aktiv)){
 			gegnerRL.draw(g);
+			//Lebensanzeige GegnerRL
+			if(GegnerRL.leben>GegnerRL.StartLeben/4){
+				g.setColor(Color.green);
+			} else {
+				g.setColor(Color.red);
+			}
+			g.fill3DRect((int)GegnerRL.StartX, (int)GegnerRL.StartY-10,GegnerRL.leben/GegnerRL.Faktor,3,true);
 		}
-		
+		//Gegner2
 		if((GegnerOU.leben>0)&&(GegnerOU.aktiv)){
 			gegnerOU.draw(g);
+			//Lebensanzeige GegnerOU
+			if(GegnerOU.leben>GegnerOU.StartLeben/4){
+				g.setColor(Color.green);
+			} else {
+				g.setColor(Color.red);
+			}
+			g.fill3DRect((int)GegnerOU.StartX, (int)GegnerOU.StartY-10,GegnerOU.leben/GegnerOU.Faktor,3,true);
 		}
 		
 		//Falle
@@ -156,59 +191,24 @@ public class Spielfeld extends JPanel implements Runnable{
 		}
 		
 		//Endgegner
-		if ((Endgegner.leben>0)&&(Endgegner.aktiv)){
+		if ((Endgegner.leben>0)&&(Endgegner.aktiv)&&(current_room == 3)){
 			Boss.draw(g);
-		}
-		//GegnerKI
-		if((GegnerKI.leben>0)&&(GegnerKI.aktiv)){
-			gegnerKI.draw(g);
-		}
-		//SchussEndgegner wird nur in raum 3 gezeichnet
-		if ((current_room==3)&&(Schuss_Endgegner.sichtbar==true)&&(Endgegner.leben>0)&&(Schuss_Endgegner.aktiv)){
-			schuss_endgegner.draw(g);
-		}
-		//Schuss Spieler
-		if (Schuss_Spieler.sichtbar){
-			schuss_spieler.draw(g);
-		}
-		//Anzeige von Schatzelementen
-		if((anzeige)&&(counter_anzeige<=300)&&(propra2013.Gruppe54.Spieler.aktiv)){
-			g.setColor(Color.white);
-			if(g.getFont() != new Font("Lucida Sans Typewriter",Font.PLAIN,8)){
-				g.setFont(new Font("Lucida Sans Typewriter",Font.PLAIN,8));
-			}
-			g.drawString(text_anzeige, (int)spieler.x, (int)spieler.y-10);
-			counter_anzeige++;
-		}
-		//Lebensanzeige Endgegner
-		if ((current_room==3)&&(Endgegner.leben>0)&&(Endgegner.aktiv)){
+			//Lebensanzeige Endgegner
 			if(Endgegner.leben>Endgegner.StartLeben/4){
 				g.setColor(Color.green);
 			} else {
 				g.setColor(Color.red);
 			}
 			g.fill3DRect((int)Endgegner.StartX, (int)Endgegner.StartY-10,Endgegner.leben/Endgegner.Faktor,3,true);
-		}
-		//Lebensanzeige GegnerOU
-		if ((GegnerOU.aktiv)&&(GegnerOU.leben>0)){
-			if(GegnerOU.leben>GegnerOU.StartLeben/4){
-				g.setColor(Color.green);
-			} else {
-				g.setColor(Color.red);
+			//SchussEndgegner
+			if ((Schuss_Endgegner.sichtbar==true)&&(Schuss_Endgegner.aktiv)){
+				schuss_endgegner.draw(g);
 			}
-			g.fill3DRect((int)GegnerOU.StartX, (int)GegnerOU.StartY-10,GegnerOU.leben/GegnerOU.Faktor,3,true);	
 		}
-		//Lebensanzeige GegnerRL
-		if ((GegnerRL.leben>0)&&(GegnerRL.aktiv)){
-			if(GegnerRL.leben>GegnerOU.StartLeben/4){
-				g.setColor(Color.green);
-			} else {
-				g.setColor(Color.red);
-			}
-			g.fill3DRect((int)GegnerRL.StartX, (int)GegnerRL.StartY-10,GegnerRL.leben/GegnerRL.Faktor,3,true);
-		}
-		//Lebensanzeige GegnerKI
-		if ((GegnerKI.aktiv)&&(GegnerKI.leben>0)){
+		//GegnerKI
+		if((GegnerKI.leben>0)&&(GegnerKI.aktiv)){
+			gegnerKI.draw(g);
+			//Lebensanzeige GegnerKI
 			if(GegnerKI.leben>GegnerKI.StartLeben/4){
 				g.setColor(Color.green);
 			} else {
@@ -227,19 +227,19 @@ public class Spielfeld extends JPanel implements Runnable{
 				define();
 				isFirst=false;
 			}
-			
-			if((propra2013.Gruppe54.Spieler.leben <= 0)&&(propra2013.Gruppe54.Spieler.superleben >= 1)&&(propra2013.Gruppe54.Spieler.aktiv)){
-				propra2013.Gruppe54.Spieler.aktiv = false;
+			//Wenn der Spieler besiegt wurde
+			if((spieler.leben <= 0)&&(spieler.superleben >= 1)&&(spieler.aktiv)){
+				spieler.aktiv = false;
 				anzeige = false;
 				Waffe.angriff = false;
-				if(propra2013.Gruppe54.Spieler.checkpoint.getX() != Raum.Startpunkt[Spielfeld.current_lvl-1].getX()){
+				if(spieler.checkpoint.getX() != Raum.Startpunkt[Spielfeld.current_lvl-1].getX()){
 					Frame.checkpoint.setVisible(true);
-				} else if(propra2013.Gruppe54.Spieler.checkpoint.getX() == Raum.Startpunkt[Spielfeld.current_lvl-1].getX()){
+				} else if(spieler.checkpoint.getX() == Raum.Startpunkt[Spielfeld.current_lvl-1].getX()){
 					Frame.neustart.setVisible(true);	
 				}
-				propra2013.Gruppe54.Spieler.superleben -= 1;
-			} else if((propra2013.Gruppe54.Spieler.leben <= 0)&&(propra2013.Gruppe54.Spieler.superleben <= 0)&&(propra2013.Gruppe54.Spieler.aktiv)){
-				propra2013.Gruppe54.Spieler.aktiv = false;
+				spieler.superleben -= 1;
+			} else if((spieler.leben <= 0)&&(spieler.superleben <= 0)&&(spieler.aktiv)){
+				spieler.aktiv = false;
 				anzeige = false;
 				Waffe.angriff = false;
 				Frame.neustart.setVisible(true);
@@ -254,24 +254,79 @@ public class Spielfeld extends JPanel implements Runnable{
 					counter_angriff = 0;
 				}
 			}
-			//GegnerKI Bewegung
+			//GegnerKI 
 			if ((GegnerKI.leben>0)&&(GegnerKI.aktiv)&&(GegnerKI.StartX !=0)&&(GegnerKI.StartY !=0)){
 				GegnerKI.lauf();
+				GegnerKI.counter_gegnerKI ++;
+				GegnerKI.laufen=false;
+				if(GegnerKI.counter_gegnerKI==3){
+					GegnerKI.laufen=true;
+					GegnerKI.counter_gegnerKI=0;
+				}
+			} else if((GegnerKI.leben <= 0)&&(GegnerKI_counter == 0)&&(shop == false)){ // "   "
+				getBlock(GegnerKI.StartX+16,GegnerKI.StartY+16).ID = 13;
+				GegnerKI_counter = 1;
+				GegnerKI.StartX = 0;
+				GegnerKI.StartY = 0;
 			}
-			//GegnerRL Bewegung
+			//GegnerRL 
 			if ((GegnerRL.aktiv)&&(GegnerRL.leben>0)&&(GegnerRL.StartX !=0)&&(GegnerRL.StartY !=0)){
 				GegnerRL.lauf();
+			} else if((GegnerRL.leben <= 0)&&(GegnerRL_counter == 0)&&(shop == false)){	//wenn der Gegner besiegt wurde müssen seine Koordinaten auf 0 gesetzt werden
+				getBlock(GegnerRL.StartX+16,GegnerRL.StartY+16).ID = 32;				//der counter ist dafür, dass beim besiegen des Gegners nur einmal ein Schatz liegt
+				GegnerRL_counter = 1;
+				GegnerRL.StartX = 0;
+				GegnerRL.StartY = 0;
 			}
-			//GegnerOU Bewegung
+			//GegnerOU 
 			if ((GegnerOU.aktiv)&&(GegnerOU.leben>0)&&(GegnerOU.StartX !=0)&&(GegnerOU.StartY !=0)){
 				GegnerOU.lauf();
+			} else if((GegnerOU.leben <= 0)&&(GegnerOU_counter == 0)&&(shop == false)){ // "   " 
+				getBlock(GegnerOU.StartX+16,GegnerOU.StartY+16).ID = 14;
+				GegnerOU_counter = 1;
+				GegnerOU.StartX = 0;
+				GegnerOU.StartY = 0;
 			}
-			//Endgegner Bewegung
+			//Endgegner 
 			if ((Endgegner.leben>0)&&(Endgegner.aktiv)&&(Endgegner.StartX !=0)&&(Endgegner.StartY !=0)){
 				Endgegner.lauf();
+				//Schuss vom Endgegner
+				if ((current_room==3)&&(Schuss_Endgegner.sichtbar==true)&&(Endgegner.leben>0)&&(Schuss_Endgegner.aktiv)){
+					if (Schuss_Endgegner.checkPos==false){
+						Schuss_Endgegner.checkPos();
+					}
+					Schuss_Endgegner.bewegung();
+				}
+			} else if((Endgegner.leben <= 0)&&(Endgegner_counter == 0)&&(shop == false)){ // "   "
+				getBlock(Endgegner.StartX+16,Endgegner.StartY+16).ID = 13;
+				Endgegner_counter = 1;
+				Endgegner.StartX = 0;
+				Endgegner.StartY = 0;
 			}
+			//Falle bewegung
 			if((Falle.aktiv)&&(Falle.StartX != 0)&&(Falle.StartY != 0)){
 				Falle.bewegung();
+			}
+			//Counter für den String über dem Spieler zur Ausgabe eingesammelter Werte
+			if(counter_anzeige==300){  
+				anzeige = false;
+				counter_anzeige = 0;
+			}
+			//Spieler
+			if(spieler.aktiv){
+			//Steuerung des Spielers
+			if((spieler.check(1))&&(spieler.check(15))&&(spieler.check(18))&&(spieler.check(20))&&(spieler.check(21))&&(spieler.check(10))
+					&&(spieler.check(22))&&(spieler.check(23))&&(spieler.check(24))&&(spieler.check(25))&&(spieler.check(28))&&(spieler.check(31))
+					&&(spieler.check(41))&&(spieler.check(42))&&(spieler.check(43))&&(spieler.check(2))&&(spieler.check(4))&&(spieler.check(29))&&(spieler.check(17))){//prüfen ob Elemente vom Spieler durchschritten werden dürfen
+				spieler.checkKollision();
+				spieler.x += Frame.dx;
+				spieler.y += Frame.dy;
+				Elemente.beruehrung = false;
+			} else if((spieler.check(15)==false) | (spieler.check(18)==false) | (spieler.check(20)==false) | (spieler.check(21)==false) | (spieler.check(22)==false)
+					| (spieler.check(23)==false) | (spieler.check(24)==false) | (spieler.check(25)==false) | (spieler.check(28)==false) | (spieler.check(31)==false)
+					| (spieler.check(29)==false) | (spieler.check(17)==false) | (spieler.check(10)==false)){	//wenn nicht, dann wird nur die Aktion des Elements ausgeführt, der Spieler geht aber nicht weiter
+				spieler.checkKollision();
+				Elemente.beruehrung = false;
 			}
 			//Schuss vom Spieler
 			if((Schuss_Spieler.sichtbar)){
@@ -280,64 +335,6 @@ public class Spielfeld extends JPanel implements Runnable{
 				}
 				Schuss_Spieler.Schuss();
 				counter_schuss = 1;
-			}
-			//Schuss vom Endgegner
-			if ((current_room==3)&&(Schuss_Endgegner.sichtbar==true)&&(Endgegner.leben>0)&&(Schuss_Endgegner.aktiv)){
-				if (Schuss_Endgegner.checkPos==false){
-					Schuss_Endgegner.checkPos();
-				}
-				Schuss_Endgegner.bewegung();
-			}
-			if((GegnerRL.leben <= 0)&&(GegnerRL_counter == 0)&&(shop == false)){	//wenn der Gegner besiegt wurde müssen seine Koordinaten auf 0 gesetzt werden
-				getBlock(GegnerRL.StartX+16,GegnerRL.StartY+16).ID = 32;				//der counter ist dafür, dass beim besiegen des Gegners nur einmal ein Schatz liegt
-				GegnerRL_counter = 1;
-				GegnerRL.StartX = 0;
-				GegnerRL.StartY = 0;
-			}
-			if((GegnerOU.leben <= 0)&&(GegnerOU_counter == 0)&&(shop == false)){ // "   " 
-				getBlock(GegnerOU.StartX+16,GegnerOU.StartY+16).ID = 14;
-				GegnerOU_counter = 1;
-				GegnerOU.StartX = 0;
-				GegnerOU.StartY = 0;
-			}
-			if((Endgegner.leben <= 0)&&(Endgegner_counter == 0)&&(shop == false)){ // "   "
-				getBlock(Endgegner.StartX+16,Endgegner.StartY+16).ID = 13;
-				Endgegner_counter = 1;
-				Endgegner.StartX = 0;
-				Endgegner.StartY = 0;
-			} 
-			if((GegnerKI.leben <= 0)&&(GegnerKI_counter == 0)&&(shop == false)){ // "   "
-				getBlock(GegnerKI.StartX+16,GegnerKI.StartY+16).ID = 13;
-				GegnerKI_counter = 1;
-				GegnerKI.StartX = 0;
-				GegnerKI.StartY = 0;
-			}
-			
-			if(counter_anzeige==300){  //String über dem Spieler zur Ausgabe eingesammelter Werte
-				anzeige = false;
-				counter_anzeige = 0;
-			}
-			GegnerKI.counter_gegnerKI ++;
-			GegnerKI.laufen=false;
-			if(GegnerKI.counter_gegnerKI==3){
-				GegnerKI.laufen=true;
-				GegnerKI.counter_gegnerKI=0;
-			}
-			
-			if(propra2013.Gruppe54.Spieler.aktiv){
-			//Steuerung des Spielers
-			if((check(1))&&(check(15))&&(check(18))&&(check(20))&&(check(21))&&(check(10))
-					&&(check(22))&&(check(23))&&(check(24))&&(check(25))&&(check(28))&&(check(31))
-					&&(check(41))&&(check(42))&&(check(43))&&(check(2))&&(check(4))&&(check(29))&&(check(17))){//prüfen ob Elemente vom Spieler durchschritten werden dürfen
-				checkKollision();
-				spieler.x += Frame.dx;
-				spieler.y += Frame.dy;
-				Elemente.beruehrung = false;
-			} else if((check(15)==false) | (check(18)==false) | (check(20)==false) | (check(21)==false) | (check(22)==false)
-					| (check(23)==false) | (check(24)==false) | (check(25)==false) | (check(28)==false) | (check(31)==false)
-					| (check(29)==false) | (check(17)==false) | (check(10)==false)){	//wenn nicht, dann wird nur die Aktion des Elements ausgeführt, der Spieler geht aber nicht weiter
-				checkKollision();
-				Elemente.beruehrung = false;
 			}
 			}
 			try{
@@ -378,56 +375,6 @@ public class Spielfeld extends JPanel implements Runnable{
 		spieler.y = Spielfeld.spieler_preposY;
 		Schuss_Endgegner.sichtbar=true;
 		Spielfeld.shop = false;
-	}
-	
-	//prüft ob die boolean Variablen noch auf "true" gesetzt sind obwohl der Spieler nicht mehr vor dem Item steht
-	//damit die Anzeige ausgeblendet wird
-	public static void checkShopItems(){
-        if((Spielfeld.shop_trank)&&(Spielfeld.check(21))){
-        	Spielfeld.shop_trank = false;
-        }
-        if((Spielfeld.shop_mana)&&(Spielfeld.check(22))){
-        	Spielfeld.shop_mana = false;
-        }
-        if((Spielfeld.shop_ruestung1)&&(Spielfeld.check(23))){
-        	Spielfeld.shop_ruestung1 = false;
-        }
-        if((Spielfeld.shop_ruestung2)&&(Spielfeld.check(24))){
-        	Spielfeld.shop_ruestung2 = false;
-        }
-        if((Spielfeld.shop_stiefel)&&(Spielfeld.check(25))){
-        	Spielfeld.shop_stiefel = false;
-        }
-        if((Spielfeld.shop_axt)&&(Spielfeld.check(28))){
-        	Spielfeld.shop_axt = false;
-        }
-        if((Spielfeld.shop_supertrank)&&(Spielfeld.check(29))){
-        	Spielfeld.shop_supertrank = false;
-        }
-	}
-	
-	//prüft an 4 Punkten ob sich dort ein Objekt befindet durch das der Spieler nicht laufen darf
-	public static boolean check(int ID){
-		if((getBlockID(spieler.x+6+Frame.dx,spieler.y+26+Frame.dy)!=ID)&&(getBlockID(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy)!=ID)&&(getBlockID(spieler.x+6+Frame.dx,spieler.y+32+Frame.dy)!=ID)
-			&&(getBlockID(spieler.x+26+Frame.dx,spieler.y+32+Frame.dy)!=ID)&&(spieler.x+Frame.dx>0)&&(spieler.y+32+Frame.dy<(Raum.worldHeight*Raum.blockSize))&&(spieler.x+32+Frame.dx<(Raum.worldWidth*Raum.blockSize))
-			&&(spieler.y+Frame.dy>0)){
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	//prüft am derzeitigen Standort des Spielers an 4 Punkten ob dieser ein Objekt berührt welches eine Aktion ausführt
-	public static void checkKollision(){
-		Elemente.beruehrung = false;
-		Elemente.Aufruf(getBlockID(spieler.x+6+Frame.dx, spieler.y+26+Frame.dy),getBlock(spieler.x+6+Frame.dx, spieler.y+26+Frame.dy));
-        if(Elemente.beruehrung == false){ //zweiten Punkt prüfen
-        	Elemente.Aufruf(getBlockID(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy),getBlock(spieler.x+26+Frame.dx,spieler.y+26+Frame.dy));
-        } else if(Elemente.beruehrung == false){ //dritten Punkt prüfen
-        	Elemente.Aufruf(getBlockID(spieler.x+6+Frame.dx,spieler.y+36+Frame.dy),getBlock(spieler.x+6+Frame.dx,spieler.y+36+Frame.dy));
-        } else if(Elemente.beruehrung == false){ //vierten Punkt prüfen
-        	Elemente.Aufruf(getBlockID(spieler.x+26+Frame.dx,spieler.y+36+Frame.dy),getBlock(spieler.x+26+Frame.dx,spieler.y+36+Frame.dy));
-        }
 	}
 	
 	//liefert die ID des Blocks bei gegebenen x,y Koordinaten eines Punktes auf dem Spielfeld

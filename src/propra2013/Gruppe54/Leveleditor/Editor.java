@@ -14,9 +14,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-//TODO: 		-Möglichkeit zum löschen
-//				-Speichern
-//				-Spawnpunkt des Spielers ändern?
+//TODO: 		-Spawnpunkt des Spielers ändern?
 
 public class Editor extends JFrame{
 

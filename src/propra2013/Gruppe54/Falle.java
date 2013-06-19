@@ -58,10 +58,10 @@ public class Falle extends Rectangle {
 
 		if((Falle.StartX+31 >= Spielfeld.spieler.x)&&(Falle.StartX <= Spielfeld.spieler.x+31)  &&
 			(Falle.StartY+31 >= Spielfeld.spieler.y)&&(Falle.StartY <= Spielfeld.spieler.y+31)){		
-			if (Spieler.ruestung>0){
-				Spieler.ruestung-=Schaden;
+			if (Spielfeld.spieler.ruestung>0){
+				Spielfeld.spieler.ruestung-=Schaden;
 			} else {
-				Spieler.leben -= Schaden;
+				Spielfeld.spieler.leben -= Schaden;
 			}	
 		}	
 	}

@@ -76,11 +76,11 @@ public class GegnerOU extends Rectangle{
 		if( (GegnerOU.StartX+26 >= Spielfeld.spieler.x)&&(GegnerOU.StartX <= Spielfeld.spieler.x+26)&&
 			(GegnerOU.StartY+26 >= Spielfeld.spieler.y)&&(GegnerOU.StartY <= Spielfeld.spieler.y+26)){		
 			counter_kollision ++;
-			if ((Spieler.ruestung>0)&&(counter_kollision == 5)){  //counter_kollision damit nicht zuviel Leben abgezogen wird
-				Spieler.ruestung-=1;
+			if ((Spielfeld.spieler.ruestung>0)&&(counter_kollision == 5)){  //counter_kollision damit nicht zuviel Leben abgezogen wird
+				Spielfeld.spieler.ruestung-=1;
 				counter_kollision = 0;
-			} else if((Spieler.ruestung <= 0)&&(counter_kollision == 5)) {
-				Spieler.leben -= 1;
+			} else if((Spielfeld.spieler.ruestung <= 0)&&(counter_kollision == 5)) {
+				Spielfeld.spieler.leben -= 1;
 				counter_kollision = 0;
 			}
 		}
