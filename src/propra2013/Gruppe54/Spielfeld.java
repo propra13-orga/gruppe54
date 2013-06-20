@@ -284,7 +284,9 @@ public class Spielfeld extends JPanel implements Runnable{
 					GegnerKI.counter_gegnerKI=0;
 				}
 			} else if((GegnerKI.leben <= 0)&&(GegnerKI_counter == 0)&&(shop == false)){ // "   "
-				getBlock(GegnerKI.StartX+16,GegnerKI.StartY+16).ID = 13;
+				if(getBlock(GegnerKI.StartX+16,GegnerKI.StartY+16).ID == 0){ //nur ein Element ablegen wenn dort Boden ist
+					getBlock(GegnerKI.StartX+16,GegnerKI.StartY+16).ID = 13;
+				}
 				spieler.xp += 10*current_lvl;
 				anzeige = true;
 				text_anzeige = "+"+10*current_lvl+" XP";
@@ -296,7 +298,9 @@ public class Spielfeld extends JPanel implements Runnable{
 			if ((GegnerRL.aktiv)&&(GegnerRL.leben>0)&&(GegnerRL.StartX !=0)&&(GegnerRL.StartY !=0)){
 				GegnerRL.lauf();
 			} else if((GegnerRL.leben <= 0)&&(GegnerRL_counter == 0)&&(shop == false)){	//wenn der Gegner besiegt wurde müssen seine Koordinaten auf 0 gesetzt werden
-				getBlock(GegnerRL.StartX+16,GegnerRL.StartY+16).ID = 32;				//der counter ist dafür, dass beim besiegen des Gegners nur einmal ein Schatz liegt
+				if(getBlock(GegnerKI.StartX+16,GegnerKI.StartY+16).ID == 0){
+					getBlock(GegnerRL.StartX+16,GegnerRL.StartY+16).ID = 32;			//der counter ist dafür, dass beim besiegen des Gegners nur einmal ein Schatz liegt
+				}
 				spieler.xp += 15*current_lvl;
 				anzeige = true;
 				text_anzeige = "+"+15*current_lvl+" XP";
@@ -308,7 +312,9 @@ public class Spielfeld extends JPanel implements Runnable{
 			if ((GegnerOU.aktiv)&&(GegnerOU.leben>0)&&(GegnerOU.StartX !=0)&&(GegnerOU.StartY !=0)){
 				GegnerOU.lauf();
 			} else if((GegnerOU.leben <= 0)&&(GegnerOU_counter == 0)&&(shop == false)){ // "   " 
-				getBlock(GegnerOU.StartX+16,GegnerOU.StartY+16).ID = 14;
+				if(getBlock(GegnerKI.StartX+16,GegnerKI.StartY+16).ID == 0){
+					getBlock(GegnerOU.StartX+16,GegnerOU.StartY+16).ID = 14;
+				}
 				spieler.xp += 15*current_lvl;
 				anzeige = true;
 				text_anzeige = "+"+15*current_lvl+" XP";
@@ -328,7 +334,9 @@ public class Spielfeld extends JPanel implements Runnable{
 					Schuss_Endgegner.bewegung();
 				}
 			} else if((Endgegner.leben <= 0)&&(Endgegner_counter == 0)&&(shop == false)){ // "   "
-				getBlock(Endgegner.StartX+16,Endgegner.StartY+16).ID = 13;
+				if(getBlock(GegnerKI.StartX+16,GegnerKI.StartY+16).ID == 0){ 
+					getBlock(Endgegner.StartX+16,Endgegner.StartY+16).ID = 13;
+				}
 				spieler.xp += 25*current_lvl;
 				anzeige = true;
 				text_anzeige = "+"+25*current_lvl+" XP";
