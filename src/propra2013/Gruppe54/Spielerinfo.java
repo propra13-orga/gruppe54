@@ -29,6 +29,7 @@ public class Spielerinfo extends JPanel implements Runnable{
 		g.drawString("Level: "+Spielfeld.current_lvl,8,20);
 		g.drawString("Raum: "+Spielfeld.current_room,8,35);
 		g.drawString("Gold: "+Spielfeld.spieler.gold,8,50);
+		g.drawString("XP: "+Spielfeld.spieler.xp,8,65);
 		//Lebensanzeige
 		if(Spielfeld.spieler.leben>0){
 			if(Spielfeld.spieler.leben>40){
@@ -96,7 +97,7 @@ public class Spielerinfo extends JPanel implements Runnable{
 		g.drawLine(380, 0, 380, 75);
 		g.drawLine(410, 0, 410, 75);
 		g.drawLine(440, 0, 440, 75);
-		g.drawLine(320, 36, 440, 36);
+		g.drawLine(320, 38, 440, 38);
 		g.setFont(new Font("Lucida Sans Typewriter",Font.PLAIN,10));
 		g.setColor(Color.black);
 		//Gespräch

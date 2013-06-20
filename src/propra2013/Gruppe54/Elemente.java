@@ -15,8 +15,8 @@ public class Elemente {
 		
 		case 5://Ausgang
 			if(Spielfeld.current_room!=3) {  
-				if(Schuss_Spieler.sichtbar){
-					Schuss_Spieler.sichtbar = false;
+				if(Spielfeld.schuss_spieler.sichtbar){
+					Spielfeld.schuss_spieler.sichtbar = false;
 				}
 				Falle.aktiv=false;
 				GegnerKI.leben=0;
@@ -50,7 +50,7 @@ public class Elemente {
 		
 		case 8://Falle_Feuer
 			feuer++;
-			if(feuer==5){
+			if(feuer==10){
 				beruehrung = true;		  //da z.B. beim hochlaufen zwei Punkte auf Berührung überprüft werden, soll gespeichert werden,
 				if(Spielfeld.spieler.ruestung<=0){  //ob bereits eine Falle ausgelöst wurde damit die Punkte nicht doppelt abgezogen werden
 					Spielfeld.spieler.leben-=1;
@@ -63,12 +63,12 @@ public class Elemente {
 		
 		case 9://Falle_Speer
 			speer++;
-			if(speer==5){
+			if(speer==15){
 				beruehrung = true;
 				if(Spielfeld.spieler.ruestung<=0){
-					Spielfeld.spieler.leben-=2;
+					Spielfeld.spieler.leben-=1;
 				} else {
-					Spielfeld.spieler.ruestung-=2;
+					Spielfeld.spieler.ruestung-=1;
 				}
 				block.Zustand = 1;	//lädt das aktive Bild der Falle
 				speer = 0;
@@ -84,6 +84,34 @@ public class Elemente {
 			} else if(Spielfeld.Falle_counter==5){
 				Spielfeld.spieler.ruestung-=1;
 				Spielfeld.Falle_counter = 0;
+			}
+			break;
+		
+		case 11://Falle_Axt
+			speer++;
+			if(speer==15){
+				beruehrung = true;
+				if(Spielfeld.spieler.ruestung<=0){
+					Spielfeld.spieler.leben-=2;
+				} else {
+					Spielfeld.spieler.ruestung-=2;
+				}
+				block.Zustand = 1;	//lädt das aktive Bild der Falle
+				speer = 0;
+			}
+			break;
+		
+		case 12://Falle_Totenkopf
+			speer++;
+			if(speer==15){
+				beruehrung = true;
+				if(Spielfeld.spieler.ruestung<=0){
+					Spielfeld.spieler.leben-=2;
+				} else {
+					Spielfeld.spieler.ruestung-=2;
+				}
+				block.Zustand = 1;	//lädt das aktive Bild der Falle
+				speer = 0;
 			}
 			break;
 		
@@ -221,8 +249,8 @@ public class Elemente {
 			break;
 			
 		case 26://Eingang Shop
-			if(Schuss_Spieler.sichtbar){
-   			 Schuss_Spieler.sichtbar = false;
+			if(Spielfeld.schuss_spieler.sichtbar){
+   			 Spielfeld.schuss_spieler.sichtbar = false;
    		 	}
    		 	if(Schuss_Endgegner.sichtbar){
    			 Schuss_Endgegner.sichtbar=false;
@@ -321,8 +349,8 @@ public class Elemente {
 		
 		case 40:
 			if(Spielfeld.current_room!=3) {  
-				if(Schuss_Spieler.sichtbar){
-					Schuss_Spieler.sichtbar = false;
+				if(Spielfeld.schuss_spieler.sichtbar){
+					Spielfeld.schuss_spieler.sichtbar = false;
 				}
 				Spielfeld.current_room+=1;
 				Falle.aktiv=false;

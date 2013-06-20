@@ -347,10 +347,10 @@ public class Frame extends JFrame implements ActionListener{
 					 }
 		         }
 		         //Schuss des Spielers
-		         if ((key == KeyEvent.VK_SPACE)&&(Spielfeld.spieler.aktiv)&&(Spielfeld.spieler.mana>=10)){	
-		        	Schuss_Spieler.sichtbar=true;
-		        	Schuss_Spieler.setPos=false;
-					Schuss_Spieler.checkRichtung();
+		         if ((key == KeyEvent.VK_SPACE)&&(Spielfeld.spieler.aktiv)&&(Spielfeld.spieler.mana>=10)&&(Spielfeld.spieler.xp>=50)){	
+		        	Spielfeld.schuss_spieler.sichtbar=true;
+		        	Spielfeld.schuss_spieler.setPos=false;
+					Spielfeld.schuss_spieler.checkRichtung();
 					Spielfeld.spieler.mana -= 10;
 					Spielfeld.counter_schuss = 0;
 		         }

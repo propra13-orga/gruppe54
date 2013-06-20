@@ -13,12 +13,12 @@ public class Spielfeld extends JPanel implements Runnable{
 
 	public Thread thread = new Thread(this);
 	
-	public static Image[] elemente = new Image[50];
+	public static Image[] elemente = new Image[55];
 	
 	public static int current_lvl=1,current_room=1,current_player=1,counter_anzeige = 0;
 	public static double spieler_preposX=0,spieler_preposY=0;
 	
-	public static boolean isFirst = true; //erster Aufruf
+	public static boolean isFirst = true,weg_verschlossen = true;
 	public static boolean preis_shop = false,shop = false,shop_trank = false,shop_mana = false,shop_supertrank = false,shop_ruestung1 = false,shop_ruestung2 = false,shop_stiefel = false,shop_axt = false,anzeige = false;
 	public static String text_anzeige,preis_anzeige;
 	public static Raum raum;
@@ -33,12 +33,12 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static Schuss_Spieler schuss_spieler;
 	public static int counter_schuss = 0; //wird auf 1 gesetzt wenn der Spieler schießt, damit die Position des Schusses sich während dem Flug nicht 
 										  //weiterhin der Position des Spielers anpasst
+	public static int counter_angriff = 0;
 	public static Pfeil pfeil;
 	public static int EndgegnerLeben;
 	public static int GegnerRLLeben;
 	public static int GegnerOULeben;
 	public static int GegnerKILeben;
-	public static int counter_angriff;
 	public static Falle falle;
 	public static Waffe waffe;
 	
@@ -63,10 +63,10 @@ public class Spielfeld extends JPanel implements Runnable{
 		//Fallen
 		elemente[7] = new ImageIcon("pics/falle_loch_inaktiv.png").getImage();
 		elemente[8] = new ImageIcon("pics/feuer.gif").getImage();
-		elemente[9] = new ImageIcon("pics/falle_speer"+current_lvl+".png").getImage();
+		elemente[9] = new ImageIcon("pics/falle_speer1.png").getImage();
 		elemente[10] = new ImageIcon("pics/anim.gif").getImage();
-		//11
-		//12
+		elemente[11] = new ImageIcon("pics/falle_speer2.png").getImage();
+		elemente[12] = new ImageIcon("pics/falle_speer3.png").getImage();
 		//Items
 		elemente[13] = new ImageIcon("pics/item_trank.png").getImage();
 		elemente[14] = new ImageIcon("pics/item_trank2.png").getImage();
@@ -96,7 +96,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		//40 Ausgang Wald
 		elemente[41] = new ImageIcon("pics/baum1.png").getImage();
 		elemente[42] = new ImageIcon("pics/baum2.png").getImage();
-		elemente[43] = new ImageIcon("pics/wasser1.png").getImage();
+		elemente[43] = new ImageIcon("pics/wasser.gif").getImage();
 		//elemente[44] = new ImageIcon("pics/herz_element.png").getImage();
 		elemente[45] = new ImageIcon("pics/ufer_oben.png").getImage();
 		elemente[46] = new ImageIcon("pics/ufer_links.png").getImage();
@@ -158,7 +158,7 @@ public class Spielfeld extends JPanel implements Runnable{
 				g.drawString(preis_anzeige, (int)spieler.x, (int)spieler.y-10);
 			}
 			//Schuss Spieler
-			if (Schuss_Spieler.sichtbar){
+			if (schuss_spieler.sichtbar){
 				schuss_spieler.draw(g);
 			}
 		}
@@ -232,6 +232,22 @@ public class Spielfeld extends JPanel implements Runnable{
 				spieler.aktiv = false;
 				anzeige = false;
 				Waffe.angriff = false;
+				//Schadensberechnung anhand der XP des Spielers
+				if(spieler.xp >= 25){
+					spieler.schaden = 10;
+				} else if(spieler.xp >= 75){
+					spieler.schaden = 12;
+				} else if(spieler.xp >= 125){
+					spieler.schaden = 15;
+				} else if(spieler.xp >= 175){
+					spieler.schaden = 17;
+				} else if(spieler.xp >= 225){
+					spieler.schaden = 20;
+				} else if(spieler.xp >= 300){
+					spieler.schaden = 25;
+				} else if(spieler.xp >= 450){
+					spieler.schaden = 35;
+				}
 				if(spieler.checkpoint.getX() != Raum.Startpunkt[Spielfeld.current_lvl-1].getX()){
 					Frame.checkpoint.setVisible(true);
 				} else if(spieler.checkpoint.getX() == Raum.Startpunkt[Spielfeld.current_lvl-1].getX()){
@@ -240,6 +256,10 @@ public class Spielfeld extends JPanel implements Runnable{
 				spieler.superleben -= 1;
 			} else if((spieler.leben <= 0)&&(spieler.superleben <= 0)&&(spieler.aktiv)){
 				spieler.aktiv = false;
+				spieler.xp -= 100;
+				if(spieler.xp <= 0){
+					spieler.xp = 0;
+				}
 				anzeige = false;
 				Waffe.angriff = false;
 				Frame.neustart.setVisible(true);
@@ -250,8 +270,8 @@ public class Spielfeld extends JPanel implements Runnable{
 					Waffe.Kollision();
 				}
 				counter_angriff++;
-				if(counter_angriff == 10000){
-					counter_angriff = 0;
+				if(counter_angriff == 100){
+					Waffe.angriff = false;
 				}
 			}
 			//GegnerKI 
@@ -265,6 +285,9 @@ public class Spielfeld extends JPanel implements Runnable{
 				}
 			} else if((GegnerKI.leben <= 0)&&(GegnerKI_counter == 0)&&(shop == false)){ // "   "
 				getBlock(GegnerKI.StartX+16,GegnerKI.StartY+16).ID = 13;
+				spieler.xp += 10*current_lvl;
+				anzeige = true;
+				text_anzeige = "+"+10*current_lvl+" XP";
 				GegnerKI_counter = 1;
 				GegnerKI.StartX = 0;
 				GegnerKI.StartY = 0;
@@ -274,6 +297,9 @@ public class Spielfeld extends JPanel implements Runnable{
 				GegnerRL.lauf();
 			} else if((GegnerRL.leben <= 0)&&(GegnerRL_counter == 0)&&(shop == false)){	//wenn der Gegner besiegt wurde müssen seine Koordinaten auf 0 gesetzt werden
 				getBlock(GegnerRL.StartX+16,GegnerRL.StartY+16).ID = 32;				//der counter ist dafür, dass beim besiegen des Gegners nur einmal ein Schatz liegt
+				spieler.xp += 15*current_lvl;
+				anzeige = true;
+				text_anzeige = "+"+15*current_lvl+" XP";
 				GegnerRL_counter = 1;
 				GegnerRL.StartX = 0;
 				GegnerRL.StartY = 0;
@@ -283,9 +309,13 @@ public class Spielfeld extends JPanel implements Runnable{
 				GegnerOU.lauf();
 			} else if((GegnerOU.leben <= 0)&&(GegnerOU_counter == 0)&&(shop == false)){ // "   " 
 				getBlock(GegnerOU.StartX+16,GegnerOU.StartY+16).ID = 14;
+				spieler.xp += 15*current_lvl;
+				anzeige = true;
+				text_anzeige = "+"+15*current_lvl+" XP";
 				GegnerOU_counter = 1;
 				GegnerOU.StartX = 0;
 				GegnerOU.StartY = 0;
+				weg_verschlossen = false;
 			}
 			//Endgegner 
 			if ((Endgegner.leben>0)&&(Endgegner.aktiv)&&(Endgegner.StartX !=0)&&(Endgegner.StartY !=0)){
@@ -299,6 +329,9 @@ public class Spielfeld extends JPanel implements Runnable{
 				}
 			} else if((Endgegner.leben <= 0)&&(Endgegner_counter == 0)&&(shop == false)){ // "   "
 				getBlock(Endgegner.StartX+16,Endgegner.StartY+16).ID = 13;
+				spieler.xp += 25*current_lvl;
+				anzeige = true;
+				text_anzeige = "+"+25*current_lvl+" XP";
 				Endgegner_counter = 1;
 				Endgegner.StartX = 0;
 				Endgegner.StartY = 0;
@@ -317,7 +350,8 @@ public class Spielfeld extends JPanel implements Runnable{
 			//Steuerung des Spielers
 			if((spieler.check(1))&&(spieler.check(15))&&(spieler.check(18))&&(spieler.check(20))&&(spieler.check(21))&&(spieler.check(10))
 					&&(spieler.check(22))&&(spieler.check(23))&&(spieler.check(24))&&(spieler.check(25))&&(spieler.check(28))&&(spieler.check(31))
-					&&(spieler.check(41))&&(spieler.check(42))&&(spieler.check(43))&&(spieler.check(2))&&(spieler.check(4))&&(spieler.check(29))&&(spieler.check(17))){//prüfen ob Elemente vom Spieler durchschritten werden dürfen
+					&&(spieler.check(41))&&(spieler.check(42))&&(spieler.check(43))&&(spieler.check(2))&&(spieler.check(4))&&(spieler.check(29))
+					&&(spieler.check(17))&&(spieler.check(51))){//prüfen ob Elemente vom Spieler durchschritten werden dürfen
 				spieler.checkKollision();
 				spieler.x += Frame.dx;
 				spieler.y += Frame.dy;
@@ -327,13 +361,18 @@ public class Spielfeld extends JPanel implements Runnable{
 					| (spieler.check(29)==false) | (spieler.check(17)==false) | (spieler.check(10)==false)){	//wenn nicht, dann wird nur die Aktion des Elements ausgeführt, der Spieler geht aber nicht weiter
 				spieler.checkKollision();
 				Elemente.beruehrung = false;
+			} else if((spieler.check(51)==false)&&(weg_verschlossen==false)){
+				spieler.checkKollision();
+				spieler.x += Frame.dx;
+				spieler.y += Frame.dy;
+				Elemente.beruehrung = false;
 			}
 			//Schuss vom Spieler
-			if((Schuss_Spieler.sichtbar)){
-				if (Schuss_Spieler.setPos==false){
-					Schuss_Spieler.setPos();
+			if((schuss_spieler.sichtbar)){
+				if (schuss_spieler.setPos==false){
+					schuss_spieler.setPos();
 				}
-				Schuss_Spieler.Schuss();
+				schuss_spieler.Schuss();
 				counter_schuss = 1;
 			}
 			}

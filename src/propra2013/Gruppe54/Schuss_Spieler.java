@@ -8,12 +8,13 @@ import javax.swing.ImageIcon;
 public class Schuss_Spieler extends Rectangle {
 
 	private static final long serialVersionUID = 1L;
-	public static boolean setPos=false;
-	public static double StartX,StartY;
-	public static double speed = 0.7;
-	public static boolean sichtbar=false;
+	public boolean setPos=false;
+	public double StartX,StartY;
+	public double speed = 0.6;
+	public int schaden = 20;
+	public boolean sichtbar=false;
 	public boolean checkRichtung = false;
-	public static int Richtung = 0;
+	public int Richtung = 0;
 	
 	public Schuss_Spieler() {
 		setBounds((int)StartX,(int)StartY,32,32);
@@ -21,7 +22,7 @@ public class Schuss_Spieler extends Rectangle {
 	}
 
 	//schaut nach wo der Spieler steht 
-		public static void setPos(){
+		public void setPos(){
 			if(setPos == false){
 			StartX=Spielfeld.spieler.x;
 			StartY=Spielfeld.spieler.y;
@@ -30,38 +31,37 @@ public class Schuss_Spieler extends Rectangle {
 		}
 		
 	//Zeichnet einen Schuss
-	//muss noch ein anderes Bild eingefügt werden
-		public void draw(Graphics g){
-			g.drawImage(new ImageIcon("pics/schuss1.png").getImage(), (int)StartX, (int)StartY, 32, 32, null); 
+	public void draw(Graphics g){
+		g.drawImage(new ImageIcon("pics/schuss1.png").getImage(), (int)StartX, (int)StartY, 32, 32, null); 
+	}
+	public int checkRichtung(){
+		if (Spielfeld.spieler.rechts==true){
+			return 1;
+		} else if(Spielfeld.spieler.links==true){
+			return 3;
+		} else if (Spielfeld.spieler.hoch==true){
+			return 4;
+		} else if (Spielfeld.spieler.runter==true){
+			return 2;
+		} else {
+			return 0;
 		}
-		public static int checkRichtung(){
-			if (Spielfeld.spieler.rechts==true){
-				return 1;
-			} else if(Spielfeld.spieler.links==true){
-				return 3;
-			} else if (Spielfeld.spieler.hoch==true){
-				return 4;
-			} else if (Spielfeld.spieler.runter==true){
-				return 2;
-			} else {
-				return 0;
-			}
-		}
+	}
 		
 		//prüft an 4 Punkten ob sich dort ein Objekt befindet durch das der Schuss nicht fliegen darf
-		public static boolean check(int ID){
-			if((Spielfeld.getBlockID(Schuss_Spieler.StartX+10,Schuss_Spieler.StartY+27)!=ID)&& //unten links
-				(Spielfeld.getBlockID(Schuss_Spieler.StartX+25,Schuss_Spieler.StartY+27)!=ID)&& //unten rechts
-				(Spielfeld.getBlockID(Schuss_Spieler.StartX+10,Schuss_Spieler.StartY+30)!=ID)&& //oben links
-				(Spielfeld.getBlockID(Schuss_Spieler.StartX+20,Schuss_Spieler.StartY+30)!=ID)&&//oben rechts
-				(Schuss_Spieler.StartX>0)&&(Schuss_Spieler.StartX<800)&&(Schuss_Spieler.StartY>0)&&(Schuss_Spieler.StartY<480)){ 
+		public boolean check(int ID){
+			if((Spielfeld.getBlockID(StartX+10,StartY+27)!=ID)&& //unten links
+				(Spielfeld.getBlockID(StartX+25,StartY+27)!=ID)&& //unten rechts
+				(Spielfeld.getBlockID(StartX+10,StartY+30)!=ID)&& //oben links
+				(Spielfeld.getBlockID(StartX+20,StartY+30)!=ID)&&//oben rechts
+				(StartX>0)&&(StartX<800)&&(StartY>0)&&(StartY<480)){ 
 				return true;
 			} else { 
 				return false;
 			}
 		}
 		//Wie der Schuss sich bewegt wenn der Spieler nach rechts schaut
-		public static void Schuss(){
+		public void Schuss(){
 			if(Spielfeld.counter_schuss == 0){
 				Richtung = checkRichtung();
 			}
@@ -88,37 +88,37 @@ public class Schuss_Spieler extends Rectangle {
 			}
 		}
 			
-	public static void Kollision(){
+	public void Kollision(){
 		//Endgegner
-		if((Schuss_Spieler.StartX+31 >= Endgegner.StartX)&&(Schuss_Spieler.StartX <= Endgegner.StartX+31)&&
-		   (Schuss_Spieler.StartY+31 >= Endgegner.StartY)&&(Schuss_Spieler.StartY <= Endgegner.StartY+31)){		
+		if((StartX+31 >= Endgegner.StartX)&&(StartX <= Endgegner.StartX+31)&&
+		   (StartY+31 >= Endgegner.StartY)&&(StartY <= Endgegner.StartY+31)){		
 			sichtbar=false;
-			Endgegner.leben-=25;
+			Endgegner.leben-=schaden;
 		//GegnerRL
-		} else if((Schuss_Spieler.StartX+31 >= GegnerRL.StartX)&&(Schuss_Spieler.StartX <= GegnerRL.StartX+31)  &&
-		      (Schuss_Spieler.StartY+31 >= GegnerRL.StartY)&&(Schuss_Spieler.StartY <= GegnerRL.StartY+31)){			
+		} else if((StartX+31 >= GegnerRL.StartX)&&(StartX <= GegnerRL.StartX+31)  &&
+		      (StartY+31 >= GegnerRL.StartY)&&(StartY <= GegnerRL.StartY+31)){			
 			sichtbar=false;
-			GegnerRL.leben-=25;
+			GegnerRL.leben-=schaden;
 		//GegnerOU
-		} else if((Schuss_Spieler.StartX+31 >= GegnerOU.StartX)&&(Schuss_Spieler.StartX <= GegnerOU.StartX+31)&&
-        	  (Schuss_Spieler.StartY+31 >= GegnerOU.StartY)&&(Schuss_Spieler.StartY <= GegnerOU.StartY+31)){		
+		} else if((StartX+31 >= GegnerOU.StartX)&&(StartX <= GegnerOU.StartX+31)&&
+        	  (StartY+31 >= GegnerOU.StartY)&&(StartY <= GegnerOU.StartY+31)){		
 			sichtbar=false;	
-			GegnerOU.leben-=25;
+			GegnerOU.leben-=schaden;
 		//Schuss_Endgegner
-		}else if((Schuss_Spieler.StartX+31 >= Schuss_Endgegner.StartX)&&(Schuss_Spieler.StartX <= Schuss_Endgegner.StartX+31)  &&
-			 (Schuss_Spieler.StartY+31 >= Schuss_Endgegner.StartY)&&(Schuss_Spieler.StartY <= Schuss_Endgegner.StartY+31)){		
+		}else if((StartX+31 >= Schuss_Endgegner.StartX)&&(StartX <= Schuss_Endgegner.StartX+31)  &&
+			 (StartY+31 >= Schuss_Endgegner.StartY)&&(StartY <= Schuss_Endgegner.StartY+31)){		
 			sichtbar=false;	
 			Schuss_Endgegner.StartX=(int)Endgegner.StartX;
 			Schuss_Endgegner.StartY=(int)Endgegner.StartY;
 		//Bewegliche Falle
-		} else if((Schuss_Spieler.StartX+31 >= Falle.StartX)&&(Schuss_Spieler.StartX <= Falle.StartX+31)  &&
-			 (Schuss_Spieler.StartY+31 >= Falle.StartY)&&(Schuss_Spieler.StartY <= Falle.StartY+31)){		
+		} else if((StartX+31 >= Falle.StartX)&&(StartX <= Falle.StartX+31)  &&
+			 (StartY+31 >= Falle.StartY)&&(StartY <= Falle.StartY+31)){		
 			sichtbar=false;	
 		//GegnerKI
-		} else if( (Schuss_Spieler.StartX+31 >= GegnerKI.StartX)&&(Schuss_Spieler.StartX <= GegnerKI.StartX+31)  &&
-			  (Schuss_Spieler.StartY+31 >= GegnerKI.StartY)&&(Schuss_Spieler.StartY <= GegnerKI.StartY+31)){		
+		} else if((StartX+31 >= GegnerKI.StartX)&&(StartX <= GegnerKI.StartX+31)  &&
+			  (StartY+31 >= GegnerKI.StartY)&&(StartY <= GegnerKI.StartY+31)){		
 			sichtbar=false;	
-			GegnerKI.leben-=25;
+			GegnerKI.leben-=schaden;
 		}
 	}
 	public static void main(String[] args) {

@@ -13,11 +13,13 @@ public class Spieler extends Rectangle {
 	public int gold = 500;
 	public int current_schwert = 0;   //gibt an welches Schwert der Spieler gerade hat
 	public boolean schwert = true;
-	public int waffe = 0,ausrüstung = 1;
+	public int waffe = 0,ausrüstung = 2;
+	public double schaden = 5;
 	public int item_trank = 0,item_mana = 0,item_supertrank = 0;
 	public int ruestung = 50;
 	public int mana = 100;			  //Zauberkraft
 	public int leben = 100,superleben = 3;
+	public int xp = 0;
 	public boolean aktiv = false;
 	public Point checkpoint;
 	public int check_room = 1;
@@ -47,41 +49,33 @@ public class Spieler extends Rectangle {
 	//prüft am derzeitigen Standort des Spielers an 4 Punkten ob dieser ein Objekt berührt welches eine Aktion ausführt
 	public void checkKollision(){
 		Elemente.beruehrung = false;
-		Elemente.Aufruf(Spielfeld.getBlockID(x+6+Frame.dx,y+26+Frame.dy),Spielfeld.getBlock(x+6+Frame.dx, y+26+Frame.dy));
-        if(Elemente.beruehrung == false){ //zweiten Punkt prüfen
-        	Elemente.Aufruf(Spielfeld.getBlockID(x+26+Frame.dx,y+26+Frame.dy),Spielfeld.getBlock(x+26+Frame.dx,y+26+Frame.dy));
-        } else if(Elemente.beruehrung == false){ //dritten Punkt prüfen
-        	Elemente.Aufruf(Spielfeld.getBlockID(x+6+Frame.dx,y+36+Frame.dy),Spielfeld.getBlock(x+6+Frame.dx,y+36+Frame.dy));
-        } else if(Elemente.beruehrung == false){ //vierten Punkt prüfen
-        	Elemente.Aufruf(Spielfeld.getBlockID(x+26+Frame.dx,y+36+Frame.dy),Spielfeld.getBlock(x+26+Frame.dx,y+36+Frame.dy));
+		Elemente.Aufruf(Spielfeld.getBlockID(x+26+Frame.dx,y+32+Frame.dy),Spielfeld.getBlock(x+26+Frame.dx,y+32+Frame.dy));
+        Elemente.Aufruf(Spielfeld.getBlockID(x+6+Frame.dx,y+26+Frame.dy),Spielfeld.getBlock(x+6+Frame.dx, y+26+Frame.dy));
+        if(Elemente.beruehrung == false){
+        Elemente.Aufruf(Spielfeld.getBlockID(x+26+Frame.dx,y+26+Frame.dy),Spielfeld.getBlock(x+26+Frame.dx,y+26+Frame.dy));
+        Elemente.Aufruf(Spielfeld.getBlockID(x+6+Frame.dx,y+32+Frame.dy),Spielfeld.getBlock(x+6+Frame.dx,y+32+Frame.dy));
         }
-	}
+    }
 	
 	//prüft ob die boolean Variablen noch auf "true" gesetzt sind obwohl der Spieler nicht mehr vor dem Item steht
-		//damit die Anzeige ausgeblendet wird
-		public void checkShopItems(){
-	        if((Spielfeld.shop_trank)&&(check(21))){
-	        	Spielfeld.shop_trank = false;
-	        }
-	        if((Spielfeld.shop_mana)&&(check(22))){
-	        	Spielfeld.shop_mana = false;
-	        }
-	        if((Spielfeld.shop_ruestung1)&&(check(23))){
-	        	Spielfeld.shop_ruestung1 = false;
-	        }
-	        if((Spielfeld.shop_ruestung2)&&(check(24))){
-	        	Spielfeld.shop_ruestung2 = false;
-	        }
-	        if((Spielfeld.shop_stiefel)&&(check(25))){
-	        	Spielfeld.shop_stiefel = false;
-	        }
-	        if((Spielfeld.shop_axt)&&(check(28))){
-	        	Spielfeld.shop_axt = false;
-	        }
-	        if((Spielfeld.shop_supertrank)&&(check(29))){
-	        	Spielfeld.shop_supertrank = false;
-	        }
-		}
+	//damit die Anzeige ausgeblendet wird
+	public void checkShopItems(){
+	   if((Spielfeld.shop_trank)&&(check(21))){
+	       	Spielfeld.shop_trank = false;
+	   } else if((Spielfeld.shop_mana)&&(check(22))){
+	      	Spielfeld.shop_mana = false;
+	   } else if((Spielfeld.shop_ruestung1)&&(check(23))){
+	       	Spielfeld.shop_ruestung1 = false;
+	   } else if((Spielfeld.shop_ruestung2)&&(check(24))){
+	       	Spielfeld.shop_ruestung2 = false;
+	   } else if((Spielfeld.shop_stiefel)&&(check(25))){
+	      	Spielfeld.shop_stiefel = false;
+	   } else if((Spielfeld.shop_axt)&&(check(28))){
+	       	Spielfeld.shop_axt = false;
+	   } else if((Spielfeld.shop_supertrank)&&(check(29))){
+	       	Spielfeld.shop_supertrank = false;
+	   }
+	}
 		
 	//prüft an 4 Punkten ob sich dort ein Objekt befindet durch das der Spieler nicht laufen darf
 	public boolean check(int ID){

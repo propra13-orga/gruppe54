@@ -61,6 +61,24 @@ public class Block extends Rectangle {
 			}
 			break;
 		
+		case 11:
+			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
+			if(Zustand==0){
+				g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
+			} else if(Zustand==1) {
+				g.drawImage(new ImageIcon("pics/falle_speer2_aktiv.png").getImage(),x,y,width,height,null);
+			}
+			break;
+		
+		case 12: 
+			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
+			if(Zustand==0){
+				g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
+			} else if(Zustand==1) {
+				g.drawImage(new ImageIcon("pics/falle_speer3_aktiv.png").getImage(),x,y,width,height,null);
+			}
+			break;
+		
 		case 13://Lebenstrank
 			if(Zustand==0){
 				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null); 
@@ -184,6 +202,7 @@ public class Block extends Rectangle {
 				counter_gegner11=1;
 				GegnerOU.StartX = x;
 				GegnerOU.StartY = y;
+				Spielfeld.weg_verschlossen = true;
 			} else if ((GegnerOU.aktiv)&&(counter_gegner11==1)&&(GegnerOU.leben>0)){
 				Spielfeld.gegnerOU.draw(g);
 			}
@@ -228,6 +247,15 @@ public class Block extends Rectangle {
 			GegnerKI.StartY = y;
 			} else if((GegnerKI.leben>0)&&(counter_gegner40==1)){
 				Spielfeld.gegnerKI.draw(g);
+			}
+			break;
+		
+		//verschlossener Weg, geht auf wenn man Gegner2 besiegt hat
+		case 51:
+			if(Spielfeld.weg_verschlossen){
+				g.drawImage(Spielfeld.elemente[1],x,y,width,height,null);
+			} else if(Spielfeld.weg_verschlossen == false){
+				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);
 			}
 			break;
 			
