@@ -9,7 +9,8 @@ public class Schuss_Endgegner extends Rectangle {
 	
 	private static final long serialVersionUID = 1L;
 	public static boolean checkPos=false;
-	public static int StartX,StartY;
+	public static double StartX,StartY;
+	public static double speed = 0.7;
 	public static boolean sichtbar=false;
 	public static boolean aktiv;
 	public static int Fall=0;
@@ -20,14 +21,14 @@ public class Schuss_Endgegner extends Rectangle {
 
 	
 	public Schuss_Endgegner() {
-		setBounds(StartX,StartY,32,32);
+		setBounds((int)StartX,(int)StartY,32,32);
 		sichtbar=true;
 		aktiv=false;
 	}
 	
 	//Zeichnet einen Schuss
 		public void draw(Graphics g){
-			g.drawImage(new ImageIcon("pics/schuss2.png").getImage(), StartX, StartY, 32, 32, null); 
+			g.drawImage(new ImageIcon("pics/schuss2.png").getImage(), (int)StartX, (int)StartY, 32, 32, null); 
 		}
 		
 		//Bewegung nach rechts so lange es geht dann wieder vom Gegner starten
@@ -48,13 +49,12 @@ public class Schuss_Endgegner extends Rectangle {
 	public static void Kollision(){
 		if( (Schuss_Endgegner.StartX+31 >= Spielfeld.spieler.x)&&(Schuss_Endgegner.StartX <= Spielfeld.spieler.x+31)  &&
 			(Schuss_Endgegner.StartY+31 >= Spielfeld.spieler.y)&&(Schuss_Endgegner.StartY <= Spielfeld.spieler.y+31)){		
-			if (spieler.ruestung>0){
-				spieler.ruestung-=25;
+			if (Spielfeld.spieler.ruestung>0){
+				Spielfeld.spieler.ruestung-=25;
 			} else {
-				spieler.leben -= 25;
-			}
-			restart=true;
-		} 
+				Spielfeld.spieler.leben -= 25;
+
+			restart=true;}}
 	} 
 	
 	//schaut nach wo der Endgegner steht (nur ein mal)

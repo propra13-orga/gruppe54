@@ -224,14 +224,18 @@ public class GegnerKI extends Rectangle{
 		if( (GegnerKI.StartX+26 >= Spielfeld.spieler.x)&&(GegnerKI.StartX <= Spielfeld.spieler.x+26)&&
 			(GegnerKI.StartY+26 >= Spielfeld.spieler.y)&&(GegnerKI.StartY <= Spielfeld.spieler.y+26)){	
 			counter_kollision ++;
-			if ((Spieler.ruestung>0)&&(counter_kollision == 4)){	//counter_kollision damit nicht zuviel Leben abgezogen wird
-				Spieler.ruestung-=Schaden;
+			if ((Spielfeld.spieler.ruestung>0)&&(counter_kollision == 4)){	//counter_kollision damit nicht zuviel Leben abgezogen wird
+				Spielfeld.spieler.ruestung-=Schaden;
 				counter_kollision = 0;
-			} else if((Spieler.ruestung<=0)&&(counter_kollision == 4)) {
-				Spieler.leben -= Schaden;
+			} else if((Spielfeld.spieler.ruestung<=0)&&(counter_kollision == 4)) {
+				Spielfeld.spieler.leben -= Schaden;
 				counter_kollision = 0;
 			}
 		}
+		if( (GegnerKI.StartX+26 >= Falle.StartX)&&(GegnerKI.StartX <= Falle.StartX+26)&&
+				(GegnerKI.StartY+26 >= Falle.StartY)&&(GegnerKI.StartY <= Falle.StartY+26)){	
+				GegnerKI.leben=0;
+				}
 	}
 	
 /*

@@ -20,7 +20,7 @@ public class Editorfeld extends JPanel implements Runnable,MouseListener{
 	public static Raum raum;
 	public static Level level = new Level();
 	public Thread thread = new Thread(this);
-	public static Image[] elemente = new Image[50];
+	public static Image[] elemente = new Image[55];
 	public static int current_lvl = 1,current_room = 1,current_id = 0;
 	public static boolean gegner1 = false,gegner2 = false, endgegner = false, fledermaus = false, falle = false,zepter = false;
 	/**
@@ -36,6 +36,11 @@ public class Editorfeld extends JPanel implements Runnable,MouseListener{
 	
 	   //Bilder in Array laden
 		public static void loadImages(){
+			boolean lvl_null = false;
+			if(current_lvl == 0){
+				current_lvl = 1;
+				lvl_null = true;
+			}
 			elemente[0] = new ImageIcon("pics/boden"+current_lvl+".png").getImage(); 
 			elemente[1] = new ImageIcon("pics/mauer"+current_lvl+".png").getImage();
 			elemente[2] = new ImageIcon("pics/fackel.gif").getImage();
@@ -46,10 +51,10 @@ public class Editorfeld extends JPanel implements Runnable,MouseListener{
 			//Fallen
 			elemente[7] = new ImageIcon("pics/falle_loch_inaktiv.png").getImage();
 			elemente[8] = new ImageIcon("pics/feuer.gif").getImage();
-			elemente[9] = new ImageIcon("pics/falle_speer"+current_lvl+".png").getImage();
+			elemente[9] = new ImageIcon("pics/falle_speer1.png").getImage();
 			elemente[10] = new ImageIcon("pics/anim.gif").getImage();
-			//11
-			//12
+			elemente[11] = new ImageIcon("pics/falle_speer2.png").getImage();
+			elemente[12] = new ImageIcon("pics/falle_speer3.png").getImage();
 			//Items
 			elemente[13] = new ImageIcon("pics/item_trank.png").getImage();
 			elemente[14] = new ImageIcon("pics/item_trank2.png").getImage();
@@ -89,6 +94,10 @@ public class Editorfeld extends JPanel implements Runnable,MouseListener{
 			elemente[46] = new ImageIcon("pics/ufer_links.png").getImage();
 			elemente[47] = new ImageIcon("pics/ufer_rechts.png").getImage();
 			elemente[48] = new ImageIcon("pics/ufer_unten.png").getImage();
+			if(lvl_null){
+				current_lvl -= 1;
+				lvl_null = false;
+			}
 		}
 		
 	

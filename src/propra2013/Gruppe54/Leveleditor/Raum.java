@@ -36,7 +36,7 @@ public class Raum {
 		
 		for(int y=0;y<worldHeight;y++){
 			for(int x=0;x<worldWidth;x++){
-				block[y][x] = new EditorBlock(x*blockSize,y*blockSize,blockSize,blockSize,50);	// Konstruktor
+				block[y][x] = new EditorBlock(x*blockSize,y*blockSize,blockSize,blockSize,55);	// Konstruktor
 			}
 		}
 	}

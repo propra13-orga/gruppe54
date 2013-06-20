@@ -15,8 +15,11 @@ public class Elemente {
 		
 		case 5://Ausgang
 			if(Spielfeld.current_room!=3) {  
-				if(Schuss_Spieler.sichtbar){
-					Schuss_Spieler.sichtbar = false;
+				if(Spielfeld.schuss_spieler.sichtbar){
+					Spielfeld.schuss_spieler.sichtbar = false;
+				}
+				if(Spielfeld.schuss2_spieler.sichtbar){
+					Spielfeld.schuss2_spieler.sichtbar = false;
 				}
 				Falle.aktiv=false;
 				GegnerKI.leben=0;
@@ -50,12 +53,12 @@ public class Elemente {
 		
 		case 8://Falle_Feuer
 			feuer++;
-			if(feuer==5){
+			if(feuer==10){
 				beruehrung = true;		  //da z.B. beim hochlaufen zwei Punkte auf Berührung überprüft werden, soll gespeichert werden,
-				if(Spieler.ruestung<=0){  //ob bereits eine Falle ausgelöst wurde damit die Punkte nicht doppelt abgezogen werden
-					Spieler.leben-=1;
+				if(Spielfeld.spieler.ruestung<=0){  //ob bereits eine Falle ausgelöst wurde damit die Punkte nicht doppelt abgezogen werden
+					Spielfeld.spieler.leben-=1;
 				} else {
-					Spieler.ruestung-=1;
+					Spielfeld.spieler.ruestung-=1;
 				}		
 				feuer = 0;
 			}
@@ -63,12 +66,12 @@ public class Elemente {
 		
 		case 9://Falle_Speer
 			speer++;
-			if(speer==5){
+			if(speer==15){
 				beruehrung = true;
-				if(Spieler.ruestung<=0){
-					Spieler.leben-=2;
+				if(Spielfeld.spieler.ruestung<=0){
+					Spielfeld.spieler.leben-=1;
 				} else {
-					Spieler.ruestung-=2;
+					Spielfeld.spieler.ruestung-=1;
 				}
 				block.Zustand = 1;	//lädt das aktive Bild der Falle
 				speer = 0;
@@ -78,23 +81,51 @@ public class Elemente {
 		case 10://Falle_Monster
 			beruehrung = true;
 			Spielfeld.Falle_counter++;
-			if((Spieler.ruestung<=0)&&(Spielfeld.Falle_counter==5)){
-				Spieler.leben-=1;
+			if((Spielfeld.spieler.ruestung<=0)&&(Spielfeld.Falle_counter==5)){
+				Spielfeld.spieler.leben-=1;
 				Spielfeld.Falle_counter = 0;
 			} else if(Spielfeld.Falle_counter==5){
-				Spieler.ruestung-=1;
+				Spielfeld.spieler.ruestung-=1;
 				Spielfeld.Falle_counter = 0;
+			}
+			break;
+		
+		case 11://Falle_Axt
+			speer++;
+			if(speer==15){
+				beruehrung = true;
+				if(Spielfeld.spieler.ruestung<=0){
+					Spielfeld.spieler.leben-=2;
+				} else {
+					Spielfeld.spieler.ruestung-=2;
+				}
+				block.Zustand = 1;	//lädt das aktive Bild der Falle
+				speer = 0;
+			}
+			break;
+		
+		case 12://Falle_Totenkopf
+			speer++;
+			if(speer==15){
+				beruehrung = true;
+				if(Spielfeld.spieler.ruestung<=0){
+					Spielfeld.spieler.leben-=2;
+				} else {
+					Spielfeld.spieler.ruestung-=2;
+				}
+				block.Zustand = 1;	//lädt das aktive Bild der Falle
+				speer = 0;
 			}
 			break;
 		
 		case 13://Lebenstrank
 			if(block.Zustand==0){
-			if(Spieler.leben == 100){
+			if(Spielfeld.spieler.leben == 100){
 				Spielfeld.spieler.item_trank += 1;
 			} else {
-				Spieler.leben+=40;
-				if(Spieler.leben>100){
-					Spieler.leben = 100;
+				Spielfeld.spieler.leben+=40;
+				if(Spielfeld.spieler.leben>100){
+					Spielfeld.spieler.leben = 100;
 				}
 			}
 			block.Zustand = 1;
@@ -103,12 +134,12 @@ public class Elemente {
 		
 		case 14://Manatrank
 			if(block.Zustand==0){
-			if(Spieler.mana == 100){
+			if(Spielfeld.spieler.mana == 100){
 				Spielfeld.spieler.item_mana += 1;
 			} else {
-				Spieler.mana+=40;
-				if(Spieler.mana>100){
-					Spieler.mana = 100;
+				Spielfeld.spieler.mana+=40;
+				if(Spielfeld.spieler.mana>100){
+					Spielfeld.spieler.mana = 100;
 				}
 			}
 			block.Zustand = 1;
@@ -116,10 +147,10 @@ public class Elemente {
 			break;
 			
 		case 15://brunnen lebensenergie
-			if((Spieler.leben<100)&&(block.Zustand==0)){	
-				Spieler.leben = 100;
-				if(Spieler.leben>100){
-					Spieler.leben = 100;
+			if((Spielfeld.spieler.leben<100)&&(block.Zustand==0)){	
+				Spielfeld.spieler.leben = 100;
+				if(Spielfeld.spieler.leben>100){
+					Spielfeld.spieler.leben = 100;
 				}
 				block.Zustand = 1;
 			}
@@ -127,16 +158,16 @@ public class Elemente {
 		
 		case 16://Supertrank
 			if(block.Zustand==0){
-			if((Spieler.mana == 100)&&(Spieler.leben == 100)){
+			if((Spielfeld.spieler.mana == 100)&&(Spielfeld.spieler.leben == 100)){
 				Spielfeld.spieler.item_supertrank += 1;
 			} else {
-				Spieler.mana+=40;
-				if(Spieler.mana>100){
-					Spieler.mana = 100;
+				Spielfeld.spieler.mana+=40;
+				if(Spielfeld.spieler.mana>100){
+					Spielfeld.spieler.mana = 100;
 				}
-				Spieler.leben += 40;
-				if(Spieler.leben>100){
-					Spieler.leben = 100;
+				Spielfeld.spieler.leben += 40;
+				if(Spielfeld.spieler.leben>100){
+					Spielfeld.spieler.leben = 100;
 				}
 			}
 			block.Zustand = 1;
@@ -144,10 +175,10 @@ public class Elemente {
 			break;
 		
 		case 17://brunnen mana
-			if((Spieler.mana<100)&&(block.Zustand==0)){	
-				Spieler.mana = 100;
-				if(Spieler.mana>100){
-					Spieler.mana = 100;
+			if((Spielfeld.spieler.mana<100)&&(block.Zustand==0)){	
+				Spielfeld.spieler.mana = 100;
+				if(Spielfeld.spieler.mana>100){
+					Spielfeld.spieler.mana = 100;
 				}
 				block.Zustand = 1;
 			}
@@ -171,49 +202,62 @@ public class Elemente {
 		
 		case 19://Checkpoint
 			if(block.Zustand == 0){
-				Spieler.checkpoint = new Point(block.x,block.y);
-				Spieler.check_room = Spielfeld.current_room;
+				Spielfeld.spieler.checkpoint = new Point(block.x,block.y);
+				Spielfeld.spieler.check_room = Spielfeld.current_room;
 				block.Zustand = 1;
 			}
 			break;
 		
-		case 20://Shopbesitzer
+		case 20://NPC
 			Spielerinfo.npc = true;
 			break;
 		case 21://Item_Shop_Lebenstrank
 			Spielfeld.shop_trank = true;
-			Spielerinfo.preis = true;
-			Spielerinfo.preis_anzeige = "50 Gold";
+			Spielfeld.preis_shop = true;
+			Spielfeld.preis_anzeige = "50 Gold";
+			Spielerinfo.info = true;
+			Spielerinfo.info_anzeige = "Lebenstrank +40% Energie";
 			break;
 		
 		case 22://Item_Shop_Manatrank
 			Spielfeld.shop_mana = true;
-			Spielerinfo.preis = true;
-			Spielerinfo.preis_anzeige = "75 Gold";
+			Spielfeld.preis_shop = true;
+			Spielfeld.preis_anzeige = "75 Gold";
+			Spielerinfo.info = true;
+			Spielerinfo.info_anzeige = "Manatrank +40% Mana";
 			break;
 			
 		case 23://Item_Shop_Ruestung1
 			Spielfeld.shop_ruestung1 = true;
-			Spielerinfo.preis = true;
-			Spielerinfo.preis_anzeige = "150 Gold\n100% Rüstung";
+			Spielfeld.preis_shop = true;
+			Spielfeld.preis_anzeige = "150 Gold";
+			Spielerinfo.info = true;
+			Spielerinfo.info_anzeige = "Schwere Rüstung 100% Rüstung";
 			break;
 			
 		case 24://Item_Shop_Ruestung2
 			Spielfeld.shop_ruestung2 = true;
-			Spielerinfo.preis = true;
-			Spielerinfo.preis_anzeige = "100 Gold\n+50% Rüstung";
+			Spielfeld.preis_shop = true;
+			Spielfeld.preis_anzeige = "100 Gold";
+			Spielerinfo.info = true;
+			Spielerinfo.info_anzeige = "Leichte Rüstung +50% Rüstung";
 			break;
 		
 		case 25://Item_Shop_Stiefel
 			Spielfeld.shop_stiefel = true;
-			Spielerinfo.preis = true;
-			Spielerinfo.preis_anzeige = "150 Gold\n+10% Speed";
+			Spielfeld.preis_shop = true;
+			Spielfeld.preis_anzeige = "150 Gold";
+			Spielerinfo.info = true;
+			Spielerinfo.info_anzeige = "Stiefel +10% Speed";
 			break;
 			
 		case 26://Eingang Shop
-			if(Schuss_Spieler.sichtbar){
-   			 Schuss_Spieler.sichtbar = false;
+			if(Spielfeld.schuss_spieler.sichtbar){
+   			 Spielfeld.schuss_spieler.sichtbar = false;
    		 	}
+			if(Spielfeld.schuss2_spieler.sichtbar){
+	   			 Spielfeld.schuss2_spieler.sichtbar = false;
+	   		 	}
    		 	if(Schuss_Endgegner.sichtbar){
    			 Schuss_Endgegner.sichtbar=false;
    		 	}
@@ -235,14 +279,26 @@ public class Elemente {
 		
 		case 28://Item_Shop Axt
 			Spielfeld.shop_axt = true;
-			Spielerinfo.preis = true;
-			Spielerinfo.preis_anzeige = "500 Gold";
+			Spielfeld.preis_shop = true;
+			Spielfeld.preis_anzeige = "500 Gold";
+			Spielerinfo.info = true;
+			Spielerinfo.info_anzeige = "Axt";
 			break;
 		
 		case 29://Item_Shop_Supertrank
 			Spielfeld.shop_supertrank = true;
-			Spielerinfo.preis = true;
-			Spielerinfo.preis_anzeige = "100 Gold +40% Mana\n+40% Lebenspunkte";
+			Spielfeld.preis_shop = true;
+			Spielfeld.preis_anzeige = "100 Gold";
+			Spielerinfo.info = true;
+			Spielerinfo.info_anzeige = "Supertrank - erhöht sowohl Mana- als auch Lebenspunkte um 40%";
+			break;
+			
+		case 30://Item_Shop_Feuer-Magie
+			Spielfeld.shop_schuss2 = true;
+			Spielfeld.preis_shop = true;
+			Spielfeld.preis_anzeige = "30 Gold";
+			Spielerinfo.info = true;
+			Spielerinfo.info_anzeige = "Diese Magie ermöglicht es dir die Fledermäuse zu besiegen";
 			break;
 			
 		case 31://Schatztruhe
@@ -300,15 +356,18 @@ public class Elemente {
 			
 		case 33://Herz
 			if(block.Zustand == 0){
-				Spieler.superleben += 1;
+				Spielfeld.spieler.superleben += 1;
 				block.Zustand = 1;
 			}
 			break;
 		
 		case 40:
 			if(Spielfeld.current_room!=3) {  
-				if(Schuss_Spieler.sichtbar){
-					Schuss_Spieler.sichtbar = false;
+				if(Spielfeld.schuss_spieler.sichtbar){
+					Spielfeld.schuss_spieler.sichtbar = false;
+				}
+				if(Spielfeld.schuss2_spieler.sichtbar){
+					Spielfeld.schuss2_spieler.sichtbar = false;
 				}
 				Spielfeld.current_room+=1;
 				Falle.aktiv=false;

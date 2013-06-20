@@ -9,9 +9,9 @@ import javax.swing.JPanel;
 
 public class Spielerinfo extends JPanel implements Runnable{
 
-	public Thread info = new Thread(this);
-	public static boolean npc = false,preis = false,item_vorhanden = false,ruestung_voll = false,speed_voll = false,gold = false;
-	public static String preis_anzeige;
+	public Thread thread_info = new Thread(this);
+	public static boolean npc = false,info = false,item_vorhanden = false,ruestung_voll = false,speed_voll = false,gold = false;
+	public static String preis_anzeige,info_anzeige;
 	/**
 	 * 
 	 */
@@ -19,7 +19,7 @@ public class Spielerinfo extends JPanel implements Runnable{
 
 	public Spielerinfo(){
 		setBounds(25,545,810,100);
-		info.start();
+		thread_info.start();
 	}
 	
 	public void paintComponent(Graphics g){
@@ -29,27 +29,28 @@ public class Spielerinfo extends JPanel implements Runnable{
 		g.drawString("Level: "+Spielfeld.current_lvl,8,20);
 		g.drawString("Raum: "+Spielfeld.current_room,8,35);
 		g.drawString("Gold: "+Spielfeld.spieler.gold,8,50);
+		g.drawString("XP: "+Spielfeld.spieler.xp,8,65);
 		//Lebensanzeige
-		if(Spieler.leben>0){
-			if(Spieler.leben>40){
+		if(Spielfeld.spieler.leben>0){
+			if(Spielfeld.spieler.leben>40){
 				g.setColor(Color.green);
 			} else {
 				g.setColor(Color.red);
 			}
-			g.fill3DRect(75, 15, (int) (Spieler.leben*1.5), 7, true);
+			g.fill3DRect(75, 15, (int) (Spielfeld.spieler.leben*1.5), 7, true);
 		}
 	
-		if(Spieler.superleben > 0){
-			if(Spieler.superleben == 1){
+		if(Spielfeld.spieler.superleben > 0){
+			if(Spielfeld.spieler.superleben == 1){
 				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 75, 45, null, null);
-			} else if(Spieler.superleben == 2){
+			} else if(Spielfeld.spieler.superleben == 2){
 				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 75, 45, null, null);
 				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 90, 45, null, null);
-			} else if(Spieler.superleben == 3){
+			} else if(Spielfeld.spieler.superleben == 3){
 				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 75, 45, null, null);
 				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 90, 45, null, null);
 				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 105, 45, null, null);
-			} else if(Spieler.superleben == 4){
+			} else if(Spielfeld.spieler.superleben == 4){
 				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 75, 45, null, null);
 				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 90, 45, null, null);
 				g.drawImage(new ImageIcon("pics/herz.png").getImage(), 105, 45, null, null);
@@ -58,53 +59,71 @@ public class Spielerinfo extends JPanel implements Runnable{
 		}
 		
 		//Mana
-		if(Spieler.mana>0){
+		if(Spielfeld.spieler.mana>0){
 			g.setColor(Color.blue);
-			g.fill3DRect(75, 25, (int) (Spieler.mana*1.5), 7, true);
+			g.fill3DRect(75, 25, (int) (Spielfeld.spieler.mana*1.5), 7, true);
 		}
 		//Rüstung
-		if(Spieler.ruestung>0){
+		if(Spielfeld.spieler.ruestung>0){
 			g.setColor(Color.gray);
-			g.fill3DRect(75, 35, (int) (Spieler.ruestung*1.5), 7, true);
+			g.fill3DRect(75, 35, (int) (Spielfeld.spieler.ruestung*1.5), 7, true);
 		}
 		//Inventar
 		g.setColor(Color.black);
 		g.drawString("Inventar: ",250,20);
-		if((Spielfeld.spieler.item_mana==0)&&(Spielfeld.spieler.item_trank==0)&&(Spielfeld.spieler.item_supertrank==0)){
-			g.drawString("leer",260,40);
-		}
+		g.setFont(new Font("Lucida Sans Typewriter",Font.BOLD,9));
 		if(Spielfeld.spieler.item_trank>0){
-			g.drawImage(new ImageIcon("pics/shop_trank.png").getImage(), 260, 30, null);
-			g.drawString(""+Spielfeld.spieler.item_trank, 290, 50);
+			g.drawImage(new ImageIcon("pics/shop_trank.png").getImage(), 320, 2, null);
+			g.drawString("x"+Spielfeld.spieler.item_trank, 335, 35);
 		}
 		if(Spielfeld.spieler.item_mana>0){
-			g.drawImage(new ImageIcon("pics/shop_mana.png").getImage(), 305, 30, null);
-			g.drawString(""+Spielfeld.spieler.item_mana, 335, 50);
+			g.drawImage(new ImageIcon("pics/shop_mana.png").getImage(), 350, 2, null);
+			g.drawString("x"+Spielfeld.spieler.item_mana, 365, 35);
 		}
 		if(Spielfeld.spieler.item_supertrank>0){
-			g.drawImage(new ImageIcon("pics/shop_supertrank.png").getImage(), 350, 30, null);
-			g.drawString(""+Spielfeld.spieler.item_supertrank, 380, 50);
+			g.drawImage(new ImageIcon("pics/shop_supertrank.png").getImage(), 380, 2, null);
+			g.drawString("x"+Spielfeld.spieler.item_supertrank, 395, 35);
 		}
+		if(Spielfeld.spieler.ausrüstung <= 1){
+			g.drawImage(new ImageIcon("pics/inventar_schwert.png").getImage(), 320, 45, null);
+		} else if(Spielfeld.spieler.ausrüstung <= 2){
+			g.drawImage(new ImageIcon("pics/inventar_schwert.png").getImage(), 320, 45, null);
+			g.drawImage(new ImageIcon("pics/inventar_axt.png").getImage(), 350, 45, null);
+		}		
+		if(Spielfeld.spieler.Anzahl_Schüssen>0){
+			g.drawImage(new ImageIcon("pics/schuss_feuer_1.png").getImage(), 410, 40, null);
+			g.drawString("x"+Spielfeld.spieler.Anzahl_Schüssen, 425, 75);
+		}
+		//Gitter für das Inventar zeichnen
+		g.setColor(Color.gray);
+		g.drawLine(320, 0, 320, 75);
+		g.drawLine(350, 0, 350, 75);
+		g.drawLine(380, 0, 380, 75);
+		g.drawLine(410, 0, 410, 75);
+		g.drawLine(440, 0, 440, 75);
+		g.drawLine(320, 38, 440, 38);
+		g.setFont(new Font("Lucida Sans Typewriter",Font.PLAIN,10));
+		g.setColor(Color.black);
 		//Gespräch
 		if(npc){
-			g.drawString("Willkommen im Dungeon Wald. Pass nur auf, es lauern",420,30);
-			g.drawString("überall Gefahren!",420,40);
+			g.drawString("Willkommen im Dungeon Wald. Pass nur auf,",460,30);
+			g.drawString("es lauern überall Gefahren!",460,40);
 		}
 		//Preisanzeige Trank
-		if(preis){
-			g.drawString(preis_anzeige,420,30);
+		if(info){
+			g.drawString(info_anzeige,460,30);
 		}
 		if(item_vorhanden){
-			g.drawString("Du besitzt dieses Item bereits",420,30);
+			g.drawString("Du besitzt dieses Item bereits",460,30);
 		}
 		if(ruestung_voll){
-			g.drawString("Du hast bereits volle Rüstung",420,30);
+			g.drawString("Du hast bereits volle Rüstung",460,30);
 		}
 		if(speed_voll){
-			g.drawString("Du hast bereits maximale Geschwindigkeit",420,30);
+			g.drawString("Du hast bereits maximale Geschwindigkeit",460,30);
 		}
 		if(gold){
-			g.drawString("Du hast nicht genug Gold",420,30);
+			g.drawString("Du hast nicht genug Gold",460,30);
 		}
 	}
 	

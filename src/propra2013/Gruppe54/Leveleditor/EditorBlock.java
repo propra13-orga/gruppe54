@@ -2,10 +2,6 @@ package propra2013.Gruppe54.Leveleditor;
 
 import java.awt.*;
 
-import javax.swing.ImageIcon;
-
-import propra2013.Gruppe54.Spieler;
-
 public class EditorBlock extends Rectangle {
 
 	/**
@@ -28,8 +24,10 @@ public class EditorBlock extends Rectangle {
 		if(ID == 2){	//Fackel, einzige Objekt hinter dem eine Mauer liegt
 			g.drawImage(Editorfeld.elemente[1],x,y,width,height,null); 
 			g.drawImage(Editorfeld.elemente[ID],x,y,width,height,null);
-		} else if(ID == 50){
+		} else if(ID == 55){
 			g.drawRect(x,y,32,32);
+		} else if(ID == 51){ //verschlossener Weg
+			g.drawImage(Editorfeld.elemente[1],x,y,width,height,null);
 		} else {
 			g.drawImage(Editorfeld.elemente[0],x,y,width,height,null); 
 			g.drawImage(Editorfeld.elemente[ID],x,y,width,height,null);

@@ -14,9 +14,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-//TODO: 		-Möglichkeit zum löschen
-//				-Speichern
-//				-Spawnpunkt des Spielers ändern?
+//TODO: 		-Spawnpunkt des Spielers ändern?
 
 public class Editor extends JFrame{
 
@@ -37,10 +35,10 @@ public class Editor extends JFrame{
 	public static JLabel raum = new JLabel("Raum: "+Editorfeld.current_room);
 	public static JLabel info = new JLabel();
 	
-	public static String auswahl1[] = {"Boden","Mauer1","Mauer2","Baum1","Baum2","Wasser","Ufer rechts","Ufer links","Ufer oben","Ufer unten","Fackel","Ausgang Dungeon","Eingang Shop","Leer"};
+	public static String auswahl1[] = {"Boden","Mauer1","Mauer2","bewegliche Mauer","Baum1","Baum2","Wasser","Ufer rechts","Ufer links","Ufer oben","Ufer unten","Fackel","Ausgang Dungeon","Eingang Shop","Leer"};
 	public static String auswahl2[] = {"Lebenstrank","Manatrank","Supertrank","Zepter","Herz","Lebensbrunnen","Manabrunnen","Gold","Schatztruhe"};
 	public static String auswahl3[] = {"Gegner1","Gegner2","Endgegner","Fledermaus","Bewegliche Falle"};
-	public static String auswahl4[] = {"Loch","Feuer","Grüner Giftbaum","Speer"};
+	public static String auswahl4[] = {"Loch","Feuer","Grüner Giftbaum","Speer","Axt","Totenkopf"};
 	public static JComboBox<?> Raumelemente = new JComboBox<Object>(auswahl1);
 	public static JComboBox<?> Items = new JComboBox<Object>(auswahl2);
 	public static JComboBox<?> Gegner = new JComboBox<Object>(auswahl3);
@@ -175,6 +173,8 @@ public class Editor extends JFrame{
 					Editorfeld.current_id = 48;
 				} else if("Ufer unten".equals(selectedChoice.getSelectedItem())){
 					Editorfeld.current_id = 45;
+				} else if("bewegliche Mauer".equals(selectedChoice.getSelectedItem())){
+					Editorfeld.current_id = 51;
 				} 
 			}
 		});
@@ -232,6 +232,10 @@ public class Editor extends JFrame{
 					Editorfeld.current_id = 10;
 				} else if("Speer".equals(selectedChoice.getSelectedItem())){
 					Editorfeld.current_id = 9;
+				} else if("Axt".equals(selectedChoice.getSelectedItem())){
+					Editorfeld.current_id = 11;
+				} else if("Totenkopf".equals(selectedChoice.getSelectedItem())){
+					Editorfeld.current_id = 12;
 				}
 			}
 		});
