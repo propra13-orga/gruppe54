@@ -21,9 +21,9 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static boolean isFirst = true; //erster Aufruf
 	public static boolean shop = false,shop_trank = false,shop_mana = false,shop_supertrank = false,shop_ruestung1 = false,shop_ruestung2 = false,shop_stiefel = false,shop_axt = false,anzeige = false;
 	public static String text_anzeige;
-	public static Raum raum = new Raum();
-	public static level level = new level();
-	public static spieler spieler;
+	public static Raum raum;
+	public static Level level = new Level();
+	public static Spieler spieler;
 	public static GegnerRL gegnerRL;
 	public static GegnerOU gegnerOU;
 	public static Endgegner Boss;
@@ -48,7 +48,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	public Spielfeld(){
 		setBounds(25,55,800,480);
 		thread.start();
-		spieler = new spieler();
+		spieler = new Spieler();
 		spieler.runter=true;
 	}
     //Bilder in Array laden
@@ -128,28 +128,16 @@ public class Spielfeld extends JPanel implements Runnable{
 		Spielfeld.GegnerKI_counter = 0;
 		Waffe.ID = spieler.waffe;
 	}
-
+	
+	//Hier nur zeichnen, berechnungen oder sonstiges im Thread ausführen
 	public void paintComponent(Graphics g){
-		if(isFirst){ //Erstinitialisierung
-			define();
-			isFirst=false;
-		}
 		raum.draw(g); //zeichnet den raum
-		if(propra2013.Gruppe54.spieler.aktiv){
+		if(propra2013.Gruppe54.Spieler.aktiv){
 			spieler.draw(g);  //zeichnet den Spieler
 			//Waffe des Spielers
 			if((spieler.schwert)){
 				Waffe.ID = spieler.waffe;
 				Waffe.draw(g);
-			}
-			if((Waffe.angriff)&&(Waffe.ID != 3)){
-				if(counter_angriff == 0){
-					Waffe.Kollision();
-				}
-				counter_angriff++;
-				if(counter_angriff == 10000){
-					counter_angriff = 0;
-				}
 			}
 			if((spieler.waffe == 3)&&(Waffe.angriff)){
 				Waffe.draw(g);
@@ -185,9 +173,11 @@ public class Spielfeld extends JPanel implements Runnable{
 			schuss_spieler.draw(g);
 		}
 		//Anzeige von Schatzelementen
-		if((anzeige)&&(counter_anzeige<=300)&&(propra2013.Gruppe54.spieler.aktiv)){
+		if((anzeige)&&(counter_anzeige<=300)&&(propra2013.Gruppe54.Spieler.aktiv)){
 			g.setColor(Color.white);
-			g.setFont(new Font("Lucida Sans Typewriter",Font.PLAIN,8));
+			if(g.getFont() != new Font("Lucida Sans Typewriter",Font.PLAIN,8)){
+				g.setFont(new Font("Lucida Sans Typewriter",Font.PLAIN,8));
+			}
 			g.drawString(text_anzeige, (int)spieler.x, (int)spieler.y-10);
 			counter_anzeige++;
 		}
@@ -234,22 +224,36 @@ public class Spielfeld extends JPanel implements Runnable{
 		while(true){
 			validate();
 			repaint();
+			if(isFirst){ //Erstinitialisierung
+				define();
+				isFirst=false;
+			}
 			
-			if((propra2013.Gruppe54.spieler.leben <= 0)&&(propra2013.Gruppe54.spieler.superleben >= 1)&&(propra2013.Gruppe54.spieler.aktiv)){
-				propra2013.Gruppe54.spieler.aktiv = false;
+			if((propra2013.Gruppe54.Spieler.leben <= 0)&&(propra2013.Gruppe54.Spieler.superleben >= 1)&&(propra2013.Gruppe54.Spieler.aktiv)){
+				propra2013.Gruppe54.Spieler.aktiv = false;
 				anzeige = false;
 				Waffe.angriff = false;
-				if(propra2013.Gruppe54.spieler.checkpoint.getX() != Raum.Startpunkt[Spielfeld.current_lvl-1].getX()){
+				if(propra2013.Gruppe54.Spieler.checkpoint.getX() != Raum.Startpunkt[Spielfeld.current_lvl-1].getX()){
 					Frame.checkpoint.setVisible(true);
-				} else if(propra2013.Gruppe54.spieler.checkpoint.getX() == Raum.Startpunkt[Spielfeld.current_lvl-1].getX()){
+				} else if(propra2013.Gruppe54.Spieler.checkpoint.getX() == Raum.Startpunkt[Spielfeld.current_lvl-1].getX()){
 					Frame.neustart.setVisible(true);	
 				}
-				propra2013.Gruppe54.spieler.superleben -= 1;
-			} else if((propra2013.Gruppe54.spieler.leben <= 0)&&(propra2013.Gruppe54.spieler.superleben <= 0)&&(propra2013.Gruppe54.spieler.aktiv)){
-				propra2013.Gruppe54.spieler.aktiv = false;
+				propra2013.Gruppe54.Spieler.superleben -= 1;
+			} else if((propra2013.Gruppe54.Spieler.leben <= 0)&&(propra2013.Gruppe54.Spieler.superleben <= 0)&&(propra2013.Gruppe54.Spieler.aktiv)){
+				propra2013.Gruppe54.Spieler.aktiv = false;
 				anzeige = false;
 				Waffe.angriff = false;
 				Frame.neustart.setVisible(true);
+			}
+			//Waffe des Spielers
+			if((Waffe.angriff)&&(Waffe.ID != 3)){
+				if(counter_angriff == 0){
+					Waffe.Kollision();
+				}
+				counter_angriff++;
+				if(counter_angriff == 10000){
+					counter_angriff = 0;
+				}
 			}
 			//GegnerKI Bewegung
 			if ((GegnerKI.leben>0)&&(GegnerKI.aktiv)&&(GegnerKI.StartX !=0)&&(GegnerKI.StartY !=0)){
@@ -321,7 +325,7 @@ public class Spielfeld extends JPanel implements Runnable{
 				GegnerKI.counter_gegnerKI=0;
 			}
 			
-			if(propra2013.Gruppe54.spieler.aktiv){
+			if(propra2013.Gruppe54.Spieler.aktiv){
 			//Steuerung des Spielers
 			if((check(1))&&(check(15))&&(check(18))&&(check(20))&&(check(21))&&(check(10))
 					&&(check(22))&&(check(23))&&(check(24))&&(check(25))&&(check(28))&&(check(31))

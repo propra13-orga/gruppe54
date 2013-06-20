@@ -17,6 +17,7 @@ public class Schuss_Endgegner extends Rectangle {
 	public static int nächsterSchrittY=0;
 	public static boolean restart=false;
 
+
 	
 	public Schuss_Endgegner() {
 		setBounds(StartX,StartY,32,32);
@@ -34,15 +35,14 @@ public class Schuss_Endgegner extends Rectangle {
 			restart=false;
 			checkFall();
 			nächsterSchritt();
-			StartX+=nächsterSchrittX;
-			StartY+=nächsterSchrittY;
-	        Kollision();
-	        if(restart==true){
-	       		 StartX=(int)Endgegner.StartX;
-	     	     StartY=(int)Endgegner.StartY;
+			if (restart==false){
+				StartX+=nächsterSchrittX;
+				StartY+=nächsterSchrittY;
+				Kollision();
+				}else if(restart==true){
+					StartX=(int)Endgegner.StartX;
+					StartY=(int)Endgegner.StartY;
 	        }
-	        
-	        System.out.println(restart);
 		}
 		
 	public static void Kollision(){

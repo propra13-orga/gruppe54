@@ -75,10 +75,10 @@ public class Endgegner extends Rectangle{
 	public static void Kollision(){
 		if((Endgegner.StartX+31 >= Spielfeld.spieler.x)&&(Endgegner.StartX <= Spielfeld.spieler.x+31)&&
 			(Endgegner.StartY+31 >= Spielfeld.spieler.y)&&(Endgegner.StartY <= Spielfeld.spieler.y+31)){		
-			if (spieler.ruestung>0){
-				spieler.ruestung-=1;
+			if (Spieler.ruestung>0){
+				Spieler.ruestung-=1;
 			} else {
-				spieler.leben -= 1;
+				Spieler.leben -= 1;
 			}
 		}
 	}

@@ -52,10 +52,10 @@ public class Elemente {
 			feuer++;
 			if(feuer==5){
 				beruehrung = true;		  //da z.B. beim hochlaufen zwei Punkte auf Berührung überprüft werden, soll gespeichert werden,
-				if(spieler.ruestung<=0){  //ob bereits eine Falle ausgelöst wurde damit die Punkte nicht doppelt abgezogen werden
-					spieler.leben-=1;
+				if(Spieler.ruestung<=0){  //ob bereits eine Falle ausgelöst wurde damit die Punkte nicht doppelt abgezogen werden
+					Spieler.leben-=1;
 				} else {
-					spieler.ruestung-=1;
+					Spieler.ruestung-=1;
 				}		
 				feuer = 0;
 			}
@@ -65,10 +65,10 @@ public class Elemente {
 			speer++;
 			if(speer==5){
 				beruehrung = true;
-				if(spieler.ruestung<=0){
-					spieler.leben-=2;
+				if(Spieler.ruestung<=0){
+					Spieler.leben-=2;
 				} else {
-					spieler.ruestung-=2;
+					Spieler.ruestung-=2;
 				}
 				block.Zustand = 1;	//lädt das aktive Bild der Falle
 				speer = 0;
@@ -78,23 +78,23 @@ public class Elemente {
 		case 10://Falle_Monster
 			beruehrung = true;
 			Spielfeld.Falle_counter++;
-			if((spieler.ruestung<=0)&&(Spielfeld.Falle_counter==5)){
-				spieler.leben-=1;
+			if((Spieler.ruestung<=0)&&(Spielfeld.Falle_counter==5)){
+				Spieler.leben-=1;
 				Spielfeld.Falle_counter = 0;
 			} else if(Spielfeld.Falle_counter==5){
-				spieler.ruestung-=1;
+				Spieler.ruestung-=1;
 				Spielfeld.Falle_counter = 0;
 			}
 			break;
 		
 		case 13://Lebenstrank
 			if(block.Zustand==0){
-			if(spieler.leben == 100){
+			if(Spieler.leben == 100){
 				Spielfeld.spieler.item_trank += 1;
 			} else {
-				spieler.leben+=40;
-				if(spieler.leben>100){
-					spieler.leben = 100;
+				Spieler.leben+=40;
+				if(Spieler.leben>100){
+					Spieler.leben = 100;
 				}
 			}
 			block.Zustand = 1;
@@ -103,12 +103,12 @@ public class Elemente {
 		
 		case 14://Manatrank
 			if(block.Zustand==0){
-			if(spieler.mana == 100){
+			if(Spieler.mana == 100){
 				Spielfeld.spieler.item_mana += 1;
 			} else {
-				spieler.mana+=40;
-				if(spieler.mana>100){
-					spieler.mana = 100;
+				Spieler.mana+=40;
+				if(Spieler.mana>100){
+					Spieler.mana = 100;
 				}
 			}
 			block.Zustand = 1;
@@ -116,10 +116,10 @@ public class Elemente {
 			break;
 			
 		case 15://brunnen lebensenergie
-			if((spieler.leben<100)&&(block.Zustand==0)){	
-				spieler.leben = 100;
-				if(spieler.leben>100){
-					spieler.leben = 100;
+			if((Spieler.leben<100)&&(block.Zustand==0)){	
+				Spieler.leben = 100;
+				if(Spieler.leben>100){
+					Spieler.leben = 100;
 				}
 				block.Zustand = 1;
 			}
@@ -127,16 +127,16 @@ public class Elemente {
 		
 		case 16://Supertrank
 			if(block.Zustand==0){
-			if((spieler.mana == 100)&&(spieler.leben == 100)){
+			if((Spieler.mana == 100)&&(Spieler.leben == 100)){
 				Spielfeld.spieler.item_supertrank += 1;
 			} else {
-				spieler.mana+=40;
-				if(spieler.mana>100){
-					spieler.mana = 100;
+				Spieler.mana+=40;
+				if(Spieler.mana>100){
+					Spieler.mana = 100;
 				}
-				spieler.leben += 40;
-				if(spieler.leben>100){
-					spieler.leben = 100;
+				Spieler.leben += 40;
+				if(Spieler.leben>100){
+					Spieler.leben = 100;
 				}
 			}
 			block.Zustand = 1;
@@ -144,10 +144,10 @@ public class Elemente {
 			break;
 		
 		case 17://brunnen mana
-			if((spieler.mana<100)&&(block.Zustand==0)){	
-				spieler.mana = 100;
-				if(spieler.mana>100){
-					spieler.mana = 100;
+			if((Spieler.mana<100)&&(block.Zustand==0)){	
+				Spieler.mana = 100;
+				if(Spieler.mana>100){
+					Spieler.mana = 100;
 				}
 				block.Zustand = 1;
 			}
@@ -171,8 +171,8 @@ public class Elemente {
 		
 		case 19://Checkpoint
 			if(block.Zustand == 0){
-				spieler.checkpoint = new Point(block.x,block.y);
-				spieler.check_room = Spielfeld.current_room;
+				Spieler.checkpoint = new Point(block.x,block.y);
+				Spieler.check_room = Spielfeld.current_room;
 				block.Zustand = 1;
 			}
 			break;
@@ -300,7 +300,7 @@ public class Elemente {
 			
 		case 33://Herz
 			if(block.Zustand == 0){
-				spieler.superleben += 1;
+				Spieler.superleben += 1;
 				block.Zustand = 1;
 			}
 			break;
