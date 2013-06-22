@@ -207,7 +207,8 @@ public class Waffe extends Rectangle {
 			break;
 			}
 		}
-		if((((x+28 >= GegnerOU.StartX)&&(x+28 <= GegnerOU.StartX+32))&&((y+30 >= GegnerOU.StartY)&&(y+30 <= GegnerOU.StartY+32)))||
+		//Ich lasse den Kommentar drin, falls wir doch später eine Waffe haben mit der man Geister besiegen kann
+		/*if((((x+28 >= GegnerOU.StartX)&&(x+28 <= GegnerOU.StartX+32))&&((y+30 >= GegnerOU.StartY)&&(y+30 <= GegnerOU.StartY+32)))||
 		   (((x-4 >= GegnerOU.StartX)&&(x-4 <= GegnerOU.StartX+32))&&((y+30 >= GegnerRL.StartY)&&(y+30 <= GegnerOU.StartY+32)))||
 		   (((x-4 >= GegnerOU.StartX)&&(x-4 <= GegnerOU.StartX+32))&&((y+4 >= GegnerOU.StartY)&&(y+4 <= GegnerOU.StartY+32)))||
 		   (((x+28 >= GegnerOU.StartX)&&(x+28 <= GegnerOU.StartX+32))&&((y+4 >= GegnerOU.StartY)&&(y+4 <= GegnerOU.StartY+32)))){
@@ -217,26 +218,15 @@ public class Waffe extends Rectangle {
 			case 1: GegnerOU.leben -= Spielfeld.spieler.schaden*1.2;
 			break;
 			}
-		}
+		}*/
 		if((((x+28 >= Endgegner.StartX)&&(x+28 <= Endgegner.StartX+32))&&((y+30 >= Endgegner.StartY)&&(y+30 <= Endgegner.StartY+32)))||
 		   (((x-4 >= Endgegner.StartX)&&(x-4 <= Endgegner.StartX+32))&&((y+30 >= Endgegner.StartY)&&(y+30 <= Endgegner.StartY+32)))||
 		   (((x-4 >= Endgegner.StartX)&&(x-4 <= Endgegner.StartX+32))&&((y+4 >= Endgegner.StartY)&&(y+4 <= Endgegner.StartY+32)))||
 		   (((x+28 >= Endgegner.StartX)&&(x+28 <= Endgegner.StartX+32))&&((y+4 >= Endgegner.StartY)&&(y+4 <= Endgegner.StartY+32)))){
 			switch(ID){
-			case 0: Endgegner.leben -= Spielfeld.spieler.schaden;
+			case 0: Endgegner.leben -= Spielfeld.spieler.schaden*0.1;
 				break;
-			case 1: Endgegner.leben -= Spielfeld.spieler.schaden*1.2;
-			break;
-			}
-		}
-		if((((x+28 >= GegnerKI.StartX)&&(x+28 <= GegnerKI.StartX+32))&&((y+30 >= GegnerKI.StartY)&&(y+30 <= GegnerKI.StartY+32)))||
-		   (((x-4 >= GegnerKI.StartX)&&(x-4 <= GegnerKI.StartX+32))&&((y+30 >= GegnerKI.StartY)&&(y+30 <= GegnerKI.StartY+32)))||
-		   (((x-4 >= GegnerKI.StartX)&&(x-4 <= GegnerKI.StartX+32))&&((y+4 >= GegnerKI.StartY)&&(y+4 <= GegnerKI.StartY+32)))||
-		   (((x+28 >= GegnerKI.StartX)&&(x+28 <= GegnerKI.StartX+32))&&((y+4 >= GegnerKI.StartY)&&(y+4 <= GegnerKI.StartY+32)))){
-			switch(ID){
-			case 0: GegnerKI.leben -= Spielfeld.spieler.schaden;
-				break;
-			case 1: GegnerKI.leben -= Spielfeld.spieler.schaden*1.2;
+			case 1: Endgegner.leben -= Spielfeld.spieler.schaden*0.2;
 			break;
 			}
 		}

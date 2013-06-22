@@ -50,11 +50,13 @@ public class Schuss_Endgegner extends Rectangle {
 		if( (Schuss_Endgegner.StartX+31 >= Spielfeld.spieler.x)&&(Schuss_Endgegner.StartX <= Spielfeld.spieler.x+31)  &&
 			(Schuss_Endgegner.StartY+31 >= Spielfeld.spieler.y)&&(Schuss_Endgegner.StartY <= Spielfeld.spieler.y+31)){		
 			if (Spielfeld.spieler.ruestung>0){
-				Spielfeld.spieler.ruestung-=25;
+				Spielfeld.spieler.ruestung-=1;
+				restart=true;
 			} else {
-				Spielfeld.spieler.leben -= 25;
+				Spielfeld.spieler.leben -= 1;
 
-			restart=true;}}
+			restart=true;}
+			} restart=true;
 	} 
 	
 	//schaut nach wo der Endgegner steht (nur ein mal)

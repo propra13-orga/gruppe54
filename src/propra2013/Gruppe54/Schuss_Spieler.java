@@ -98,7 +98,6 @@ public class Schuss_Spieler extends Rectangle {
 		} else if((StartX+31 >= GegnerRL.StartX)&&(StartX <= GegnerRL.StartX+31)  &&
 		      (StartY+31 >= GegnerRL.StartY)&&(StartY <= GegnerRL.StartY+31)){			
 			sichtbar=false;
-			GegnerRL.leben-=schaden;
 		//GegnerOU
 		} else if((StartX+31 >= GegnerOU.StartX)&&(StartX <= GegnerOU.StartX+31)&&
         	  (StartY+31 >= GegnerOU.StartY)&&(StartY <= GegnerOU.StartY+31)){		
@@ -117,8 +116,7 @@ public class Schuss_Spieler extends Rectangle {
 		//GegnerKI
 		} else if((StartX+31 >= GegnerKI.StartX)&&(StartX <= GegnerKI.StartX+31)  &&
 			  (StartY+31 >= GegnerKI.StartY)&&(StartY <= GegnerKI.StartY+31)){		
-			sichtbar=false;	
-			GegnerKI.leben-=schaden;
+			sichtbar=false;
 		}
 	}
 	public static void main(String[] args) {

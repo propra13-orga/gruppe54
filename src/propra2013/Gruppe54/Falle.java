@@ -24,15 +24,18 @@ public class Falle extends Rectangle {
 	public static boolean status = false;
 	public static double StartPunktX;
 	public static double StartPunktY;
+	public int counter_Kollision=0;
 	
 	public Falle(){
 		setBounds((int)StartX,(int)StartY,32,32);
 		if (Spielfeld.current_lvl==1){
-			Schaden=1;
-		} else if(Spielfeld.current_lvl==2){
 			Schaden=2;
+		} else if(Spielfeld.current_lvl==2){
+			Schaden=4;
 		} else if (Spielfeld.current_lvl==3){
-			Schaden=3;
+			Schaden=6;
+		}else if (Spielfeld.current_lvl==4){
+			Schaden=8;
 		}
 		aktiv=false;
 	}
@@ -43,10 +46,12 @@ public class Falle extends Rectangle {
 	}}
 
 	
-	public static void bewegung(){
+	public void bewegung(){
 		if ((Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=1)&&(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=4)){
        	 Falle.StartY+=1*speed;
+       	 if (counter_Kollision==5){
        	 Kollision();
+       	 }else counter_Kollision+=1;
        	 } else if((Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)==1)|(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)==4)){
        		 Falle.StartX=Falle.StartPunktX;
     		 Falle.StartY=Falle.StartPunktY;
@@ -54,8 +59,8 @@ public class Falle extends Rectangle {
 		
 	}
 	
-	public static void Kollision(){
-
+	public void Kollision(){
+		
 		if((Falle.StartX+31 >= Spielfeld.spieler.x)&&(Falle.StartX <= Spielfeld.spieler.x+31)  &&
 			(Falle.StartY+31 >= Spielfeld.spieler.y)&&(Falle.StartY <= Spielfeld.spieler.y+31)){		
 			if (Spielfeld.spieler.ruestung>0){
@@ -63,7 +68,8 @@ public class Falle extends Rectangle {
 			} else {
 				Spielfeld.spieler.leben -= Schaden;
 			}	
-		}	
+		}
+		counter_Kollision=0;
 	}
 		
 	

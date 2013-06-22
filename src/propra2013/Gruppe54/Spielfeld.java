@@ -346,7 +346,7 @@ public class Spielfeld extends JPanel implements Runnable{
 			}
 			//Falle bewegung
 			if((Falle.aktiv)&&(Falle.StartX != 0)&&(Falle.StartY != 0)){
-				Falle.bewegung();
+				falle.bewegung();
 			}
 			//Counter für den String über dem Spieler zur Ausgabe eingesammelter Werte
 			if(counter_anzeige==300){  

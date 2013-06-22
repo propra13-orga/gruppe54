@@ -244,7 +244,7 @@ public class Frame extends JFrame implements ActionListener{
 		         
 		         //ruft den Shop auf
 		         if ((key == KeyEvent.VK_ENTER)){			
-		        	 if(Spielfeld.shop_trank){
+		        	 if((Spielfeld.shop_trank)&&(Spielfeld.spieler.item_trank<9)){
 		        		 if(Spielfeld.spieler.gold >= 50){
 		    				 Spielfeld.spieler.gold -= 50;
 		    				 Spielfeld.spieler.item_trank += 1;
@@ -252,7 +252,7 @@ public class Frame extends JFrame implements ActionListener{
 		    				 Spielerinfo.gold = true;
 		        			 Spielerinfo.info = false;
 		    			 }
-		        	 } else if(Spielfeld.shop_mana){
+		        	 } else if((Spielfeld.shop_mana)&&(Spielfeld.spieler.item_mana<9)){
 		        		 if(Spielfeld.spieler.gold >= 75){
 		    				 Spielfeld.spieler.gold -= 75;
 		    				 Spielfeld.spieler.item_mana += 1;
@@ -260,7 +260,7 @@ public class Frame extends JFrame implements ActionListener{
 		    				 Spielerinfo.gold = true;
 		        			 Spielerinfo.info = false;
 		    			 }
-		        	 } else if(Spielfeld.shop_supertrank){
+		        	 } else if((Spielfeld.shop_supertrank)&&(Spielfeld.spieler.item_supertrank<9)){
 		        		 if(Spielfeld.spieler.gold >= 100){
 		    				 Spielfeld.spieler.gold -= 100;
 		    				 Spielfeld.spieler.item_supertrank += 1;
@@ -316,7 +316,7 @@ public class Frame extends JFrame implements ActionListener{
 		        			 Spielerinfo.gold = true;
 		        			 Spielerinfo.info = false;
 		        		 }
-		        	 } else if(Spielfeld.shop_schuss2){
+		        	 } else if((Spielfeld.shop_schuss2)&&(Spielfeld.spieler.Anzahl_Schüssen<9)){
 		        		 if(Spielfeld.spieler.gold >= 30){
 		    				 Spielfeld.spieler.gold -= 30;
 		    				 Spielfeld.spieler.Anzahl_Schüssen += 1;
@@ -374,8 +374,9 @@ public class Frame extends JFrame implements ActionListener{
 		        	 Spielfeld.spieler.mana = 100;
 		        	 Spielfeld.spieler.leben = 100;
 		        	 Spielfeld.spieler.ruestung = 100;
-		        	 Spielfeld.spieler.xp=50;
+		        	 Spielfeld.spieler.xp=100;
 		        	 Spielfeld.spieler.Anzahl_Schüssen=10;
+		        	 Spielfeld.spieler.gold=500;
 		         }
 		         //Angriff
 		         if((key == KeyEvent.VK_B)&&(Spielfeld.spieler.aktiv)&&(Spielfeld.spieler.schwert)){
