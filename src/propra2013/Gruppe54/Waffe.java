@@ -204,7 +204,7 @@ public class Waffe extends Rectangle {
 			case 0: Spielfeld.gegnerRL.leben -= Spielfeld.spieler.schaden;	
 				break;
 			case 1: Spielfeld.gegnerRL.leben -= Spielfeld.spieler.schaden*1.2;
-			break;
+				break;
 			}
 		}
 		if((((x+28 >= Endgegner.StartX)&&(x+28 <= Endgegner.StartX+32))&&((y+30 >= Endgegner.StartY)&&(y+30 <= Endgegner.StartY+32)))||

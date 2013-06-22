@@ -50,9 +50,10 @@ public class Schuss_Endgegner extends Rectangle {
 		if((StartX+31 >= Spielfeld.spieler.x)&&(StartX <= Spielfeld.spieler.x+31)  &&
 		   (StartY+31 >= Spielfeld.spieler.y)&&(StartY <= Spielfeld.spieler.y+31)){		
 			if (Spielfeld.spieler.ruestung>0){
-				Spielfeld.spieler.ruestung-=25;
+				Spielfeld.spieler.ruestung-=1;
+				restart=true;
 			} else {
-				Spielfeld.spieler.leben -= 25;
+				Spielfeld.spieler.leben -= 1;
 				restart=true;
 			}
 		}
