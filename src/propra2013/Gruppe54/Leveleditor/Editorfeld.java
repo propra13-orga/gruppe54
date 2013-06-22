@@ -47,7 +47,7 @@ public class Editorfeld extends JPanel implements Runnable,MouseListener{
 			elemente[3] = new ImageIcon("pics/leer.png").getImage();
 			elemente[4] = new ImageIcon("pics/mauer"+current_lvl+"_2.png").getImage();
 			elemente[5] = new ImageIcon("pics/ausgang.png").getImage();
-			//6
+			elemente[6] = new ImageIcon("pics/schlüssel.png").getImage();
 			//Fallen
 			elemente[7] = new ImageIcon("pics/falle_loch_inaktiv.png").getImage();
 			elemente[8] = new ImageIcon("pics/feuer.gif").getImage();
@@ -88,7 +88,7 @@ public class Editorfeld extends JPanel implements Runnable,MouseListener{
 			//40 Ausgang Wald
 			elemente[41] = new ImageIcon("pics/baum1.png").getImage();
 			elemente[42] = new ImageIcon("pics/baum2.png").getImage();
-			elemente[43] = new ImageIcon("pics/wasser1.png").getImage();
+			elemente[43] = new ImageIcon("pics/wasser.gif").getImage();
 			//elemente[44] = new ImageIcon("pics/herz_element.png").getImage();
 			elemente[45] = new ImageIcon("pics/ufer_oben.png").getImage();
 			elemente[46] = new ImageIcon("pics/ufer_links.png").getImage();

@@ -11,18 +11,14 @@ public class Spieler extends Rectangle {
 	
 	public double speed = 0.5;
 	public int gold = 500;
-	public int current_schwert = 0;   //gibt an welches Schwert der Spieler gerade hat
-	public boolean schwert = true;
-	public int waffe = 0,ausrüstung = 2;
+	public int waffe = 0,ausrüstung = 2,schluessel = 0;
 	public double schaden = 5;
 	public int item_trank = 0,item_mana = 0,item_supertrank = 0;
-	public int ruestung = 50;
-	public int mana = 100;			  //Zauberkraft
-	public int leben = 100,superleben = 3;
-	public int xp = 0;
+	public int leben = 100,superleben = 3,mana = 100,xp = 0,ruestung = 50;
 	public boolean aktiv = false;
 	public Point checkpoint;
-	public int check_room = 1;
+	public int check_room = 1;		//Raum wo das letzte Mal der Checkpoint betätigt wurde
+	public int Anzahl_Schüssen=9;
 	
 	public boolean beweglich = false;
 	public boolean rechts = false;
@@ -74,6 +70,8 @@ public class Spieler extends Rectangle {
 	       	Spielfeld.shop_axt = false;
 	   } else if((Spielfeld.shop_supertrank)&&(check(29))){
 	       	Spielfeld.shop_supertrank = false;
+	   }else if((Spielfeld.shop_schuss2)&&(check(30))){
+	       	Spielfeld.shop_schuss2 = false;
 	   }
 	}
 		

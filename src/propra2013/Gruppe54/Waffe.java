@@ -7,17 +7,17 @@ import javax.swing.ImageIcon;
 
 public class Waffe extends Rectangle {
 
-	public static int ID;
-	public static boolean angriff = false;
-	public static int x;
-	public static int y;
+	public int ID;
+	public boolean angriff = false;
+	public int x;
+	public int y;
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public static void draw(Graphics g){
+	public void draw(Graphics g){
 		switch(ID){
 		case 0:
 			if(Spielfeld.spieler.rechts){
@@ -195,26 +195,15 @@ public class Waffe extends Rectangle {
 		}
 	}
 	
-	public static void Kollision(){
-		if((((x+28 >= GegnerRL.StartX)&&(x+28 <= GegnerRL.StartX+32))&&((y+30 >= GegnerRL.StartY)&&(y+30 <= GegnerRL.StartY+32)))||
-		   (((x-4 >= GegnerRL.StartX)&&(x-4 <= GegnerRL.StartX+32))&&((y+30 >= GegnerRL.StartY)&&(y+30 <= GegnerRL.StartY+32)))||
-		   (((x-4 >= GegnerRL.StartX)&&(x-4 <= GegnerRL.StartX+32))&&((y+4 >= GegnerRL.StartY)&&(y+4 <= GegnerRL.StartY+32)))||
-		   (((x+28 >= GegnerRL.StartX)&&(x+28 <= GegnerRL.StartX+32))&&((y+4 >= GegnerRL.StartY)&&(y+4 <= GegnerRL.StartY+32)))){
+	public void Kollision(){
+		if((((x+28 >= Spielfeld.gegnerRL.StartX)&&(x+28 <= Spielfeld.gegnerRL.StartX+32))&&((y+30 >= Spielfeld.gegnerRL.StartY)&&(y+30 <= Spielfeld.gegnerRL.StartY+32)))||
+		   (((x-4 >= Spielfeld.gegnerRL.StartX)&&(x-4 <= Spielfeld.gegnerRL.StartX+32))&&((y+30 >= Spielfeld.gegnerRL.StartY)&&(y+30 <= Spielfeld.gegnerRL.StartY+32)))||
+		   (((x-4 >= Spielfeld.gegnerRL.StartX)&&(x-4 <= Spielfeld.gegnerRL.StartX+32))&&((y+4 >= Spielfeld.gegnerRL.StartY)&&(y+4 <= Spielfeld.gegnerRL.StartY+32)))||
+		   (((x+28 >= Spielfeld.gegnerRL.StartX)&&(x+28 <= Spielfeld.gegnerRL.StartX+32))&&((y+4 >= Spielfeld.gegnerRL.StartY)&&(y+4 <= Spielfeld.gegnerRL.StartY+32)))){
 			switch(ID){
-			case 0: GegnerRL.leben -= Spielfeld.spieler.schaden;
+			case 0: Spielfeld.gegnerRL.leben -= Spielfeld.spieler.schaden;	
 				break;
-			case 1: GegnerRL.leben -= Spielfeld.spieler.schaden*1.2;
-			break;
-			}
-		}
-		if((((x+28 >= GegnerOU.StartX)&&(x+28 <= GegnerOU.StartX+32))&&((y+30 >= GegnerOU.StartY)&&(y+30 <= GegnerOU.StartY+32)))||
-		   (((x-4 >= GegnerOU.StartX)&&(x-4 <= GegnerOU.StartX+32))&&((y+30 >= GegnerRL.StartY)&&(y+30 <= GegnerOU.StartY+32)))||
-		   (((x-4 >= GegnerOU.StartX)&&(x-4 <= GegnerOU.StartX+32))&&((y+4 >= GegnerOU.StartY)&&(y+4 <= GegnerOU.StartY+32)))||
-		   (((x+28 >= GegnerOU.StartX)&&(x+28 <= GegnerOU.StartX+32))&&((y+4 >= GegnerOU.StartY)&&(y+4 <= GegnerOU.StartY+32)))){
-			switch(ID){
-			case 0: GegnerOU.leben -= Spielfeld.spieler.schaden;
-				break;
-			case 1: GegnerOU.leben -= Spielfeld.spieler.schaden*1.2;
+			case 1: Spielfeld.gegnerRL.leben -= Spielfeld.spieler.schaden*1.2;
 			break;
 			}
 		}
@@ -226,17 +215,6 @@ public class Waffe extends Rectangle {
 			case 0: Endgegner.leben -= Spielfeld.spieler.schaden;
 				break;
 			case 1: Endgegner.leben -= Spielfeld.spieler.schaden*1.2;
-			break;
-			}
-		}
-		if((((x+28 >= GegnerKI.StartX)&&(x+28 <= GegnerKI.StartX+32))&&((y+30 >= GegnerKI.StartY)&&(y+30 <= GegnerKI.StartY+32)))||
-		   (((x-4 >= GegnerKI.StartX)&&(x-4 <= GegnerKI.StartX+32))&&((y+30 >= GegnerKI.StartY)&&(y+30 <= GegnerKI.StartY+32)))||
-		   (((x-4 >= GegnerKI.StartX)&&(x-4 <= GegnerKI.StartX+32))&&((y+4 >= GegnerKI.StartY)&&(y+4 <= GegnerKI.StartY+32)))||
-		   (((x+28 >= GegnerKI.StartX)&&(x+28 <= GegnerKI.StartX+32))&&((y+4 >= GegnerKI.StartY)&&(y+4 <= GegnerKI.StartY+32)))){
-			switch(ID){
-			case 0: GegnerKI.leben -= Spielfeld.spieler.schaden;
-				break;
-			case 1: GegnerKI.leben -= Spielfeld.spieler.schaden*1.2;
 			break;
 			}
 		}

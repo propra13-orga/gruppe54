@@ -1,6 +1,7 @@
 package propra2013.Gruppe54;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
@@ -11,23 +12,18 @@ public class GegnerOU extends Rectangle{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	/**
-	 * @param args
-	 */
-	public static boolean unten=false; // gibt an, ob der Gegener unten an eine Wand stößt
-	public static boolean rechts=false; // gibt an, ob der Gegener rechts an eine Wand stößt
-	public static int leben; 
-	public static double StartX;
-	public static double StartY;
-	public static double speed = 0.4;
-	public static int counter_kollision = 0;
-	public static int x,y;
+	
+	public boolean unten=false;  // gibt an, ob der Gegener unten an eine Wand stößt
+	public boolean rechts=false; // gibt an, ob der Gegener rechts an eine Wand stößt
+	public int leben; 
+	public double StartX;
+	public double StartY;
+	public double speed = 0.3;
+	public int counter_kollision = 0;
 	public static int StartLeben;
-	public static int Faktor; //zum zeichen der Lebensanzeige
-	public static boolean aktiv;
-	/**
-	 * @param args
-	 */
+	public int Faktor; //zum zeichen der Lebensanzeige
+	public boolean aktiv,hoch = false;
+	public Image image;
 	
 	public GegnerOU() {
 		setBounds((int)StartX,(int)StartY,32,32);
@@ -49,32 +45,42 @@ public class GegnerOU extends Rectangle{
 	}
 	
 	public void draw(Graphics g){
-		if((GegnerOU.aktiv)&&(GegnerOU.StartX!=0)&&(GegnerOU.StartY!=0)){
-			g.drawImage(new ImageIcon("pics/gegner2_"+Spielfeld.current_lvl+".png").getImage(), (int)StartX, (int)StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
+		if((aktiv)&&(StartX!=0)&&(StartY!=0)){
+			if(hoch){
+				g.drawImage(new ImageIcon("pics/gegner2_"+Spielfeld.current_lvl+"_hoch.png").getImage(), (int)StartX, (int)StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
+			} else if(!hoch){
+				g.drawImage(new ImageIcon("pics/gegner2_"+Spielfeld.current_lvl+".png").getImage(), (int)StartX, (int)StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
+			}
 		}
 	}
 	
-	public static void lauf(){
+	public void lauf(){
 		//Gegner läuft hoch und runter
-			if ((unten==false)&&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY+2+32)!=1)&&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY+2+32)!=41)
-					&&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY+2+32)!=42)&&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY+2+32)!=43)
-					&&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY+2+32)!=4)){
+			if ((unten==false)&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=1)&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=41)
+					&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=42)&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=43)
+					&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=4)){
 				Kollision();
-				GegnerOU.StartY+=1*speed;
-				} else unten = true;
-			if ((unten==true)&&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY-2+16)!=1)&&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY-2+16)!=41)
-					&&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY-2+16)!=42)&&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY-2+16)!=43)
-					&&(Spielfeld.getBlockID(GegnerOU.StartX+16, GegnerOU.StartY+2+32)!=4)){
+				StartY+=1*speed;
+				hoch = false;
+				} else {
+					unten = true;
+				}
+			if ((unten==true)&&(Spielfeld.getBlockID(StartX+16, StartY-2+16)!=1)&&(Spielfeld.getBlockID(StartX+16, StartY-2+16)!=41)
+					&&(Spielfeld.getBlockID(StartX+16, StartY-2+16)!=42)&&(Spielfeld.getBlockID(StartX+16, StartY-2+16)!=43)
+					&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=4)){
 				Kollision();
-				GegnerOU.StartY-=1*speed;
-				} else unten = false;	
+				StartY-=1*speed;
+				hoch = true;
+				} else {
+					unten = false;	
+				}
 			} 
 	
 
 	//Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
-	public static void Kollision(){
-		if( (GegnerOU.StartX+26 >= Spielfeld.spieler.x)&&(GegnerOU.StartX <= Spielfeld.spieler.x+26)&&
-			(GegnerOU.StartY+26 >= Spielfeld.spieler.y)&&(GegnerOU.StartY <= Spielfeld.spieler.y+26)){		
+	public void Kollision(){
+		if( (StartX+26 >= Spielfeld.spieler.x)&&(StartX <= Spielfeld.spieler.x+26)&&
+			(StartY+26 >= Spielfeld.spieler.y)&&(StartY <= Spielfeld.spieler.y+26)){		
 			counter_kollision ++;
 			if ((Spielfeld.spieler.ruestung>0)&&(counter_kollision == 5)){  //counter_kollision damit nicht zuviel Leben abgezogen wird
 				Spielfeld.spieler.ruestung-=1;

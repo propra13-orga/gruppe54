@@ -12,14 +12,17 @@ public class Block extends Rectangle {
 	
     int ID,Zustand=0;				//0 - inaktiv, 1 - aktiv
 
-	public int counter_gegner10=0;
-	public int counter_gegner11=0;
+	public int counter_gegner10=0;	//damit die Gegner nur einmal auf dem initialisierten Block spawnen
+	public int counter_gegner11=0;	//und von da an ihre Wege gehen und nicht immer wieder auf dem Block neu gezeichnet werden
 	public int counter_gegner12=0;
 	public int counter_gegner40=0;
 	public int counter_falle=0;
 	
 	/**
 	 * Konstruktor
+	 * @param x,y Koordinaten des Blocks
+	 * @param width,height Blocksize
+	 * @param ID - Art des Objekts das der Block darstellen soll
 	 */
 	public Block(int x, int y, int width, int height, int ID){
 		setBounds(x,y,width,height);
@@ -27,7 +30,9 @@ public class Block extends Rectangle {
 		this.Zustand = 0;
 	}
 	
-	//zeichnet den Block, Bild wird anhand der ID geladen
+	/**
+	 * zeichnet den Block, Bild wird anhand der ID geladen
+	 */
 	public void draw(Graphics g){ 
 		if((ID==0)|(ID==2)|(ID==5)|(ID==8)|(ID==10)|(ID==18)|((ID>20)&&(ID<31))|((ID>=40))){      
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
@@ -41,6 +46,15 @@ public class Block extends Rectangle {
 		
 		case 3:
 			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
+			break;
+			
+		case 6://Schlüssel
+			if(Zustand==0){
+				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null); 
+				g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
+			} else if(Zustand==1) {
+				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null); 
+			}
 			break;
 		
 		case 7: //Loch
@@ -57,7 +71,7 @@ public class Block extends Rectangle {
 			if(Zustand==0){
 				g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
 			} else if(Zustand==1) {
-				g.drawImage(new ImageIcon("pics/falle_speer"+Spielfeld.current_lvl+"_aktiv.png").getImage(),x,y,width,height,null);
+				g.drawImage(new ImageIcon("pics/falle_speer1_aktiv.png").getImage(),x,y,width,height,null);
 			}
 			break;
 		
@@ -182,12 +196,13 @@ public class Block extends Rectangle {
 			/*der counter wird auf eins gesetz wenn ein gegner gezeichnet wurde und ab da
 			 * soll er nur noch laufen und nicht ständig an den start punkt gezeichnet werden
 				*/
-			GegnerRL.aktiv=true;
-			if((GegnerRL.aktiv)&&(counter_gegner10==0)&&(GegnerRL.leben>0)){
+			Spielfeld.gegnerRL.aktiv=true;
+			if((Spielfeld.gegnerRL.aktiv)&&(counter_gegner10==0)){
 				counter_gegner10=1;
-				GegnerRL.StartX = x;
-				GegnerRL.StartY = y;
-			} else if ((GegnerRL.aktiv)&&(GegnerRL.leben>0)&&(counter_gegner10==1)){
+				Spielfeld.gegnerRL.StartX = x;
+				Spielfeld.gegnerRL.StartY = y;
+				Spielfeld.gegnerRL.leben = GegnerRL.StartLeben;
+			} else if ((Spielfeld.gegnerRL.aktiv)&&(Spielfeld.gegnerRL.leben>0)&&(counter_gegner10==1)){
 				Spielfeld.gegnerRL.draw(g);
 			}
 			break;
@@ -197,20 +212,21 @@ public class Block extends Rectangle {
 		/*der counter wird auf eins gesetz wenn ein gegner gezeichnet wurde und ab da
 		 * soll er nur noch laufen und nicht ständig an den start punkt gezeichnet werden
 			*/
-			GegnerOU.aktiv=true;
-			if((GegnerOU.aktiv)&&(GegnerOU.leben>0)&&(counter_gegner11==0)){	
+			Spielfeld.gegnerOU.aktiv=true;
+			if((Spielfeld.gegnerOU.aktiv)&&(counter_gegner11==0)){	
 				counter_gegner11=1;
-				GegnerOU.StartX = x;
-				GegnerOU.StartY = y;
+				Spielfeld.gegnerOU.StartX = x;
+				Spielfeld.gegnerOU.StartY = y;
+				Spielfeld.gegnerOU.leben = GegnerOU.StartLeben;
 				Spielfeld.weg_verschlossen = true;
-			} else if ((GegnerOU.aktiv)&&(counter_gegner11==1)&&(GegnerOU.leben>0)){
+			} else if ((Spielfeld.gegnerOU.aktiv)&&(counter_gegner11==1)&&(Spielfeld.gegnerOU.leben>0)){
 				Spielfeld.gegnerOU.draw(g);
 			}
 			break;
 			
 		case 37:	//Endgegner
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
-			Schuss_Endgegner.aktiv=true;
+			Spielfeld.schuss_endgegner.aktiv=true;
 			Endgegner.aktiv=true;
 			if((counter_gegner12==0)&&(Endgegner.leben>0)&&(Endgegner.aktiv)){	
 			counter_gegner12=1;

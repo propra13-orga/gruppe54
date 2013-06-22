@@ -158,7 +158,7 @@ public class GegnerKreis extends Rectangle {
 				(GegnerKreis.StartY+31 >= Spielfeld.spieler.y)  &&
 				(GegnerKreis.StartY <= Spielfeld.spieler.y+31)){		
 				
-				spieler.leben = spieler.leben -1;
+				Spielfeld.spieler.leben = Spielfeld.spieler.leben -1;
 				
 			}
 	}

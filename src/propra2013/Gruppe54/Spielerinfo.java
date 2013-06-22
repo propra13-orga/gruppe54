@@ -89,6 +89,14 @@ public class Spielerinfo extends JPanel implements Runnable{
 		} else if(Spielfeld.spieler.ausrüstung <= 2){
 			g.drawImage(new ImageIcon("pics/inventar_schwert.png").getImage(), 320, 45, null);
 			g.drawImage(new ImageIcon("pics/inventar_axt.png").getImage(), 350, 45, null);
+		}		
+		if(Spielfeld.spieler.Anzahl_Schüssen>0){
+			g.drawImage(new ImageIcon("pics/schuss_feuer_1.png").getImage(), 410, 40, null);
+			g.drawString("x"+Spielfeld.spieler.Anzahl_Schüssen, 425, 75);
+		}
+		if(Spielfeld.spieler.schluessel > 0){
+			g.drawImage(new ImageIcon("pics/schlüssel.png").getImage(), 410, 2, null);
+			g.drawString("x"+Spielfeld.spieler.schluessel, 425, 35);
 		}
 		//Gitter für das Inventar zeichnen
 		g.setColor(Color.gray);

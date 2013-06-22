@@ -74,7 +74,7 @@ public void Kollision2(){
 			(Gegner.y+31 >= Spielfeld.spieler.y)  &&
 			(Gegner.y <= Spielfeld.spieler.y+31)){		
 			
-			spieler.leben -= 1;
+			Spielfeld.spieler.leben -= 1;
 			
 		}
 }

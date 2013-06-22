@@ -18,18 +18,21 @@ public class Elemente {
 				if(Spielfeld.schuss_spieler.sichtbar){
 					Spielfeld.schuss_spieler.sichtbar = false;
 				}
+				if(Spielfeld.schuss2_spieler.sichtbar){
+					Spielfeld.schuss2_spieler.sichtbar = false;
+				}
 				Falle.aktiv=false;
 				GegnerKI.leben=0;
 				Endgegner.aktiv=false;
-				Schuss_Endgegner.aktiv=false;
+				Spielfeld.schuss_endgegner.aktiv=false;
 				GegnerKI.aktiv=false;
 				Spielfeld.current_room+=1;
 				Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_"+Spielfeld.current_room+".lvl"));
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
 				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
 				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
-				GegnerOU.leben=GegnerOU.StartLeben;
-				GegnerRL.leben=GegnerRL.StartLeben;
+				Spielfeld.gegnerRL.leben=GegnerRL.StartLeben;
+				Spielfeld.gegnerRL.leben=GegnerRL.StartLeben;
 				Spielfeld.GegnerRL_counter = 0;
 				Spielfeld.GegnerOU_counter = 0;
 				Spielfeld.Endgegner_counter = 0;
@@ -40,6 +43,13 @@ public class Elemente {
 				Falle.StartX=0;
 				Falle.StartY=0;
 			}
+			break;
+		
+		case 6:
+			if((block.Zustand == 0)&&(Spielfeld.spieler.schluessel < 9)){
+				Spielfeld.spieler.schluessel += 1;
+				block.Zustand = 1;
+			} 
 			break;
 			
 		case 7://Falle_Loch - Spieler soll auf den Startpunkt zurück fallen
@@ -191,8 +201,8 @@ public class Elemente {
 			} else if(Spielfeld.current_lvl==4){
 				JOptionPane.showMessageDialog(null, "Du hast gewonnen!","",JOptionPane.PLAIN_MESSAGE, Frame.Sieger);
 			}
-			GegnerRL.leben=0;
-			GegnerOU.leben=0;
+			Spielfeld.gegnerRL.leben=0;
+			Spielfeld.gegnerRL.leben=0;
 
 			}
 			break;
@@ -252,8 +262,11 @@ public class Elemente {
 			if(Spielfeld.schuss_spieler.sichtbar){
    			 Spielfeld.schuss_spieler.sichtbar = false;
    		 	}
-   		 	if(Schuss_Endgegner.sichtbar){
-   			 Schuss_Endgegner.sichtbar=false;
+			if(Spielfeld.schuss2_spieler.sichtbar){
+	   			 Spielfeld.schuss2_spieler.sichtbar = false;
+	   		 	}
+   		 	if(Spielfeld.schuss_endgegner.sichtbar){
+   		 	Spielfeld.schuss_endgegner.sichtbar=false;
    		 	}
    		 	if(Falle.aktiv){
    		 		Falle.aktiv = false;
@@ -287,9 +300,17 @@ public class Elemente {
 			Spielerinfo.info_anzeige = "Supertrank - erhöht sowohl Mana- als auch Lebenspunkte um 40%";
 			break;
 			
+		case 30://Item_Shop_Feuer-Magie
+			Spielfeld.shop_schuss2 = true;
+			Spielfeld.preis_shop = true;
+			Spielfeld.preis_anzeige = "30 Gold";
+			Spielerinfo.info = true;
+			Spielerinfo.info_anzeige = "Diese Magie ermöglicht es dir die Fledermäuse zu besiegen";
+			break;
+			
 		case 31://Schatztruhe
 			int i = (int) (Math.random()*3+1);		//Zufallszahl zwischen 1 und 3 erzeugen
-			if(block.Zustand == 0){
+			if((block.Zustand == 0)&&(Spielfeld.spieler.schluessel>0)){
 				switch(i){
 				case 1:
 					Spielfeld.spieler.gold += 150;
@@ -311,6 +332,7 @@ public class Elemente {
 
 				block.Zustand = 1;
 				Spielfeld.anzeige = true;
+				Spielfeld.spieler.schluessel -= 1;
 			}
 			break;
 		case 32://Gold
@@ -352,17 +374,20 @@ public class Elemente {
 				if(Spielfeld.schuss_spieler.sichtbar){
 					Spielfeld.schuss_spieler.sichtbar = false;
 				}
+				if(Spielfeld.schuss2_spieler.sichtbar){
+					Spielfeld.schuss2_spieler.sichtbar = false;
+				}
 				Spielfeld.current_room+=1;
 				Falle.aktiv=false;
 				Endgegner.aktiv=false;
-				Schuss_Endgegner.aktiv=false;
+				Spielfeld.schuss_endgegner.aktiv=false;
 				GegnerKI.aktiv = false;
 				Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_"+Spielfeld.current_room+".lvl"));
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
 				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
 				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
-				GegnerOU.leben=GegnerOU.StartLeben;
-				GegnerRL.leben=GegnerRL.StartLeben;
+				Spielfeld.gegnerRL.leben=GegnerRL.StartLeben;
+				Spielfeld.gegnerRL.leben=GegnerRL.StartLeben;
 				Spielfeld.GegnerRL_counter = 0;
 				Spielfeld.GegnerOU_counter = 0;
 				Spielfeld.Endgegner_counter = 0;

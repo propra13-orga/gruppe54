@@ -56,21 +56,21 @@ public class Pfeil extends Rectangle{
 				aktiv=false;
 				Endgegner.leben-=25;
 			//GegnerRL
-			} else if((x+16 >= GegnerRL.StartX)&&(x <= GegnerRL.StartX+31)&&
-			          (y+16 >= GegnerRL.StartY)&&(y <= GegnerRL.StartY+31)){			
+			} else if((x+16 >= Spielfeld.gegnerRL.StartX)&&(x <= Spielfeld.gegnerRL.StartX+31)&&
+			          (y+16 >= Spielfeld.gegnerRL.StartY)&&(y <= Spielfeld.gegnerRL.StartY+31)){			
 				aktiv=false;
-				GegnerRL.leben-=25;
+				Spielfeld.gegnerRL.leben-=25;
 			//GegnerOU
-			} else if((x+16 >= GegnerOU.StartX)&&(x <= GegnerOU.StartX+31)&&
-	        		  (y+16 >= GegnerOU.StartY)&&(y <= GegnerOU.StartY+31)){		
+			} else if((x+16 >= Spielfeld.gegnerOU.StartX)&&(x <= Spielfeld.gegnerOU.StartX+31)&&
+	        		  (y+16 >= Spielfeld.gegnerOU.StartY)&&(y <= Spielfeld.gegnerOU.StartY+31)){		
 					aktiv=false;	
-					GegnerOU.leben-=25;
+					Spielfeld.gegnerOU.leben-=25;
 			//Schuss_Endgegner
-			}else if((x+16 >= Schuss_Endgegner.StartX)&&(x <= Schuss_Endgegner.StartX+31)&&
-					 (y+16 >= Schuss_Endgegner.StartY)&&(y <= Schuss_Endgegner.StartY+31)){		
+			}else if((x+16 >= Spielfeld.schuss_endgegner.StartX)&&(x <= Spielfeld.schuss_endgegner.StartX+31)&&
+					 (y+16 >= Spielfeld.schuss_endgegner.StartY)&&(y <= Spielfeld.schuss_endgegner.StartY+31)){		
 				aktiv=false;	
-				Schuss_Endgegner.StartX=(int)Endgegner.StartX;
-				Schuss_Endgegner.StartY=(int)Endgegner.StartY;
+				Spielfeld.schuss_endgegner.StartX=(int)Endgegner.StartX;
+				Spielfeld.schuss_endgegner.StartY=(int)Endgegner.StartY;
 			//Bewegliche Falle
 			} else if((x+16 >= Falle.StartX)&&(x <= Falle.StartX+31)&&
 					  (y+16 >= Falle.StartY)&&(y <= Falle.StartY+31)){		
