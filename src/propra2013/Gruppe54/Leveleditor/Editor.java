@@ -36,7 +36,7 @@ public class Editor extends JFrame{
 	public static JLabel info = new JLabel();
 	
 	public static String auswahl1[] = {"Boden","Mauer1","Mauer2","bewegliche Mauer","Baum1","Baum2","Wasser","Ufer rechts","Ufer links","Ufer oben","Ufer unten","Fackel","Ausgang Dungeon","Eingang Shop","Leer"};
-	public static String auswahl2[] = {"Lebenstrank","Manatrank","Supertrank","Schlüssel","Zepter","Herz","Lebensbrunnen","Manabrunnen","Gold","Schatztruhe"};
+	public static String auswahl2[] = {"Lebenstrank","Manatrank","Supertrank","Schlüssel","Zepter","Herz","Lebensbrunnen","Manabrunnen","Gold1","Gold2","Schatztruhe"};
 	public static String auswahl3[] = {"Gegner1","Gegner2","Endgegner","Fledermaus","Bewegliche Falle"};
 	public static String auswahl4[] = {"Loch","Feuer","Grüner Giftbaum","Speer","Axt","Totenkopf"};
 	public static JComboBox<?> Raumelemente = new JComboBox<Object>(auswahl1);
@@ -192,7 +192,7 @@ public class Editor extends JFrame{
 					Editorfeld.current_id = 15;
 				} else if("Manabrunnen".equals(selectedChoice.getSelectedItem())){
 					Editorfeld.current_id = 17;
-				} else if("Gold".equals(selectedChoice.getSelectedItem())){
+				} else if("Gold1".equals(selectedChoice.getSelectedItem())){
 					Editorfeld.current_id = 32;
 				} else if("Schatztruhe".equals(selectedChoice.getSelectedItem())){
 					Editorfeld.current_id = 31;
@@ -202,6 +202,8 @@ public class Editor extends JFrame{
 					Editorfeld.current_id = 33;
 				} else if("Schlüssel".equals(selectedChoice.getSelectedItem())){
 					Editorfeld.current_id = 6;
+				} else if("Gold2".equals(selectedChoice.getSelectedItem())){
+					Editorfeld.current_id = 54;
 				} 
 			}
 		});

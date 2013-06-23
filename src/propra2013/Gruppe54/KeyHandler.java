@@ -11,7 +11,6 @@ public class KeyHandler implements KeyListener{
         int key = e.getKeyCode();
       //nur bewegen wenn der Spieler aktiv ist
       if((Spielfeld.spieler.aktiv)&&(Spielfeld.spieler.beweglich)){
-    	  //prüfen welche ID die stelle an die gegangen werden soll hat und nur laufen wenn es keine Mauer ist
          if ((key == KeyEvent.VK_A)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+1.5, Spielfeld.spieler.y+26)!=1)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+2, Spielfeld.spieler.y+32)!=1)) {
         	Frame.dx = -1*Spielfeld.spieler.speed;
             Spielfeld.spieler.checkShopItems();
@@ -20,13 +19,6 @@ public class KeyHandler implements KeyListener{
             Spielfeld.spieler.rechts = false;
             Spielfeld.spieler.hoch = false;
             Spielfeld.spieler.runter = false;
-            Spielerinfo.npc = false;
-            Spielerinfo.info = false;
-            Spielerinfo.ruestung_voll = false;
-            Spielerinfo.speed_voll = false;
-            Spielerinfo.gold = false;
-            Spielerinfo.item_vorhanden = false;
-            Spielfeld.preis_shop = false;
             
             if (Frame.CharakterAuswahl==2){
             	Frame.image = Frame.Figur2_links.getImage();
@@ -43,13 +35,6 @@ public class KeyHandler implements KeyListener{
          	Spielfeld.spieler.rechts = true;
          	Spielfeld.spieler.hoch = false;
          	Spielfeld.spieler.runter = false;
-         	Spielerinfo.npc = false;
-         	Spielerinfo.info = false;
-            Spielerinfo.ruestung_voll = false;
-            Spielerinfo.speed_voll = false;
-            Spielerinfo.gold = false;
-            Spielerinfo.item_vorhanden = false;
-            Spielfeld.preis_shop = false;
             
             if (Frame.CharakterAuswahl==2){
             	Frame.image = Frame.Figur2_rechts.getImage();
@@ -66,13 +51,6 @@ public class KeyHandler implements KeyListener{
 	        Spielfeld.spieler.rechts = false;
 	        Spielfeld.spieler.hoch = true;
 	        Spielfeld.spieler.runter = false;
-	        Spielerinfo.npc = false;
-            Spielerinfo.info = false;
-            Spielerinfo.ruestung_voll = false;
-            Spielerinfo.speed_voll = false;
-            Spielerinfo.gold = false;
-            Spielerinfo.item_vorhanden = false;
-            Spielfeld.preis_shop = false;
             
             if (Frame.CharakterAuswahl==2){
             	Frame.image = Frame.Figur2_oben.getImage();
@@ -89,13 +67,6 @@ public class KeyHandler implements KeyListener{
 	        Spielfeld.spieler.rechts = false;
 	        Spielfeld.spieler.hoch = false;
 	        Spielfeld.spieler.runter = true;
-	        Spielerinfo.npc = false;
-            Spielerinfo.info = false;
-            Spielerinfo.ruestung_voll = false;
-            Spielerinfo.speed_voll = false;
-            Spielerinfo.gold = false;
-            Spielerinfo.item_vorhanden = false;
-            Spielfeld.preis_shop = false;
             
 	        if (Frame.CharakterAuswahl==2){
             	Frame.image = Frame.Figur2_unten.getImage();
@@ -186,6 +157,28 @@ public class KeyHandler implements KeyListener{
     				 Spielerinfo.gold = true;
         			 Spielerinfo.info = false;
     			 }
+        	 } else if(Spielfeld.shop_bogen){
+        		 if(Spielfeld.spieler.ausrüstung == 3){
+        			 Spielerinfo.item_vorhanden = true;
+        			 Spielerinfo.info = false;
+        		 } else if(Spielfeld.spieler.gold >= 250){
+    				 Spielfeld.spieler.gold -= 250;
+    				 Spielfeld.spieler.ausrüstung = 3;
+    				 Spielfeld.spieler.waffe = 2;
+    				 Spielfeld.waffe.ID = 2;
+    				 Spielfeld.spieler.pfeile += 5;
+    			 } else if(Spielfeld.spieler.gold-250 <= 0){
+    				 Spielerinfo.gold = true;
+        			 Spielerinfo.info = false;
+    			 }
+        	 } else if(Spielfeld.shop_pfeile){
+        		 if(Spielfeld.spieler.gold >= 100){
+    				 Spielfeld.spieler.gold -= 100;
+    				 Spielfeld.spieler.pfeile += 10;
+    			 } else if(Spielfeld.spieler.gold-100 <= 0){
+    				 Spielerinfo.gold = true;
+        			 Spielerinfo.info = false;
+    			 }
         	 }
          }
          //Lebenstrank nehmen
@@ -244,15 +237,44 @@ public class KeyHandler implements KeyListener{
         	if(Spielfeld.waffe.angriff == false){
         		Spielfeld.waffe.angriff = true;
         	}
+        	if((Spielfeld.spieler.waffe == 2)&&(!Spielfeld.pfeil.aktiv)&&(Spielfeld.spieler.pfeile>0)){
+        		Spielfeld.spieler.pfeile -= 1;
+        		Spielfeld.pfeil.aktiv = true;
+        		if(Spielfeld.spieler.rechts){
+        			Spielfeld.pfeil.richtung = 0;
+        			Spielfeld.pfeil.x = Spielfeld.spieler.x+16;
+            		Spielfeld.pfeil.y = Spielfeld.spieler.y+5;
+        		} else if(Spielfeld.spieler.links){
+        			Spielfeld.pfeil.richtung = 1;
+        			Spielfeld.pfeil.x = Spielfeld.spieler.x;
+            		Spielfeld.pfeil.y = Spielfeld.spieler.y+5;
+        		} else if(Spielfeld.spieler.hoch){
+        			Spielfeld.pfeil.richtung = 2;
+        			Spielfeld.pfeil.x = Spielfeld.spieler.x+12;
+            		Spielfeld.pfeil.y = Spielfeld.spieler.y+5;
+        		} else if(Spielfeld.spieler.runter){
+        			Spielfeld.pfeil.richtung = 3;
+        			Spielfeld.pfeil.x = Spielfeld.spieler.x;
+            		Spielfeld.pfeil.y = Spielfeld.spieler.y+8;
+        		}
+        	}
          }
          if((key == KeyEvent.VK_1)&&(Spielfeld.spieler.aktiv)){
 	       	Spielfeld.spieler.waffe = 0;
+	       	Spielfeld.waffe.ID = 0;
 	     }
          if((key == KeyEvent.VK_2)&&(Spielfeld.spieler.aktiv)){
         	if(Spielfeld.spieler.ausrüstung >= 2){
         		Spielfeld.spieler.waffe = 1;
+        		Spielfeld.waffe.ID = 1;
         	}
 		 }
+         if((key == KeyEvent.VK_3)&&(Spielfeld.spieler.aktiv)){
+         	if(Spielfeld.spieler.ausrüstung >= 3){
+         		Spielfeld.spieler.waffe = 2;
+         		Spielfeld.waffe.ID = 2;
+         	}
+ 		 }
       }
 	}
 

@@ -77,57 +77,66 @@ public class Spielerinfo extends JPanel implements Runnable{
 			g.drawString("x"+Spielfeld.spieler.item_trank, 335, 35);
 		}
 		if(Spielfeld.spieler.item_mana>0){
-			g.drawImage(new ImageIcon("pics/shop_mana.png").getImage(), 350, 2, null);
-			g.drawString("x"+Spielfeld.spieler.item_mana, 365, 35);
+			g.drawImage(new ImageIcon("pics/shop_mana.png").getImage(), 355, 2, null);
+			g.drawString("x"+Spielfeld.spieler.item_mana, 370, 35);
 		}
 		if(Spielfeld.spieler.item_supertrank>0){
-			g.drawImage(new ImageIcon("pics/shop_supertrank.png").getImage(), 380, 2, null);
-			g.drawString("x"+Spielfeld.spieler.item_supertrank, 395, 35);
+			g.drawImage(new ImageIcon("pics/shop_supertrank.png").getImage(), 390, 2, null);
+			g.drawString("x"+Spielfeld.spieler.item_supertrank, 405, 35);
 		}
 		if(Spielfeld.spieler.ausrüstung <= 1){
-			g.drawImage(new ImageIcon("pics/inventar_schwert.png").getImage(), 320, 45, null);
+			g.drawImage(new ImageIcon("pics/inventar_schwert.png").getImage(), 320, 40, null);
 		} else if(Spielfeld.spieler.ausrüstung <= 2){
-			g.drawImage(new ImageIcon("pics/inventar_schwert.png").getImage(), 320, 45, null);
-			g.drawImage(new ImageIcon("pics/inventar_axt.png").getImage(), 350, 45, null);
-		}		
+			g.drawImage(new ImageIcon("pics/inventar_schwert.png").getImage(), 320, 40, null);
+			g.drawImage(new ImageIcon("pics/inventar_axt.png").getImage(), 355, 40, null);
+		} else if(Spielfeld.spieler.ausrüstung <= 3){
+			g.drawImage(new ImageIcon("pics/inventar_schwert.png").getImage(), 320, 40, null);
+			g.drawImage(new ImageIcon("pics/inventar_axt.png").getImage(), 355, 40, null);
+			g.drawImage(new ImageIcon("pics/inventar_bogen.png").getImage(), 390, 40, null);
+		}			
 		if(Spielfeld.spieler.Anzahl_Schüssen>0){
-			g.drawImage(new ImageIcon("pics/schuss_feuer_1.png").getImage(), 410, 40, null);
-			g.drawString("x"+Spielfeld.spieler.Anzahl_Schüssen, 425, 75);
+			g.drawImage(new ImageIcon("pics/inventar_feuermagie.png").getImage(), 425, 40, null);
+			g.drawString("x"+Spielfeld.spieler.Anzahl_Schüssen, 440, 75);
+		}
+		if(Spielfeld.spieler.pfeile > 0){
+			g.drawImage(new ImageIcon("pics/item_pfeile.png").getImage(), 425, 2, null);
+			g.drawString("x"+Spielfeld.spieler.pfeile, 440, 35);
 		}
 		if(Spielfeld.spieler.schluessel > 0){
-			g.drawImage(new ImageIcon("pics/schlüssel.png").getImage(), 410, 2, null);
-			g.drawString("x"+Spielfeld.spieler.schluessel, 425, 35);
+			g.drawImage(new ImageIcon("pics/schlüssel.png").getImage(), 460, 2, null);
+			g.drawString("x"+Spielfeld.spieler.schluessel, 475, 35);
 		}
 		//Gitter für das Inventar zeichnen
 		g.setColor(Color.gray);
 		g.drawLine(320, 0, 320, 75);
-		g.drawLine(350, 0, 350, 75);
-		g.drawLine(380, 0, 380, 75);
-		g.drawLine(410, 0, 410, 75);
-		g.drawLine(440, 0, 440, 75);
-		g.drawLine(320, 38, 440, 38);
+		g.drawLine(355, 0, 355, 75);
+		g.drawLine(390, 0, 390, 75);
+		g.drawLine(425, 0, 425, 75);
+		g.drawLine(460, 0, 460, 75);
+		g.drawLine(495, 0, 495, 75);
+		g.drawLine(320, 38, 495, 38);
 		g.setFont(new Font("Lucida Sans Typewriter",Font.PLAIN,10));
 		g.setColor(Color.black);
 		//Gespräch
 		if(npc){
-			g.drawString("Willkommen im Dungeon Wald. Pass nur auf,",460,30);
-			g.drawString("es lauern überall Gefahren!",460,40);
+			g.drawString("Willkommen im Dungeon Wald. Pass nur auf,",520,30);
+			g.drawString("es lauern überall Gefahren!",520,40);
 		}
 		//Preisanzeige Trank
 		if(info){
-			g.drawString(info_anzeige,460,30);
+			g.drawString(info_anzeige,500,30);
 		}
 		if(item_vorhanden){
-			g.drawString("Du besitzt dieses Item bereits",460,30);
+			g.drawString("Du besitzt dieses Item bereits",500,30);
 		}
 		if(ruestung_voll){
-			g.drawString("Du hast bereits volle Rüstung",460,30);
+			g.drawString("Du hast bereits volle Rüstung",500,30);
 		}
 		if(speed_voll){
-			g.drawString("Du hast bereits maximale Geschwindigkeit",460,30);
+			g.drawString("Du hast bereits maximale Geschwindigkeit",500,30);
 		}
 		if(gold){
-			g.drawString("Du hast nicht genug Gold",460,30);
+			g.drawString("Du hast nicht genug Gold",500,30);
 		}
 	}
 	

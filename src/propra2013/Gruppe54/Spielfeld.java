@@ -19,7 +19,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static double spieler_preposX=0,spieler_preposY=0;
 	
 	public static boolean isFirst = true,weg_verschlossen = true;
-	public static boolean preis_shop = false,shop = false,shop_trank = false,shop_mana = false,shop_supertrank = false,shop_ruestung1 = false, shop_schuss2=false,shop_ruestung2 = false,shop_stiefel = false,shop_axt = false,anzeige = false;
+	public static boolean preis_shop = false,shop = false,shop_bogen = false, shop_pfeile = false,shop_trank = false,shop_mana = false,shop_supertrank = false,shop_ruestung1 = false, shop_schuss2=false,shop_ruestung2 = false,shop_stiefel = false,shop_axt = false,anzeige = false;
 	public static String text_anzeige,preis_anzeige;
 	public static Raum raum;
 	public static Level level = new Level();
@@ -91,10 +91,9 @@ public class Spielfeld extends JPanel implements Runnable{
 		elemente[28] = new ImageIcon("pics/item_axt.png").getImage();
 		elemente[29] = new ImageIcon("pics/item_trank3.png").getImage();
 		elemente[30] = new ImageIcon("pics/schuss_feuer_1.png").getImage();
-		//30
 		//Schatzelemente
 		elemente[31] = new ImageIcon("pics/truhe_zu.png").getImage();
-		elemente[32] = new ImageIcon("pics/gold.png").getImage();
+		elemente[32] = new ImageIcon("pics/gold1.gif").getImage();
 		elemente[33] = new ImageIcon("pics/herz_element.png").getImage();
 		//34
 		//35,36,37,38,39 für bewegliche Fallen bzw Gegner
@@ -107,6 +106,10 @@ public class Spielfeld extends JPanel implements Runnable{
 		elemente[46] = new ImageIcon("pics/ufer_links.png").getImage();
 		elemente[47] = new ImageIcon("pics/ufer_rechts.png").getImage();
 		elemente[48] = new ImageIcon("pics/ufer_unten.png").getImage();
+		//51 versperrter Weg
+		elemente[52] = new ImageIcon("pics/item_pfeile.png").getImage();
+		elemente[53] = new ImageIcon("pics/item_bogen.png").getImage();
+		elemente[54] = new ImageIcon("pics/gold2.gif").getImage();
 	}
 	/** 
 	 * Initialisierung
@@ -115,6 +118,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		raum = new Raum();
 		gegnerRL = new GegnerRL();
 		gegnerOU = new GegnerOU();
+		pfeil = new Pfeil();
 		falle = new Falle();
 		Boss = new Endgegner();
 		gegnerKI = new GegnerKI();
@@ -193,6 +197,10 @@ public class Spielfeld extends JPanel implements Runnable{
 		//Falle
 		if((Falle.aktiv)&&(Spielfeld.shop == false)){
 			falle.draw(g);
+		}
+		//Pfeil des Spielers
+		if(pfeil.aktiv){
+			pfeil.draw(g);
 		}
 		
 		//Endgegner
@@ -352,6 +360,10 @@ public class Spielfeld extends JPanel implements Runnable{
 			if((Falle.aktiv)&&(Falle.StartX != 0)&&(Falle.StartY != 0)){
 				falle.bewegung();
 			}
+			//Pfeil des Spielers
+			if((spieler.waffe == 2)&&(pfeil.aktiv)){
+				pfeil.Schuss();
+			}
 			//Counter für den String über dem Spieler zur Ausgabe eingesammelter Werte
 			if(counter_anzeige==300){  
 				anzeige = false;
@@ -363,14 +375,14 @@ public class Spielfeld extends JPanel implements Runnable{
 			if((spieler.check(1))&&(spieler.check(15))&&(spieler.check(18))&&(spieler.check(20))&&(spieler.check(21))&&(spieler.check(10))
 					&&(spieler.check(22))&&(spieler.check(23))&&(spieler.check(24))&&(spieler.check(25))&&(spieler.check(28))&&(spieler.check(30))&&(spieler.check(31))
 					&&(spieler.check(41))&&(spieler.check(42))&&(spieler.check(43))&&(spieler.check(2))&&(spieler.check(4))&&(spieler.check(29))
-					&&(spieler.check(17))&&(spieler.check(51))){//prüfen ob Elemente vom Spieler durchschritten werden dürfen
+					&&(spieler.check(17))&&(spieler.check(51))&&(spieler.check(52))&&(spieler.check(53))){//prüfen ob Elemente vom Spieler durchschritten werden dürfen
 				spieler.checkKollision();
 				spieler.x += Frame.dx;
 				spieler.y += Frame.dy;
 				Elemente.beruehrung = false;
 			} else if((spieler.check(15)==false) | (spieler.check(18)==false) | (spieler.check(20)==false) | (spieler.check(21)==false) | (spieler.check(22)==false) | (spieler.check(30)==false)
 					| (spieler.check(23)==false) | (spieler.check(24)==false) | (spieler.check(25)==false) | (spieler.check(28)==false) | (spieler.check(31)==false)
-					| (spieler.check(29)==false) | (spieler.check(17)==false) | (spieler.check(10)==false)){	//wenn nicht, dann wird nur die Aktion des Elements ausgeführt, der Spieler geht aber nicht weiter
+					| (spieler.check(29)==false) | (spieler.check(17)==false) | (spieler.check(10)==false)| (spieler.check(52)==false)| (spieler.check(53)==false)){	//wenn nicht, dann wird nur die Aktion des Elements ausgeführt, der Spieler geht aber nicht weiter
 				spieler.checkKollision();
 				Elemente.beruehrung = false;
 			} else if((spieler.check(51)==false)&&(weg_verschlossen==false)){
@@ -412,6 +424,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		GegnerRLLeben=gegnerRL.leben;
 		EndgegnerLeben=Endgegner.leben;
 		GegnerKILeben=GegnerKI.leben;
+		pfeil.aktiv = false;
 		level.loadLevel(new File("level/level0_0.lvl"));
 		gegnerOU.leben=0;
 		gegnerRL.leben =0;

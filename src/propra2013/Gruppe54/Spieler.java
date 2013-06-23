@@ -11,10 +11,10 @@ public class Spieler extends Rectangle {
 	
 	public double speed = 0.5;
 	public int gold = 500;
-	public int waffe = 0,ausrüstung = 2,schluessel = 0;
+	public int waffe = 0,ausrüstung = 1,schluessel = 0,pfeile = 0;
 	public double schaden = 5;
 	public int item_trank = 0,item_mana = 0,item_supertrank = 0;
-	public int leben = 100,superleben = 3,mana = 100,xp = 0,ruestung = 50;
+	public int leben = 100,superleben = 3,mana = 100,xp = 75,ruestung = 50;
 	public boolean aktiv = false;
 	public Point checkpoint;
 	public int check_room = 1;		//Raum wo das letzte Mal der Checkpoint betätigt wurde
@@ -70,9 +70,20 @@ public class Spieler extends Rectangle {
 	       	Spielfeld.shop_axt = false;
 	   } else if((Spielfeld.shop_supertrank)&&(check(29))){
 	       	Spielfeld.shop_supertrank = false;
-	   }else if((Spielfeld.shop_schuss2)&&(check(30))){
+	   } else if((Spielfeld.shop_schuss2)&&(check(30))){
 	       	Spielfeld.shop_schuss2 = false;
+	   } else if((Spielfeld.shop_bogen)&&(check(53))){
+	       	Spielfeld.shop_bogen = false;
+	   } else if((Spielfeld.shop_pfeile)&&(check(52))){
+	       	Spielfeld.shop_pfeile = false;
 	   }
+	   Spielerinfo.npc = false;
+       Spielerinfo.info = false;
+       Spielerinfo.ruestung_voll = false;
+       Spielerinfo.speed_voll = false;
+       Spielerinfo.gold = false;
+       Spielerinfo.item_vorhanden = false;
+       Spielfeld.preis_shop = false;
 	}
 		
 	//prüft an 4 Punkten ob sich dort ein Objekt befindet durch das der Spieler nicht laufen darf

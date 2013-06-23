@@ -42,11 +42,12 @@ public class Elemente {
 				GegnerKI.StartY=0;
 				Falle.StartX=0;
 				Falle.StartY=0;
+				Spielfeld.pfeil.aktiv = false;
 			}
 			break;
 		
 		case 6:
-			if((block.Zustand == 0)&&(Spielfeld.spieler.schluessel < 9)){
+			if(block.Zustand == 0){
 				Spielfeld.spieler.schluessel += 1;
 				block.Zustand = 1;
 			} 
@@ -282,6 +283,7 @@ public class Elemente {
 		case 27://Ausgang Shop
 			Spielfeld.hideShop();
 			Falle.aktiv = Falle.status;
+			Spielfeld.pfeil.aktiv = false;
 			break;
 		
 		case 28://Item_Shop Axt
@@ -335,7 +337,7 @@ public class Elemente {
 				Spielfeld.spieler.schluessel -= 1;
 			}
 			break;
-		case 32://Gold
+		case 32://Gold1
 			int j = (int) (Math.random()*3+1);		//Zufallszahl zwischen 1 und 3 erzeugen
 			if(block.Zustand == 0){
 				switch(j){
@@ -368,7 +370,7 @@ public class Elemente {
 				block.Zustand = 1;
 			}
 			break;
-		
+		//Ausgang Wald
 		case 40:
 			if(Spielfeld.current_room!=3) {  
 				if(Spielfeld.schuss_spieler.sichtbar){
@@ -377,6 +379,7 @@ public class Elemente {
 				if(Spielfeld.schuss2_spieler.sichtbar){
 					Spielfeld.schuss2_spieler.sichtbar = false;
 				}
+				Spielfeld.pfeil.aktiv = false;
 				Spielfeld.current_room+=1;
 				Falle.aktiv=false;
 				Endgegner.aktiv=false;
@@ -397,6 +400,46 @@ public class Elemente {
 				GegnerKI.StartY=0;
 				Falle.StartX=0;
 				Falle.StartY=0;
+			}
+			break;
+		case 52://Item_Shop_Pfeile
+			Spielfeld.shop_pfeile = true;
+			Spielfeld.preis_shop = true;
+			Spielfeld.preis_anzeige = "100 Gold";
+			Spielerinfo.info = true;
+			Spielerinfo.info_anzeige = "10 Pfeile für den Bogen";
+			break;
+		case 53://Item_Shop_Bogen
+			Spielfeld.shop_bogen = true;
+			Spielfeld.preis_shop = true;
+			Spielfeld.preis_anzeige = "250 Gold";
+			Spielerinfo.info = true;
+			Spielerinfo.info_anzeige = "Bogen +5 Pfeile";
+			break;
+		case 54://Gold2
+			int k = (int) (Math.random()*3+1);		//Zufallszahl zwischen 1 und 3 erzeugen
+			if(block.Zustand == 0){
+				switch(k){
+				case 1:
+					Spielfeld.spieler.gold += 60;
+					Spielfeld.text_anzeige = "+60 Gold";
+					break;
+				case 2:
+					Spielfeld.spieler.gold += 10;
+					Spielfeld.text_anzeige = "+10 Gold";
+					break;
+				case 3:
+					Spielfeld.spieler.gold += 20;
+					Spielfeld.text_anzeige = "+20 Gold";
+					break;
+				default:
+					Spielfeld.spieler.gold += 20;
+					Spielfeld.text_anzeige = "+20 Gold";
+					break;
+				}
+
+				block.Zustand = 1;
+				Spielfeld.anzeige = true;
 			}
 			break;
 		

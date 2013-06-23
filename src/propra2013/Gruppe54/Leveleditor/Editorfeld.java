@@ -77,7 +77,7 @@ public class Editorfeld extends JPanel implements Runnable,MouseListener{
 			//30
 			//Schatzelemente
 			elemente[31] = new ImageIcon("pics/truhe_zu.png").getImage();
-			elemente[32] = new ImageIcon("pics/gold.png").getImage();
+			elemente[32] = new ImageIcon("pics/gold1.gif").getImage();
 			elemente[33] = new ImageIcon("pics/herz_element.png").getImage();
 			//34
 			elemente[35] = new ImageIcon("pics/gegner1_"+current_lvl+".png").getImage();
@@ -94,6 +94,7 @@ public class Editorfeld extends JPanel implements Runnable,MouseListener{
 			elemente[46] = new ImageIcon("pics/ufer_links.png").getImage();
 			elemente[47] = new ImageIcon("pics/ufer_rechts.png").getImage();
 			elemente[48] = new ImageIcon("pics/ufer_unten.png").getImage();
+			elemente[54] = new ImageIcon("pics/gold2.gif").getImage();
 			if(lvl_null){
 				current_lvl -= 1;
 				lvl_null = false;

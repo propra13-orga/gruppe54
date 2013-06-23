@@ -274,7 +274,15 @@ public class Block extends Rectangle {
 				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);
 			}
 			break;
-			
+		
+		case 54: //Gold2
+			if(Zustand==0){
+				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null); 
+				g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
+			} else if(Zustand==1) {
+				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);
+			}
+			break;
 		default:
 			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);   //ImageArray elemente[], wird in Spielfeld.define() definiert
 			break;

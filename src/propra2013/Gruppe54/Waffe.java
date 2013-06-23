@@ -66,7 +66,7 @@ public class Waffe extends Rectangle {
 			if(Spielfeld.spieler.rechts){
 				if(angriff == false){
 					g.drawImage(new ImageIcon("pics/axt_0_rechts.png").getImage(), (int)Spielfeld.spieler.x+18, (int)Spielfeld.spieler.y-4, 24, 26, null); 
-					x = (int)Spielfeld.spieler.x+15;
+					x = (int)Spielfeld.spieler.x+18;
 					y = (int)Spielfeld.spieler.y-4;
 				} else if(angriff){
 					g.drawImage(new ImageIcon("pics/axt_0_rechts_angriff.png").getImage(), (int)Spielfeld.spieler.x+21, (int)Spielfeld.spieler.y+1, 24, 26, null); 
@@ -76,7 +76,7 @@ public class Waffe extends Rectangle {
 			} else if(Spielfeld.spieler.links){
 				if(angriff == false){
 					g.drawImage(new ImageIcon("pics/axt_0_links.png").getImage(), (int)Spielfeld.spieler.x-10, (int)Spielfeld.spieler.y-4, 24, 26, null);
-					x = (int)Spielfeld.spieler.x-7;
+					x = (int)Spielfeld.spieler.x-10;
 					y = (int)Spielfeld.spieler.y-4;
 				} else if(angriff){
 					g.drawImage(new ImageIcon("pics/axt_0_links_angriff.png").getImage(), (int)Spielfeld.spieler.x-12, (int)Spielfeld.spieler.y, 24, 26, null);
@@ -86,8 +86,8 @@ public class Waffe extends Rectangle {
 			} else if(Spielfeld.spieler.hoch){
 				if(angriff == false){
 					g.drawImage(new ImageIcon("pics/axt_0_oben.png").getImage(), (int)Spielfeld.spieler.x+15, (int)Spielfeld.spieler.y-7, 24, 26, null);
-					x = (int)Spielfeld.spieler.x;
-					y = (int)Spielfeld.spieler.y;
+					x = (int)Spielfeld.spieler.x+15;
+					y = (int)Spielfeld.spieler.y-7;
 				} else if(angriff){
 					g.drawImage(new ImageIcon("pics/axt_0_oben_angriff.png").getImage(), (int)Spielfeld.spieler.x, (int)Spielfeld.spieler.y, 24, 26, null);
 					x = (int)Spielfeld.spieler.x;
@@ -96,100 +96,32 @@ public class Waffe extends Rectangle {
 			} else if(Spielfeld.spieler.runter){
 				if(angriff == false){
 					g.drawImage(new ImageIcon("pics/axt_0_unten.png").getImage(), (int)Spielfeld.spieler.x-7, (int)Spielfeld.spieler.y-4, 24, 26, null);
-					x = (int)Spielfeld.spieler.x-10;
+					x = (int)Spielfeld.spieler.x-7;
 					y = (int)Spielfeld.spieler.y-4;
 				} else if(angriff){
 					g.drawImage(new ImageIcon("pics/axt_0_unten_angriff.png").getImage(), (int)Spielfeld.spieler.x-10, (int)Spielfeld.spieler.y+13, 24, 26, null);
-					x = (int)Spielfeld.spieler.x-8;
-					y = (int)Spielfeld.spieler.y+12;
+					x = (int)Spielfeld.spieler.x-10;
+					y = (int)Spielfeld.spieler.y+13;
 				}
 			}
 			break;
-			
 		case 2:
 			if(Spielfeld.spieler.rechts){
-				if(angriff == false){
-					g.drawImage(new ImageIcon("pics/saebel_0_rechts.png").getImage(), (int)Spielfeld.spieler.x+18, (int)Spielfeld.spieler.y-4, 24, 26, null); 
-					x = (int)Spielfeld.spieler.x+15;
-					y = (int)Spielfeld.spieler.y-4;
-				} else if(angriff){
-					g.drawImage(new ImageIcon("pics/saebel_0_rechts_angriff.png").getImage(), (int)Spielfeld.spieler.x+21, (int)Spielfeld.spieler.y+1, 24, 26, null); 
-					x = (int)Spielfeld.spieler.x+21;
-					y = (int)Spielfeld.spieler.y;
-				}
+				g.drawImage(new ImageIcon("pics/bogen_rechts.png").getImage(), (int)Spielfeld.spieler.x+14, (int)Spielfeld.spieler.y, 24, 26, null); 
+				x = (int)Spielfeld.spieler.x+14;
+				y = (int)Spielfeld.spieler.y;
 			} else if(Spielfeld.spieler.links){
-				if(angriff == false){
-					g.drawImage(new ImageIcon("pics/saebel_0_links.png").getImage(), (int)Spielfeld.spieler.x-10, (int)Spielfeld.spieler.y-4, 24, 26, null);
-					x = (int)Spielfeld.spieler.x-7;
-					y = (int)Spielfeld.spieler.y-4;
-				} else if(angriff){
-					g.drawImage(new ImageIcon("pics/saebel_0_links_angriff.png").getImage(), (int)Spielfeld.spieler.x-12, (int)Spielfeld.spieler.y, 24, 26, null);
-					x = (int)Spielfeld.spieler.x-12;
-					y = (int)Spielfeld.spieler.y;
-				}
+				g.drawImage(new ImageIcon("pics/bogen_links.png").getImage(), (int)Spielfeld.spieler.x-3, (int)Spielfeld.spieler.y+1, 24, 26, null);
+				x = (int)Spielfeld.spieler.x-3;
+				y = (int)Spielfeld.spieler.y+1;
 			} else if(Spielfeld.spieler.hoch){
-				if(angriff == false){
-					g.drawImage(new ImageIcon("pics/saebel_0_oben.png").getImage(), (int)Spielfeld.spieler.x, (int)Spielfeld.spieler.y, 24, 26, null);
-					x = (int)Spielfeld.spieler.x;
-					y = (int)Spielfeld.spieler.y;
-				} else if(angriff){
-					g.drawImage(new ImageIcon("pics/saebel_0_oben_angriff.png").getImage(), (int)Spielfeld.spieler.x, (int)Spielfeld.spieler.y, 24, 26, null);
-					x = (int)Spielfeld.spieler.x;
-					y = (int)Spielfeld.spieler.y;
-				}
+				g.drawImage(new ImageIcon("pics/bogen_oben.png").getImage(), (int)Spielfeld.spieler.x+6, (int)Spielfeld.spieler.y-2, 24, 26, null);
+				x = (int)Spielfeld.spieler.x+6;
+				y = (int)Spielfeld.spieler.y-2;
 			} else if(Spielfeld.spieler.runter){
-				if(angriff == false){
-					g.drawImage(new ImageIcon("pics/saebel_0_unten.png").getImage(), (int)Spielfeld.spieler.x-7, (int)Spielfeld.spieler.y-4, 24, 26, null);
-					x = (int)Spielfeld.spieler.x-10;
-					y = (int)Spielfeld.spieler.y-4;
-				} else if(angriff){
-					g.drawImage(new ImageIcon("pics/saebel_0_unten_angriff.png").getImage(), (int)Spielfeld.spieler.x-10, (int)Spielfeld.spieler.y+13, 24, 26, null);
-					x = (int)Spielfeld.spieler.x-8;
-					y = (int)Spielfeld.spieler.y+12;
-				}
-			}
-			break;
-		case 3:
-			if(Spielfeld.spieler.rechts){
-				if(angriff == false){
-					g.drawImage(new ImageIcon("pics/bogen_0_rechts.png").getImage(), (int)Spielfeld.spieler.x+18, (int)Spielfeld.spieler.y-4, 24, 26, null); 
-					x = (int)Spielfeld.spieler.x+15;
-					y = (int)Spielfeld.spieler.y-4;
-				} else if(angriff){
-					g.drawImage(new ImageIcon("pics/bogen_0_rechts_angriff.png").getImage(), (int)Spielfeld.spieler.x+21, (int)Spielfeld.spieler.y+1, 24, 26, null); 
-					x = (int)Spielfeld.spieler.x+21;
-					y = (int)Spielfeld.spieler.y;
-				}
-			} else if(Spielfeld.spieler.links){
-				if(angriff == false){
-					g.drawImage(new ImageIcon("pics/bogen_0_links.png").getImage(), (int)Spielfeld.spieler.x-10, (int)Spielfeld.spieler.y-4, 24, 26, null);
-					x = (int)Spielfeld.spieler.x-7;
-					y = (int)Spielfeld.spieler.y-4;
-				} else if(angriff){
-					g.drawImage(new ImageIcon("pics/bogen_0_links_angriff.png").getImage(), (int)Spielfeld.spieler.x-12, (int)Spielfeld.spieler.y, 24, 26, null);
-					x = (int)Spielfeld.spieler.x-12;
-					y = (int)Spielfeld.spieler.y;
-				}
-			} else if(Spielfeld.spieler.hoch){
-				if(angriff == false){
-					g.drawImage(new ImageIcon("pics/bogen_0_oben.png").getImage(), (int)Spielfeld.spieler.x, (int)Spielfeld.spieler.y, 24, 26, null);
-					x = (int)Spielfeld.spieler.x;
-					y = (int)Spielfeld.spieler.y;
-				} else if(angriff){
-					g.drawImage(new ImageIcon("pics/bogen_0_oben_angriff.png").getImage(), (int)Spielfeld.spieler.x, (int)Spielfeld.spieler.y, 24, 26, null);
-					x = (int)Spielfeld.spieler.x;
-					y = (int)Spielfeld.spieler.y;
-				}
-			} else if(Spielfeld.spieler.runter){
-				if(angriff == false){
-					g.drawImage(new ImageIcon("pics/bogen_0_unten.png").getImage(), (int)Spielfeld.spieler.x-7, (int)Spielfeld.spieler.y-4, 24, 26, null);
-					x = (int)Spielfeld.spieler.x-10;
-					y = (int)Spielfeld.spieler.y-4;
-				} else if(angriff){
-					g.drawImage(new ImageIcon("pics/bogen_0_unten_angriff.png").getImage(), (int)Spielfeld.spieler.x-10, (int)Spielfeld.spieler.y+13, 24, 26, null);
-					x = (int)Spielfeld.spieler.x-8;
-					y = (int)Spielfeld.spieler.y+12;
-				}
+				g.drawImage(new ImageIcon("pics/bogen_unten.png").getImage(), (int)Spielfeld.spieler.x-5, (int)Spielfeld.spieler.y, 24, 26, null);
+				x = (int)Spielfeld.spieler.x-5;
+				y = (int)Spielfeld.spieler.y;
 			}
 			break;
 		}
