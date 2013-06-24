@@ -4,8 +4,8 @@ import java.awt.Point;
 
 public class Raum {
 
-	public static final int worldWidth=25;  //Breite Spielfelds
-	public static final int worldHeight=15; //Höhe Spielfelds
+	public static final int worldWidth=30;  //Breite Spielfelds
+	public static final int worldHeight=16; //Höhe Spielfelds
 	public static final int blockSize=32;   //Größe eines Blocks
 	
 	public static Point[] Startpunkt = {new Point(5,185),new Point(5,277),new Point(675,435),new Point(5,280)};

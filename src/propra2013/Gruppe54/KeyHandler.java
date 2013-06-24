@@ -138,11 +138,11 @@ public class KeyHandler implements KeyListener{
         			 Spielerinfo.info = false;
         		 }
         	 } else if(Spielfeld.shop_axt){
-        		 if(Spielfeld.spieler.ausrüstung == 2){
+        		 if(Spielfeld.spieler.axt){
         			 Spielerinfo.item_vorhanden = true;
         			 Spielerinfo.info = false;
         		 } else if(Spielfeld.spieler.gold >= 500){
-        			 Spielfeld.spieler.ausrüstung += 1;
+        			 Spielfeld.spieler.axt = true;
         			 Spielfeld.spieler.gold -= 500;
         			 Spielfeld.spieler.waffe = 1;
         		 } else if(Spielfeld.spieler.gold-500 <= 0) {
@@ -158,12 +158,12 @@ public class KeyHandler implements KeyListener{
         			 Spielerinfo.info = false;
     			 }
         	 } else if(Spielfeld.shop_bogen){
-        		 if(Spielfeld.spieler.ausrüstung == 3){
+        		 if(Spielfeld.spieler.bogen){
         			 Spielerinfo.item_vorhanden = true;
         			 Spielerinfo.info = false;
         		 } else if(Spielfeld.spieler.gold >= 250){
     				 Spielfeld.spieler.gold -= 250;
-    				 Spielfeld.spieler.ausrüstung = 3;
+    				 Spielfeld.spieler.bogen = true;
     				 Spielfeld.spieler.waffe = 2;
     				 Spielfeld.waffe.ID = 2;
     				 Spielfeld.spieler.pfeile += 5;
@@ -211,19 +211,23 @@ public class KeyHandler implements KeyListener{
          }
          //Schuss des Spielers
          if ((key == KeyEvent.VK_SPACE)&&(Spielfeld.spieler.aktiv)&&(Spielfeld.spieler.mana>=10)&&(Spielfeld.spieler.xp>=50)){	
-        	Spielfeld.schuss_spieler.sichtbar=true;
-        	Spielfeld.schuss_spieler.setPos=false;
-			Spielfeld.schuss_spieler.checkRichtung();
-			Spielfeld.spieler.mana -= 10;
-			Spielfeld.counter_schuss = 0;
+        	if(!Spielfeld.schuss_spieler.sichtbar){
+	        	Spielfeld.schuss_spieler.sichtbar=true;
+	        	Spielfeld.schuss_spieler.setPos=false;
+				Spielfeld.schuss_spieler.checkRichtung();
+				Spielfeld.spieler.mana -= 10;
+				Spielfeld.counter_schuss = 0;
+        	}
          }
          //Schuss2 des Spielers
          if ((key == KeyEvent.VK_C)&&(Spielfeld.spieler.aktiv)&&(Spielfeld.spieler.Anzahl_Schüssen>0)&&(Spielfeld.spieler.xp>=75)){	
-        	Spielfeld.schuss2_spieler.sichtbar=true;
-        	Spielfeld.schuss2_spieler.setPos=false;
-			Spielfeld.schuss2_spieler.checkRichtung();
-			Spielfeld.spieler.Anzahl_Schüssen -= 1;
-			Spielfeld.counter_schuss2 = 0;
+        	if(!Spielfeld.schuss2_spieler.sichtbar){
+	        	Spielfeld.schuss2_spieler.sichtbar=true;
+	        	Spielfeld.schuss2_spieler.setPos=false;
+				Spielfeld.schuss2_spieler.checkRichtung();
+				Spielfeld.spieler.Anzahl_Schüssen -= 1;
+				Spielfeld.counter_schuss2 = 0;
+        	}
          } 
          if((key == KeyEvent.VK_K)&&(Spielfeld.spieler.aktiv)){ //kleiner Cheat zu Testzwecken ;D
         	 Spielfeld.spieler.mana = 100;
@@ -264,13 +268,13 @@ public class KeyHandler implements KeyListener{
 	       	Spielfeld.waffe.ID = 0;
 	     }
          if((key == KeyEvent.VK_2)&&(Spielfeld.spieler.aktiv)){
-        	if(Spielfeld.spieler.ausrüstung >= 2){
+        	if(Spielfeld.spieler.axt){
         		Spielfeld.spieler.waffe = 1;
         		Spielfeld.waffe.ID = 1;
         	}
 		 }
          if((key == KeyEvent.VK_3)&&(Spielfeld.spieler.aktiv)){
-         	if(Spielfeld.spieler.ausrüstung >= 3){
+         	if(Spielfeld.spieler.bogen){
          		Spielfeld.spieler.waffe = 2;
          		Spielfeld.waffe.ID = 2;
          	}

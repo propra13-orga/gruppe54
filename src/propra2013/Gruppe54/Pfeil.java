@@ -42,14 +42,37 @@ public class Pfeil extends Rectangle{
 	}
 	
 	public boolean check(int ID){
-		if((Spielfeld.getBlockID(x+9,y+10)!=ID)&& //unten links
-			(Spielfeld.getBlockID(x+9,y+10)!=ID)&& //unten rechts
-			(Spielfeld.getBlockID(x+9,y)!=ID)&& //oben rechts
-			(Spielfeld.getBlockID(x+9,y+10)!=ID)){ //oben links
-			return true;
-		} else { 
-			return false;
+		boolean frei = false;
+		switch(richtung){
+			case 0:
+				if((Spielfeld.getBlockID(x+23,y+13)!=ID)&&(Spielfeld.getBlockID(x+1,y+13)!=ID)){
+					frei = true;
+				} else { 
+					frei = false;
+				}
+			case 1:
+				if((Spielfeld.getBlockID(x+23,y+13)!=ID)&&(Spielfeld.getBlockID(x+1,y+13)!=ID)){
+					frei = true;
+				} else { 
+					frei = false;
+				}
+				break;
+			case 2:
+				if((Spielfeld.getBlockID(x+12,y+1)!=ID)&&(Spielfeld.getBlockID(x+12,y+23)!=ID)){
+					frei = true;
+				} else { 
+					frei = false;
+				}
+				break;
+			case 3:
+				if((Spielfeld.getBlockID(x+12,y+1)!=ID)&&(Spielfeld.getBlockID(x+12,y+23)!=ID)){
+					frei = true;
+				} else { 
+					frei = false;
+				}
+				break;
 		}
+		return frei;
 	}
 	
 	public void Kollision(){
@@ -73,7 +96,7 @@ public class Pfeil extends Rectangle{
 			} else if((x+16 >= Falle.StartX)&&(x <= Falle.StartX+31)&&
 					  (y+16 >= Falle.StartY)&&(y <= Falle.StartY+31)){		
 				aktiv = false;	
-			} else if((check(1)==false)|(check(2)==false)|(check(4)==false)|(check(10)==false)){
+			} else if((check(1)==false)|(check(2)==false)|(check(4)==false)|(check(10)==false)|(check(41)==false)|(check(42)==false)){
 				aktiv = false;
 			} else if((x<5)|(x>Raum.worldWidth*Raum.blockSize-30)|(y<5)|(y>Raum.worldHeight*Raum.blockSize-30)){
 				aktiv = false;

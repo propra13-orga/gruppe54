@@ -14,8 +14,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-//TODO: 		-Spawnpunkt des Spielers ändern?
-
 public class Editor extends JFrame{
 
 	/**
@@ -26,7 +24,7 @@ public class Editor extends JFrame{
 	 * @param args
 	 */
 	public static String title ="Dungeon Crawler - Leveleditor";
-	public static Dimension size = new Dimension(850,670); 
+	public static Dimension size = new Dimension(1000,670); 
 	public Editorfeld feld = new Editorfeld();
 	
 	public static JButton open = new JButton("Level laden");
@@ -35,8 +33,8 @@ public class Editor extends JFrame{
 	public static JLabel raum = new JLabel("Raum: "+Editorfeld.current_room);
 	public static JLabel info = new JLabel();
 	
-	public static String auswahl1[] = {"Boden","Mauer1","Mauer2","bewegliche Mauer","Baum1","Baum2","Wasser","Ufer rechts","Ufer links","Ufer oben","Ufer unten","Fackel","Ausgang Dungeon","Eingang Shop","Leer"};
-	public static String auswahl2[] = {"Lebenstrank","Manatrank","Supertrank","Schlüssel","Zepter","Herz","Lebensbrunnen","Manabrunnen","Gold1","Gold2","Schatztruhe"};
+	public static String auswahl1[] = {"Boden","Mauer1","Mauer2","bewegliche Mauer","Baum1","Baum2","Wasser","Ufer rechts","Ufer links","Ufer oben","Ufer unten","Fackel","Ausgang Dungeon","Ausgang Wald","Eingang Shop","Leer"};
+	public static String auswahl2[] = {"Lebenstrank","Manatrank","Supertrank","Pfeile","Schlüssel","Zepter","Herz","Lebensbrunnen","Manabrunnen","Gold1","Gold2","Schatztruhe"};
 	public static String auswahl3[] = {"Gegner1","Gegner2","Endgegner","Fledermaus","Bewegliche Falle"};
 	public static String auswahl4[] = {"Loch","Feuer","Grüner Giftbaum","Speer","Axt","Totenkopf"};
 	public static JComboBox<?> Raumelemente = new JComboBox<Object>(auswahl1);
@@ -155,6 +153,8 @@ public class Editor extends JFrame{
 					Editorfeld.current_id = 2;
 				} else if("Ausgang Dungeon".equals(selectedChoice.getSelectedItem())){
 					Editorfeld.current_id = 5;
+				} else if("Ausgang Wald".equals(selectedChoice.getSelectedItem())){
+					Editorfeld.current_id = 40;
 				} else if("Eingang Shop".equals(selectedChoice.getSelectedItem())){
 					Editorfeld.current_id = 26;
 				} else if("Leer".equals(selectedChoice.getSelectedItem())){
@@ -204,7 +204,9 @@ public class Editor extends JFrame{
 					Editorfeld.current_id = 6;
 				} else if("Gold2".equals(selectedChoice.getSelectedItem())){
 					Editorfeld.current_id = 54;
-				} 
+				} else if("Pfeile".equals(selectedChoice.getSelectedItem())){
+					Editorfeld.current_id = 55;
+				}  
 			}
 		});
 		

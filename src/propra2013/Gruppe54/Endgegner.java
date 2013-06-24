@@ -17,6 +17,7 @@ public class Endgegner extends Rectangle{
 	public static int leben;
 	public static boolean unten=false;//gibt an ob der Gegner unten an einer Mauer steht
 	public static boolean rechts=false;//gibt an ob der Gegner rechts an einer Mauer steht
+	public static boolean setItem = false;
 	public static int schritte=0;
 	public static int StartLeben;
 	public static int Faktor;
@@ -48,6 +49,14 @@ public class Endgegner extends Rectangle{
 	//muss noch ein anderes Bild eingefügt werden
 	public void draw(Graphics g){
 		g.drawImage(new ImageIcon("pics/gegner3_"+Spielfeld.current_lvl+".png").getImage(), (int)StartX, (int)StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
+	}
+	
+	//legt ein Elemente ab wenn der Gegner besiegt wurde
+	public static void setItem(){
+		if(Spielfeld.getBlock(StartX+16,StartY+16).ID == 0){
+			Spielfeld.getBlock(StartX+16,StartY+16).ID = 32;			
+		}
+		setItem = true;
 	}
 	
 	//Gibt an wie sich der Gegner bewegt

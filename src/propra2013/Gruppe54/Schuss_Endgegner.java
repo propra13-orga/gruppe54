@@ -16,7 +16,7 @@ public class Schuss_Endgegner extends Rectangle {
 	public double spielerx=0,spielery=0;
 	public double nächsterSchrittX=0;
 	public double nächsterSchrittY=0;
-	public boolean restart=false;
+	private boolean restart=false;
 	
 	public Schuss_Endgegner() {
 		setBounds((int)StartX,(int)StartY,32,32);

@@ -13,8 +13,8 @@ import propra2013.Gruppe54.Spielfeld;
 
 public class Raum {
 
-	public static int worldWidth=25;  //Breite Spielfelds
-	public static int worldHeight=15; //Höhe Spielfelds
+	public static int worldWidth=30;  //Breite Spielfelds
+	public static int worldHeight=16; //Höhe Spielfelds
 	public static int blockSize=32;   //Größe eines Blocks
 	
 	public static Point[] Startpunkt = {new Point(5,185),new Point(5,277),new Point(675,435),new Point(5,280)};
@@ -36,7 +36,7 @@ public class Raum {
 		
 		for(int y=0;y<worldHeight;y++){
 			for(int x=0;x<worldWidth;x++){
-				block[y][x] = new EditorBlock(x*blockSize,y*blockSize,blockSize,blockSize,55);	// Konstruktor
+				block[y][x] = new EditorBlock(x*blockSize,y*blockSize,blockSize,blockSize,50);	// Konstruktor
 			}
 		}
 	}

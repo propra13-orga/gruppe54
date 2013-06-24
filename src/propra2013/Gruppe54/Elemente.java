@@ -22,10 +22,10 @@ public class Elemente {
 					Spielfeld.schuss2_spieler.sichtbar = false;
 				}
 				Falle.aktiv=false;
-				GegnerKI.leben=0;
+				Spielfeld.gegnerKI.leben=0;
 				Endgegner.aktiv=false;
 				Spielfeld.schuss_endgegner.aktiv=false;
-				GegnerKI.aktiv=false;
+				Spielfeld.gegnerKI.aktiv=false;
 				Spielfeld.current_room+=1;
 				Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_"+Spielfeld.current_room+".lvl"));
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
@@ -33,13 +33,13 @@ public class Elemente {
 				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
 				Spielfeld.gegnerRL.leben=GegnerRL.StartLeben;
 				Spielfeld.gegnerRL.leben=GegnerRL.StartLeben;
-				Spielfeld.GegnerRL_counter = 0;
-				Spielfeld.GegnerOU_counter = 0;
-				Spielfeld.Endgegner_counter = 0;
+				Spielfeld.gegnerRL.setItem = false;
+				Spielfeld.gegnerOU.setItem = false;
+				Endgegner.setItem = false;
 				Endgegner.leben=Endgegner.StartLeben;
-				GegnerKI.leben=GegnerKI.StartLeben;
-				GegnerKI.StartX=0;
-				GegnerKI.StartY=0;
+				Spielfeld.gegnerKI.leben=Spielfeld.gegnerKI.StartLeben;
+				Spielfeld.gegnerKI.StartX=0;
+				Spielfeld.gegnerKI.StartY=0;
 				Falle.StartX=0;
 				Falle.StartY=0;
 				Spielfeld.pfeil.aktiv = false;
@@ -319,12 +319,16 @@ public class Elemente {
 					Spielfeld.text_anzeige = "+150 Gold";
 					break;
 				case 2:
-					Spielfeld.spieler.gold += 80;
-					Spielfeld.text_anzeige = "+80 Gold";
+					Spielfeld.spieler.pfeile += 10;
+					Spielfeld.text_anzeige = "+10 Pfeile";
 					break;
 				case 3:
-					Spielfeld.spieler.gold += 120;
-					Spielfeld.text_anzeige = "+120 Gold";
+					Spielfeld.spieler.item_trank += 1;
+					Spielfeld.text_anzeige = "+1 Trank";
+					break;
+				case 4:
+					Spielfeld.spieler.Anzahl_Schüssen += 5;
+					Spielfeld.text_anzeige = "+5 Feuerzauber";
 					break;
 				default:
 					Spielfeld.spieler.gold += 150;
@@ -384,20 +388,19 @@ public class Elemente {
 				Falle.aktiv=false;
 				Endgegner.aktiv=false;
 				Spielfeld.schuss_endgegner.aktiv=false;
-				GegnerKI.aktiv = false;
+				Spielfeld.gegnerKI.aktiv = false;
 				Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_"+Spielfeld.current_room+".lvl"));
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
 				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
 				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
 				Spielfeld.gegnerRL.leben=GegnerRL.StartLeben;
-				Spielfeld.gegnerRL.leben=GegnerRL.StartLeben;
-				Spielfeld.GegnerRL_counter = 0;
-				Spielfeld.GegnerOU_counter = 0;
-				Spielfeld.Endgegner_counter = 0;
+				Spielfeld.gegnerRL.setItem = false;
+				Spielfeld.gegnerOU.setItem = false;
+				Endgegner.setItem = false;
 				Endgegner.leben=Endgegner.StartLeben;
-				GegnerKI.leben=GegnerKI.StartLeben;
-				GegnerKI.StartX=0;
-				GegnerKI.StartY=0;
+				Spielfeld.gegnerKI.leben=Spielfeld.gegnerKI.StartLeben;
+				Spielfeld.gegnerKI.StartX=0;
+				Spielfeld.gegnerKI.StartY=0;
 				Falle.StartX=0;
 				Falle.StartY=0;
 			}
@@ -442,7 +445,15 @@ public class Elemente {
 				Spielfeld.anzeige = true;
 			}
 			break;
-		
+		//Pfeile
+		case 55:
+			if(block.Zustand == 0){
+				block.Zustand = 1;
+				Spielfeld.spieler.pfeile += 5;
+				Spielfeld.text_anzeige = "+5 Pfeile";
+				Spielfeld.anzeige = true;
+			}
+			break;
 		default:
 			//
 			break;
@@ -453,7 +464,6 @@ public class Elemente {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		Math.random();
 	}
 

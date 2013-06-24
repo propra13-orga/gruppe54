@@ -15,7 +15,7 @@ public class Frame extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
 	public static String title ="Dungeon Crawler";
-	public static Dimension size = new Dimension(850,670); 
+	public static Dimension size = new Dimension(1000,700); 
 	
 	public static Frame frame;
 	
@@ -47,7 +47,7 @@ public class Frame extends JFrame{
 	public static int CharakterAuswahl;
 	public static Image image;
 	public static ImageIcon Sieger = new ImageIcon();
-	public static ImageIcon Shopguy = new ImageIcon("pics/shopguy.png");	
+	public static ImageIcon Shopguy = new ImageIcon("pics/npc_aktiv.png");	
 	public static int spielerx=0,spielery=0;
 	public static double dx=0,dy=0;
 	
@@ -224,9 +224,6 @@ public class Frame extends JFrame{
 				menü.setVisible(true);
 				Spielfeld.spieler.checkpoint = new Point(Raum.Startpunkt[Spielfeld.current_lvl-1].x,Raum.Startpunkt[Spielfeld.current_lvl-1].y);
 				Spielfeld.spieler.check_room = 1;
-				Spielfeld.GegnerRL_counter = 0;
-				Spielfeld.GegnerOU_counter = 0;
-				Spielfeld.Endgegner_counter = 0;
 				
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
 				Spielfeld.spieler.aktiv = true;

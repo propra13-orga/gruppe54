@@ -13,10 +13,10 @@ public class Spielfeld extends JPanel implements Runnable{
 
 	public Thread thread = new Thread(this);
 	
-	public static Image[] elemente = new Image[55];
+	public static Image[] elemente = new Image[60];
 	
 	public static int current_lvl=1,current_room=1,current_player=1,counter_anzeige = 0;
-	public static double spieler_preposX=0,spieler_preposY=0;
+	public static double spieler_preposX=0,spieler_preposY=0;	//wenn z.B. der Shop betreten wird werden die Koordinaten des Spielers gespeichert
 	
 	public static boolean isFirst = true,weg_verschlossen = true;
 	public static boolean preis_shop = false,shop = false,shop_bogen = false, shop_pfeile = false,shop_trank = false,shop_mana = false,shop_supertrank = false,shop_ruestung1 = false, shop_schuss2=false,shop_ruestung2 = false,shop_stiefel = false,shop_axt = false,anzeige = false;
@@ -27,7 +27,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static GegnerRL gegnerRL;
 	public static GegnerOU gegnerOU;
 	public static Endgegner Boss;
-	public static int GegnerKI_counter=0, GegnerRL_counter = 0,GegnerOU_counter = 0,Endgegner_counter = 0,Falle_counter = 0;  //damit das Item, dass man nach besiegen eines Gegner erhält, nur einmal abgelegt wird
+	public static int GegnerKI_counter=0,Falle_counter = 0;  
 	public static GegnerKI gegnerKI;
 	public static Schuss_Endgegner schuss_endgegner;
 	public static Schuss_Spieler schuss_spieler;
@@ -37,10 +37,10 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static int counter_schuss2 =0;
 	public static int counter_angriff = 0;
 	public static Pfeil pfeil;
-	public static int EndgegnerLeben;
-	public static int GegnerRLLeben;
-	public static int GegnerOULeben;
-	public static int GegnerKILeben;
+	private static int EndgegnerLeben;
+	private static int GegnerRLLeben;
+	private static int GegnerOULeben;
+	private static int GegnerKILeben;
 	public static Falle falle;
 	public static Waffe waffe;
 	
@@ -48,7 +48,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	 * Konstruktor
 	 */
 	public Spielfeld(){
-		setBounds(25,55,800,480);
+		setBounds(25,55,Raum.worldWidth*Raum.blockSize,Raum.worldHeight*Raum.blockSize);
 		thread.start();
 		spieler = new Spieler();
 		spieler.runter=true;
@@ -110,6 +110,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		elemente[52] = new ImageIcon("pics/item_pfeile.png").getImage();
 		elemente[53] = new ImageIcon("pics/item_bogen.png").getImage();
 		elemente[54] = new ImageIcon("pics/gold2.gif").getImage();
+		elemente[55] = new ImageIcon("pics/item_pfeile.png").getImage();
 	}
 	/** 
 	 * Initialisierung
@@ -128,13 +129,10 @@ public class Spielfeld extends JPanel implements Runnable{
 		schuss_endgegner = new Schuss_Endgegner();
 		schuss_spieler = new Schuss_Spieler();
 		schuss2_spieler = new Schuss2_Spieler();
-		gegnerOU.leben=GegnerOU.StartLeben;
-		gegnerRL.leben=GegnerRL.StartLeben;
-		Endgegner.leben=Endgegner.StartLeben;
-		GegnerKI.leben=GegnerKI.StartLeben;
-		Spielfeld.GegnerRL_counter = 0;	//counter ist 1 wenn der jeweilige Gegner besiegt wurde,
-		Spielfeld.GegnerOU_counter = 0;	//damit nur einmal ein Item als Belohnung abgelegt wird
-		Spielfeld.Endgegner_counter = 0;
+		gegnerOU.leben = GegnerOU.StartLeben;
+		gegnerRL.leben = GegnerRL.StartLeben;
+		Endgegner.leben = Endgegner.StartLeben;
+		gegnerKI.leben = gegnerKI.StartLeben;
 		Spielfeld.GegnerKI_counter = 0;
 		waffe.ID = spieler.waffe;
 	}
@@ -219,15 +217,15 @@ public class Spielfeld extends JPanel implements Runnable{
 			}
 		}
 		//GegnerKI
-		if((GegnerKI.leben>0)&&(GegnerKI.aktiv)){
+		if((gegnerKI.leben>0)&&(gegnerKI.aktiv)){
 			gegnerKI.draw(g);
 			//Lebensanzeige GegnerKI
-			if(GegnerKI.leben>GegnerKI.StartLeben/4){
+			if(gegnerKI.leben>gegnerKI.StartLeben/4){
 				g.setColor(Color.green);
 			} else {
 				g.setColor(Color.red);
 			}
-			g.fill3DRect(GegnerKI.StartX, GegnerKI.StartY-10,GegnerKI.leben/GegnerKI.Faktor,3,true);	
+			g.fill3DRect(gegnerKI.StartX, gegnerKI.StartY-10,gegnerKI.leben/gegnerKI.Faktor,3,true);	
 		}
 	}
 	
@@ -290,50 +288,47 @@ public class Spielfeld extends JPanel implements Runnable{
 				}
 			}
 			//GegnerKI 
-			if ((GegnerKI.leben>0)&&(GegnerKI.aktiv)&&(GegnerKI.StartX !=0)&&(GegnerKI.StartY !=0)){
-				GegnerKI.lauf();
+			if ((gegnerKI.leben>0)&&(gegnerKI.aktiv)&&(gegnerKI.StartX !=0)&&(gegnerKI.StartY !=0)){
+				gegnerKI.lauf();
 				GegnerKI_counter = 0;
-				GegnerKI.counter_gegnerKI ++;
-				GegnerKI.laufen=false;
-				if(GegnerKI.counter_gegnerKI==3){
-					GegnerKI.laufen=true;
-					GegnerKI.counter_gegnerKI=0;
+				gegnerKI.counter_gegnerKI ++;
+				gegnerKI.laufen=false;
+				if(gegnerKI.counter_gegnerKI==3){
+					gegnerKI.laufen=true;
+					gegnerKI.counter_gegnerKI=0;
 				}
-			} else if((GegnerKI.leben <= 0)&&(GegnerKI_counter == 0)&&(shop == false)){ // "   "
+			} else if((gegnerKI.leben <= 0)&&(GegnerKI_counter == 0)&&(shop == false)){ // "   "
 				spieler.xp += 10*current_lvl;		//Fledermaus legt kein Item ab wenn es besiegt wurde
 				anzeige = true;
 				text_anzeige = "+"+10*current_lvl+" XP";
 				GegnerKI_counter = 1;
-				GegnerKI.StartX = 0;
-				GegnerKI.StartY = 0;
+				gegnerKI.StartX = 0;
+				gegnerKI.StartY = 0;
 			}
 			//GegnerRL 
 			if ((gegnerRL.aktiv)&&(gegnerRL.leben>0)&&(gegnerRL.StartX !=0)&&(gegnerRL.StartY !=0)){
 				gegnerRL.lauf();
-				GegnerRL_counter = 0;
-			} else if((gegnerRL.leben <= 0)&&(GegnerRL_counter == 0)&&(shop == false)){	//wenn der Gegner besiegt wurde müssen seine Koordinaten auf 0 gesetzt werden
-				if(getBlock(gegnerRL.StartX+16,gegnerRL.StartY+16).ID == 0){
-					getBlock(gegnerRL.StartX+16,gegnerRL.StartY+16).ID = 32;			//der counter ist dafür, dass beim besiegen des Gegners nur einmal ein Schatz liegt
-				}
+				gegnerRL.setItem = false;
+			} else if((gegnerRL.leben <= 0)&&(!gegnerRL.setItem)&&(shop == false)){	//wenn der Gegner besiegt wurde müssen seine Koordinaten auf 0 gesetzt werden
+				gegnerRL.setItem();
 				spieler.xp += 15*current_lvl;
 				anzeige = true;
 				text_anzeige = "+"+15*current_lvl+" XP";
-				GegnerRL_counter = 1;
 				gegnerRL.StartX = 0;
 				gegnerRL.StartY = 0;
 			}
 			//GegnerOU 
 			if ((gegnerOU.aktiv)&&(gegnerOU.leben>0)&&(gegnerOU.StartX !=0)&&(gegnerOU.StartY !=0)){
 				gegnerOU.lauf();
-				GegnerOU_counter = 0;
-			} else if((gegnerOU.leben <= 0)&&(GegnerOU_counter == 0)&&(shop == false)){ // "   " 
+				gegnerOU.setItem = false;
+			} else if((gegnerOU.leben <= 0)&&(!gegnerOU.setItem)&&(shop == false)){ // "   " 
+				gegnerOU.setItem();
 				if(getBlock(gegnerOU.StartX+16,gegnerOU.StartY+16).ID == 0){
 					getBlock(gegnerOU.StartX+16,gegnerOU.StartY+16).ID = 14;
 				}
 				spieler.xp += 15*current_lvl;
 				anzeige = true;
 				text_anzeige = "+"+15*current_lvl+" XP";
-				GegnerOU_counter = 1;
 				gegnerOU.StartX = 0;
 				gegnerOU.StartY = 0;
 				weg_verschlossen = false;
@@ -341,18 +336,19 @@ public class Spielfeld extends JPanel implements Runnable{
 			//Endgegner 
 			if ((Endgegner.leben>0)&&(Endgegner.aktiv)&&(Endgegner.StartX !=0)&&(Endgegner.StartY !=0)){
 				Endgegner.lauf();
+				Endgegner.setItem = false;
 				//Schuss vom Endgegner
 				if ((current_room==3)&&(schuss_endgegner.sichtbar==true)&&(Endgegner.leben>0)&&(schuss_endgegner.aktiv)){
 					schuss_endgegner.bewegung();
 				}
-			} else if((Endgegner.leben <= 0)&&(Endgegner_counter == 0)&&(shop == false)){ // "   "
+			} else if((Endgegner.leben <= 0)&&(!Endgegner.setItem)&&(shop == false)){ // "   "
+				Endgegner.setItem();
 				if(getBlock(Endgegner.StartX+16,Endgegner.StartY+16).ID == 0){ 
 					getBlock(Endgegner.StartX+16,Endgegner.StartY+16).ID = 13;
 				}
 				spieler.xp += 25*current_lvl;
 				anzeige = true;
 				text_anzeige = "+"+25*current_lvl+" XP";
-				Endgegner_counter = 1;
 				Endgegner.StartX = 0;
 				Endgegner.StartY = 0;
 			}
@@ -361,7 +357,7 @@ public class Spielfeld extends JPanel implements Runnable{
 				falle.bewegung();
 			}
 			//Pfeil des Spielers
-			if((spieler.waffe == 2)&&(pfeil.aktiv)){
+			if(pfeil.aktiv){
 				pfeil.Schuss();
 			}
 			//Counter für den String über dem Spieler zur Ausgabe eingesammelter Werte
@@ -420,20 +416,20 @@ public class Spielfeld extends JPanel implements Runnable{
 	 * lädt den Shop auf das Spielfeld
 	 */
 	public static void showShop(){
-		GegnerOULeben=gegnerOU.leben;
-		GegnerRLLeben=gegnerRL.leben;
-		EndgegnerLeben=Endgegner.leben;
-		GegnerKILeben=GegnerKI.leben;
+		GegnerOULeben = gegnerOU.leben;
+		GegnerRLLeben = gegnerRL.leben;
+		EndgegnerLeben = Endgegner.leben;
+		GegnerKILeben = gegnerKI.leben;
 		pfeil.aktiv = false;
 		level.loadLevel(new File("level/level0_0.lvl"));
-		gegnerOU.leben=0;
-		gegnerRL.leben =0;
-		Endgegner.leben=0;
-		GegnerKI.leben=0;
+		gegnerOU.leben = 0;
+		gegnerRL.leben = 0;
+		Endgegner.leben = 0;
+		gegnerKI.leben = 0;
 		Falle.aktiv=false;
 		schuss_endgegner.sichtbar=false;
 		Spielfeld.shop = true;
-		spieler.x = 235;
+		spieler.x = 325;
 		spieler.y = 315;
 	}
 	
@@ -444,7 +440,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		gegnerOU.leben=GegnerOULeben;
 		gegnerRL.leben=GegnerRLLeben;
 		Endgegner.leben=EndgegnerLeben;
-		GegnerKI.leben=GegnerKILeben;
+		gegnerKI.leben=GegnerKILeben;
 		Falle.aktiv=true;
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));
 		spieler.x = Spielfeld.spieler_preposX;

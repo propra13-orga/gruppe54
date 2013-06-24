@@ -131,8 +131,8 @@ public class Schuss_Spieler extends Rectangle {
 			 (StartY+31 >= Falle.StartY)&&(StartY <= Falle.StartY+31)){		
 			sichtbar=false;	
 		//GegnerKI
-		} else if((StartX+31 >= GegnerKI.StartX)&&(StartX <= GegnerKI.StartX+31)  &&
-			  (StartY+31 >= GegnerKI.StartY)&&(StartY <= GegnerKI.StartY+31)){		
+		} else if((StartX+31 >= Spielfeld.gegnerKI.StartX)&&(StartX <= Spielfeld.gegnerKI.StartX+31)  &&
+			  (StartY+31 >= Spielfeld.gegnerKI.StartY)&&(StartY <= Spielfeld.gegnerKI.StartY+31)){		
 			sichtbar=false;	
 		}
 	}

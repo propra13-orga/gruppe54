@@ -10,12 +10,12 @@ public class Spieler extends Rectangle {
 	public double y=Raum.Startpunkt[Spielfeld.current_lvl-1].getY(); 
 	
 	public double speed = 0.5;
-	public int gold = 500;
-	public int waffe = 0,ausrüstung = 1,schluessel = 0,pfeile = 0;
+	public int gold = 5000;
+	public int waffe = 0,schluessel = 0,pfeile = 10;
 	public double schaden = 5;
 	public int item_trank = 0,item_mana = 0,item_supertrank = 0;
 	public int leben = 100,superleben = 3,mana = 100,xp = 75,ruestung = 50;
-	public boolean aktiv = false;
+	public boolean aktiv = false,schwert = true,axt = false,bogen = true;
 	public Point checkpoint;
 	public int check_room = 1;		//Raum wo das letzte Mal der Checkpoint betätigt wurde
 	public int Anzahl_Schüssen=9;

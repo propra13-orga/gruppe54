@@ -20,7 +20,7 @@ public class Editorfeld extends JPanel implements Runnable,MouseListener{
 	public static Raum raum;
 	public static Level level = new Level();
 	public Thread thread = new Thread(this);
-	public static Image[] elemente = new Image[55];
+	public static Image[] elemente = new Image[60];
 	public static int current_lvl = 1,current_room = 1,current_id = 0;
 	public static boolean gegner1 = false,gegner2 = false, endgegner = false, fledermaus = false, falle = false,zepter = false;
 	/**
@@ -28,7 +28,7 @@ public class Editorfeld extends JPanel implements Runnable,MouseListener{
 	 */
 	
 	public Editorfeld(){
-		setBounds(25,80,805,485);
+		setBounds(25,80,Raum.worldWidth*Raum.blockSize+2,Raum.worldHeight*Raum.blockSize+2);
 		thread.start();
 		define();
 		addMouseListener(this);
@@ -95,6 +95,7 @@ public class Editorfeld extends JPanel implements Runnable,MouseListener{
 			elemente[47] = new ImageIcon("pics/ufer_rechts.png").getImage();
 			elemente[48] = new ImageIcon("pics/ufer_unten.png").getImage();
 			elemente[54] = new ImageIcon("pics/gold2.gif").getImage();
+			elemente[55] = new ImageIcon("pics/item_pfeile.png").getImage();
 			if(lvl_null){
 				current_lvl -= 1;
 				lvl_null = false;

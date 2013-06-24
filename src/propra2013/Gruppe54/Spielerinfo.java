@@ -18,14 +18,14 @@ public class Spielerinfo extends JPanel implements Runnable{
 	private static final long serialVersionUID = 1L;
 
 	public Spielerinfo(){
-		setBounds(25,545,810,100);
+		setBounds(100,580,810,100);
 		thread_info.start();
 	}
 	
 	public void paintComponent(Graphics g){
 		g.clearRect(0, 0, 800, 75);
 		g.drawRoundRect(0, 0, 800, 75, 10, 10);
-		g.setFont(new Font("Lucida Sans Typewriter",Font.PLAIN,11));
+		g.setFont(new Font("Arial",Font.PLAIN,11));
 		g.drawString("Level: "+Spielfeld.current_lvl,8,20);
 		g.drawString("Raum: "+Spielfeld.current_room,8,35);
 		g.drawString("Gold: "+Spielfeld.spieler.gold,8,50);
@@ -84,14 +84,13 @@ public class Spielerinfo extends JPanel implements Runnable{
 			g.drawImage(new ImageIcon("pics/shop_supertrank.png").getImage(), 390, 2, null);
 			g.drawString("x"+Spielfeld.spieler.item_supertrank, 405, 35);
 		}
-		if(Spielfeld.spieler.ausrüstung <= 1){
+		if(Spielfeld.spieler.schwert){
 			g.drawImage(new ImageIcon("pics/inventar_schwert.png").getImage(), 320, 40, null);
-		} else if(Spielfeld.spieler.ausrüstung <= 2){
-			g.drawImage(new ImageIcon("pics/inventar_schwert.png").getImage(), 320, 40, null);
+		} 
+		if(Spielfeld.spieler.axt){
 			g.drawImage(new ImageIcon("pics/inventar_axt.png").getImage(), 355, 40, null);
-		} else if(Spielfeld.spieler.ausrüstung <= 3){
-			g.drawImage(new ImageIcon("pics/inventar_schwert.png").getImage(), 320, 40, null);
-			g.drawImage(new ImageIcon("pics/inventar_axt.png").getImage(), 355, 40, null);
+		}
+		if(Spielfeld.spieler.bogen){
 			g.drawImage(new ImageIcon("pics/inventar_bogen.png").getImage(), 390, 40, null);
 		}			
 		if(Spielfeld.spieler.Anzahl_Schüssen>0){
@@ -115,7 +114,7 @@ public class Spielerinfo extends JPanel implements Runnable{
 		g.drawLine(460, 0, 460, 75);
 		g.drawLine(495, 0, 495, 75);
 		g.drawLine(320, 38, 495, 38);
-		g.setFont(new Font("Lucida Sans Typewriter",Font.PLAIN,10));
+		g.setFont(new Font("Arial",Font.PLAIN,10));
 		g.setColor(Color.black);
 		//Gespräch
 		if(npc){

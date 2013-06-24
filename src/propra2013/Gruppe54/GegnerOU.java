@@ -15,6 +15,7 @@ public class GegnerOU extends Rectangle{
 	
 	public boolean unten=false;  // gibt an, ob der Gegener unten an eine Wand stößt
 	public boolean rechts=false; // gibt an, ob der Gegener rechts an eine Wand stößt
+	public boolean setItem = false;
 	public int leben; 
 	public double StartX;
 	public double StartY;
@@ -52,6 +53,13 @@ public class GegnerOU extends Rectangle{
 				g.drawImage(new ImageIcon("pics/gegner2_"+Spielfeld.current_lvl+".png").getImage(), (int)StartX, (int)StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
 			}
 		}
+	}
+	//legt ein Item ab wenn der Gegner besiegt wurde
+	public void setItem(){
+		if(Spielfeld.getBlock(StartX+16,StartY+16).ID == 0){
+			Spielfeld.getBlock(StartX+16,StartY+16).ID = 32;			
+		}
+		setItem = true;
 	}
 	
 	public void lauf(){
