@@ -64,7 +64,7 @@ public class GegnerOU extends Rectangle{
 	
 	public void lauf(){
 		//Gegner läuft hoch und runter
-			if ((unten==false)&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=1)&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=41)
+			if ((unten==false)&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=2)&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=1)&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=41)
 					&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=42)&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=43)
 					&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=4)){
 				Kollision();
@@ -73,7 +73,7 @@ public class GegnerOU extends Rectangle{
 				} else {
 					unten = true;
 				}
-			if ((unten==true)&&(Spielfeld.getBlockID(StartX+16, StartY-2+16)!=1)&&(Spielfeld.getBlockID(StartX+16, StartY-2+16)!=41)
+			if ((unten==true)&&(Spielfeld.getBlockID(StartX+16, StartY-2+16)!=2)&&(Spielfeld.getBlockID(StartX+16, StartY-2+16)!=1)&&(Spielfeld.getBlockID(StartX+16, StartY-2+16)!=41)
 					&&(Spielfeld.getBlockID(StartX+16, StartY-2+16)!=42)&&(Spielfeld.getBlockID(StartX+16, StartY-2+16)!=43)
 					&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=4)){
 				Kollision();
