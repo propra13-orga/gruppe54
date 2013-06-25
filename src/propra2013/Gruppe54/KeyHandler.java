@@ -210,7 +210,7 @@ public class KeyHandler implements KeyListener{
 			 }
          }
          //Schuss des Spielers
-         if ((key == KeyEvent.VK_SPACE)&&(Spielfeld.spieler.aktiv)&&(Spielfeld.spieler.mana>=10)&&(Spielfeld.spieler.xp>=50)){	
+         if ((key == KeyEvent.VK_SPACE)&&(Spielfeld.spieler.aktiv)&&(Spielfeld.spieler.mana>=10)&&(Spielfeld.spieler.xp>=15)){	
         	if(!Spielfeld.schuss_spieler.sichtbar){
 	        	Spielfeld.schuss_spieler.sichtbar=true;
 	        	Spielfeld.schuss_spieler.setPos=false;

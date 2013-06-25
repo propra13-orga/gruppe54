@@ -31,7 +31,28 @@ public class Schuss_Spieler extends Rectangle {
 			setPos=true;
 		}
 	}
-		
+	
+	/**
+	 * Bestimmt den Schaden an Hand der Erfahrung des Spielers
+	 * @param spieler
+	 */
+	public void setSchaden(Spieler spieler){
+		if(spieler.xp>=275){
+			schaden=45;
+		} else
+		if (spieler.xp>=225){
+			schaden=40;
+		} else
+		if(spieler.xp>=175){
+			schaden=35;
+		} else 
+		if(spieler.xp>=125){
+			schaden=30;
+		} else
+		if(spieler.xp>=75){
+			schaden=25;
+		}
+	}
 	/**
 	 * Zeichnet den Schuss
 	 */
@@ -114,7 +135,6 @@ public class Schuss_Spieler extends Rectangle {
 		} else if((StartX+31 >= Spielfeld.gegnerRL.StartX)&&(StartX <= Spielfeld.gegnerRL.StartX+31)  &&
 		      (StartY+31 >= Spielfeld.gegnerRL.StartY)&&(StartY <= Spielfeld.gegnerRL.StartY+31)){			
 			sichtbar=false;
-			Spielfeld.gegnerRL.leben-=schaden;
 		//GegnerOU
 		} else if((StartX+31 >= Spielfeld.gegnerOU.StartX)&&(StartX <= Spielfeld.gegnerOU.StartX+31)&&
         	  (StartY+31 >= Spielfeld.gegnerOU.StartY)&&(StartY <= Spielfeld.gegnerOU.StartY+31)){		

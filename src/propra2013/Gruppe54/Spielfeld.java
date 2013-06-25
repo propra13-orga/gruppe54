@@ -125,6 +125,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		gegnerKI = new GegnerKI();
 		waffe = new Waffe();
 		loadImages();
+		current_room=3;
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
 		schuss_endgegner = new Schuss_Endgegner();
 		schuss_spieler = new Schuss_Spieler();
@@ -388,6 +389,7 @@ public class Spielfeld extends JPanel implements Runnable{
 				Elemente.beruehrung = false;
 			}
 			//Schuss vom Spieler
+			schuss_spieler.setSchaden(spieler);
 			if((schuss_spieler.sichtbar)){
 				if (schuss_spieler.setPos==false){
 					schuss_spieler.setPos();

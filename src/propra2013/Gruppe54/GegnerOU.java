@@ -90,10 +90,7 @@ public class GegnerOU extends Rectangle{
 		if( (StartX+26 >= Spielfeld.spieler.x)&&(StartX <= Spielfeld.spieler.x+26)&&
 			(StartY+26 >= Spielfeld.spieler.y)&&(StartY <= Spielfeld.spieler.y+26)){		
 			counter_kollision ++;
-			if ((Spielfeld.spieler.ruestung>0)&&(counter_kollision == 5)){  //counter_kollision damit nicht zuviel Leben abgezogen wird
-				Spielfeld.spieler.ruestung-=1;
-				counter_kollision = 0;
-			} else if((Spielfeld.spieler.ruestung <= 0)&&(counter_kollision == 5)) {
+			if(counter_kollision == 5) {
 				Spielfeld.spieler.leben -= 1;
 				counter_kollision = 0;
 			}

@@ -16,7 +16,7 @@ public class Schuss_Endgegner extends Rectangle {
 	public double spielerx=0,spielery=0;
 	public double nächsterSchrittX=0;
 	public double nächsterSchrittY=0;
-	private boolean restart=false;
+	private boolean restart=true;
 	
 	public Schuss_Endgegner() {
 		setBounds((int)StartX,(int)StartY,32,32);
@@ -29,33 +29,46 @@ public class Schuss_Endgegner extends Rectangle {
 			g.drawImage(new ImageIcon("pics/schuss2.png").getImage(), (int)StartX, (int)StartY, 32, 32, null); 
 		}
 		
-		//Bewegung nach rechts so lange es geht dann wieder vom Gegner starten
-		public void bewegung(){
-			restart=false;
-			checkFall();
-			nächsterSchritt();
-			if (restart==false){
-				StartX+=nächsterSchrittX;
-				StartY+=nächsterSchrittY;
-				Kollision();
-			} else if(restart==true){
-				StartX=Endgegner.StartX;
-				StartY=Endgegner.StartY;
-				spielerx = Spielfeld.spieler.x;
-				spielery = Spielfeld.spieler.y;
-	        }
+		//Setzt die Start Position
+		public void setStart(){
+			StartX=Endgegner.StartX;
+			StartY=Endgegner.StartY;
 		}
 		
+		public void setSchritt(){
+			StartX+=nächsterSchrittX;
+			StartY+=nächsterSchrittY;
+		}
+		
+		//Flugbahn des Schusses
+		public void bewegung(){
+			if(restart==true){
+				setStart();
+				restart=false;
+			} else
+				if(restart==false){
+					nächsterSchritt();
+					setSchritt();
+					Kollision();
+					kollisionMauer();
+				}
+		}
+	
+	public void kollisionMauer(){
+		if ((Spielfeld.getBlockID(StartX, StartY)==1) || (Spielfeld.getBlockID(StartX+31, StartY)==1)
+				|| (Spielfeld.getBlockID(StartX, StartY+31)==1) || (Spielfeld.getBlockID(StartX+31, StartY+31)==1)){
+			restart=true;
+		}
+	}
 	public void Kollision(){
 		if((StartX+31 >= Spielfeld.spieler.x)&&(StartX <= Spielfeld.spieler.x+31)  &&
 		   (StartY+31 >= Spielfeld.spieler.y)&&(StartY <= Spielfeld.spieler.y+31)){		
 			if (Spielfeld.spieler.ruestung>0){
 				Spielfeld.spieler.ruestung-=1;
-				restart=true;
 			} else {
 				Spielfeld.spieler.leben -= 1;
-				restart=true;
 			}
+			restart=true;
 		}
 	} 
 	
@@ -95,63 +108,40 @@ public class Schuss_Endgegner extends Rectangle {
 	public void nächsterSchritt(){
 		switch(checkFall()){
 		case 1:
-			if(linksfrei()){
 			nächsterSchrittX=-1*speed;
-			} else{nächsterSchrittX=0;restart=true;}
-			if(untenfrei()){
 			nächsterSchrittY=1*speed;
-			} else {nächsterSchrittY=0; restart=true;}
 			break;
 		case 2:
-			if (rechtsfrei()){
 			nächsterSchrittX=1*speed;
-			} else {nächsterSchrittX=0;restart=true;}
-			if (untenfrei()){
 			nächsterSchrittY=1*speed;
-			} else {nächsterSchrittY=0;restart=true;}
 		    break;
 		case 3:
-			if(rechtsfrei()){
 			nächsterSchrittX=1*speed;
-			} else {nächsterSchrittX=0;restart=true;}
-			if(obenfrei()){
-			nächsterSchrittY-=1*speed;
-			} else {nächsterSchrittY=0;restart=true;}
+			nächsterSchrittY=-1*speed;
 			break;
 		case 4:
-			if(linksfrei()){
-			nächsterSchrittX-=1*speed;
-			}else {nächsterSchrittX=0;restart=true;}
-			if(obenfrei()){
-			nächsterSchrittY-=1*speed;
-			} else {nächsterSchrittY=0;restart=true;}
+			nächsterSchrittX=-1*speed;
+			nächsterSchrittY=-1*speed;
 			break;
 		case 5:
-			if(untenfrei()){
 			nächsterSchrittY=1*speed;
-			} else {nächsterSchrittY=0;restart=true;}
 			nächsterSchrittX=0;
 			break;
 		case 6:
-			if(rechtsfrei()){
 			nächsterSchrittX=1*speed;
-			}else {nächsterSchrittX=0;restart=true;}
 			nächsterSchrittY=0;
 			break;
 		case 7:
 			nächsterSchrittX=0;
-			if(obenfrei()){
-			nächsterSchrittY-=1*speed;
-			} else {nächsterSchrittY=0;restart=true;}
+			nächsterSchrittY=-1*speed;
 			break;
 		case 8:
-			if(linksfrei()){
-			nächsterSchrittX-=1*speed;
-			} else {nächsterSchrittX=0;restart=true;}
+			nächsterSchrittX=-1*speed;
 			nächsterSchrittY=0;
 			break;
 		case 9:
-			restart=true;
+			nächsterSchrittX=0;
+			nächsterSchrittY=0;
 			break;
 		}		
 	}
