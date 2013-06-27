@@ -374,6 +374,9 @@ public class Elemente {
 				block.Zustand = 1;
 			}
 			break;
+		case 34://Quest NPC
+			Spielerinfo.questnpc = true;
+			break;
 		//Ausgang Wald
 		case 40:
 			if(Spielfeld.current_room!=3) {  

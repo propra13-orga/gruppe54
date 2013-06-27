@@ -79,11 +79,13 @@ public class Editorfeld extends JPanel implements Runnable,MouseListener{
 			elemente[31] = new ImageIcon("pics/truhe_zu.png").getImage();
 			elemente[32] = new ImageIcon("pics/gold1.gif").getImage();
 			elemente[33] = new ImageIcon("pics/herz_element.png").getImage();
-			//34
+			//Quest NPC
+			elemente[34] = new ImageIcon("pics/questNPC.png").getImage();
+			//Gegner
 			elemente[35] = new ImageIcon("pics/gegner1_"+current_lvl+".png").getImage();
 			elemente[36] = new ImageIcon("pics/gegner2_"+current_lvl+".png").getImage();
 			elemente[37] = new ImageIcon("pics/gegner3_"+current_lvl+".png").getImage();
-			elemente[38] = new ImageIcon("pics/falle_beweglich_unten"+current_lvl+".png").getImage();
+			elemente[38] = new ImageIcon("pics/falle_beweglich_unten_"+current_lvl+".png").getImage();
 			elemente[39] = new ImageIcon("pics/GegnerKI_1.png").getImage();
 			//40 Ausgang Wald
 			elemente[41] = new ImageIcon("pics/baum1.png").getImage();

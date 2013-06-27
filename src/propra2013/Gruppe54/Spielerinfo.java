@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 public class Spielerinfo extends JPanel implements Runnable{
 
 	public Thread thread_info = new Thread(this);
-	public static boolean npc = false,info = false,item_vorhanden = false,ruestung_voll = false,speed_voll = false,gold = false;
+	public static boolean npc = false,questnpc = false, info = false,item_vorhanden = false,ruestung_voll = false,speed_voll = false,gold = false;
 	public static String preis_anzeige,info_anzeige;
 	/**
 	 * 
@@ -120,6 +120,14 @@ public class Spielerinfo extends JPanel implements Runnable{
 		if(npc){
 			g.drawString("Willkommen im Dungeon Wald. Pass nur auf,",520,30);
 			g.drawString("es lauern überall Gefahren!",520,40);
+		}
+		//Quest Gespräch
+		if (questnpc){
+			g.drawString("Ich habe eine Quest für dich!", 520, 15);
+			g.drawString("Schaffst du es dieses Labyrith von Fallen zu", 520, 25);
+			g.drawString("überwinden,so gehört alles was du findest dir! ", 520, 35);
+			g.drawString("Traust du dich nicht, so folge einfach dem",520, 55);
+			g.drawString("Pfad in den nächsten Raum",520, 65);
 		}
 		//Preisanzeige Trank
 		if(info){

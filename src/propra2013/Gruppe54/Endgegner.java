@@ -61,7 +61,7 @@ public class Endgegner extends Rectangle{
 	
 	//Gibt an wie sich der Gegner bewegt
 	public static void lauf(){
-		//Hoch-runter
+	/*	//Hoch-runter
 		if ((unten==false)&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY+2+32)!=1)&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY+2+32)!=41)
 				&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY+2+32)!=42)&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY+2+32)!=43)
 				&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY+2+32)!=4)){
@@ -77,7 +77,8 @@ public class Endgegner extends Rectangle{
 			Endgegner.StartY-=1*speed;
 		} else {
 			unten = false; 
-		}
+		}*/
+		Kollision();
 	}
 	
 	//Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft

@@ -47,12 +47,12 @@ public class Falle extends Rectangle {
 
 	
 	public void bewegung(){
-		if ((Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=1)&&(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=4)){
+		if ((Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=1)&&(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=4)&&(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=41)&&(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=42)){
        	 Falle.StartY+=1*speed;
        	 if (counter_Kollision==5){
        	 Kollision();
        	 }else counter_Kollision+=1;
-       	 } else if((Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)==1)|(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)==4)){
+       	 } else if((Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)==1)|(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)==4)|(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)==41)|(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)==42)){
        		 Falle.StartX=Falle.StartPunktX;
     		 Falle.StartY=Falle.StartPunktY;
        	 }

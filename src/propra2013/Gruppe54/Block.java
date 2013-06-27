@@ -188,6 +188,21 @@ public class Block extends Rectangle {
 				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);
 			}
 			break;
+		case 34:    //Quest NPC
+			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
+			if(Spielerinfo.questnpc){		//wenn spieler daneben steht
+				Zustand = 1;
+			} else {
+				Zustand = 0;
+			}
+			if(Zustand==0){
+				g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
+				Spielerinfo.questnpc = false;
+			} else if(Zustand==1) {
+				Spielerinfo.questnpc = true;
+				g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);
+			}
+			break;
 			
 		case 35:	//Gegner 1
 			g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);  //boden zeichnen
