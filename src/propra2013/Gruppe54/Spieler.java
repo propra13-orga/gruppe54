@@ -78,6 +78,7 @@ public class Spieler extends Rectangle {
 	       	Spielfeld.shop_pfeile = false;
 	   }
 	   Spielerinfo.npc = false;
+	   Spielerinfo.questnpc = false;
        Spielerinfo.info = false;
        Spielerinfo.ruestung_voll = false;
        Spielerinfo.speed_voll = false;
