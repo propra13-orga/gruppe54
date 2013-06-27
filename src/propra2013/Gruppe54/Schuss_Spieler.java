@@ -87,7 +87,7 @@ public class Schuss_Spieler extends Rectangle {
 			(Spielfeld.getBlockID(StartX+25,StartY+27)!=ID)&& //unten rechts
 			(Spielfeld.getBlockID(StartX+10,StartY+30)!=ID)&& //oben links
 			(Spielfeld.getBlockID(StartX+20,StartY+30)!=ID)&&//oben rechts
-			(StartX>0)&&(StartX<800)&&(StartY>0)&&(StartY<480)){ 
+			(StartX>0)&&(StartX<Raum.worldWidth*Raum.blockSize)&&(StartY>0)&&(StartY<Raum.worldHeight*Raum.blockSize)){ 
 			return true;
 		} else { 
 			return false;
@@ -100,22 +100,22 @@ public class Schuss_Spieler extends Rectangle {
 		if(Spielfeld.counter_schuss == 0){
 			Richtung = checkRichtung();
 		}
-		if ((Richtung==1)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)){
+		if ((Richtung==1)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)&&check(51)){
 			StartX+=1*speed;
 			Kollision();
 		} else if(Richtung==1){
 			sichtbar=false;
-		} else if((Richtung==2)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)){
+		} else if((Richtung==2)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)&&check(51)){
 			StartY+=1*speed;
 			Kollision();
 		} else if(Richtung==2){
 			sichtbar=false;
-		} else if((Richtung==3)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)){
+		} else if((Richtung==3)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)&&check(51)){
 			StartX-=1*speed;
 			Kollision();
 		} else if (Richtung==3){
 			sichtbar=false;	
-		} else if((Richtung==4)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)){
+		} else if((Richtung==4)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)&&check(51)){
 			StartY-=1*speed;
 			Kollision();
 		} else if (Richtung==4){

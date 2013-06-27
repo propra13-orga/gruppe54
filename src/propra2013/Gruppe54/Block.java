@@ -264,12 +264,12 @@ public class Block extends Rectangle {
 			}
 			break;
 		
-		//verschlossener Weg, geht auf wenn man Gegner2 besiegt hat
+		//verschlossener Weg, geht auf wenn man Gegner2 besiegt hat, ist also so konzipiert auch nur auf diesen zu reagieren
 		case 51:
 			if(Spielfeld.weg_verschlossen){
-				g.drawImage(Spielfeld.elemente[1],x,y,width,height,null);
+				g.drawImage(Spielfeld.elemente[1],x,y,width,height,null); //Mauer
 			} else if(Spielfeld.weg_verschlossen == false){
-				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null);
+				ID = 0; //Boden
 			}
 			break;
 		

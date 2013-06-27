@@ -96,7 +96,7 @@ public class Pfeil extends Rectangle{
 			} else if((x+16 >= Falle.StartX)&&(x <= Falle.StartX+31)&&
 					  (y+16 >= Falle.StartY)&&(y <= Falle.StartY+31)){		
 				aktiv = false;	
-			} else if((check(1)==false)|(check(2)==false)|(check(4)==false)|(check(10)==false)|(check(41)==false)|(check(42)==false)){
+			} else if((check(1)==false)|(check(2)==false)|(check(4)==false)|(check(10)==false)|(check(41)==false)|(check(42)==false)|check(51)==false){
 				aktiv = false;
 			} else if((x<5)|(x>Raum.worldWidth*Raum.blockSize-30)|(y<5)|(y>Raum.worldHeight*Raum.blockSize-30)){
 				aktiv = false;
