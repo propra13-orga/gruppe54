@@ -54,6 +54,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static Client client,client2;
 	public static int counter_server = 0;
 	public static String richtung = null;
+	public static String ip = null;
 	
 	/**
 	 * Konstruktor

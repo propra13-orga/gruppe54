@@ -150,6 +150,9 @@ public class Frame extends JFrame{
 		//Button Enter Click
 		enter.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				if((multiplayer.isSelected())&(!createServer.isSelected())){
+					Spielfeld.ip = JOptionPane.showInputDialog(null, "Bitte gebe die IP-Adresse des Rechners an der den Server erstellt hat:");
+				}
 				//Buttons ausblenden und entfernen
 				spiel_zurueck.setVisible(false);
 				enter.setVisible(false);
@@ -162,9 +165,9 @@ public class Frame extends JFrame{
 				Spielfeld.current_room=1;
 				
 				if(multiplayer.isSelected()){
-					spielfeld.multiplayer = true;
+					Spielfeld.multiplayer = true;
 				} else if(!multiplayer.isSelected()){
-					spielfeld.multiplayer = false;
+					Spielfeld.multiplayer = false;
 				}
 				if(createServer.isSelected()){
 					Spielfeld.host = true;
