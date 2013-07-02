@@ -12,7 +12,7 @@ public class Client extends Thread{
 	
 	public Client() throws UnknownHostException{
 		try{
-			socket = new Socket("localhost", 4444); 
+			socket = new Socket(InetAddress.getByName("10.125.6.155"), 4444); 
 			out = new PrintWriter(socket.getOutputStream(),true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		} catch(Exception e){
