@@ -9,7 +9,12 @@ public class Elemente {
 	
 	public static boolean beruehrung = false;
 	public static int feuer = 0,speer = 0; //es soll nicht jeder Schritt über das Feuer Schaden geben, es soll aber Schaden genommen werden wenn der Spieler stehen bleibt
-
+	
+	/**
+	 * Aufruf der Elemente
+	 * @param ID
+	 * @param block
+	 */
 	public static void Aufruf(int ID,Block block){
 		switch(ID){
 		

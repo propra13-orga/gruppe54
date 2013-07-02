@@ -24,6 +24,7 @@ public class Endgegner extends Rectangle{
 	public static boolean aktiv;
 
 	/**
+	 * Konstruktor
 	 * @param args
 	 */
 	public Endgegner(){
@@ -45,13 +46,19 @@ public class Endgegner extends Rectangle{
 		aktiv=false;
 	}
 	
-	//Zeichnet den Gegner
-	//muss noch ein anderes Bild eingefügt werden
+	
+	/**
+	 * Draw Methode
+	 * @param g
+	 */
 	public void draw(Graphics g){
 		g.drawImage(new ImageIcon("pics/gegner3_"+Spielfeld.current_lvl+".png").getImage(), (int)StartX, (int)StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
 	}
 	
-	//legt ein Elemente ab wenn der Gegner besiegt wurde
+	
+	/**
+	 * setItem legt ein Elemente ab wenn der Gegner besiegt wurde 
+	 */
 	public static void setItem(){
 		if(Spielfeld.getBlock(StartX+16,StartY+16).ID == 0){
 			Spielfeld.getBlock(StartX+16,StartY+16).ID = 32;			
@@ -59,7 +66,9 @@ public class Endgegner extends Rectangle{
 		setItem = true;
 	}
 	
-	//Gibt an wie sich der Gegner bewegt
+	/**
+	 * lauf gibt die Bewegung des Endgegners an
+	 */
 	public static void lauf(){
 	/*	//Hoch-runter
 		if ((unten==false)&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY+2+32)!=1)&&(Spielfeld.getBlockID(Endgegner.StartX+16, Endgegner.StartY+2+32)!=41)
@@ -80,8 +89,11 @@ public class Endgegner extends Rectangle{
 		}*/
 		Kollision();
 	}
-	
-	//Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
+	/**
+	 * Kollision
+	 * gibt an was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
+	 * 
+	 */
 	public static void Kollision(){
 		if((Endgegner.StartX+31 >= Spielfeld.spieler.x)&&(Endgegner.StartX <= Spielfeld.spieler.x+31)&&
 			(Endgegner.StartY+31 >= Spielfeld.spieler.y)&&(Endgegner.StartY <= Spielfeld.spieler.y+31)){		

@@ -26,6 +26,9 @@ public class Falle extends Rectangle {
 	public static double StartPunktY;
 	public int counter_Kollision=0;
 	
+	/**
+	 * Konstruktor
+	 */
 	public Falle(){
 		setBounds((int)StartX,(int)StartY,32,32);
 		if (Spielfeld.current_lvl==1){
@@ -39,13 +42,19 @@ public class Falle extends Rectangle {
 		}
 		aktiv=false;
 	}
-
+	
+	/**
+	 * Draw Methode
+	 * @param g
+	 */
 	public void draw(Graphics g){
 		if((Falle.StartX!=0)&&(Falle.StartY!=0)){
 		g.drawImage(new ImageIcon("pics/falle_beweglich_unten_"+Spielfeld.current_lvl+".png").getImage(), (int)StartX, (int)StartY, 32, 32, null);
 	}}
 
-	
+	/**
+	 * Bewegung der Falle
+	 */
 	public void bewegung(){
 		if ((Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=1)&&(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=4)&&(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=41)&&(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=42)){
        	 Falle.StartY+=1*speed;
@@ -59,6 +68,10 @@ public class Falle extends Rectangle {
 		
 	}
 	
+	/**
+	 * Kollision
+	 * Gibt an was passiert wenn der Spieler die Falle berührt
+	 */
 	public void Kollision(){
 		
 		if((Falle.StartX+31 >= Spielfeld.spieler.x)&&(Falle.StartX <= Spielfeld.spieler.x+31)  &&

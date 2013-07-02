@@ -233,8 +233,9 @@ public class KeyHandler implements KeyListener{
         	 Spielfeld.spieler.mana = 100;
         	 Spielfeld.spieler.leben = 100;
         	 Spielfeld.spieler.ruestung = 100;
-        	 Spielfeld.spieler.xp+=50;
+        	 Spielfeld.spieler.xp+=100;
         	 Spielfeld.spieler.Anzahl_Schüssen=10;
+        	 Spielfeld.spieler.pfeile=10;
          }
          //Angriff
          if((key == KeyEvent.VK_B)&&(Spielfeld.spieler.aktiv)){

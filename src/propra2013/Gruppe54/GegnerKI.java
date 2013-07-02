@@ -32,7 +32,7 @@ public class GegnerKI extends Rectangle{
 	public int counter_gegnerKI=0;
 	
 	/**
-	 * @param args
+	 * Konstruktor
 	 */
 	public GegnerKI(){
 		setBounds(StartX,StartY,32,32);
@@ -57,14 +57,19 @@ public class GegnerKI extends Rectangle{
 		aktiv=false;
 	}
 	
-	//Zeichnet den Gegner
+	/**
+	 * Draw Methode
+	 * @param g
+	 */
 	public void draw(Graphics g){
 		if((aktiv)&&(StartX!=0)&&(StartY!=0)){
 			g.drawImage(new ImageIcon("pics/GegnerKI_1"/*+Spielfeld.current_lvl*/+".png").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
 		}
 	}
 	
-	//Funktion die den nächsten schritt berechnet
+	/**
+	 * berechnet die Richtung des nächsten Schrittes
+	 */
 	public void nächsterSchritt(){
 		if (Fall==1){
 			if(linksfrei()){
@@ -128,8 +133,8 @@ public class GegnerKI extends Rectangle{
 		}		
 	}
 	
-	//Überprüft wo sich der Spieler befindet, wenn Gegner in 9 steht
-	/*
+	/**Überprüft wo sich der Spieler befindet, wenn Gegner in 9 steht
+	 *
 	 * 4		7		3
 	 * 
 	 * 8		9		6
@@ -167,7 +172,10 @@ public class GegnerKI extends Rectangle{
 			Fall=9;
 		}
 	}
-
+	
+	/**
+	 * Bewegung des GegnerKI
+	 */
 	public void lauf(){
 		if (laufen){
 			checkFall();
