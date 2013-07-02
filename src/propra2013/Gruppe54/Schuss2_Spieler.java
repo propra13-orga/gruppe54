@@ -15,18 +15,20 @@ public class Schuss2_Spieler extends Rectangle {
 	public boolean sichtbar=false;
 	public boolean checkRichtung = false;
 	public int Richtung = 0;
+	public Spieler spieler;
 
 	
-	public Schuss2_Spieler() {
+	public Schuss2_Spieler(Spieler spieler) {
 		setBounds((int)StartX,(int)StartY,32,32);
-		sichtbar=false;
+		this.sichtbar=false;
+		this.spieler = spieler;
 	}
 
 	//schaut nach wo der Spieler steht 
 		public void setPos(){
 			if(setPos == false){
-			StartX=Spielfeld.spieler.x;
-			StartY=Spielfeld.spieler.y;
+			StartX = spieler.x;
+			StartY = spieler.y;
 			setPos=true;
 			}
 		}
@@ -36,13 +38,13 @@ public class Schuss2_Spieler extends Rectangle {
 		g.drawImage(new ImageIcon("pics/schuss_feuer_1.png").getImage(), (int)StartX, (int)StartY, 32, 32, null); 
 	}
 	public int checkRichtung(){
-		if (Spielfeld.spieler.rechts==true){
+		if (spieler.rechts==true){
 			return 1;
-		} else if(Spielfeld.spieler.links==true){
+		} else if(spieler.links==true){
 			return 3;
-		} else if (Spielfeld.spieler.hoch==true){
+		} else if (spieler.hoch==true){
 			return 4;
-		} else if (Spielfeld.spieler.runter==true){
+		} else if (spieler.runter==true){
 			return 2;
 		} else {
 			return 0;
@@ -117,6 +119,9 @@ public class Schuss2_Spieler extends Rectangle {
 			  (StartY+31 >= Spielfeld.gegnerKI.StartY)&&(StartY <= Spielfeld.gegnerKI.StartY+31)){		
 			sichtbar=false;	
 			Spielfeld.gegnerKI.leben-=schaden;
+			if(Spielfeld.multiplayer){
+				Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";gegner;3;"+schaden);
+			}
 		}
 	}
 	public static void main(String[] args) {

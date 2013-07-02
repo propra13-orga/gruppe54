@@ -133,9 +133,17 @@ public class Waffe extends Rectangle {
 		   (((x-4 >= Spielfeld.gegnerRL.StartX)&&(x-4 <= Spielfeld.gegnerRL.StartX+32))&&((y+4 >= Spielfeld.gegnerRL.StartY)&&(y+4 <= Spielfeld.gegnerRL.StartY+32)))||
 		   (((x+28 >= Spielfeld.gegnerRL.StartX)&&(x+28 <= Spielfeld.gegnerRL.StartX+32))&&((y+4 >= Spielfeld.gegnerRL.StartY)&&(y+4 <= Spielfeld.gegnerRL.StartY+32)))){
 			switch(ID){
-			case 0: Spielfeld.gegnerRL.leben -= Spielfeld.spieler.schaden;	
+			case 0: 
+				Spielfeld.gegnerRL.leben -= Spielfeld.spieler.schaden;
+				if(Spielfeld.multiplayer){
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";gegner;1;"+Spielfeld.spieler.schaden);
+				}
 				break;
-			case 1: Spielfeld.gegnerRL.leben -= Spielfeld.spieler.schaden*1.2;
+			case 1: 
+				Spielfeld.gegnerRL.leben -= Spielfeld.spieler.schaden*1.2;
+				if(Spielfeld.multiplayer){
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";gegner;1;"+Spielfeld.spieler.schaden*1.2);
+				}
 				break;
 			}
 		}
@@ -144,9 +152,17 @@ public class Waffe extends Rectangle {
 		   (((x-4 >= Endgegner.StartX)&&(x-4 <= Endgegner.StartX+32))&&((y+4 >= Endgegner.StartY)&&(y+4 <= Endgegner.StartY+32)))||
 		   (((x+28 >= Endgegner.StartX)&&(x+28 <= Endgegner.StartX+32))&&((y+4 >= Endgegner.StartY)&&(y+4 <= Endgegner.StartY+32)))){
 			switch(ID){
-			case 0: Endgegner.leben -= Spielfeld.spieler.schaden;
+			case 0: 
+				Endgegner.leben -= Spielfeld.spieler.schaden;
+				if(Spielfeld.multiplayer){
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";gegner;4;"+Spielfeld.spieler.schaden);
+				}
 				break;
-			case 1: Endgegner.leben -= Spielfeld.spieler.schaden*1.2;
+			case 1: 
+				Endgegner.leben -= Spielfeld.spieler.schaden*1.2;
+				if(Spielfeld.multiplayer){
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";gegner;4;"+Spielfeld.spieler.schaden*1.2);
+				}
 			break;
 			}
 		}

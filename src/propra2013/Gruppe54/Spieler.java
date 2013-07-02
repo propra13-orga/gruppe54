@@ -25,12 +25,16 @@ public class Spieler extends Rectangle {
 	public boolean links = false;
 	public boolean hoch = false;
 	public boolean runter = false; 
+	public boolean multiplayer = false;
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Konstruktor
+	 */
 	public Spieler(){
 		setBounds((int)x,(int)y,32,32);
 		aktiv = true;		//gibt an ob der Spieler im Spiel ist
@@ -38,11 +42,16 @@ public class Spieler extends Rectangle {
 	}
 	
 	public void draw(Graphics g){
-		g.drawImage(Frame.image,(int)x,(int)y,32,32,null);
-		//g.drawImage(new ImageIcon("pics/spieler"+Spielfeld.current_player+".png").getImage(), x, y, 32, 32, null); //zeichnet den Spieler an (x,y)
+		if(multiplayer){
+			g.drawImage(Frame.image2,(int)x,(int)y,32,32,null);
+		} else if(!multiplayer) {
+			g.drawImage(Frame.image,(int)x,(int)y,32,32,null);
+		}
 	}
 	
-	//prüft am derzeitigen Standort des Spielers an 4 Punkten ob dieser ein Objekt berührt welches eine Aktion ausführt
+	/**
+	 * prüft am derzeitigen Standort des Spielers an 4 Punkten ob dieser ein Objekt berührt welches eine Aktion ausführt
+	 */
 	public void checkKollision(){
 		Elemente.beruehrung = false;
 		Elemente.Aufruf(Spielfeld.getBlockID(x+26+Frame.dx,y+32+Frame.dy),Spielfeld.getBlock(x+26+Frame.dx,y+32+Frame.dy));
@@ -53,8 +62,10 @@ public class Spieler extends Rectangle {
         }
     }
 	
-	//prüft ob die boolean Variablen noch auf "true" gesetzt sind obwohl der Spieler nicht mehr vor dem Item steht
-	//damit die Anzeige ausgeblendet wird
+	/**
+	 * prüft ob die boolean Variablen noch auf "true" gesetzt sind obwohl der Spieler nicht mehr vor dem Item steht
+	 * damit die Anzeige ausgeblendet wird
+	 */
 	public void checkShopItems(){
 	   if((Spielfeld.shop_trank)&&(check(21))){
 	       	Spielfeld.shop_trank = false;
@@ -87,7 +98,11 @@ public class Spieler extends Rectangle {
        Spielfeld.preis_shop = false;
 	}
 		
-	//prüft an 4 Punkten ob sich dort ein Objekt befindet durch das der Spieler nicht laufen darf
+	/**
+	 * prüft an 4 Punkten ob sich dort ein Objekt befindet durch das der Spieler nicht laufen darf
+	 * @param ID
+	 * @return true,false
+	 */
 	public boolean check(int ID){
 		if((Spielfeld.getBlockID(x+6+Frame.dx,y+26+Frame.dy)!=ID)&&(Spielfeld.getBlockID(x+26+Frame.dx,y+26+Frame.dy)!=ID)&&(Spielfeld.getBlockID(x+6+Frame.dx,y+32+Frame.dy)!=ID)
 			&&(Spielfeld.getBlockID(x+26+Frame.dx,y+32+Frame.dy)!=ID)&&(x+Frame.dx>0)&&(y+32+Frame.dy<(Raum.worldHeight*Raum.blockSize))&&(x+32+Frame.dx<(Raum.worldWidth*Raum.blockSize))
@@ -97,13 +112,6 @@ public class Spieler extends Rectangle {
 			return false;
 		}
 	}
-	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
+	public static void main(String[] args) {}
 
 }
