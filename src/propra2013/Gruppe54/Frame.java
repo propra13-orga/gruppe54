@@ -31,11 +31,6 @@ public class Frame extends JFrame{
 	public static JButton nextLevel = new JButton("Nächstes Level");
 	public static JButton spiel_zurueck = new JButton("Zurück zum Spiel");
 	public static JButton checkpoint = new JButton("Zum Checkpoint");
-	//Charakterauswahl
-	public static JLabel charakter = new JLabel();
-	public static JLabel charakterBild = new JLabel();
-	public static JButton PfeilRechts = new JButton();
-	public static JButton PfeilLinks = new JButton();
 	public static ImageIcon Figur2_rechts = new ImageIcon("pics/Figur2_rechts.png");
 	public static ImageIcon Figur2_links = new ImageIcon("pics/Figur2_links.png");
 	public static ImageIcon Figur2_unten = new ImageIcon("pics/Figur2_unten.png");
@@ -44,12 +39,12 @@ public class Frame extends JFrame{
 	public static ImageIcon Figur1_links = new ImageIcon("pics/Figur1_links.png");
 	public static ImageIcon Figur1_unten = new ImageIcon("pics/Figur1_unten.png");
 	public static ImageIcon Figur1_oben = new ImageIcon("pics/Figur1_oben.png");
-	public static int CharakterAuswahl;
-	public static Image image;
+	public static Image image = Figur1_rechts.getImage(),image2 = Figur2_rechts.getImage();
 	public static ImageIcon Sieger = new ImageIcon();
 	public static ImageIcon Shopguy = new ImageIcon("pics/npc_aktiv.png");	
 	public static int spielerx=0,spielery=0;
 	public static double dx=0,dy=0;
+	public static JCheckBox multiplayer,createServer;
 	
 	//Levelauswahl
 	public static String auswahl[] = {"Level1","Level2","Level3","Level4"};
@@ -70,6 +65,18 @@ public class Frame extends JFrame{
 		addKeyListener(new KeyHandler());			//KeyListener hinzufügen
 		requestFocus();								//Fokus setzen
 		
+		multiplayer = new JCheckBox("Multiplayer");
+		multiplayer.setBounds(550,100,150,20);
+	    multiplayer.setSelected(false);
+	    multiplayer.setVisible(true);
+	    add(multiplayer);
+	    
+	    createServer = new JCheckBox("Server erstellen");
+	    createServer.setBounds(550,125,150,20);
+	    createServer.setSelected(false);
+	    createServer.setVisible(true);
+	    add(createServer);
+		
 		//Button Hauptmenü, nur im "Spielmodus" sichtbar
 		menü.setBounds(25,25,175,20);
 		menü.setVisible(false);
@@ -88,47 +95,21 @@ public class Frame extends JFrame{
 		//Button nächstes Level, nur sichtbar wenn ein Level erfolgreich absolviert wurde
 		nextLevel.setBounds(340,25,150,20);
 		nextLevel.setVisible(false);
-		
-		//Label Charakterauswahl
-		charakter.setBounds(460,100,150,30);
-		charakter.setText("Charakterauswahl:");
-		charakter.setVisible(true);
-		add(charakter);
-		
-		//Label für das Charakter-Bild
-		charakterBild.setBounds(540, 150, 32, 32);
-		charakterBild.setVisible(true);
-		charakterBild.setIcon(Figur1_unten);
-		image = Figur1_unten.getImage();
-		add(charakterBild);
-		Sieger =Figur1_unten;
-		
-		CharakterAuswahl = 1;
-		
-		//Buttons zur Charakterauswahl
-		PfeilRechts.setBounds(600, 155, 50, 20);
-		PfeilLinks.setBounds(460, 155, 50, 20);
-		PfeilRechts.setVisible(true);
-		PfeilLinks.setVisible(true);
-		PfeilRechts.setText(">");
-		PfeilLinks.setText("<");
-		add(PfeilLinks);
-		add(PfeilRechts);
 	
 		//Anzeige des Menüs
-		enter.setBounds(250, 100, 150, 30);		//Button Enter
+		enter.setBounds(375, 100, 150, 30);		//Button Enter
 		enter.setVisible(true);
 		add(enter);
 		
-		info.setBounds(250,150,150,30);			//Button Info
+		info.setBounds(375,150,150,30);			//Button Info
 		info.setVisible(true);
 		add(info);
 		
-		schließen.setBounds(250, 200, 150, 30); //Button Schließen
+		schließen.setBounds(375, 200, 150, 30); //Button Schließen
 		schließen.setVisible(true);
 		add(schließen);
 		
-		levelAuswahl.setBounds(250, 250, 150, 30);	//ComboBox Levelauswahl
+		levelAuswahl.setBounds(375, 250, 150, 30);	//ComboBox Levelauswahl
 		levelAuswahl.setVisible(true);
 		add(levelAuswahl);
 		
@@ -166,26 +147,6 @@ public class Frame extends JFrame{
 			}
 		});
 		
-		//Button PfeilRechts Click
-		PfeilRechts.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				charakterBild.setIcon(Figur2_unten);
-				image = Figur2_unten.getImage();
-				CharakterAuswahl = 2;
-				Sieger =Figur2_unten;
-			}
-		});
-		
-		//Button PfeilLinks Click
-		PfeilLinks.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				charakterBild.setIcon(Figur1_unten);
-				image = Figur1_unten.getImage();
-				CharakterAuswahl =1;
-				Sieger =Figur1_unten;
-			}
-		});
-		
 		//Button Enter Click
 		enter.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -194,22 +155,23 @@ public class Frame extends JFrame{
 				enter.setVisible(false);
 				info.setVisible(false);
 				schließen.setVisible(false);
-				charakter.setVisible(false);
-				PfeilRechts.setVisible(false);
-				PfeilLinks.setVisible(false);
-				charakterBild.setVisible(false);
-				remove(spiel_zurueck);
-				remove(PfeilRechts);
-				remove(PfeilLinks);
-				remove(charakterBild);
 				remove(enter);
 				remove(info);
 				remove(schließen);
 				remove(levelAuswahl);
-				remove(charakter);
-			
 				Spielfeld.current_room=1;
-				Spielfeld.isFirst = true;
+				
+				if(multiplayer.isSelected()){
+					spielfeld.multiplayer = true;
+				} else if(!multiplayer.isSelected()){
+					spielfeld.multiplayer = false;
+				}
+				if(createServer.isSelected()){
+					Spielfeld.host = true;
+				} else if(!createServer.isSelected()){
+					Spielfeld.host = false;
+				}
+				
 				//Spielfeld anzeigen	
 				spielfeld.define();	
 				add(spielfeld);						
@@ -252,6 +214,9 @@ public class Frame extends JFrame{
 					Spielfeld.spieler.leben = 100;
 					Spielfeld.spieler.mana = 100;
 					Spielfeld.spieler.aktiv = true;
+					if(Spielfeld.multiplayer){
+						Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";erwacht;");
+					}
 				} else if(Spielfeld.spieler.superleben <= 0){
 					//aktuelles Level in Raum 1 neu laden
 					Spielfeld.current_room = 1;
@@ -270,6 +235,9 @@ public class Frame extends JFrame{
 					nextLevel.setVisible(false);
 					checkpoint.setVisible(false);
 					Spielfeld.shop = false;
+					if(Spielfeld.multiplayer){
+						Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";erwacht;");
+					}
 				}
 			}
 		});
@@ -287,6 +255,9 @@ public class Frame extends JFrame{
 				Spielfeld.spieler.leben = 100;
 				Spielfeld.spieler.mana = 100;
 				Spielfeld.spieler.aktiv = true;
+				if(Spielfeld.multiplayer){
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";erwacht;");
+				}
 			}
 		});
 		
@@ -332,18 +303,10 @@ public class Frame extends JFrame{
 				info.setVisible(true);
 				schließen.setVisible(true);
 				levelAuswahl.setVisible(true);
-				charakter.setVisible(true);
-				PfeilRechts.setVisible(true);
-				PfeilLinks.setVisible(true);
-				charakterBild.setVisible(true);
-				add(PfeilRechts);
-				add(PfeilLinks);
-				add(charakterBild);
 				add(enter);
 				add(info);
 				add(schließen);
 				add(levelAuswahl);
-				add(charakter);
 				Spielfeld.spieler.aktiv = false;
 				levelAuswahl.setSelectedItem("Level"+Spielfeld.current_lvl);
 				Spielfeld.shop = false;
@@ -369,18 +332,10 @@ public class Frame extends JFrame{
 				enter.setVisible(false);
 				info.setVisible(false);
 				schließen.setVisible(false);
-				charakter.setVisible(false);
-				PfeilRechts.setVisible(false);
-				PfeilLinks.setVisible(false);
-				charakterBild.setVisible(false);
-				remove(PfeilRechts);
-				remove(PfeilLinks);
-				remove(charakterBild);
 				remove(enter);
 				remove(info);
 				remove(schließen);
 				remove(levelAuswahl);
-				remove(charakter);
 				Spielfeld.spieler.beweglich = true;
 				Spielfeld.spieler.aktiv = true;
 				menü.setVisible(true);

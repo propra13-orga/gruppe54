@@ -19,12 +19,8 @@ public class KeyHandler implements KeyListener{
             Spielfeld.spieler.rechts = false;
             Spielfeld.spieler.hoch = false;
             Spielfeld.spieler.runter = false;
-            
-            if (Frame.CharakterAuswahl==2){
-            	Frame.image = Frame.Figur2_links.getImage();
-            } else if (Frame.CharakterAuswahl ==1){
-            	Frame.image = Frame.Figur1_links.getImage();
-            }
+            Frame.image = Frame.Figur1_links.getImage();
+            Spielfeld.richtung = "links";
          }
 
          if ((key == KeyEvent.VK_D)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+30, Spielfeld.spieler.y+26)!=1)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+30, Spielfeld.spieler.y+32)!=1)) {
@@ -35,12 +31,8 @@ public class KeyHandler implements KeyListener{
          	Spielfeld.spieler.rechts = true;
          	Spielfeld.spieler.hoch = false;
          	Spielfeld.spieler.runter = false;
-            
-            if (Frame.CharakterAuswahl==2){
-            	Frame.image = Frame.Figur2_rechts.getImage();
-            } else if (Frame.CharakterAuswahl ==1){
-            	Frame.image = Frame.Figur1_rechts.getImage();
-            }
+         	Frame.image = Frame.Figur1_rechts.getImage();
+         	Spielfeld.richtung = "rechts";
          }
 
          if ((key == KeyEvent.VK_W)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+6, Spielfeld.spieler.y+26)!=1)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+26, Spielfeld.spieler.y+23)!=1)) {
@@ -51,12 +43,8 @@ public class KeyHandler implements KeyListener{
 	        Spielfeld.spieler.rechts = false;
 	        Spielfeld.spieler.hoch = true;
 	        Spielfeld.spieler.runter = false;
-            
-            if (Frame.CharakterAuswahl==2){
-            	Frame.image = Frame.Figur2_oben.getImage();
-            } else if (Frame.CharakterAuswahl ==1){
-            	Frame.image = Frame.Figur1_oben.getImage();
-            }
+	        Frame.image = Frame.Figur1_oben.getImage();
+	        Spielfeld.richtung = "hoch";
          }
          
          if ((key == KeyEvent.VK_S)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+6, Spielfeld.spieler.y+32)!=1)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+26, Spielfeld.spieler.y+32)!=1)) {
@@ -67,12 +55,8 @@ public class KeyHandler implements KeyListener{
 	        Spielfeld.spieler.rechts = false;
 	        Spielfeld.spieler.hoch = false;
 	        Spielfeld.spieler.runter = true;
-            
-	        if (Frame.CharakterAuswahl==2){
-            	Frame.image = Frame.Figur2_unten.getImage();
-            } else if (Frame.CharakterAuswahl ==1){
-            	Frame.image = Frame.Figur1_unten.getImage();
-            }
+	        Frame.image = Frame.Figur1_unten.getImage();
+	        Spielfeld.richtung = "runter";
          }
          
          //ruft den Shop auf
@@ -217,9 +201,12 @@ public class KeyHandler implements KeyListener{
 				Spielfeld.schuss_spieler.checkRichtung();
 				Spielfeld.spieler.mana -= 10;
 				Spielfeld.counter_schuss = 0;
+				if(Spielfeld.multiplayer){
+				Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";schuss1;");
+				}
         	}
-         }
-         //Schuss2 des Spielers
+         } 
+        //Schuss2 des Spielers
          if ((key == KeyEvent.VK_C)&&(Spielfeld.spieler.aktiv)&&(Spielfeld.spieler.Anzahl_Schüssen>0)&&(Spielfeld.spieler.xp>=75)){	
         	if(!Spielfeld.schuss2_spieler.sichtbar){
 	        	Spielfeld.schuss2_spieler.sichtbar=true;
@@ -227,6 +214,9 @@ public class KeyHandler implements KeyListener{
 				Spielfeld.schuss2_spieler.checkRichtung();
 				Spielfeld.spieler.Anzahl_Schüssen -= 1;
 				Spielfeld.counter_schuss2 = 0;
+				if(Spielfeld.multiplayer){
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";schuss2;");
+				}
         	}
          } 
          if((key == KeyEvent.VK_K)&&(Spielfeld.spieler.aktiv)){ //kleiner Cheat zu Testzwecken ;D

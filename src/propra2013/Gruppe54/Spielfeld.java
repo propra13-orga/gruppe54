@@ -3,6 +3,8 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
+import java.net.UnknownHostException;
 
 public class Spielfeld extends JPanel implements Runnable{
 
@@ -18,20 +20,21 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static int current_lvl=1,current_room=1,current_player=1,counter_anzeige = 0;
 	public static double spieler_preposX=0,spieler_preposY=0;	//wenn z.B. der Shop betreten wird werden die Koordinaten des Spielers gespeichert
 	
-	public static boolean isFirst = true,weg_verschlossen = true;
+	public static boolean set_server = false,isFirst = true,weg_verschlossen = true;
 	public static boolean preis_shop = false,shop = false,shop_bogen = false, shop_pfeile = false,shop_trank = false,shop_mana = false,shop_supertrank = false,shop_ruestung1 = false, shop_schuss2=false,shop_ruestung2 = false,shop_stiefel = false,shop_axt = false,anzeige = false;
 	public static String text_anzeige,preis_anzeige;
 	public static Raum raum;
 	public static Level level = new Level();
 	public static Spieler spieler;
+	public static Spieler spieler2;
 	public static GegnerRL gegnerRL;
 	public static GegnerOU gegnerOU;
 	public static Endgegner Boss;
 	public static int GegnerKI_counter=0,Falle_counter = 0;  
 	public static GegnerKI gegnerKI;
 	public static Schuss_Endgegner schuss_endgegner;
-	public static Schuss_Spieler schuss_spieler;
-	public static Schuss2_Spieler schuss2_spieler;
+	public static Schuss_Spieler schuss_spieler,schuss_spieler2;
+	public static Schuss2_Spieler schuss2_spieler,schuss2_spieler2;
 	public static int counter_schuss = 0; //wird auf 1 gesetzt wenn der Spieler schießt, damit die Position des Schusses sich während dem Flug nicht 
 										  //weiterhin der Position des Spielers anpasst
 	public static int counter_schuss2 =0;
@@ -43,6 +46,14 @@ public class Spielfeld extends JPanel implements Runnable{
 	private static int GegnerKILeben;
 	public static Falle falle;
 	public static Waffe waffe;
+	public static boolean multiplayer = false;
+
+	public static boolean host = false;
+	
+	public static Server server;
+	public static Client client,client2;
+	public static int counter_server = 0;
+	public static String richtung = null;
 	
 	/**
 	 * Konstruktor
@@ -51,7 +62,12 @@ public class Spielfeld extends JPanel implements Runnable{
 		setBounds(25,55,Raum.worldWidth*Raum.blockSize,Raum.worldHeight*Raum.blockSize);
 		thread.start();
 		spieler = new Spieler();
-		spieler.runter=true;
+		spieler.rechts = true;
+		spieler2 = new Spieler();
+		if(multiplayer){
+			spieler2.aktiv = true;
+			spieler2.rechts = true;
+		}
 	}
     /**
      * Bilder in Array laden
@@ -113,10 +129,36 @@ public class Spielfeld extends JPanel implements Runnable{
 		elemente[54] = new ImageIcon("pics/gold2.gif").getImage();
 		elemente[55] = new ImageIcon("pics/item_pfeile.png").getImage();
 	}
+	
+	/**
+	 * Initialisiert Server und Client bzw. nur den Client
+	 * @throws IOException
+	 */
+	public void defineServer() throws IOException{
+	if(host){  //Server erstellen und Client
+		server = new Server();
+		server.start();
+		client = new Client();
+		client.start();
+	} else if(!host){ //nur Client erstellen
+		client = new Client();
+		client.start();
+	}
+	set_server = true;
+	}
+	
 	/** 
 	 * Initialisierung
 	 */
 	public void define(){
+		if((!set_server)&(multiplayer)){
+			try {
+				defineServer();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		schuss_spieler2 = new Schuss_Spieler(spieler2);
 		raum = new Raum();
 		gegnerRL = new GegnerRL();
 		gegnerOU = new GegnerOU();
@@ -128,14 +170,16 @@ public class Spielfeld extends JPanel implements Runnable{
 		loadImages();
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
 		schuss_endgegner = new Schuss_Endgegner();
-		schuss_spieler = new Schuss_Spieler();
-		schuss2_spieler = new Schuss2_Spieler();
+		schuss_spieler = new Schuss_Spieler(spieler);
+		schuss2_spieler = new Schuss2_Spieler(spieler);
+		schuss2_spieler2 = new Schuss2_Spieler(spieler2);
 		gegnerOU.leben = GegnerOU.StartLeben;
 		gegnerRL.leben = GegnerRL.StartLeben;
 		Endgegner.leben = Endgegner.StartLeben;
 		gegnerKI.leben = gegnerKI.StartLeben;
-		Spielfeld.GegnerKI_counter = 0;
+		GegnerKI_counter = 0;
 		waffe.ID = spieler.waffe;
+		isFirst = false;
 	}
 	
 	public void paintComponent(Graphics g){
@@ -170,6 +214,20 @@ public class Spielfeld extends JPanel implements Runnable{
 				schuss2_spieler.draw(g);
 			}
 		}
+		
+		//Multiplayer 
+		if(multiplayer){
+			if(spieler2.aktiv){
+				spieler2.draw(g);
+			}
+			if(schuss_spieler2.sichtbar){
+				schuss_spieler2.draw(g);
+			}
+			if(schuss2_spieler2.sichtbar){
+				schuss2_spieler2.draw(g);
+			}
+		}
+		
 		//Gegner1
 		if((gegnerRL.leben>0)&&(gegnerRL.aktiv)){
 			gegnerRL.draw(g);
@@ -238,6 +296,9 @@ public class Spielfeld extends JPanel implements Runnable{
 			if(isFirst){ //Erstinitialisierung
 				define();
 				isFirst=false;
+				if(multiplayer){
+					spieler2.multiplayer = true;
+				}
 			}
 			//Wenn der Spieler besiegt wurde
 			if((spieler.leben <= 0)&&(spieler.superleben >= 1)&&(spieler.aktiv)){
@@ -264,9 +325,12 @@ public class Spielfeld extends JPanel implements Runnable{
 				if(spieler.checkpoint.getX() != Raum.Startpunkt[Spielfeld.current_lvl-1].getX()){
 					Frame.checkpoint.setVisible(true);
 				} else if(spieler.checkpoint.getX() == Raum.Startpunkt[Spielfeld.current_lvl-1].getX()){
-					Frame.neustart.setVisible(true);	
+					Frame.neustart.setVisible(true);	 
 				}
 				spieler.superleben -= 1;
+				if(multiplayer){
+					client.send(client.socket.getLocalPort()+";besiegt;");
+				}
 			} else if((spieler.leben <= 0)&&(spieler.superleben <= 0)&&(spieler.aktiv)){
 				spieler.aktiv = false;
 				spieler.xp -= 100;
@@ -288,6 +352,31 @@ public class Spielfeld extends JPanel implements Runnable{
 					counter_angriff = 0;
 				}
 			}
+			
+			if(multiplayer){
+				if(spieler2.rechts){
+					Frame.image2 = Frame.Figur2_rechts.getImage();
+				} else if(spieler2.links){
+					Frame.image2 = Frame.Figur2_links.getImage();
+				} else if(spieler2.hoch){
+					Frame.image2 = Frame.Figur2_oben.getImage();
+				} else if(spieler2.runter){
+					Frame.image2 = Frame.Figur2_unten.getImage();
+				}
+				//Schuss von Spieler2
+				schuss_spieler2.setSchaden(spieler2);
+				if(schuss_spieler2.sichtbar){
+					schuss_spieler2.Schuss();
+					counter_schuss = 1;
+				}
+				//Schuss2 von Spieler2
+				if(schuss2_spieler2.sichtbar){
+					schuss2_spieler2.Schuss();
+					counter_schuss2 = 1;
+				}
+				
+			}
+		
 			//GegnerKI 
 			if ((gegnerKI.leben>0)&&(gegnerKI.aktiv)&&(gegnerKI.StartX !=0)&&(gegnerKI.StartY !=0)){
 				gegnerKI.lauf();
@@ -376,11 +465,25 @@ public class Spielfeld extends JPanel implements Runnable{
 				spieler.checkKollision();
 				spieler.x += Frame.dx;
 				spieler.y += Frame.dy;
+				
+				if((multiplayer)&(client != null)&(counter_server==0)){
+					client.send(client.socket.getLocalPort()+";spieler;"+Double.toString(spieler.x)+";"+Double.toString(spieler.y)+";"); //position an Server schicken
+					client.send(client.socket.getLocalPort()+";blick;"+richtung+";");
+					spieler2.checkKollision();
+				}
+				counter_server++;
+				if(counter_server==10){
+					counter_server=0;
+				}
+				
 				Elemente.beruehrung = false;
 			} else if((spieler.check(15)==false) | (spieler.check(18)==false) | (spieler.check(20)==false) | (spieler.check(21)==false) | (spieler.check(22)==false) | (spieler.check(30)==false)
 					| (spieler.check(23)==false) | (spieler.check(24)==false) | (spieler.check(25)==false) | (spieler.check(28)==false) | (spieler.check(31)==false) |(spieler.check(34)==false) 
 					| (spieler.check(29)==false) | (spieler.check(17)==false) | (spieler.check(10)==false)| (spieler.check(52)==false)| (spieler.check(53)==false)){	//wenn nicht, dann wird nur die Aktion des Elements ausgeführt, der Spieler geht aber nicht weiter
 				spieler.checkKollision();
+				if(multiplayer){
+					spieler2.checkKollision();
+				}
 				Elemente.beruehrung = false;
 			} else if((spieler.check(51)==false)&&(weg_verschlossen==false)){
 				spieler.checkKollision();

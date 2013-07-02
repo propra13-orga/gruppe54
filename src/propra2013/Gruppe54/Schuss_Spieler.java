@@ -15,10 +15,12 @@ public class Schuss_Spieler extends Rectangle {
 	public boolean sichtbar=false;
 	public boolean checkRichtung = false;
 	public int Richtung = 0;
+	public Spieler spieler;
 	
-	public Schuss_Spieler() {
+	public Schuss_Spieler(Spieler spieler) {
 		setBounds((int)StartX,(int)StartY,32,32);
-		sichtbar=false;
+		this.sichtbar=false;
+		this.spieler = spieler;
 	}
 
 	/**
@@ -26,8 +28,8 @@ public class Schuss_Spieler extends Rectangle {
 	 */
 	public void setPos(){
 		if(setPos == false){
-			StartX=Spielfeld.spieler.x;
-			StartY=Spielfeld.spieler.y;
+			StartX = spieler.x;
+			StartY = spieler.y;
 			setPos=true;
 		}
 	}
@@ -64,13 +66,13 @@ public class Schuss_Spieler extends Rectangle {
 	 * @return	Integer-Wert für die Richtung
 	 */
 	public int checkRichtung(){
-		if (Spielfeld.spieler.rechts==true){
+		if (spieler.rechts==true){
 			return 1;
-		} else if(Spielfeld.spieler.links==true){
+		} else if(spieler.links==true){
 			return 3;
-		} else if (Spielfeld.spieler.hoch==true){
+		} else if (spieler.hoch==true){
 			return 4;
-		} else if (Spielfeld.spieler.runter==true){
+		} else if (spieler.runter==true){
 			return 2;
 		} else {
 			return 0;
@@ -131,6 +133,9 @@ public class Schuss_Spieler extends Rectangle {
 		   (StartY+31 >= Endgegner.StartY)&&(StartY <= Endgegner.StartY+31)){		
 			sichtbar=false;
 			Endgegner.leben-=schaden;
+			if(Spielfeld.multiplayer){
+				Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";gegner;4;"+schaden);
+			}
 		//GegnerRL
 		} else if((StartX+31 >= Spielfeld.gegnerRL.StartX)&&(StartX <= Spielfeld.gegnerRL.StartX+31)  &&
 		      (StartY+31 >= Spielfeld.gegnerRL.StartY)&&(StartY <= Spielfeld.gegnerRL.StartY+31)){			
@@ -140,6 +145,9 @@ public class Schuss_Spieler extends Rectangle {
         	  (StartY+31 >= Spielfeld.gegnerOU.StartY)&&(StartY <= Spielfeld.gegnerOU.StartY+31)){		
 			sichtbar=false;	
 			Spielfeld.gegnerOU.leben-=schaden;
+			if(Spielfeld.multiplayer){
+				Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";gegner;2;"+schaden);
+			}
 		//Schuss_Endgegner
 		}else if((StartX+31 >= Spielfeld.schuss_endgegner.StartX)&&(StartX <= Spielfeld.schuss_endgegner.StartX+31)  &&
 			 (StartY+31 >= Spielfeld.schuss_endgegner.StartY)&&(StartY <= Spielfeld.schuss_endgegner.StartY+31)){		
