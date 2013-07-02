@@ -10,7 +10,7 @@ public class Elemente {
 	public static boolean beruehrung = false;
 	public static int feuer = 0,speer = 0; //es soll nicht jeder Schritt über das Feuer Schaden geben, es soll aber Schaden genommen werden wenn der Spieler stehen bleibt
 
-	public static void Aufruf(int ID,Block block){
+	public static void Aufruf(int ID,Block block,Spieler spieler){
 		switch(ID){
 		
 		case 5://Ausgang
@@ -29,8 +29,8 @@ public class Elemente {
 				Spielfeld.current_room+=1;
 				Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_"+Spielfeld.current_room+".lvl"));
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
-				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
-				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
+				spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
+				spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
 				Spielfeld.gegnerRL.leben=GegnerRL.StartLeben;
 				Spielfeld.gegnerRL.leben=GegnerRL.StartLeben;
 				Spielfeld.gegnerRL.setItem = false;
@@ -43,19 +43,28 @@ public class Elemente {
 				Falle.StartX=0;
 				Falle.StartY=0;
 				Spielfeld.pfeil.aktiv = false;
+				if(Spielfeld.multiplayer){
+					if(Spielfeld.schuss_spieler2.sichtbar){
+						Spielfeld.schuss_spieler2.sichtbar = false;
+					}
+					if(Spielfeld.schuss2_spieler2.sichtbar){
+						Spielfeld.schuss2_spieler2.sichtbar = false;
+					}
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";raumwechsel;");
+				}
 			}
 			break;
 		
 		case 6:
 			if(block.Zustand == 0){
-				Spielfeld.spieler.schluessel += 1;
+				spieler.schluessel += 1;
 				block.Zustand = 1;
 			} 
 			break;
 			
 		case 7://Falle_Loch - Spieler soll auf den Startpunkt zurück fallen
-			Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
-			Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
+			spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
+			spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
 			block.Zustand = 1;
 			break;
 		
@@ -63,10 +72,10 @@ public class Elemente {
 			feuer++;
 			if(feuer==10){
 				beruehrung = true;		  //da z.B. beim hochlaufen zwei Punkte auf Berührung überprüft werden, soll gespeichert werden,
-				if(Spielfeld.spieler.ruestung<=0){  //ob bereits eine Falle ausgelöst wurde damit die Punkte nicht doppelt abgezogen werden
-					Spielfeld.spieler.leben-=1;
+				if(spieler.ruestung<=0){  //ob bereits eine Falle ausgelöst wurde damit die Punkte nicht doppelt abgezogen werden
+					spieler.leben-=1;
 				} else {
-					Spielfeld.spieler.ruestung-=1;
+					spieler.ruestung-=1;
 				}		
 				feuer = 0;
 			}
@@ -76,10 +85,10 @@ public class Elemente {
 			speer++;
 			if(speer==15){
 				beruehrung = true;
-				if(Spielfeld.spieler.ruestung<=0){
-					Spielfeld.spieler.leben-=1;
+				if(spieler.ruestung<=0){
+					spieler.leben-=1;
 				} else {
-					Spielfeld.spieler.ruestung-=1;
+					spieler.ruestung-=1;
 				}
 				block.Zustand = 1;	//lädt das aktive Bild der Falle
 				speer = 0;
@@ -89,11 +98,11 @@ public class Elemente {
 		case 10://Falle_Monster
 			beruehrung = true;
 			Spielfeld.Falle_counter++;
-			if((Spielfeld.spieler.ruestung<=0)&&(Spielfeld.Falle_counter==5)){
-				Spielfeld.spieler.leben-=1;
+			if((spieler.ruestung<=0)&&(Spielfeld.Falle_counter==5)){
+				spieler.leben-=1;
 				Spielfeld.Falle_counter = 0;
 			} else if(Spielfeld.Falle_counter==5){
-				Spielfeld.spieler.ruestung-=1;
+				spieler.ruestung-=1;
 				Spielfeld.Falle_counter = 0;
 			}
 			break;
@@ -102,10 +111,10 @@ public class Elemente {
 			speer++;
 			if(speer==15){
 				beruehrung = true;
-				if(Spielfeld.spieler.ruestung<=0){
-					Spielfeld.spieler.leben-=2;
+				if(spieler.ruestung<=0){
+					spieler.leben-=2;
 				} else {
-					Spielfeld.spieler.ruestung-=2;
+					spieler.ruestung-=2;
 				}
 				block.Zustand = 1;	//lädt das aktive Bild der Falle
 				speer = 0;
@@ -116,10 +125,10 @@ public class Elemente {
 			speer++;
 			if(speer==15){
 				beruehrung = true;
-				if(Spielfeld.spieler.ruestung<=0){
-					Spielfeld.spieler.leben-=2;
+				if(spieler.ruestung<=0){
+					spieler.leben-=2;
 				} else {
-					Spielfeld.spieler.ruestung-=2;
+					spieler.ruestung-=2;
 				}
 				block.Zustand = 1;	//lädt das aktive Bild der Falle
 				speer = 0;
@@ -128,12 +137,12 @@ public class Elemente {
 		
 		case 13://Lebenstrank
 			if(block.Zustand==0){
-			if(Spielfeld.spieler.leben == 100){
-				Spielfeld.spieler.item_trank += 1;
+			if(spieler.leben == 100){
+				spieler.item_trank += 1;
 			} else {
-				Spielfeld.spieler.leben+=40;
-				if(Spielfeld.spieler.leben>100){
-					Spielfeld.spieler.leben = 100;
+				spieler.leben+=40;
+				if(spieler.leben>100){
+					spieler.leben = 100;
 				}
 			}
 			block.Zustand = 1;
@@ -142,12 +151,12 @@ public class Elemente {
 		
 		case 14://Manatrank
 			if(block.Zustand==0){
-			if(Spielfeld.spieler.mana == 100){
-				Spielfeld.spieler.item_mana += 1;
+			if(spieler.mana == 100){
+				spieler.item_mana += 1;
 			} else {
-				Spielfeld.spieler.mana+=40;
-				if(Spielfeld.spieler.mana>100){
-					Spielfeld.spieler.mana = 100;
+				spieler.mana+=40;
+				if(spieler.mana>100){
+					spieler.mana = 100;
 				}
 			}
 			block.Zustand = 1;
@@ -155,10 +164,10 @@ public class Elemente {
 			break;
 			
 		case 15://brunnen lebensenergie
-			if((Spielfeld.spieler.leben<100)&&(block.Zustand==0)){	
-				Spielfeld.spieler.leben = 100;
-				if(Spielfeld.spieler.leben>100){
-					Spielfeld.spieler.leben = 100;
+			if((spieler.leben<100)&&(block.Zustand==0)){	
+				spieler.leben = 100;
+				if(spieler.leben>100){
+					spieler.leben = 100;
 				}
 				block.Zustand = 1;
 			}
@@ -166,16 +175,16 @@ public class Elemente {
 		
 		case 16://Supertrank
 			if(block.Zustand==0){
-			if((Spielfeld.spieler.mana == 100)&&(Spielfeld.spieler.leben == 100)){
-				Spielfeld.spieler.item_supertrank += 1;
+			if((spieler.mana == 100)&&(spieler.leben == 100)){
+				spieler.item_supertrank += 1;
 			} else {
-				Spielfeld.spieler.mana+=40;
-				if(Spielfeld.spieler.mana>100){
-					Spielfeld.spieler.mana = 100;
+				spieler.mana+=40;
+				if(spieler.mana>100){
+					spieler.mana = 100;
 				}
-				Spielfeld.spieler.leben += 40;
-				if(Spielfeld.spieler.leben>100){
-					Spielfeld.spieler.leben = 100;
+				spieler.leben += 40;
+				if(spieler.leben>100){
+					spieler.leben = 100;
 				}
 			}
 			block.Zustand = 1;
@@ -183,10 +192,10 @@ public class Elemente {
 			break;
 		
 		case 17://brunnen mana
-			if((Spielfeld.spieler.mana<100)&&(block.Zustand==0)){	
-				Spielfeld.spieler.mana = 100;
-				if(Spielfeld.spieler.mana>100){
-					Spielfeld.spieler.mana = 100;
+			if((spieler.mana<100)&&(block.Zustand==0)){	
+				spieler.mana = 100;
+				if(spieler.mana>100){
+					spieler.mana = 100;
 				}
 				block.Zustand = 1;
 			}
@@ -194,7 +203,7 @@ public class Elemente {
 			
 		case 18://zepter
 			if(Endgegner.leben<=0){
-			Spielfeld.spieler.beweglich = false;
+			spieler.beweglich = false;
 			block.ID = 0;
 			if(Spielfeld.current_lvl<4){
 				Frame.nextLevel.setVisible(true);
@@ -210,8 +219,8 @@ public class Elemente {
 		
 		case 19://Checkpoint
 			if(block.Zustand == 0){
-				Spielfeld.spieler.checkpoint = new Point(block.x,block.y);
-				Spielfeld.spieler.check_room = Spielfeld.current_room;
+				spieler.checkpoint = new Point(block.x,block.y);
+				spieler.check_room = Spielfeld.current_room;
 				block.Zustand = 1;
 			}
 			break;
@@ -265,7 +274,15 @@ public class Elemente {
    		 	}
 			if(Spielfeld.schuss2_spieler.sichtbar){
 	   			 Spielfeld.schuss2_spieler.sichtbar = false;
-	   		 	}
+	   		}
+			if(Spielfeld.multiplayer){
+				if(Spielfeld.schuss_spieler2.sichtbar){
+		   			 Spielfeld.schuss_spieler2.sichtbar = false;
+		   		}
+				if(Spielfeld.schuss2_spieler2.sichtbar){
+			   		 Spielfeld.schuss2_spieler2.sichtbar = false;
+			   	}
+			}
    		 	if(Spielfeld.schuss_endgegner.sichtbar){
    		 	Spielfeld.schuss_endgegner.sichtbar=false;
    		 	}
@@ -315,30 +332,30 @@ public class Elemente {
 			if((block.Zustand == 0)&&(Spielfeld.spieler.schluessel>0)){
 				switch(i){
 				case 1:
-					Spielfeld.spieler.gold += 150;
+					spieler.gold += 150;
 					Spielfeld.text_anzeige = "+150 Gold";
 					break;
 				case 2:
-					Spielfeld.spieler.pfeile += 10;
+					spieler.pfeile += 10;
 					Spielfeld.text_anzeige = "+10 Pfeile";
 					break;
 				case 3:
-					Spielfeld.spieler.item_trank += 1;
+					spieler.item_trank += 1;
 					Spielfeld.text_anzeige = "+1 Trank";
 					break;
 				case 4:
-					Spielfeld.spieler.Anzahl_Schüssen += 5;
+					spieler.Anzahl_Schüssen += 5;
 					Spielfeld.text_anzeige = "+5 Feuerzauber";
 					break;
 				default:
-					Spielfeld.spieler.gold += 150;
+					spieler.gold += 150;
 					Spielfeld.text_anzeige = "+150 Gold";
 					break;
 				}
 
 				block.Zustand = 1;
 				Spielfeld.anzeige = true;
-				Spielfeld.spieler.schluessel -= 1;
+				spieler.schluessel -= 1;
 			}
 			break;
 		case 32://Gold1
@@ -346,19 +363,19 @@ public class Elemente {
 			if(block.Zustand == 0){
 				switch(j){
 				case 1:
-					Spielfeld.spieler.gold += 50;
+					spieler.gold += 50;
 					Spielfeld.text_anzeige = "+50 Gold";
 					break;
 				case 2:
-					Spielfeld.spieler.gold += 20;
+					spieler.gold += 20;
 					Spielfeld.text_anzeige = "+20 Gold";
 					break;
 				case 3:
-					Spielfeld.spieler.gold += 10;
+					spieler.gold += 10;
 					Spielfeld.text_anzeige = "+10 Gold";
 					break;
 				default:
-					Spielfeld.spieler.gold += 50;
+					spieler.gold += 50;
 					Spielfeld.text_anzeige = "+50 Gold";
 					break;
 				}
@@ -370,7 +387,7 @@ public class Elemente {
 			
 		case 33://Herz
 			if(block.Zustand == 0){
-				Spielfeld.spieler.superleben += 1;
+				spieler.superleben += 1;
 				block.Zustand = 1;
 			}
 			break;
@@ -394,8 +411,8 @@ public class Elemente {
 				Spielfeld.gegnerKI.aktiv = false;
 				Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_"+Spielfeld.current_room+".lvl"));
 				//Spieler auf den Startpunkt des jeweiligen Levels setzen
-				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
-				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
+				spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
+				spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
 				Spielfeld.gegnerRL.leben=GegnerRL.StartLeben;
 				Spielfeld.gegnerRL.setItem = false;
 				Spielfeld.gegnerOU.setItem = false;
@@ -406,6 +423,14 @@ public class Elemente {
 				Spielfeld.gegnerKI.StartY=0;
 				Falle.StartX=0;
 				Falle.StartY=0;
+				if(Spielfeld.multiplayer){
+					if(Spielfeld.schuss_spieler2.sichtbar){
+						Spielfeld.schuss_spieler2.sichtbar = false;
+					}
+					if(Spielfeld.schuss2_spieler2.sichtbar){
+						Spielfeld.schuss2_spieler2.sichtbar = false;
+					}
+				}
 			}
 			break;
 		case 52://Item_Shop_Pfeile
@@ -427,19 +452,19 @@ public class Elemente {
 			if(block.Zustand == 0){
 				switch(k){
 				case 1:
-					Spielfeld.spieler.gold += 60;
+					spieler.gold += 60;
 					Spielfeld.text_anzeige = "+60 Gold";
 					break;
 				case 2:
-					Spielfeld.spieler.gold += 10;
+					spieler.gold += 10;
 					Spielfeld.text_anzeige = "+10 Gold";
 					break;
 				case 3:
-					Spielfeld.spieler.gold += 20;
+					spieler.gold += 20;
 					Spielfeld.text_anzeige = "+20 Gold";
 					break;
 				default:
-					Spielfeld.spieler.gold += 20;
+					spieler.gold += 20;
 					Spielfeld.text_anzeige = "+20 Gold";
 					break;
 				}
@@ -452,7 +477,7 @@ public class Elemente {
 		case 55:
 			if(block.Zustand == 0){
 				block.Zustand = 1;
-				Spielfeld.spieler.pfeile += 5;
+				spieler.pfeile += 5;
 				Spielfeld.text_anzeige = "+5 Pfeile";
 				Spielfeld.anzeige = true;
 			}
@@ -463,9 +488,6 @@ public class Elemente {
 	}
 }
 	
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		Math.random();
 	}
