@@ -20,9 +20,9 @@ public class Editorfeld extends JPanel implements Runnable,MouseListener{
 	public static Raum raum;
 	public static Level level = new Level();
 	public Thread thread = new Thread(this);
-	public static Image[] elemente = new Image[60];
+	public static Image[] elemente = new Image[70];
 	public static int current_lvl = 1,current_room = 1,current_id = 0;
-	public static boolean gegner1 = false,gegner2 = false, endgegner = false, fledermaus = false, falle = false,zepter = false;
+	public static boolean gegner1 = false,gegner2 = false, endgegner = false, fledermaus = false, falle = false,zepter = false, rätsel1=false,rätsel2=false,rätsel3=false,rätsel4=false;
 	/**
 	 * @param args
 	 */
@@ -98,6 +98,14 @@ public class Editorfeld extends JPanel implements Runnable,MouseListener{
 			elemente[48] = new ImageIcon("pics/ufer_unten.png").getImage();
 			elemente[54] = new ImageIcon("pics/gold2.gif").getImage();
 			elemente[55] = new ImageIcon("pics/item_pfeile.png").getImage();
+			elemente[56] = new ImageIcon("pics/tor_unten_1.png").getImage();
+			elemente[57] = new ImageIcon("pics/tor_unten_2.png").getImage();
+			elemente[58] = new ImageIcon("pics/tor_unten_3.png").getImage();
+			elemente[59] = new ImageIcon("pics/rätsel1_editor.png").getImage();
+			elemente[60] = new ImageIcon("pics/rätsel2_editor.png").getImage();
+			elemente[61] = new ImageIcon("pics/rätsel3_editor.png").getImage();
+			elemente[62] = new ImageIcon("pics/rätsel4_editor.png").getImage();
+			
 			if(lvl_null){
 				current_lvl -= 1;
 				lvl_null = false;
@@ -189,6 +197,20 @@ public class Editorfeld extends JPanel implements Runnable,MouseListener{
 			case 39:
 				fledermaus = false;
 				break;
+			case 59:
+				rätsel1 =false;
+				break;
+			case 60:
+				rätsel2 =false;
+				break;
+			case 61:
+				rätsel3 =false;
+				break;
+			case 62:
+				rätsel4 =false;
+				break;
+			
+			
 		}
 	}
 	
@@ -199,6 +221,10 @@ public class Editorfeld extends JPanel implements Runnable,MouseListener{
 		falle = false;
 		fledermaus = false;
 		zepter = false;
+		rätsel1 = false;
+		rätsel2 = false;
+		rätsel3 = false;
+		rätsel4 = false;
 		for(int y=0;y<Raum.worldHeight;y++){
 			for(int x=0;x<Raum.worldWidth;x++){
 				if(Raum.block[y][x].ID == 35){
@@ -213,6 +239,14 @@ public class Editorfeld extends JPanel implements Runnable,MouseListener{
 					fledermaus = true;
 				} else if(Raum.block[y][x].ID == 18){
 					zepter = true;
+				} else if(Raum.block[y][x].ID == 59){
+					rätsel1 = true;
+				} else if(Raum.block[y][x].ID == 60){
+					rätsel2 = true;
+				} else if(Raum.block[y][x].ID == 61){
+					rätsel3 = true;
+				} else if(Raum.block[y][x].ID == 62){
+					rätsel4 = true;
 				}
 			}
 		}
@@ -265,6 +299,34 @@ public class Editorfeld extends JPanel implements Runnable,MouseListener{
 					checkBool(getBlock(arg0.getX(),arg0.getY()).ID);
 					Editorfeld.getBlock(arg0.getX(),arg0.getY()).ID = current_id;
 					fledermaus = true;
+				} 
+				break;
+			case 59:
+				if(!rätsel1){
+					checkBool(getBlock(arg0.getX(),arg0.getY()).ID);
+					Editorfeld.getBlock(arg0.getX(),arg0.getY()).ID = current_id;
+					rätsel1 = true;
+				} 
+				break;
+			case 60:
+				if(!rätsel2){
+					checkBool(getBlock(arg0.getX(),arg0.getY()).ID);
+					Editorfeld.getBlock(arg0.getX(),arg0.getY()).ID = current_id;
+					rätsel2 = true;
+				} 
+				break;
+			case 61:
+				if(!rätsel3){
+					checkBool(getBlock(arg0.getX(),arg0.getY()).ID);
+					Editorfeld.getBlock(arg0.getX(),arg0.getY()).ID = current_id;
+					rätsel3 = true;
+				} 
+				break;
+			case 62:
+				if(!rätsel4){
+					checkBool(getBlock(arg0.getX(),arg0.getY()).ID);
+					Editorfeld.getBlock(arg0.getX(),arg0.getY()).ID = current_id;
+					rätsel4 = true;
 				} 
 				break;
 			default:

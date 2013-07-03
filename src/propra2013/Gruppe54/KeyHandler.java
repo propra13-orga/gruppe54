@@ -21,6 +21,7 @@ public class KeyHandler implements KeyListener{
             Spielfeld.spieler.runter = false;
             Frame.image = Frame.Figur1_links.getImage();
             Spielfeld.richtung = "links";
+            Rätsel.setFalse();
          }
 
          if ((key == KeyEvent.VK_D)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+30, Spielfeld.spieler.y+26)!=1)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+30, Spielfeld.spieler.y+32)!=1)) {
@@ -33,6 +34,7 @@ public class KeyHandler implements KeyListener{
          	Spielfeld.spieler.runter = false;
          	Frame.image = Frame.Figur1_rechts.getImage();
          	Spielfeld.richtung = "rechts";
+         	Rätsel.setFalse();
          }
 
          if ((key == KeyEvent.VK_W)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+6, Spielfeld.spieler.y+26)!=1)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+26, Spielfeld.spieler.y+23)!=1)) {
@@ -45,6 +47,7 @@ public class KeyHandler implements KeyListener{
 	        Spielfeld.spieler.runter = false;
 	        Frame.image = Frame.Figur1_oben.getImage();
 	        Spielfeld.richtung = "hoch";
+	        Rätsel.setFalse();
          }
          
          if ((key == KeyEvent.VK_S)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+6, Spielfeld.spieler.y+32)!=1)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+26, Spielfeld.spieler.y+32)!=1)) {
@@ -57,6 +60,7 @@ public class KeyHandler implements KeyListener{
 	        Spielfeld.spieler.runter = true;
 	        Frame.image = Frame.Figur1_unten.getImage();
 	        Spielfeld.richtung = "runter";
+	        Rätsel.setFalse();
          }
          
          //ruft den Shop auf
@@ -270,6 +274,23 @@ public class KeyHandler implements KeyListener{
          		Spielfeld.waffe.ID = 2;
          	}
  		 }
+         //rätsel betätigen
+        if((key == KeyEvent.VK_E)&&(Spielfeld.spieler.aktiv)){
+          if(Rätsel.geschafft==false){
+        	if (Spielfeld.rätsel1.berührung==true){
+        		Spielfeld.rätsel1.aktion();
+        	}
+        	if (Spielfeld.rätsel2.berührung==true){
+        		Spielfeld.rätsel2.aktion();
+        	}
+        	if (Spielfeld.rätsel3.berührung==true){
+        		Spielfeld.rätsel3.aktion();
+        	}
+        	if (Spielfeld.rätsel4.berührung==true){
+        		Spielfeld.rätsel4.aktion();
+        	}
+          } 
+        }
       }
 	}
 

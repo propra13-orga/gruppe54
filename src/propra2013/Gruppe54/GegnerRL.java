@@ -64,14 +64,14 @@ public class GegnerRL extends Rectangle  {
 		 Kollision();
        	 if ((rechts==false)&&(Spielfeld.getBlockID(StartX+24, StartY+16)!=1)&&(Spielfeld.getBlockID(StartX+24, StartY+16)!=41)
        			 &&(Spielfeld.getBlockID(StartX+24, StartY+16)!=42)&&(Spielfeld.getBlockID(StartX+24, StartY+16)!=43)
-       			 &&(Spielfeld.getBlockID(StartX+24, StartY+16)!=4)){
+       			 &&(Spielfeld.getBlockID(StartX+24, StartY+16)!=4)&&(Spielfeld.getBlockID(StartX+24, StartY+16)!=56)&&(Spielfeld.getBlockID(StartX+24, StartY+16)!=57)&&(Spielfeld.getBlockID(StartX+24, StartY+16)!=58)){
        		StartX+=1*speed;
        	 } else {
        		 rechts = true;
        	 }
        	 if ((rechts==true)&&(Spielfeld.getBlockID(StartX-2, StartY+16)!=1)&&(Spielfeld.getBlockID(StartX+-2, StartY+16)!=41)
        			 &&(Spielfeld.getBlockID(StartX-2, StartY+16)!=42)&&(Spielfeld.getBlockID(StartX-2, StartY+16)!=43)
-       			 &&(Spielfeld.getBlockID(StartX-2, StartY+16)!=4)){
+       			 &&(Spielfeld.getBlockID(StartX-2, StartY+16)!=4)&&(Spielfeld.getBlockID(StartX-2, StartY+16)!=56)&&(Spielfeld.getBlockID(StartX-2, StartY+16)!=57)&&(Spielfeld.getBlockID(StartX-2, StartY+16)!=58)){
        		 StartX-=1*speed;
        	 } else {
         	 rechts = false;

@@ -66,7 +66,7 @@ public class GegnerOU extends Rectangle{
 		//Gegner läuft hoch und runter
 			if ((unten==false)&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=2)&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=1)&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=41)
 					&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=42)&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=43)
-					&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=4)&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=2)){
+					&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=4)&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=2)&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=56)&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=57)&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=58)){
 				Kollision();
 				StartY+=1*speed;
 				hoch = false;
@@ -75,7 +75,7 @@ public class GegnerOU extends Rectangle{
 				}
 			if ((unten==true)&&(Spielfeld.getBlockID(StartX+16, StartY-2+16)!=2)&&(Spielfeld.getBlockID(StartX+16, StartY-2+16)!=1)&&(Spielfeld.getBlockID(StartX+16, StartY-2+16)!=41)
 					&&(Spielfeld.getBlockID(StartX+16, StartY-2+16)!=42)&&(Spielfeld.getBlockID(StartX+16, StartY-2+16)!=43)
-					&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=4)&&(Spielfeld.getBlockID(StartX+16, StartY-2+16)!=2)){
+					&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=4)&&(Spielfeld.getBlockID(StartX+16, StartY-2+16)!=2)&&(Spielfeld.getBlockID(StartX+16, StartY-2+16)!=56)&&(Spielfeld.getBlockID(StartX+16, StartY-2+16)!=57)&&(Spielfeld.getBlockID(StartX+16, StartY-2+16)!=58)){
 				Kollision();
 				StartY-=1*speed;
 				hoch = true;

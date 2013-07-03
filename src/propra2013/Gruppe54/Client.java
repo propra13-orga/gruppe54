@@ -2,6 +2,7 @@ package propra2013.Gruppe54;
 
 import java.io.*;
 import java.net.*;
+import java.rmi.Naming;
 import java.util.regex.Pattern;
 
 public class Client extends Thread{
@@ -12,7 +13,12 @@ public class Client extends Thread{
 	
 	public Client() throws UnknownHostException{
 		try{
-			socket = new Socket(InetAddress.getByName("10.125.6.155"), 4444); 
+			//Joshuas Ip adresse 10.125.6.155 
+			if(Spielfeld.host){
+				socket = new Socket("localhost", 4444);
+			} else if((Spielfeld.multiplayer)&(!Spielfeld.host)){
+				socket = new Socket(InetAddress.getByName(Spielfeld.ip), 4444);
+			}
 			out = new PrintWriter(socket.getOutputStream(),true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		} catch(Exception e){

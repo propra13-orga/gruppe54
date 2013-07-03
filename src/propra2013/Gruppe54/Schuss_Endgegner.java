@@ -84,7 +84,19 @@ public class Schuss_Endgegner extends Rectangle {
 						if ((Spielfeld.getBlockID(StartX, StartY)==42) || (Spielfeld.getBlockID(StartX+31, StartY)==42)
 								|| (Spielfeld.getBlockID(StartX, StartY+31)==42) || (Spielfeld.getBlockID(StartX+31, StartY+31)==42)){
 							restart=true;
-						}
+						}else
+							if ((Spielfeld.getBlockID(StartX, StartY)==56) || (Spielfeld.getBlockID(StartX+31, StartY)==56)
+									|| (Spielfeld.getBlockID(StartX, StartY+31)==56) || (Spielfeld.getBlockID(StartX+31, StartY+31)==56)){
+								restart=true;
+							}else
+								if ((Spielfeld.getBlockID(StartX, StartY)==57) || (Spielfeld.getBlockID(StartX+31, StartY)==57)
+										|| (Spielfeld.getBlockID(StartX, StartY+31)==57) || (Spielfeld.getBlockID(StartX+31, StartY+31)==57)){
+									restart=true;
+								}else
+									if ((Spielfeld.getBlockID(StartX, StartY)==58) || (Spielfeld.getBlockID(StartX+31, StartY)==58)
+											|| (Spielfeld.getBlockID(StartX, StartY+31)==58) || (Spielfeld.getBlockID(StartX+31, StartY+31)==58)){
+										restart=true;
+									}
 	}
 	public void Kollision(){
 		if((StartX+31 >= Spielfeld.spieler.x)&&(StartX <= Spielfeld.spieler.x+31)  &&

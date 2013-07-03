@@ -56,12 +56,12 @@ public class Falle extends Rectangle {
 	 * Bewegung der Falle
 	 */
 	public void bewegung(){
-		if ((Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=1)&&(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=4)&&(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=41)&&(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=42)){
+		if ((Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=1)&&(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=4)&&(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=41)&&(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=42)&&(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=56)&&(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=57)&&(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)!=58)){
        	 Falle.StartY+=1*speed;
        	 if (counter_Kollision==5){
        	 Kollision();
        	 }else counter_Kollision+=1;
-       	 } else if((Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)==1)|(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)==4)|(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)==41)|(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)==42)){
+       	 } else if((Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)==1)|(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)==4)|(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)==41)|(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)==42)|(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)==56)|(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)==57)|(Spielfeld.getBlockID(Falle.StartX+16, Falle.StartY+32)==58)){
        		 Falle.StartX=Falle.StartPunktX;
     		 Falle.StartY=Falle.StartPunktY;
        	 }

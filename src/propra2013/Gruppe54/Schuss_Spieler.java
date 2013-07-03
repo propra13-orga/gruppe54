@@ -102,22 +102,22 @@ public class Schuss_Spieler extends Rectangle {
 		if(Spielfeld.counter_schuss == 0){
 			Richtung = checkRichtung();
 		}
-		if ((Richtung==1)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)&&check(51)){
+		if ((Richtung==1)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)&&check(51)&&check(56)&&check(57)&&check(58)){
 			StartX+=1*speed;
 			Kollision();
 		} else if(Richtung==1){
 			sichtbar=false;
-		} else if((Richtung==2)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)&&check(51)){
+		} else if((Richtung==2)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)&&check(51)&&check(56)&&check(57)&&check(58)){
 			StartY+=1*speed;
 			Kollision();
 		} else if(Richtung==2){
 			sichtbar=false;
-		} else if((Richtung==3)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)&&check(51)){
+		} else if((Richtung==3)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)&&check(51)&&check(56)&&check(57)&&check(58)){
 			StartX-=1*speed;
 			Kollision();
 		} else if (Richtung==3){
 			sichtbar=false;	
-		} else if((Richtung==4)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)&&check(51)){
+		} else if((Richtung==4)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)&&check(51)&&check(56)&&check(57)&&check(58)){
 			StartY-=1*speed;
 			Kollision();
 		} else if (Richtung==4){

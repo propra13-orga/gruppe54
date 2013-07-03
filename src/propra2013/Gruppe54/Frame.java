@@ -150,6 +150,9 @@ public class Frame extends JFrame{
 		//Button Enter Click
 		enter.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				if((multiplayer.isSelected())&(!createServer.isSelected())){
+					Spielfeld.ip = JOptionPane.showInputDialog(null, "Bitte gebe die IP-Adresse des Rechners an der den Server erstellt hat:");
+				}
 				//Buttons ausblenden und entfernen
 				spiel_zurueck.setVisible(false);
 				enter.setVisible(false);
@@ -162,9 +165,9 @@ public class Frame extends JFrame{
 				Spielfeld.current_room=1;
 				
 				if(multiplayer.isSelected()){
-					spielfeld.multiplayer = true;
+					Spielfeld.multiplayer = true;
 				} else if(!multiplayer.isSelected()){
-					spielfeld.multiplayer = false;
+					Spielfeld.multiplayer = false;
 				}
 				if(createServer.isSelected()){
 					Spielfeld.host = true;
@@ -173,6 +176,7 @@ public class Frame extends JFrame{
 				}
 				
 				//Spielfeld anzeigen	
+				Rätsel.reset();
 				spielfeld.define();	
 				add(spielfeld);						
 				//Spielerinfo anzeigen
@@ -204,6 +208,7 @@ public class Frame extends JFrame{
 		neustart.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				if(Spielfeld.spieler.superleben >= 1){
+					Rätsel.reset();
 					Spielfeld.current_room = Spielfeld.spieler.check_room;
 					spielfeld.define();
 					Spielfeld.spieler.x = Spielfeld.spieler.checkpoint.getX();
@@ -219,6 +224,7 @@ public class Frame extends JFrame{
 					}
 				} else if(Spielfeld.spieler.superleben <= 0){
 					//aktuelles Level in Raum 1 neu laden
+					Rätsel.reset();
 					Spielfeld.current_room = 1;
 					spielfeld.define();
 					//Spieler auf den Startpunkt des jeweiligen Levels setzen
@@ -245,6 +251,7 @@ public class Frame extends JFrame{
 		//Button Checkpoint Click
 		checkpoint.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				Rätsel.reset();
 				Spielfeld.current_room = Spielfeld.spieler.check_room;
 				spielfeld.define();
 				Spielfeld.spieler.x = Spielfeld.spieler.checkpoint.getX();
@@ -264,6 +271,7 @@ public class Frame extends JFrame{
 		//bei Erreichen des Ziels nächstes Level
 		nextLevel.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				Rätsel.reset();
 				Spielfeld.current_lvl += 1;
 				Spielfeld.current_room = 1; 
 				Spielfeld.spieler.checkpoint = new Point(Raum.Startpunkt[Spielfeld.current_lvl-1].x,Raum.Startpunkt[Spielfeld.current_lvl-1].y);

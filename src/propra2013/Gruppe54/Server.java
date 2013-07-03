@@ -17,6 +17,7 @@ public class Server extends Thread{
 	public Server() throws IOException{
 		try{
 		server = new ServerSocket(4444);
+		System.out.println(server.getInetAddress());
 		} catch(Exception e){
 			
 		}

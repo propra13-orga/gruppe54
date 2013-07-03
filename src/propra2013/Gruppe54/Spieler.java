@@ -111,7 +111,20 @@ public class Spieler extends Rectangle {
 		} else {
 			return false;
 		}
+		
 	}
+	//Prüfe ob der Spieler das Rätsel berührt
+	public boolean checkRätsel(int ID){
+		if((Spielfeld.getBlockID(x+6+Frame.dx,y+6+Frame.dy)!=ID)&&(Spielfeld.getBlockID(x+26+Frame.dx,y+6+Frame.dy)!=ID)&&(Spielfeld.getBlockID(x+6+Frame.dx,y+32+Frame.dy)!=ID)
+				&&(Spielfeld.getBlockID(x+26+Frame.dx,y+32+Frame.dy)!=ID)&&(x+Frame.dx>0)&&(y+32+Frame.dy<(Raum.worldHeight*Raum.blockSize))&&(x+32+Frame.dx<(Raum.worldWidth*Raum.blockSize))
+				&&(y+Frame.dy>0)){
+				return true;
+			} else {
+				return false;
+			}
+	}
+	
+	
 	public static void main(String[] args) {}
 
 }

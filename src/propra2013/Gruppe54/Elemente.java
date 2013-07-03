@@ -48,6 +48,7 @@ public class Elemente {
 				Falle.StartX=0;
 				Falle.StartY=0;
 				Spielfeld.pfeil.aktiv = false;
+				Rätsel.reset();
 			}
 			break;
 		
@@ -283,12 +284,14 @@ public class Elemente {
    		 	Spielfeld.spieler_preposX = Spielfeld.spieler.x;
    		 	Spielfeld.spieler_preposY = Spielfeld.spieler.y;
    		 	Spielfeld.showShop();
+   		 	Rätsel.reset();
 			break;
 			
 		case 27://Ausgang Shop
 			Spielfeld.hideShop();
 			Falle.aktiv = Falle.status;
 			Spielfeld.pfeil.aktiv = false;
+			Rätsel.reset();
 			break;
 		
 		case 28://Item_Shop Axt
@@ -391,6 +394,7 @@ public class Elemente {
 				if(Spielfeld.schuss2_spieler.sichtbar){
 					Spielfeld.schuss2_spieler.sichtbar = false;
 				}
+				Rätsel.reset();
 				Spielfeld.pfeil.aktiv = false;
 				Spielfeld.current_room+=1;
 				Falle.aktiv=false;
@@ -462,6 +466,7 @@ public class Elemente {
 				Spielfeld.anzeige = true;
 			}
 			break;
+
 		default:
 			//
 			break;

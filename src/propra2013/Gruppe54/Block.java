@@ -305,7 +305,69 @@ public class Block extends Rectangle {
 				g.drawImage(Spielfeld.elemente[0],x,y,width,height,null); 
 			}
 			break;
+		
+		case 56://TOR links
+			if(!Rätsel.geschafft){
+				g.drawImage(Spielfeld.elemente[56],x,y,width,height,null); //Mauer
+			} else if(Rätsel.geschafft){
+				ID=63;
+			}
+			break;
 			
+		case 57://Tor mitte
+			if(!Rätsel.geschafft){
+				g.drawImage(Spielfeld.elemente[57],x,y,width,height,null); //Mauer
+			} else if(Rätsel.geschafft){
+				ID=64;
+			}
+			break;
+			
+		case 58://Tor rechts
+			if(!Rätsel.geschafft){
+				g.drawImage(Spielfeld.elemente[58],x,y,width,height,null); //Mauer
+			} else if(Rätsel.geschafft){
+				ID=65;
+			}
+			break;
+		
+		case 59://rätsel1
+			Rätsel.vorhanden=true;
+			Spielfeld.rätsel1.X=x;
+			Spielfeld.rätsel1.Y=y;
+			break;
+			
+		case 60://rätsel2
+			Rätsel.vorhanden=true;
+			Spielfeld.rätsel2.X=x;
+			Spielfeld.rätsel2.Y=y;
+			break;
+			
+		case 61://rätsel3
+			Rätsel.vorhanden=true;
+			Spielfeld.rätsel3.X=x;
+			Spielfeld.rätsel3.Y=y;
+			break;
+			
+		case 62://rätsel4
+			Rätsel.vorhanden=true;
+			Spielfeld.rätsel4.X=x;
+			Spielfeld.rätsel4.Y=y;
+			break;
+		
+		case 63:
+			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null); 
+			break;
+		
+		case 64:
+			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null); 
+			break;
+			
+		case 65:
+			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null); 
+			break;
+		
+		
+
 		default:
 			g.drawImage(Spielfeld.elemente[ID],x,y,width,height,null);   //ImageArray elemente[], wird in Spielfeld.define() definiert
 			break;
