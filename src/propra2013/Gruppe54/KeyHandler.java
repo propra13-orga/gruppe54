@@ -206,7 +206,9 @@ public class KeyHandler implements KeyListener{
 				Spielfeld.spieler.mana -= 10;
 				Spielfeld.counter_schuss = 0;
 				if(Spielfeld.multiplayer){
-				Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";schuss1;");
+					if(Spielfeld.spieler.current_room == Spielfeld.spieler2.current_room){
+						Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";schuss1;");
+					}
 				}
         	}
          } 
@@ -219,7 +221,9 @@ public class KeyHandler implements KeyListener{
 				Spielfeld.spieler.Anzahl_Schüssen -= 1;
 				Spielfeld.counter_schuss2 = 0;
 				if(Spielfeld.multiplayer){
-					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";schuss2;");
+					if(Spielfeld.spieler.current_room == Spielfeld.spieler2.current_room){
+						Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";schuss2;");
+					}
 				}
         	}
          } 

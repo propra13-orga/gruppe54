@@ -37,7 +37,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static Schuss2_Spieler schuss2_spieler,schuss2_spieler2;
 	public static int counter_schuss = 0; //wird auf 1 gesetzt wenn der Spieler schießt, damit die Position des Schusses sich während dem Flug nicht 
 										  //weiterhin der Position des Spielers anpasst
-	public static int counter_schuss2 =0;
+	public static int counter_schuss2 = 0;
 	public static int counter_angriff = 0;
 	public static Pfeil pfeil;
 	private static int EndgegnerLeben;
@@ -51,7 +51,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static boolean host = false;
 	
 	public static Server server;
-	public static Client client,client2;
+	public static Client client;
 	public static int counter_server = 0;
 	public static String richtung = null;
 	public static String ip = null;
@@ -235,7 +235,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		
 		//Multiplayer 
 		if(multiplayer){
-			if(spieler2.aktiv){
+			if((spieler2.aktiv)&(spieler.current_room == spieler2.current_room)){
 				spieler2.draw(g);
 			}
 			if(schuss_spieler2.sichtbar){
@@ -322,9 +322,6 @@ public class Spielfeld extends JPanel implements Runnable{
 			if(isFirst){ //Erstinitialisierung
 				define();
 				isFirst=false;
-				if(multiplayer){
-					spieler2.multiplayer = true;
-				}
 			}
 			//Wenn der Spieler besiegt wurde
 			if((spieler.leben <= 0)&&(spieler.superleben >= 1)&&(spieler.aktiv)){
@@ -354,7 +351,7 @@ public class Spielfeld extends JPanel implements Runnable{
 					Frame.neustart.setVisible(true);	 
 				}
 				spieler.superleben -= 1;
-				if(multiplayer){
+				if(multiplayer){	//Nachricht an den Server senden
 					client.send(client.socket.getLocalPort()+";besiegt;");
 				}
 			} else if((spieler.leben <= 0)&&(spieler.superleben <= 0)&&(spieler.aktiv)){
@@ -393,12 +390,10 @@ public class Spielfeld extends JPanel implements Runnable{
 				schuss_spieler2.setSchaden(spieler2);
 				if(schuss_spieler2.sichtbar){
 					schuss_spieler2.Schuss();
-					counter_schuss = 1;
 				}
 				//Schuss2 von Spieler2
 				if(schuss2_spieler2.sichtbar){
 					schuss2_spieler2.Schuss();
-					counter_schuss2 = 1;
 				}
 				
 			}
@@ -499,7 +494,7 @@ public class Spielfeld extends JPanel implements Runnable{
 					client.send(client.socket.getLocalPort()+";blick;"+richtung+";");
 					spieler2.checkKollision();
 				}
-			
+
 				Elemente.beruehrung = false;
 			} else if((spieler.check(15)==false) | (spieler.check(18)==false) | (spieler.check(20)==false) | (spieler.check(21)==false) | (spieler.check(22)==false) | (spieler.check(30)==false)
 					| (spieler.check(23)==false) | (spieler.check(24)==false) | (spieler.check(25)==false) | (spieler.check(28)==false) | (spieler.check(31)==false) |(spieler.check(34)==false) 

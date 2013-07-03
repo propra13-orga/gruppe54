@@ -13,7 +13,6 @@ public class Server extends Thread{
 	BufferedReader in = null;
 	List<Socket> clientList = new ArrayList<Socket>();
 
-	
 	public Server() throws IOException{
 		try{
 		server = new ServerSocket(4444);
@@ -31,7 +30,6 @@ public class Server extends Thread{
 					clientList.add(client);
 					System.out.println("Spieler beigetreten");
 				}
-				System.out.println(clientList);
 				ServerThread handleClient = new ServerThread(client,this);
 				handleClient.start();
 			} catch(IOException e){

@@ -17,10 +17,22 @@ public class ServerThread extends Thread {
 	public void run() {
 		try {
 			// lesen
-			in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-			out = new PrintWriter(s.getOutputStream(),true);
+			if(!s.isClosed()){
+				in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+				out = new PrintWriter(s.getOutputStream(),true);
+			}
 			while(in != null){
+				if(in != null){
 				String incoming = in.readLine();
+				if(incoming.equals("serverdown".toString())){		//wenn der Server beendet wird
+					out.println(s.getLocalPort()+";serverdown;");	//beiden Clients mitteilen
+					out2.println(s.getLocalPort()+";serverdown;");
+					s.close();										//alles schließen
+					out.close();
+					out2.close();
+					this.interrupt();
+					break;
+				}
 				out.println(incoming.toString()); //zurück schicken
 				if(Spielfeld.server.clientList.size() == 2){	//richtigen client aus der Liste aussuchen
 					if(server.clientList.get(0) == s){
@@ -31,6 +43,7 @@ public class ServerThread extends Thread {
 					out2 = new PrintWriter(s2.getOutputStream(),true);
 					out2.println(incoming.toString());
 				}
+			  }
 			}
 			out.close();
 			out2.close();

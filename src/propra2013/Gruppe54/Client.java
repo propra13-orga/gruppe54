@@ -3,20 +3,23 @@ package propra2013.Gruppe54;
 import java.io.*;
 import java.net.*;
 import java.rmi.Naming;
+import java.util.concurrent.CancellationException;
 import java.util.regex.Pattern;
+
+import sun.net.ConnectionResetException;
 
 public class Client extends Thread{
 
 	Socket socket = null;
 	PrintWriter out = null;
 	BufferedReader in = null;
+	boolean running = false;
 	
 	public Client() throws UnknownHostException{
 		try{
-			//Joshuas Ip adresse 10.125.6.155 
-			if(Spielfeld.host){
+			if(Spielfeld.host){		//Spieler hat den Server erstellt
 				socket = new Socket("localhost", 4444);
-			} else if((Spielfeld.multiplayer)&(!Spielfeld.host)){
+			} else if((Spielfeld.multiplayer)&(!Spielfeld.host)){	//Spieler ist dem Server beigetreten
 				socket = new Socket(InetAddress.getByName(Spielfeld.ip), 4444);
 			}
 			out = new PrintWriter(socket.getOutputStream(),true);
@@ -24,6 +27,7 @@ public class Client extends Thread{
 		} catch(Exception e){
 			e.printStackTrace();
 		}
+		running = true;
 	}
 	
 	public void send(String text){
@@ -31,7 +35,7 @@ public class Client extends Thread{
 	}
 	
 	public void run(){
-		while(true){
+		while(running){
 			String incoming;
 			try{
 				incoming = in.readLine();				//blockiert bis Nachricht empfangen
@@ -40,6 +44,7 @@ public class Client extends Thread{
 				
 				String[] input = p.split(incoming.toString());
 				if(!input[0].equals(Integer.toString(socket.getLocalPort()))){		//wenn die Nachricht nicht von einem selber kam	
+					if(input[1] != null){
 					if(input[1].equals("spieler".toString())){			//Position von Spieler2
 						Spielfeld.spieler2.x = Double.parseDouble(input[2]);
 						Spielfeld.spieler2.y = Double.parseDouble(input[3]);
@@ -92,9 +97,39 @@ public class Client extends Thread{
 						Spielfeld.spieler2.aktiv = false;
 					} else if(input[1].equals("erwacht".toString())){		//Spieler wurde wieder zum Leben erweckt
 						Spielfeld.spieler2.aktiv = true;
+					} else if(input[1].equals("raumwechsel".toString())){	//Spieler wurde wieder zum Leben erweckt
+						Falle.aktiv=false;
+						Spielfeld.gegnerKI.leben=0;
+						Endgegner.aktiv=false;
+						Spielfeld.schuss_endgegner.aktiv=false;
+						Spielfeld.gegnerKI.aktiv=false;
+						Spielfeld.current_room+=1;
+						Spielfeld.level.loadLevel(new File("level/level"+Spielfeld.current_lvl+"_"+Spielfeld.current_room+".lvl"));
+						//Spieler auf den Startpunkt des jeweiligen Levels setzen
+						Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].x;
+						Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].y;
+						Spielfeld.gegnerRL.leben=GegnerRL.StartLeben;
+						Spielfeld.gegnerRL.leben=GegnerRL.StartLeben;
+						Spielfeld.gegnerRL.setItem = false;
+						Spielfeld.gegnerOU.setItem = false;
+						Endgegner.setItem = false;
+						Endgegner.leben=Endgegner.StartLeben;
+						Spielfeld.gegnerKI.leben=Spielfeld.gegnerKI.StartLeben;
+						Spielfeld.gegnerKI.StartX=0;
+						Spielfeld.gegnerKI.StartY=0;
+						Falle.StartX=0;
+						Falle.StartY=0;
+						Spielfeld.pfeil.aktiv = false;
+					} else if(input[1].equals("serverdown".toString())){	//Server wurde beendet
+						Spielfeld.spieler2.aktiv = false;
+						System.out.println("Server wurde beendet");
+						running = false;
+						out.close();
+						in.close();
 					}
+				  }
 				}
-				//TODO: Raumwechsel, Levelwechsel, Waffen, Pfeile, Elementen muss Spieler übergeben werden
+				//TODO: Levelwechsel, Waffen, Pfeile, Shop im Multiplayer
 				
 				}
 			} catch(IOException e){

@@ -17,15 +17,14 @@ public class Spieler extends Rectangle {
 	public int leben = 100,superleben = 3,mana = 100,xp = 0,ruestung = 100;
 	public boolean aktiv = false,schwert = true,axt = false,bogen = false;
 	public Point checkpoint;
-	public int check_room = 1;		//Raum wo das letzte Mal der Checkpoint betätigt wurde
-	public int Anzahl_Schüssen=0;
+	public int check_room = 1,current_room = 1;	//check_room - Raum wo das letzte Mal der Checkpoint betätigt wurde		
+	public int Anzahl_Schüssen=9;
 	
 	public boolean beweglich = false;
 	public boolean rechts = false;
 	public boolean links = false;
 	public boolean hoch = false;
 	public boolean runter = false; 
-	public boolean multiplayer = false;
 	
 	/**
 	 * 
@@ -42,11 +41,7 @@ public class Spieler extends Rectangle {
 	}
 	
 	public void draw(Graphics g){
-		if(multiplayer){
-			g.drawImage(Frame.image2,(int)x,(int)y,32,32,null);
-		} else if(!multiplayer) {
-			g.drawImage(Frame.image,(int)x,(int)y,32,32,null);
-		}
+		g.drawImage(Frame.image,(int)x,(int)y,32,32,null);
 	}
 	
 	/**
@@ -54,11 +49,11 @@ public class Spieler extends Rectangle {
 	 */
 	public void checkKollision(){
 		Elemente.beruehrung = false;
-		Elemente.Aufruf(Spielfeld.getBlockID(x+26+Frame.dx,y+32+Frame.dy),Spielfeld.getBlock(x+26+Frame.dx,y+32+Frame.dy));
-        Elemente.Aufruf(Spielfeld.getBlockID(x+6+Frame.dx,y+26+Frame.dy),Spielfeld.getBlock(x+6+Frame.dx, y+26+Frame.dy));
+		Elemente.Aufruf(Spielfeld.getBlockID(x+26+Frame.dx,y+32+Frame.dy),Spielfeld.getBlock(x+26+Frame.dx,y+32+Frame.dy),this);
+        Elemente.Aufruf(Spielfeld.getBlockID(x+6+Frame.dx,y+26+Frame.dy),Spielfeld.getBlock(x+6+Frame.dx, y+26+Frame.dy),this);
         if(Elemente.beruehrung == false){
-        Elemente.Aufruf(Spielfeld.getBlockID(x+26+Frame.dx,y+26+Frame.dy),Spielfeld.getBlock(x+26+Frame.dx,y+26+Frame.dy));
-        Elemente.Aufruf(Spielfeld.getBlockID(x+6+Frame.dx,y+32+Frame.dy),Spielfeld.getBlock(x+6+Frame.dx,y+32+Frame.dy));
+        	Elemente.Aufruf(Spielfeld.getBlockID(x+26+Frame.dx,y+26+Frame.dy),Spielfeld.getBlock(x+26+Frame.dx,y+26+Frame.dy),this);
+        	Elemente.Aufruf(Spielfeld.getBlockID(x+6+Frame.dx,y+32+Frame.dy),Spielfeld.getBlock(x+6+Frame.dx,y+32+Frame.dy),this);
         }
     }
 	
