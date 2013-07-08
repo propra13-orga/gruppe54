@@ -66,7 +66,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		spieler.rechts = true;
 		spieler2 = new Spieler();
 		if(multiplayer){
-			spieler2.aktiv = true;
+			spieler2.multiplayer = true;
 			spieler2.rechts = true;
 		}
 	}
@@ -364,11 +364,19 @@ public class Spielfeld extends JPanel implements Runnable{
 				//Schuss von Spieler2
 				schuss_spieler2.setSchaden(spieler2);
 				if(schuss_spieler2.sichtbar){
+					if (schuss_spieler.setPos==false){
+						schuss_spieler.setPos();
+					}
 					schuss_spieler2.Schuss();
+					counter_schuss = 1;
 				}
 				//Schuss2 von Spieler2
 				if(schuss2_spieler2.sichtbar){
+					if (schuss2_spieler2.setPos==false){
+						schuss2_spieler2.setPos();
+					}
 					schuss2_spieler2.Schuss();
+					counter_schuss2 = 1;
 				}
 				
 			}

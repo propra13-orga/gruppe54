@@ -294,6 +294,15 @@ public class Elemente {
    		 	}
    		 	Spielfeld.spieler_preposX = Spielfeld.spieler.x;
    		 	Spielfeld.spieler_preposY = Spielfeld.spieler.y;
+   		 if(Spielfeld.multiplayer){
+				if(Spielfeld.schuss_spieler2.sichtbar){
+					Spielfeld.schuss_spieler2.sichtbar = false;
+				}
+				if(Spielfeld.schuss2_spieler2.sichtbar){
+					Spielfeld.schuss2_spieler2.sichtbar = false;
+				}
+				Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";shopein;");
+			}
    		 	Spielfeld.showShop();
 			break;
 			
@@ -301,6 +310,7 @@ public class Elemente {
 			Spielfeld.hideShop();
 			Falle.aktiv = Falle.status;
 			Spielfeld.pfeil.aktiv = false;
+			Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";shopaus;");
 			break;
 		
 		case 28://Item_Shop Axt

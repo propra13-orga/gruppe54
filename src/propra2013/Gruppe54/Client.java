@@ -97,7 +97,7 @@ public class Client extends Thread{
 						Spielfeld.spieler2.aktiv = false;
 					} else if(input[1].equals("erwacht".toString())){		//Spieler wurde wieder zum Leben erweckt
 						Spielfeld.spieler2.aktiv = true;
-					} else if(input[1].equals("raumwechsel".toString())){	//Spieler wurde wieder zum Leben erweckt
+					} else if(input[1].equals("raumwechsel".toString())){	//Raumwechsel
 						Falle.aktiv=false;
 						Spielfeld.gegnerKI.leben=0;
 						Endgegner.aktiv=false;
@@ -126,6 +126,10 @@ public class Client extends Thread{
 						running = false;
 						out.close();
 						in.close();
+					} else if(input[1].equals("shopein".toString())){
+						Spielfeld.spieler2.current_room += 1;
+					} else if(input[1].equals("shopaus".toString())){
+						Spielfeld.spieler2.current_room -= 1;
 					}
 				  }
 				}

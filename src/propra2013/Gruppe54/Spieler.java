@@ -25,6 +25,7 @@ public class Spieler extends Rectangle {
 	public boolean links = false;
 	public boolean hoch = false;
 	public boolean runter = false; 
+	public boolean multiplayer = false;
 	
 	/**
 	 * 
@@ -41,7 +42,11 @@ public class Spieler extends Rectangle {
 	}
 	
 	public void draw(Graphics g){
-		g.drawImage(Frame.image,(int)x,(int)y,32,32,null);
+		if(multiplayer){
+			g.drawImage(Frame.image2,(int)x,(int)y,32,32,null);
+		} else if(!multiplayer) {
+			g.drawImage(Frame.image,(int)x,(int)y,32,32,null);
+		}
 	}
 	
 	/**
