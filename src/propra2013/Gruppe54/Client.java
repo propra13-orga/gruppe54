@@ -130,12 +130,44 @@ public class Client extends Thread{
 						Spielfeld.spieler2.current_room += 1;
 					} else if(input[1].equals("shopaus".toString())){
 						Spielfeld.spieler2.current_room -= 1;
+					} else if(input[1].equals("pfeil".toString())){
+						if(input[2].equals("rechts".toString())){
+							Spielfeld.pfeil2.richtung = 0;
+						} else if(input[2].equals("links".toString())){
+							Spielfeld.pfeil2.richtung = 1;
+						} else if(input[2].equals("hoch".toString())){
+							Spielfeld.pfeil2.richtung = 2;
+						} else if(input[2].equals("runter".toString())){
+							Spielfeld.pfeil2.richtung = 3;
+						}
+						Spielfeld.pfeil2.x = Double.parseDouble(input[3]);
+						Spielfeld.pfeil2.y = Double.parseDouble(input[4]);
+						Spielfeld.pfeil2.aktiv = true;
+						Spielfeld.pfeil2.Schuss();
+					} else if(input[1].equals("waffenwechsel".toString())){
+						Spielfeld.spieler2.waffe = Integer.parseInt(input[2]);
+		        		Spielfeld.waffe2.ID = Integer.parseInt(input[2]);
+					} else if(input[1].equals("spielerleben".toString())){
+						Spielfeld.spieler2.leben = Integer.parseInt(input[2]);
+					} else if(input[1].equals("rätselaktion".toString())){
+						switch(Integer.parseInt(input[2])){
+						case 1:
+							Spielfeld.rätsel1.aktion();
+							break;
+						case 2:
+							Spielfeld.rätsel2.aktion();
+							break;
+						case 3:
+							Spielfeld.rätsel3.aktion();
+							break;
+						case 4:
+							Spielfeld.rätsel4.aktion();
+							break;
+						}
 					}
 				  }
 				}
-				//TODO: Levelwechsel, Waffen, Pfeile, Shop im Multiplayer
-				
-				}
+			  }
 			} catch(IOException e){
 				e.printStackTrace();
 			}

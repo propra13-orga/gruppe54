@@ -49,7 +49,8 @@ public class GegnerRL extends Rectangle  {
 				g.drawImage(new ImageIcon("pics/gegner1_"+Spielfeld.current_lvl+".png").getImage(), (int)StartX, (int)StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
 			} else if(!rechts){
 				g.drawImage(new ImageIcon("pics/gegner1_"+Spielfeld.current_lvl+"_rechts.png").getImage(), (int)StartX, (int)StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
-			}		}
+			}		
+		}
 	}	
 	//legt ein Item ab wenn der Gegner besiegt wurde
 	public void setItem(){
@@ -64,14 +65,14 @@ public class GegnerRL extends Rectangle  {
 		 Kollision();
        	 if ((rechts==false)&&(Spielfeld.getBlockID(StartX+24, StartY+16)!=1)&&(Spielfeld.getBlockID(StartX+24, StartY+16)!=41)
        			 &&(Spielfeld.getBlockID(StartX+24, StartY+16)!=42)&&(Spielfeld.getBlockID(StartX+24, StartY+16)!=43)
-       			 &&(Spielfeld.getBlockID(StartX+24, StartY+16)!=4)){
+       			 &&(Spielfeld.getBlockID(StartX+24, StartY+16)!=4)&&(Spielfeld.getBlockID(StartX+24, StartY+16)!=56)&&(Spielfeld.getBlockID(StartX+24, StartY+16)!=57)&&(Spielfeld.getBlockID(StartX+24, StartY+16)!=58)){
        		StartX+=1*speed;
        	 } else {
        		 rechts = true;
        	 }
        	 if ((rechts==true)&&(Spielfeld.getBlockID(StartX-2, StartY+16)!=1)&&(Spielfeld.getBlockID(StartX+-2, StartY+16)!=41)
        			 &&(Spielfeld.getBlockID(StartX-2, StartY+16)!=42)&&(Spielfeld.getBlockID(StartX-2, StartY+16)!=43)
-       			 &&(Spielfeld.getBlockID(StartX-2, StartY+16)!=4)){
+       			 &&(Spielfeld.getBlockID(StartX-2, StartY+16)!=4)&&(Spielfeld.getBlockID(StartX-2, StartY+16)!=56)&&(Spielfeld.getBlockID(StartX-2, StartY+16)!=57)&&(Spielfeld.getBlockID(StartX-2, StartY+16)!=58)){
        		 StartX-=1*speed;
        	 } else {
         	 rechts = false;
@@ -88,6 +89,9 @@ public class GegnerRL extends Rectangle  {
 				counter_kollision = 0;
 			} else if((Spielfeld.spieler.ruestung <= 0)&&(counter_kollision == 5)) {
 				Spielfeld.spieler.leben -= 1;
+				if(Spielfeld.multiplayer){
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";spielerleben;"+Spielfeld.spieler.leben+";");
+				}
 				counter_kollision = 0;
 			}
 		}

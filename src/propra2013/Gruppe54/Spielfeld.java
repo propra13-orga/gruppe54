@@ -15,7 +15,7 @@ public class Spielfeld extends JPanel implements Runnable{
 
 	public Thread thread = new Thread(this);
 	
-	public static Image[] elemente = new Image[60];
+	public static Image[] elemente = new Image[70];
 	
 	public static int current_lvl=1,current_room=1,current_player=1,counter_anzeige = 0;
 	public static double spieler_preposX=0,spieler_preposY=0;	//wenn z.B. der Shop betreten wird werden die Koordinaten des Spielers gespeichert
@@ -39,13 +39,13 @@ public class Spielfeld extends JPanel implements Runnable{
 										  //weiterhin der Position des Spielers anpasst
 	public static int counter_schuss2 = 0;
 	public static int counter_angriff = 0;
-	public static Pfeil pfeil;
+	public static Pfeil pfeil,pfeil2;
 	private static int EndgegnerLeben;
 	private static int GegnerRLLeben;
 	private static int GegnerOULeben;
 	private static int GegnerKILeben;
 	public static Falle falle;
-	public static Waffe waffe;
+	public static Waffe waffe,waffe2;
 	public static boolean multiplayer = false;
 
 	public static boolean host = false;
@@ -55,6 +55,11 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static int counter_server = 0;
 	public static String richtung = null;
 	public static String ip = null;
+	
+	public static Rätsel rätsel1;
+	public static Rätsel rätsel2;
+	public static Rätsel rätsel3;
+	public static Rätsel rätsel4;
 	
 	/**
 	 * Konstruktor
@@ -69,6 +74,10 @@ public class Spielfeld extends JPanel implements Runnable{
 			spieler2.multiplayer = true;
 			spieler2.rechts = true;
 		}
+		rätsel1 = new Rätsel(1);
+		rätsel2 = new Rätsel(2);
+		rätsel3 = new Rätsel(3);
+		rätsel4 = new Rätsel(4);
 	}
     /**
      * Bilder in Array laden
@@ -129,6 +138,14 @@ public class Spielfeld extends JPanel implements Runnable{
 		elemente[53] = new ImageIcon("pics/item_bogen.png").getImage();
 		elemente[54] = new ImageIcon("pics/gold2.gif").getImage();
 		elemente[55] = new ImageIcon("pics/item_pfeile.png").getImage();
+		//Rätsel für die Quest
+		elemente[56] = new ImageIcon("pics/tor_unten_1.png").getImage();
+		elemente[57] = new ImageIcon("pics/tor_unten_2.png").getImage();
+		elemente[58] = new ImageIcon("pics/tor_unten_3.png").getImage();
+		//59,60,61,62 für die rätsel
+		elemente[63] = new ImageIcon("pics/tor_oben_1.png").getImage();
+		elemente[64] = new ImageIcon("pics/tor_oben_2.png").getImage();
+		elemente[65] = new ImageIcon("pics/tor_oben_3.png").getImage();
 	}
 	
 	/**
@@ -160,6 +177,7 @@ public class Spielfeld extends JPanel implements Runnable{
 			}
 		}
 		schuss_spieler2 = new Schuss_Spieler(spieler2);
+		pfeil2 = new Pfeil();
 		raum = new Raum();
 		gegnerRL = new GegnerRL();
 		gegnerOU = new GegnerOU();
@@ -167,7 +185,8 @@ public class Spielfeld extends JPanel implements Runnable{
 		falle = new Falle();
 		Boss = new Endgegner();
 		gegnerKI = new GegnerKI();
-		waffe = new Waffe();
+		waffe = new Waffe(spieler);
+		waffe2 = new Waffe(spieler2);
 		loadImages();
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
 		schuss_endgegner = new Schuss_Endgegner();
@@ -220,12 +239,23 @@ public class Spielfeld extends JPanel implements Runnable{
 		if(multiplayer){
 			if((spieler2.aktiv)&(spieler.current_room == spieler2.current_room)){
 				spieler2.draw(g);
+				waffe2.draw(g);
+				//Lebensanzeige Spieler2
+				if(spieler2.leben>spieler2.leben/4){
+					g.setColor(Color.green);
+				} else {
+					g.setColor(Color.red);
+				}
+				g.fill3DRect((int)spieler2.x, (int)spieler2.y-10,spieler2.leben/3,3,true);
 			}
 			if(schuss_spieler2.sichtbar){
 				schuss_spieler2.draw(g);
 			}
 			if(schuss2_spieler2.sichtbar){
 				schuss2_spieler2.draw(g);
+			}
+			if(pfeil2.aktiv){
+				pfeil2.draw(g);
 			}
 		}
 		
@@ -286,6 +316,14 @@ public class Spielfeld extends JPanel implements Runnable{
 				g.setColor(Color.red);
 			}
 			g.fill3DRect(gegnerKI.StartX, gegnerKI.StartY-10,gegnerKI.leben/gegnerKI.Faktor,3,true);	
+		}
+		
+		//Rätsel
+		if(Rätsel.vorhanden){
+		rätsel1.draw(g);
+		rätsel2.draw(g);
+		rätsel3.draw(g);
+		rätsel4.draw(g);
 		}
 	}
 	
@@ -379,6 +417,11 @@ public class Spielfeld extends JPanel implements Runnable{
 					counter_schuss2 = 1;
 				}
 				
+				//Pfeil von Spieler2
+				if(pfeil2.aktiv){
+					pfeil2.Schuss();
+				}
+				
 			}
 		
 			//GegnerKI 
@@ -465,7 +508,9 @@ public class Spielfeld extends JPanel implements Runnable{
 			if((spieler.check(1))&&(spieler.check(15))&&(spieler.check(18))&&(spieler.check(20))&&(spieler.check(21))&&(spieler.check(10))
 					&&(spieler.check(22))&&(spieler.check(23))&&(spieler.check(24))&&(spieler.check(34))&&(spieler.check(25))&&(spieler.check(28))&&(spieler.check(30))&&(spieler.check(31))
 					&&(spieler.check(41))&&(spieler.check(42))&&(spieler.check(43))&&(spieler.check(2))&&(spieler.check(4))&&(spieler.check(29))
-					&&(spieler.check(17))&&(spieler.check(51))&&(spieler.check(52))&&(spieler.check(53))){//prüfen ob Elemente vom Spieler durchschritten werden dürfen
+					&&(spieler.check(17))&&(spieler.check(51))&&(spieler.check(52))&&(spieler.check(53))&&
+					(spieler.check(56))&&(spieler.check(57))&&(spieler.check(58))
+					&&(spieler.checkRätsel(59))&&(spieler.checkRätsel(60))&&(spieler.checkRätsel(61))&&(spieler.checkRätsel(62))){//prüfen ob Elemente vom Spieler durchschritten werden dürfen
 				spieler.checkKollision();
 				spieler.x += Frame.dx;
 				spieler.y += Frame.dy;
@@ -475,7 +520,7 @@ public class Spielfeld extends JPanel implements Runnable{
 					client.send(client.socket.getLocalPort()+";blick;"+richtung+";");
 					spieler2.checkKollision();
 				}
-				
+
 				Elemente.beruehrung = false;
 			} else if((spieler.check(15)==false) | (spieler.check(18)==false) | (spieler.check(20)==false) | (spieler.check(21)==false) | (spieler.check(22)==false) | (spieler.check(30)==false)
 					| (spieler.check(23)==false) | (spieler.check(24)==false) | (spieler.check(25)==false) | (spieler.check(28)==false) | (spieler.check(31)==false) |(spieler.check(34)==false) 
@@ -490,6 +535,14 @@ public class Spielfeld extends JPanel implements Runnable{
 				spieler.x += Frame.dx;
 				spieler.y += Frame.dy;
 				Elemente.beruehrung = false;
+			} else if ((spieler.checkRätsel(59)==false)){
+				rätsel1.berührung=true;
+			}else if ((spieler.checkRätsel(60)==false)){
+				rätsel2.berührung=true;
+			}else if ((spieler.checkRätsel(61)==false)){
+				rätsel3.berührung=true;
+			}else if ((spieler.checkRätsel(62)==false)){
+				rätsel4.berührung=true;
 			}
 			//Schuss vom Spieler
 			schuss_spieler.setSchaden(spieler);

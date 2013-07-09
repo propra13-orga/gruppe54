@@ -11,10 +11,10 @@ public class Spieler extends Rectangle {
 	
 	public double speed = 0.5;
 	public int gold = 0;
-	public int waffe = 0,schluessel = 0,pfeile = 10;
+	public int waffe = 0,schluessel = 0,pfeile = 0;
 	public double schaden = 5;
 	public int item_trank = 0,item_mana = 0,item_supertrank = 0;
-	public int leben = 100,superleben = 3,mana = 100,xp = 0,ruestung = 50;
+	public int leben = 100,superleben = 3,mana = 100,xp = 0,ruestung = 100;
 	public boolean aktiv = false,schwert = true,axt = false,bogen = true;
 	public Point checkpoint;
 	public int check_room = 1,current_room = 1;	//check_room - Raum wo das letzte Mal der Checkpoint betätigt wurde		
@@ -111,7 +111,20 @@ public class Spieler extends Rectangle {
 		} else {
 			return false;
 		}
+		
 	}
+	//Prüfe ob der Spieler das Rätsel berührt
+	public boolean checkRätsel(int ID){
+		if((Spielfeld.getBlockID(x+6+Frame.dx,y+6+Frame.dy)!=ID)&&(Spielfeld.getBlockID(x+26+Frame.dx,y+6+Frame.dy)!=ID)&&(Spielfeld.getBlockID(x+6+Frame.dx,y+32+Frame.dy)!=ID)
+				&&(Spielfeld.getBlockID(x+26+Frame.dx,y+32+Frame.dy)!=ID)&&(x+Frame.dx>0)&&(y+32+Frame.dy<(Raum.worldHeight*Raum.blockSize))&&(x+32+Frame.dx<(Raum.worldWidth*Raum.blockSize))
+				&&(y+Frame.dy>0)){
+				return true;
+			} else {
+				return false;
+			}
+	}
+	
+	
 	public static void main(String[] args) {}
 
 }

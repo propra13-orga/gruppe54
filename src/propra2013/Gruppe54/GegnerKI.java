@@ -32,7 +32,7 @@ public class GegnerKI extends Rectangle{
 	public int counter_gegnerKI=0;
 	
 	/**
-	 * @param args
+	 * Konstruktor
 	 */
 	public GegnerKI(){
 		setBounds(StartX,StartY,32,32);
@@ -57,14 +57,19 @@ public class GegnerKI extends Rectangle{
 		aktiv=false;
 	}
 	
-	//Zeichnet den Gegner
+	/**
+	 * Draw Methode
+	 * @param g
+	 */
 	public void draw(Graphics g){
 		if((aktiv)&&(StartX!=0)&&(StartY!=0)){
-			g.drawImage(new ImageIcon("pics/GegnerKI_1"/*+Spielfeld.current_lvl*/+".png").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
+			g.drawImage(new ImageIcon("pics/GegnerKI_1.png").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
 		}
 	}
 	
-	//Funktion die den nächsten schritt berechnet
+	/**
+	 * berechnet die Richtung des nächsten Schrittes
+	 */
 	public void nächsterSchritt(){
 		if (Fall==1){
 			if(linksfrei()){
@@ -128,8 +133,8 @@ public class GegnerKI extends Rectangle{
 		}		
 	}
 	
-	//Überprüft wo sich der Spieler befindet, wenn Gegner in 9 steht
-	/*
+	/**Überprüft wo sich der Spieler befindet, wenn Gegner in 9 steht
+	 *
 	 * 4		7		3
 	 * 
 	 * 8		9		6
@@ -167,7 +172,10 @@ public class GegnerKI extends Rectangle{
 			Fall=9;
 		}
 	}
-
+	
+	/**
+	 * Bewegung des GegnerKI
+	 */
 	public void lauf(){
 		if (laufen){
 			checkFall();
@@ -181,7 +189,7 @@ public class GegnerKI extends Rectangle{
 	public boolean linksfrei(){
 		boolean frei=false;
 		for (int i=1;i<16;i++){
-			if((Spielfeld.getBlockID(StartX-1, StartY+15+i)!=1)&&(Spielfeld.getBlockID(StartX-1, StartY+15+i)!=2)&&(Spielfeld.getBlockID(StartX-1, StartY+15+i)!=33)&&(Spielfeld.getBlockID(StartX-1, StartY+15+i)!=4)&&(Spielfeld.getBlockID(StartX-1, StartY+15+i)!=41)&&(Spielfeld.getBlockID(StartX-1, StartY+15+i)!=42)){
+			if((Spielfeld.getBlockID(StartX-1, StartY+15+i)!=1)&&(Spielfeld.getBlockID(StartX-1, StartY+15+i)!=2)&&(Spielfeld.getBlockID(StartX-1, StartY+15+i)!=4)&&(Spielfeld.getBlockID(StartX-1, StartY+15+i)!=41)&&(Spielfeld.getBlockID(StartX-1, StartY+15+i)!=42)&&(Spielfeld.getBlockID(StartX-1, StartY+15+i)!=33)&&(Spielfeld.getBlockID(StartX-1, StartY+15+i)!=56)&&(Spielfeld.getBlockID(StartX-1, StartY+15+i)!=57)&&(Spielfeld.getBlockID(StartX-1, StartY+15+i)!=58)){
 				frei=true;
 			} else {
 				frei=false;
@@ -194,7 +202,7 @@ public class GegnerKI extends Rectangle{
 	public boolean rechtsfrei(){
 		boolean frei=false;
 		for (int i=1;i<16;i++){
-			if((Spielfeld.getBlockID(StartX+32, StartY+15+i)!=1)&&(Spielfeld.getBlockID(StartX+32, StartY+15+i)!=2)&&(Spielfeld.getBlockID(StartX+32, StartY+15+i)!=33)&&(Spielfeld.getBlockID(StartX+32, StartY+15+i)!=4)&&(Spielfeld.getBlockID(StartX+32, StartY+15+i)!=41)&&(Spielfeld.getBlockID(StartX+32, StartY+15+i)!=42)){
+			if((Spielfeld.getBlockID(StartX+32, StartY+15+i)!=1)&&(Spielfeld.getBlockID(StartX+32, StartY+15+i)!=2)&&(Spielfeld.getBlockID(StartX+32, StartY+15+i)!=33)&&(Spielfeld.getBlockID(StartX+32, StartY+15+i)!=4)&&(Spielfeld.getBlockID(StartX+32, StartY+15+i)!=41)&&(Spielfeld.getBlockID(StartX+32, StartY+15+i)!=42)&&(Spielfeld.getBlockID(StartX+32, StartY+15+i)!=56)&&(Spielfeld.getBlockID(StartX+32, StartY+15+i)!=57)&&(Spielfeld.getBlockID(StartX+32, StartY+15+i)!=58)){
 				frei=true;
 			} else {
 				frei=false;
@@ -207,7 +215,7 @@ public class GegnerKI extends Rectangle{
 	public boolean obenfrei(){
 		boolean frei=false;
 		for (int i=1;i<29;i++){
-			if((Spielfeld.getBlockID(StartX+1+i, StartY+15)!=1)&&(Spielfeld.getBlockID(StartX+1+i, StartY+15)!=2)&&(Spielfeld.getBlockID(StartX+1+i, StartY+15)!=33)&&(Spielfeld.getBlockID(StartX+1+i, StartY+15)!=4)&&(Spielfeld.getBlockID(StartX+1+i, StartY+15)!=41)&&(Spielfeld.getBlockID(StartX+1+i, StartY+15)!=42)){
+			if((Spielfeld.getBlockID(StartX+1+i, StartY+15)!=1)&&(Spielfeld.getBlockID(StartX+1+i, StartY+15)!=2)&&(Spielfeld.getBlockID(StartX+1+i, StartY+15)!=33)&&(Spielfeld.getBlockID(StartX+1+i, StartY+15)!=4)&&(Spielfeld.getBlockID(StartX+1+i, StartY+15)!=41)&&(Spielfeld.getBlockID(StartX+1+i, StartY+15)!=42)&&(Spielfeld.getBlockID(StartX+1+i, StartY+15)!=56)&&(Spielfeld.getBlockID(StartX+1+i, StartY+15)!=57)&&(Spielfeld.getBlockID(StartX+1+i, StartY+15)!=58)){
 				frei=true;
 			} else {
 				frei=false;
@@ -220,7 +228,7 @@ public class GegnerKI extends Rectangle{
 	public boolean untenfrei(){
 		boolean frei=false;
 		for (int i=1;i<29;i++){
-			if((Spielfeld.getBlockID(StartX+1+i, StartY+32)!=1)&&(Spielfeld.getBlockID(StartX+1+i, StartY+32)!=2)&&(Spielfeld.getBlockID(StartX+1+i, StartY+32)!=33)&&(Spielfeld.getBlockID(StartX+1+i, StartY+32)!=4)&&(Spielfeld.getBlockID(StartX+1+i, StartY+32)!=41)&&(Spielfeld.getBlockID(StartX+1+i, StartY+32)!=42)){
+			if((Spielfeld.getBlockID(StartX+1+i, StartY+32)!=1)&&(Spielfeld.getBlockID(StartX+1+i, StartY+32)!=2)&&(Spielfeld.getBlockID(StartX+1+i, StartY+32)!=33)&&(Spielfeld.getBlockID(StartX+1+i, StartY+32)!=4)&&(Spielfeld.getBlockID(StartX+1+i, StartY+32)!=41)&&(Spielfeld.getBlockID(StartX+1+i, StartY+32)!=42)&&(Spielfeld.getBlockID(StartX+1+i, StartY+32)!=56)&&(Spielfeld.getBlockID(StartX+1+i, StartY+32)!=57)&&(Spielfeld.getBlockID(StartX+1+i, StartY+32)!=58)){
 				frei=true;
 			} else {
 				frei=false;
@@ -240,13 +248,15 @@ public class GegnerKI extends Rectangle{
 				counter_kollision = 0;
 			} else if((Spielfeld.spieler.ruestung<=0)&&(counter_kollision == 4)) {
 				Spielfeld.spieler.leben -= Schaden;
+				if(Spielfeld.multiplayer){
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";spielerleben;"+Spielfeld.spieler.leben+";");
+				}
 				counter_kollision = 0;
 			}
 		}
-		if( (StartX+26 >= Falle.StartX)&&(StartX <= Falle.StartX+26)&&
-				(StartY+26 >= Falle.StartY)&&(StartY <= Falle.StartY+26)){	
-				leben=0;
-				}
+		if((StartX+26 >= Falle.StartX)&&(StartX <= Falle.StartX+26)&&(StartY+26 >= Falle.StartY)&&(StartY <= Falle.StartY+26)){	
+			leben=0;
+		}
 	}
 	
 	public static void main(String[] args) {

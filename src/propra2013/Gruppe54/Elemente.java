@@ -10,6 +10,7 @@ public class Elemente {
 	public static boolean beruehrung = false;
 	public static int feuer = 0,speer = 0; //es soll nicht jeder Schritt über das Feuer Schaden geben, es soll aber Schaden genommen werden wenn der Spieler stehen bleibt
 
+
 	public static void Aufruf(int ID,Block block,Spieler spieler){
 		switch(ID){
 		
@@ -43,6 +44,7 @@ public class Elemente {
 				Falle.StartX=0;
 				Falle.StartY=0;
 				Spielfeld.pfeil.aktiv = false;
+				Rätsel.reset();
 				if(Spielfeld.multiplayer){
 					if(Spielfeld.schuss_spieler2.sichtbar){
 						Spielfeld.schuss_spieler2.sichtbar = false;
@@ -74,6 +76,9 @@ public class Elemente {
 				beruehrung = true;		  //da z.B. beim hochlaufen zwei Punkte auf Berührung überprüft werden, soll gespeichert werden,
 				if(spieler.ruestung<=0){  //ob bereits eine Falle ausgelöst wurde damit die Punkte nicht doppelt abgezogen werden
 					spieler.leben-=1;
+					if(Spielfeld.multiplayer){
+						Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";spielerleben;"+spieler.leben+";");
+					}
 				} else {
 					spieler.ruestung-=1;
 				}		
@@ -87,6 +92,9 @@ public class Elemente {
 				beruehrung = true;
 				if(spieler.ruestung<=0){
 					spieler.leben-=1;
+					if(Spielfeld.multiplayer){
+						Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";spielerleben;"+spieler.leben+";");
+					}
 				} else {
 					spieler.ruestung-=1;
 				}
@@ -101,6 +109,9 @@ public class Elemente {
 			if((spieler.ruestung<=0)&&(Spielfeld.Falle_counter==5)){
 				spieler.leben-=1;
 				Spielfeld.Falle_counter = 0;
+				if(Spielfeld.multiplayer){
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";spielerleben;"+spieler.leben+";");
+				}
 			} else if(Spielfeld.Falle_counter==5){
 				spieler.ruestung-=1;
 				Spielfeld.Falle_counter = 0;
@@ -113,6 +124,9 @@ public class Elemente {
 				beruehrung = true;
 				if(spieler.ruestung<=0){
 					spieler.leben-=2;
+					if(Spielfeld.multiplayer){
+						Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";spielerleben;"+spieler.leben+";");
+					}
 				} else {
 					spieler.ruestung-=2;
 				}
@@ -127,6 +141,9 @@ public class Elemente {
 				beruehrung = true;
 				if(spieler.ruestung<=0){
 					spieler.leben-=2;
+					if(Spielfeld.multiplayer){
+						Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";spielerleben;"+spieler.leben+";");
+					}
 				} else {
 					spieler.ruestung-=2;
 				}
@@ -143,6 +160,9 @@ public class Elemente {
 				spieler.leben+=40;
 				if(spieler.leben>100){
 					spieler.leben = 100;
+				}
+				if(Spielfeld.multiplayer){
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";spielerleben;"+spieler.leben+";");
 				}
 			}
 			block.Zustand = 1;
@@ -169,6 +189,9 @@ public class Elemente {
 				if(spieler.leben>100){
 					spieler.leben = 100;
 				}
+				if(Spielfeld.multiplayer){
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";spielerleben;"+spieler.leben+";");
+				}
 				block.Zustand = 1;
 			}
 			break;
@@ -185,6 +208,9 @@ public class Elemente {
 				spieler.leben += 40;
 				if(spieler.leben>100){
 					spieler.leben = 100;
+				}
+				if(Spielfeld.multiplayer){
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";spielerleben;"+spieler.leben+";");
 				}
 			}
 			block.Zustand = 1;
@@ -304,6 +330,7 @@ public class Elemente {
 				Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";shopein;");
 			}
    		 	Spielfeld.showShop();
+   		 	Rätsel.reset();
 			break;
 			
 		case 27://Ausgang Shop
@@ -311,6 +338,7 @@ public class Elemente {
 			Falle.aktiv = Falle.status;
 			Spielfeld.pfeil.aktiv = false;
 			Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";shopaus;");
+			Rätsel.reset();
 			break;
 		
 		case 28://Item_Shop Axt
@@ -413,6 +441,7 @@ public class Elemente {
 				if(Spielfeld.schuss2_spieler.sichtbar){
 					Spielfeld.schuss2_spieler.sichtbar = false;
 				}
+				Rätsel.reset();
 				Spielfeld.pfeil.aktiv = false;
 				Spielfeld.current_room+=1;
 				Falle.aktiv=false;
@@ -492,6 +521,7 @@ public class Elemente {
 				Spielfeld.anzeige = true;
 			}
 			break;
+
 		default:
 			//
 			break;

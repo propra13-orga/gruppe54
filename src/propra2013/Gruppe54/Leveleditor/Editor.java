@@ -37,10 +37,12 @@ public class Editor extends JFrame{
 	public static String auswahl2[] = {"Lebenstrank","Manatrank","Supertrank","Pfeile","Schlüssel","Zepter","Herz","Lebensbrunnen","Manabrunnen","Gold1","Gold2","Schatztruhe","QuestNPC","WaldNPC"};
 	public static String auswahl3[] = {"Gegner1","Gegner2","Endgegner","Fledermaus","Bewegliche Falle"};
 	public static String auswahl4[] = {"Loch","Feuer","Grüner Giftbaum","Speer","Axt","Totenkopf"};
+	public static String auswahl5[] = {"Rätsel1","Rätsel2","Rätsel3","Rätsel4","Tor1","Tor2","Tor3"};
 	public static JComboBox<?> Raumelemente = new JComboBox<Object>(auswahl1);
 	public static JComboBox<?> Items = new JComboBox<Object>(auswahl2);
 	public static JComboBox<?> Gegner = new JComboBox<Object>(auswahl3);
 	public static JComboBox<?> Fallen = new JComboBox<Object>(auswahl4);
+	public static JComboBox<?> QuestRätsel = new JComboBox<Object>(auswahl5);
 	
 	public Editor(){
 		setTitle(title);
@@ -63,6 +65,9 @@ public class Editor extends JFrame{
 		Fallen.setBounds(550, 50, 150, 22);
 		Fallen.setVisible(true);
 		add(Fallen);
+		QuestRätsel.setBounds(725, 50, 150, 22);
+		QuestRätsel.setVisible(true);
+		add(QuestRätsel);
 		
 		level.setBounds(375, 15, 75, 10);
 		raum.setBounds(450,15,75,10);
@@ -246,6 +251,27 @@ public class Editor extends JFrame{
 					Editorfeld.current_id = 11;
 				} else if("Totenkopf".equals(selectedChoice.getSelectedItem())){
 					Editorfeld.current_id = 12;
+				}
+			}
+		});
+		
+		QuestRätsel.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				JComboBox<?> selectedChoice = (JComboBox<?>) e.getSource();
+				if("Rätsel1".equals(selectedChoice.getSelectedItem())){
+					Editorfeld.current_id = 59;
+				} else if("Rätsel2".equals(selectedChoice.getSelectedItem())){
+					Editorfeld.current_id = 60;
+				} else if("Rätsel3".equals(selectedChoice.getSelectedItem())){
+					Editorfeld.current_id = 61;
+				} else if("Rätsel4".equals(selectedChoice.getSelectedItem())){
+					Editorfeld.current_id = 62;
+				} else if("Tor1".equals(selectedChoice.getSelectedItem())){
+					Editorfeld.current_id = 56;
+				} else if("Tor2".equals(selectedChoice.getSelectedItem())){
+					Editorfeld.current_id = 57;
+				} else if("Tor3".equals(selectedChoice.getSelectedItem())){
+					Editorfeld.current_id = 58;
 				}
 			}
 		});
