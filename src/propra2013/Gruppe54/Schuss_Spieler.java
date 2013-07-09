@@ -151,7 +151,6 @@ public class Schuss_Spieler extends Rectangle {
 		//Schuss_Endgegner
 		}else if((StartX+31 >= Spielfeld.schuss_endgegner.StartX)&&(StartX <= Spielfeld.schuss_endgegner.StartX+31)  &&
 			 (StartY+31 >= Spielfeld.schuss_endgegner.StartY)&&(StartY <= Spielfeld.schuss_endgegner.StartY+31)){		
-			sichtbar=false;	
 			Spielfeld.schuss_endgegner.StartX=(int)Endgegner.StartX;
 			Spielfeld.schuss_endgegner.StartY=(int)Endgegner.StartY;
 		//Bewegliche Falle
