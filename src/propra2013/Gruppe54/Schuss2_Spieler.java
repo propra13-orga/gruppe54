@@ -17,23 +17,31 @@ public class Schuss2_Spieler extends Rectangle {
 	public int Richtung = 0;
 	public Spieler spieler;
 
-	
+	/**
+	 * Konstruktor
+	 * @param spieler, derjenige Spieler der den Schuss abgefeuert hat
+	 */
 	public Schuss2_Spieler(Spieler spieler) {
 		setBounds((int)StartX,(int)StartY,32,32);
 		this.sichtbar=false;
 		this.spieler = spieler;
 	}
 
-	//schaut nach wo der Spieler steht 
-		public void setPos(){
-			if(setPos == false){
+	/**
+	 * schaut nach wo der Spieler steht 
+	 */
+	public void setPos(){
+		if(setPos == false){
 			StartX = spieler.x;
 			StartY = spieler.y;
 			setPos=true;
-			}
 		}
+	}
 		
-	//Zeichnet einen Schuss
+	/**
+	 * Zeichnet einen Schuss
+	 * @param g
+	 */
 	public void draw(Graphics g){
 		g.drawImage(new ImageIcon("pics/schuss_feuer_1.png").getImage(), (int)StartX, (int)StartY, 32, 32, null); 
 	}
@@ -51,46 +59,54 @@ public class Schuss2_Spieler extends Rectangle {
 		}
 	}
 		
-		//prüft an 4 Punkten ob sich dort ein Objekt befindet durch das der Schuss nicht fliegen darf
-		public boolean check(int ID){
-			if((Spielfeld.getBlockID(StartX+10,StartY+27)!=ID)&& //unten links
-				(Spielfeld.getBlockID(StartX+25,StartY+27)!=ID)&& //unten rechts
-				(Spielfeld.getBlockID(StartX+10,StartY+30)!=ID)&& //oben links
-				(Spielfeld.getBlockID(StartX+20,StartY+30)!=ID)&&//oben rechts
-				(StartX>0)&&(StartX<Raum.worldWidth*Raum.blockSize)&&(StartY>0)&&(StartY<Raum.worldHeight*Raum.blockSize)){ 
-				return true;
-			} else { 
-				return false;
-			}
+		/**
+		 * prüft an 4 Punkten ob sich dort ein Objekt befindet durch das der Schuss nicht fliegen darf
+		 * @param ID, die ID auf die geprüft werden soll
+		 * @return true oder false
+		 */
+	public boolean check(int ID){
+		if((Spielfeld.getBlockID(StartX+10,StartY+27)!=ID)&& //unten links
+			(Spielfeld.getBlockID(StartX+25,StartY+27)!=ID)&& //unten rechts
+			(Spielfeld.getBlockID(StartX+10,StartY+30)!=ID)&& //oben links
+			(Spielfeld.getBlockID(StartX+20,StartY+30)!=ID)&&//oben rechts
+			(StartX>0)&&(StartX<Raum.worldWidth*Raum.blockSize)&&(StartY>0)&&(StartY<Raum.worldHeight*Raum.blockSize)){ 
+			return true;
+		} else { 
+			return false;
 		}
-		//Wie der Schuss sich bewegt wenn der Spieler nach rechts schaut
-		public void Schuss(){
-			if(Spielfeld.counter_schuss2 == 0){
-				Richtung = checkRichtung();
-			}
-			if ((Richtung==1)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)&&check(51)&&check(56)&&check(57)&&check(58)){
-				StartX+=1*speed;
-				Kollision();
-			} else if(Richtung==1){
-				sichtbar=false;
-			} else if((Richtung==2)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)&&check(51)&&check(56)&&check(57)&&check(58)){
-				StartY+=1*speed;
-				Kollision();
-			} else if(Richtung==2){
-				sichtbar=false;
-			} else if((Richtung==3)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)&&check(51)&&check(56)&&check(57)&&check(58)){
-				StartX-=1*speed;
-				Kollision();
-			} else if (Richtung==3){
-				sichtbar=false;	
-			} else if((Richtung==4)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)&&check(51)&&check(56)&&check(57)&&check(58)){
-				StartY-=1*speed;
-				Kollision();
-			} else if (Richtung==4){
-				sichtbar=false;
-			}
+	}
+	/**
+	 * Bewegung des Schusses
+	 */
+	public void Schuss(){
+		if(Spielfeld.counter_schuss2 == 0){
+			Richtung = checkRichtung();
 		}
-			
+		if ((Richtung==1)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)&&check(51)&&check(56)&&check(57)&&check(58)){
+			StartX+=1*speed;
+			Kollision();
+		} else if(Richtung==1){
+			sichtbar=false;
+		} else if((Richtung==2)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)&&check(51)&&check(56)&&check(57)&&check(58)){
+			StartY+=1*speed;
+			Kollision();
+		} else if(Richtung==2){
+			sichtbar=false;
+		} else if((Richtung==3)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)&&check(51)&&check(56)&&check(57)&&check(58)){
+			StartX-=1*speed;
+			Kollision();
+		} else if (Richtung==3){
+			sichtbar=false;	
+		} else if((Richtung==4)&&check(1)&&check(2)&&check(4)&&check(6)&&check(10)&&check(15)&&check(41)&&check(42)&&check(43)&&check(51)&&check(56)&&check(57)&&check(58)){
+			StartY-=1*speed;
+			Kollision();
+		} else if (Richtung==4){
+			sichtbar=false;
+		}
+	}
+	/**
+	 * Kollisionsabfrage
+	 */
 	public void Kollision(){
 		//Endgegner
 		if((StartX+31 >= Endgegner.StartX)&&(StartX <= Endgegner.StartX+31)&&
@@ -124,8 +140,5 @@ public class Schuss2_Spieler extends Rectangle {
 			}
 		}
 	}
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
+	public static void main(String[] args) {}
 }

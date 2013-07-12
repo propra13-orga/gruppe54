@@ -4,13 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.net.UnknownHostException;
 
 public class Spielfeld extends JPanel implements Runnable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public Thread thread = new Thread(this);
@@ -166,7 +162,7 @@ public class Spielfeld extends JPanel implements Runnable{
 	}
 	
 	/** 
-	 * Initialisierung
+	 * Initialisierung, erstellt alle Objekte und lädt das Level
 	 */
 	public void define(){
 		if((!set_server)&(multiplayer)){
@@ -202,10 +198,13 @@ public class Spielfeld extends JPanel implements Runnable{
 		isFirst = false;
 	}
 	
+	/*
+	 * PaintComponent - Hier werden Spielfeld und Objekte auf das Panel gezeichnet
+	 */
 	public void paintComponent(Graphics g){
-		raum.draw(g); //zeichnet den raum
+		raum.draw(g); 						//zeichnet den raum
 		if(spieler.aktiv){
-			spieler.draw(g);  //zeichnet den Spieler
+			spieler.draw(g);  				//zeichnet den Spieler
 			//Waffe des Spielers
 			waffe.draw(g);
 			
@@ -218,6 +217,7 @@ public class Spielfeld extends JPanel implements Runnable{
 				g.drawString(text_anzeige, (int)spieler.x, (int)spieler.y-10);
 				counter_anzeige++;
 			}
+			//Anzeige des Preises einzelner Gegenstände im Shop
 			if(preis_shop){
 				g.setColor(Color.white);
 				if(g.getFont() != new Font("Lucida Sans Typewriter",Font.PLAIN,8)){
@@ -225,16 +225,15 @@ public class Spielfeld extends JPanel implements Runnable{
 				}
 				g.drawString(preis_anzeige, (int)spieler.x, (int)spieler.y-10);
 			}
-			//Schuss Spieler
+			//Schuss Spieler - Kugelblitz
 			if (schuss_spieler.sichtbar){
 				schuss_spieler.draw(g);
 			}
-			//Schuss2 Spieler
+			//Schuss2 Spieler - FeuerMagie
 			if (schuss2_spieler.sichtbar){
 				schuss2_spieler.draw(g);
 			}
 		}
-		
 		//Multiplayer 
 		if(multiplayer){
 			if((spieler2.aktiv)&(spieler.current_room == spieler2.current_room)){
@@ -258,7 +257,6 @@ public class Spielfeld extends JPanel implements Runnable{
 				pfeil2.draw(g);
 			}
 		}
-		
 		//Gegner1
 		if((gegnerRL.leben>0)&&(gegnerRL.aktiv)){
 			gegnerRL.draw(g);
@@ -281,7 +279,6 @@ public class Spielfeld extends JPanel implements Runnable{
 			}
 			g.fill3DRect((int)gegnerOU.StartX, (int)gegnerOU.StartY-10,gegnerOU.leben/gegnerOU.Faktor,3,true);
 		}
-		
 		//Falle
 		if((Falle.aktiv)&&(Spielfeld.shop == false)){
 			falle.draw(g);
@@ -290,7 +287,6 @@ public class Spielfeld extends JPanel implements Runnable{
 		if(pfeil.aktiv){
 			pfeil.draw(g);
 		}
-		
 		//Endgegner
 		if ((Endgegner.leben>0)&&(Endgegner.aktiv)&&(current_room == 3)){
 			Boss.draw(g);
@@ -317,7 +313,6 @@ public class Spielfeld extends JPanel implements Runnable{
 			}
 			g.fill3DRect(gegnerKI.StartX, gegnerKI.StartY-10,gegnerKI.leben/gegnerKI.Faktor,3,true);	
 		}
-		
 		//Rätsel
 		if(Rätsel.vorhanden){
 		rätsel1.draw(g);
@@ -327,7 +322,9 @@ public class Spielfeld extends JPanel implements Runnable{
 		}
 	}
 	
-	//Thread
+	/**
+	 * Thread, hier werden alle Bewegungen und Sonstiges ausgeführt
+	 **/
 	public void run(){
 		while(true){
 			validate();
@@ -434,7 +431,7 @@ public class Spielfeld extends JPanel implements Runnable{
 					gegnerKI.laufen=true;
 					gegnerKI.counter_gegnerKI=0;
 				}
-			} else if((gegnerKI.leben <= 0)&&(GegnerKI_counter == 0)&&(shop == false)){ // "   "
+			} else if((gegnerKI.leben <= 0)&&(GegnerKI_counter == 0)&&(shop == false)){ //wenn der Gegner besiegt wurde müssen seine Koordinaten auf 0 gesetzt werde
 				spieler.xp += 10*current_lvl;		//Fledermaus legt kein Item ab wenn es besiegt wurde
 				anzeige = true;
 				text_anzeige = "+"+10*current_lvl+" XP";
@@ -508,29 +505,30 @@ public class Spielfeld extends JPanel implements Runnable{
 			if((spieler.check(1))&&(spieler.check(15))&&(spieler.check(18))&&(spieler.check(20))&&(spieler.check(21))&&(spieler.check(10))
 					&&(spieler.check(22))&&(spieler.check(23))&&(spieler.check(24))&&(spieler.check(34))&&(spieler.check(25))&&(spieler.check(28))&&(spieler.check(30))&&(spieler.check(31))
 					&&(spieler.check(41))&&(spieler.check(42))&&(spieler.check(43))&&(spieler.check(2))&&(spieler.check(4))&&(spieler.check(29))
-					&&(spieler.check(17))&&(spieler.check(51))&&(spieler.check(52))&&(spieler.check(53))&&
-					(spieler.check(56))&&(spieler.check(57))&&(spieler.check(58))
-					&&(spieler.checkRätsel(59))&&(spieler.checkRätsel(60))&&(spieler.checkRätsel(61))&&(spieler.checkRätsel(62))){//prüfen ob Elemente vom Spieler durchschritten werden dürfen
+					&&(spieler.check(17))&&(spieler.check(51))&&(spieler.check(52))&&(spieler.check(53))&&(spieler.check(56))&&(spieler.check(57))&&(spieler.check(58))
+					&&(spieler.checkRätsel(59))&&(spieler.checkRätsel(60))&&(spieler.checkRätsel(61))&&(spieler.checkRätsel(62))){
+					//prüfen ob Elemente vom Spieler durchschritten werden dürfen
 				spieler.checkKollision();
 				spieler.x += Frame.dx;
 				spieler.y += Frame.dy;
 				
 				if((multiplayer)&(client != null)){
-					client.send(client.socket.getLocalPort()+";spieler;"+Double.toString(spieler.x)+";"+Double.toString(spieler.y)+";"); //position an Server schicken
+					//position an Server schicken
+					client.send(client.socket.getLocalPort()+";spieler;"+Double.toString(spieler.x)+";"+Double.toString(spieler.y)+";"); 
 					client.send(client.socket.getLocalPort()+";blick;"+richtung+";");
 					spieler2.checkKollision();
 				}
-
 				Elemente.beruehrung = false;
 			} else if((spieler.check(15)==false) | (spieler.check(18)==false) | (spieler.check(20)==false) | (spieler.check(21)==false) | (spieler.check(22)==false) | (spieler.check(30)==false)
 					| (spieler.check(23)==false) | (spieler.check(24)==false) | (spieler.check(25)==false) | (spieler.check(28)==false) | (spieler.check(31)==false) |(spieler.check(34)==false) 
-					| (spieler.check(29)==false) | (spieler.check(17)==false) | (spieler.check(10)==false)| (spieler.check(52)==false)| (spieler.check(53)==false)){	//wenn nicht, dann wird nur die Aktion des Elements ausgeführt, der Spieler geht aber nicht weiter
+					| (spieler.check(29)==false) | (spieler.check(17)==false) | (spieler.check(10)==false)| (spieler.check(52)==false)| (spieler.check(53)==false)){
+					//wenn nicht, dann wird nur die Aktion des Elements ausgeführt, der Spieler geht aber nicht weiter
 				spieler.checkKollision();
 				if(multiplayer){
 					spieler2.checkKollision();
 				}
 				Elemente.beruehrung = false;
-			} else if((spieler.check(51)==false)&&(weg_verschlossen==false)){
+			} else if((spieler.check(51)==false)&&(!weg_verschlossen)){
 				spieler.checkKollision();
 				spieler.x += Frame.dx;
 				spieler.y += Frame.dy;
@@ -648,7 +646,8 @@ public class Spielfeld extends JPanel implements Runnable{
 				break;
 			}
 		}
-		if(Raum.block[i][j] != null){  //Nullpointerexception abfangen
+		//Nullzeiger abfangen
+		if(Raum.block[i][j] != null){ 
 			return Raum.block[i][j];
 		} else {
 			return Raum.block[0][0];

@@ -8,9 +8,6 @@ import javax.swing.ImageIcon;
 
 public class GegnerOU extends Rectangle{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	public boolean unten=false;  // gibt an, ob der Gegener unten an eine Wand stößt
@@ -26,6 +23,9 @@ public class GegnerOU extends Rectangle{
 	public boolean aktiv,hoch = false;
 	public Image image;
 	
+	/**
+	 * Konstruktor
+	 */
 	public GegnerOU() {
 		setBounds((int)StartX,(int)StartY,32,32);
 		if (Spielfeld.current_lvl==1){
@@ -45,6 +45,10 @@ public class GegnerOU extends Rectangle{
 		aktiv=false;
 	}
 	
+	/**
+	 * Zeichnet den Gegner
+	 * @param g
+	 */
 	public void draw(Graphics g){
 		if((aktiv)&&(StartX!=0)&&(StartY!=0)){
 			if(hoch){
@@ -54,7 +58,9 @@ public class GegnerOU extends Rectangle{
 			}
 		}
 	}
-	//legt ein Item ab wenn der Gegner besiegt wurde
+	/**
+	 * legt ein Item ab wenn der Gegner besiegt wurde
+	 */
 	public void setItem(){
 		if(Spielfeld.getBlock(StartX+16,StartY+16).ID == 0){
 			Spielfeld.getBlock(StartX+16,StartY+16).ID = 32;			
@@ -62,6 +68,9 @@ public class GegnerOU extends Rectangle{
 		setItem = true;
 	}
 	
+	/**
+	 * Bewegung des Gegners
+	 */
 	public void lauf(){
 		//Gegner läuft hoch und runter
 			if ((unten==false)&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=2)&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=1)&&(Spielfeld.getBlockID(StartX+16, StartY+2+32)!=41)
@@ -85,7 +94,9 @@ public class GegnerOU extends Rectangle{
 			} 
 	
 
-	//Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
+	/**
+	 * Kollision, bestimmt was passieren soll wenn ein Gegner mit dem Spieler zusammen trifft
+	 */
 	public void Kollision(){
 		if( (StartX+26 >= Spielfeld.spieler.x)&&(StartX <= Spielfeld.spieler.x+26)&&
 			(StartY+26 >= Spielfeld.spieler.y)&&(StartY <= Spielfeld.spieler.y+26)){		

@@ -7,10 +7,17 @@ public class KeyHandler implements KeyListener{
 
 	public static void main(String[] args) {}
 	
+	/**
+	 * KeyHandler
+	 */
+	@Override
 	public void keyPressed(KeyEvent e){
         int key = e.getKeyCode();
       //nur bewegen wenn der Spieler aktiv ist
       if((Spielfeld.spieler.aktiv)&&(Spielfeld.spieler.beweglich)){
+    	  /**
+    	   * Taste A - Bewegung hoch
+    	   */
          if ((key == KeyEvent.VK_A)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+1.5, Spielfeld.spieler.y+26)!=1)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+2, Spielfeld.spieler.y+32)!=1)) {
         	Frame.dx = -1*Spielfeld.spieler.speed;
             Spielfeld.spieler.checkShopItems();
@@ -23,7 +30,9 @@ public class KeyHandler implements KeyListener{
             Spielfeld.richtung = "links";
             Rätsel.setFalse();
          }
-
+         /**
+   	   	  * Taste D - Bewegun rechts
+   	      */
          if ((key == KeyEvent.VK_D)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+30, Spielfeld.spieler.y+26)!=1)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+30, Spielfeld.spieler.y+32)!=1)) {
 	        Frame.dx = 1*Spielfeld.spieler.speed;
 	        Spielfeld.spieler.checkShopItems();
@@ -36,7 +45,9 @@ public class KeyHandler implements KeyListener{
          	Spielfeld.richtung = "rechts";
          	Rätsel.setFalse();
          }
-
+         /**
+   	      * Taste W - Bewegung runter
+   	      */
          if ((key == KeyEvent.VK_W)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+6, Spielfeld.spieler.y+26)!=1)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+26, Spielfeld.spieler.y+23)!=1)) {
 	        Frame.dy = -1*Spielfeld.spieler.speed;
 	        Spielfeld.spieler.checkShopItems();
@@ -49,7 +60,9 @@ public class KeyHandler implements KeyListener{
 	        Spielfeld.richtung = "hoch";
 	        Rätsel.setFalse();
          }
-         
+         /**
+   	      * Taste S - Bewegung links
+   	      */
          if ((key == KeyEvent.VK_S)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+6, Spielfeld.spieler.y+32)!=1)&&(Spielfeld.getBlockID(Spielfeld.spieler.x+26, Spielfeld.spieler.y+32)!=1)) {
 	        Frame.dy = 1*Spielfeld.spieler.speed;
 	        Spielfeld.spieler.checkShopItems();
@@ -63,7 +76,9 @@ public class KeyHandler implements KeyListener{
 	        Rätsel.setFalse();
          }
          
-         //ruft den Shop auf
+         /**
+   	   	  * Taste Enter - Interaktion mit Objekten und NPCs
+   	      */
          if ((key == KeyEvent.VK_ENTER)){			
         	 if(Spielfeld.shop_trank){
         		 if(Spielfeld.spieler.gold >= 50){
@@ -169,7 +184,9 @@ public class KeyHandler implements KeyListener{
     			 }
         	 }
          }
-         //Lebenstrank nehmen
+         /**
+   	      * Taste N - Lebenstrank benutzen
+   	      */
          if ((key == KeyEvent.VK_N)&&(Spielfeld.spieler.aktiv)&&(Spielfeld.spieler.leben<100)&&(Spielfeld.spieler.item_trank>0)){   //Trank
         	 Spielfeld.spieler.leben += 40;
         	 Spielfeld.spieler.item_trank -= 1;
@@ -177,7 +194,9 @@ public class KeyHandler implements KeyListener{
         		 Spielfeld.spieler.leben = 100;
         	 }
          }
-         //Mana Trank nehmen
+         /**
+          * Taste M - Mana Trank benutzen
+          */
          if ((key == KeyEvent.VK_M)&&(Spielfeld.spieler.aktiv)&&(Spielfeld.spieler.mana<100)&&(Spielfeld.spieler.item_mana>0)){		//Mana
         	 Spielfeld.spieler.mana += 40;
         	 Spielfeld.spieler.item_mana -= 1;
@@ -185,7 +204,9 @@ public class KeyHandler implements KeyListener{
         		 Spielfeld.spieler.mana = 100;
         	 }
          }
-       //Supertrank nehmen
+         /**
+          * Taste J - Supertrank beutzen
+          */
          if ((key == KeyEvent.VK_J)&&(Spielfeld.spieler.aktiv)&&((Spielfeld.spieler.mana<100)|(Spielfeld.spieler.leben<100))&&(Spielfeld.spieler.item_supertrank>0)){		//Mana
         	 Spielfeld.spieler.item_supertrank -= 1;
         	 Spielfeld.spieler.mana+=40;
@@ -197,7 +218,9 @@ public class KeyHandler implements KeyListener{
 				 Spielfeld.spieler.leben = 100;
 			 }
          }
-         //Schuss des Spielers
+         /**
+          * Leertaste - Schuss des Spielers
+          */
          if ((key == KeyEvent.VK_SPACE)&&(Spielfeld.spieler.aktiv)&&(Spielfeld.spieler.mana>=10)&&(Spielfeld.spieler.xp>=15)){	
         	if(!Spielfeld.schuss_spieler.sichtbar){
 	        	Spielfeld.schuss_spieler.sichtbar=true;
@@ -212,7 +235,9 @@ public class KeyHandler implements KeyListener{
 				}
         	}
          } 
-        //Schuss2 des Spielers
+         /**
+          * Taste C - Schuss2 des Spielers
+          */
          if ((key == KeyEvent.VK_C)&&(Spielfeld.spieler.aktiv)&&(Spielfeld.spieler.Anzahl_Schüssen>0)&&(Spielfeld.spieler.xp>=75)){	
         	if(!Spielfeld.schuss2_spieler.sichtbar){
 	        	Spielfeld.schuss2_spieler.sichtbar=true;
@@ -227,7 +252,10 @@ public class KeyHandler implements KeyListener{
 				}
         	}
          } 
-         if((key == KeyEvent.VK_K)&&(Spielfeld.spieler.aktiv)){ //kleiner Cheat zu Testzwecken ;D
+         /**
+          * Taste K - kleiner Cheat zu Testzwecken ;D
+          */
+         if((key == KeyEvent.VK_K)&&(Spielfeld.spieler.aktiv)){ 
         	 Spielfeld.spieler.mana = 100;
         	 Spielfeld.spieler.leben = 100;
         	 Spielfeld.spieler.ruestung = 100;
@@ -238,7 +266,9 @@ public class KeyHandler implements KeyListener{
 				Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";spielerleben;"+Spielfeld.spieler.leben+";");
 			}
          }
-         //Angriff
+         /**
+          * Taste B - Angriff mit der jeweiligen Waffe
+          */
          if((key == KeyEvent.VK_B)&&(Spielfeld.spieler.aktiv)){
         	if(Spielfeld.waffe.angriff == false){
         		Spielfeld.waffe.angriff = true;
@@ -277,26 +307,43 @@ public class KeyHandler implements KeyListener{
         		}
         	}
          }
+         /**
+          * Taste 1 - Schwert nehmen
+          */
          if((key == KeyEvent.VK_1)&&(Spielfeld.spieler.aktiv)){
 	       	Spielfeld.spieler.waffe = 0;
 	       	Spielfeld.waffe.ID = 0;
-	       	Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";waffenwechsel;0;");
+	       	if(Spielfeld.multiplayer){
+	       		Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";waffenwechsel;0;");
+	       	}
 	     }
+         /**
+          * Taste 2 - Axt nehmen
+          */
          if((key == KeyEvent.VK_2)&&(Spielfeld.spieler.aktiv)){
         	if(Spielfeld.spieler.axt){
         		Spielfeld.spieler.waffe = 1;
         		Spielfeld.waffe.ID = 1;
-    	       	Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";waffenwechsel;1;");
+        		if(Spielfeld.multiplayer){
+        			Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";waffenwechsel;1;");
+        		}
         	}
 		 }
+         /**
+          * Taste 3 - Bogen nehmen
+          */
          if((key == KeyEvent.VK_3)&&(Spielfeld.spieler.aktiv)){
          	if(Spielfeld.spieler.bogen){
          		Spielfeld.spieler.waffe = 2;
          		Spielfeld.waffe.ID = 2;
-    	       	Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";waffenwechsel;2;");
+         		if(Spielfeld.multiplayer){
+         			Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";waffenwechsel;2;");
+         		}
          	}
- 		 }
-         //rätsel betätigen
+         } 
+        /**
+         * Taste E - Rätsel betätigen
+         */
         if((key == KeyEvent.VK_E)&&(Spielfeld.spieler.aktiv)){
           if(Rätsel.geschafft==false){
         	if (Spielfeld.rätsel1.berührung==true){
@@ -330,9 +377,7 @@ public class KeyHandler implements KeyListener{
 
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-	}
+	public void keyTyped(KeyEvent e) {}
 
 	@Override
 	public void keyReleased(KeyEvent e) {

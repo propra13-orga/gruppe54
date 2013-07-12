@@ -24,80 +24,80 @@ public class Schuss_Endgegner extends Rectangle {
 		aktiv=false;
 	}
 	
-	//Zeichnet einen Schuss
-		public void draw(Graphics g){
-			g.drawImage(new ImageIcon("pics/schuss2.png").getImage(), (int)StartX, (int)StartY, 32, 32, null); 
-		}
-		
-		//Setzt die Start Position
-		public void setStart(){
-			StartX=Endgegner.StartX;
-			StartY=Endgegner.StartY;
-		}
-		
-		public void setSchritt(){
-			StartX+=nächsterSchrittX*speed;
-			StartY+=nächsterSchrittY*speed;
-		}
-		
-		//Flugbahn des Schusses
-		public void bewegung(){
-			if(restart==true){
-				setStart();
-				nächsterSchritt();
-				restart=false;
-			} else
-				if(restart==false){
-					if (counter_Schritt==2){
-					nächsterSchritt();
-					setSchritt();
-					Kollision();
-					kollisionMauer();
-					counter_Schritt=0;
-					} else 
-						if(counter_Schritt<2){
-							//setSchritt();
-							Kollision();
-							kollisionMauer();
-							counter_Schritt++;
-						}
-				}
-		}
-	
-	public void kollisionMauer(){
-		if ((Spielfeld.getBlockID(StartX, StartY)==1) || (Spielfeld.getBlockID(StartX+31, StartY)==1)
-				|| (Spielfeld.getBlockID(StartX, StartY+31)==1) || (Spielfeld.getBlockID(StartX+31, StartY+31)==1)){
-			restart=true;
-		} else
-			if ((Spielfeld.getBlockID(StartX, StartY)==2) || (Spielfeld.getBlockID(StartX+31, StartY)==2)
-					|| (Spielfeld.getBlockID(StartX, StartY+31)==2) || (Spielfeld.getBlockID(StartX+31, StartY+31)==2)){
-				restart=true;
-			} else
-				if ((Spielfeld.getBlockID(StartX, StartY)==4) || (Spielfeld.getBlockID(StartX+31, StartY)==4)
-						|| (Spielfeld.getBlockID(StartX, StartY+31)==4) || (Spielfeld.getBlockID(StartX+31, StartY+31)==4)){
-					restart=true;
-				}else
-					if ((Spielfeld.getBlockID(StartX, StartY)==41) || (Spielfeld.getBlockID(StartX+31, StartY)==41)
-							|| (Spielfeld.getBlockID(StartX, StartY+31)==41) || (Spielfeld.getBlockID(StartX+31, StartY+31)==41)){
-						restart=true;
-					}else
-						if ((Spielfeld.getBlockID(StartX, StartY)==42) || (Spielfeld.getBlockID(StartX+31, StartY)==42)
-								|| (Spielfeld.getBlockID(StartX, StartY+31)==42) || (Spielfeld.getBlockID(StartX+31, StartY+31)==42)){
-							restart=true;
-						}else
-							if ((Spielfeld.getBlockID(StartX, StartY)==56) || (Spielfeld.getBlockID(StartX+31, StartY)==56)
-									|| (Spielfeld.getBlockID(StartX, StartY+31)==56) || (Spielfeld.getBlockID(StartX+31, StartY+31)==56)){
-								restart=true;
-							}else
-								if ((Spielfeld.getBlockID(StartX, StartY)==57) || (Spielfeld.getBlockID(StartX+31, StartY)==57)
-										|| (Spielfeld.getBlockID(StartX, StartY+31)==57) || (Spielfeld.getBlockID(StartX+31, StartY+31)==57)){
-									restart=true;
-								}else
-									if ((Spielfeld.getBlockID(StartX, StartY)==58) || (Spielfeld.getBlockID(StartX+31, StartY)==58)
-											|| (Spielfeld.getBlockID(StartX, StartY+31)==58) || (Spielfeld.getBlockID(StartX+31, StartY+31)==58)){
-										restart=true;
-									}
+	/**
+	 * Zeichnet den Schuss
+	 * @param g
+	 */
+	public void draw(Graphics g){
+		g.drawImage(new ImageIcon("pics/schuss2.png").getImage(), (int)StartX, (int)StartY, 32, 32, null); 
 	}
+		
+	/**
+	 * Setzt die Start Position
+	 */
+	public void setStart(){
+		StartX=Endgegner.StartX;
+		StartY=Endgegner.StartY;
+	}
+	
+	/**
+	 * setzt den nächsten "Schritt"
+	 */
+	public void setSchritt(){
+		StartX+=nächsterSchrittX*speed;
+		StartY+=nächsterSchrittY*speed;
+	}
+		
+	/**
+	 * Flugbahn des Schusses
+	 */
+	public void bewegung(){
+		if(restart==true){
+			setStart();
+			nächsterSchritt();
+			restart=false;
+		} else if(restart==false){
+			if(counter_Schritt==2){
+				nächsterSchritt();
+				setSchritt();
+				Kollision();
+				kollisionMauer();
+				counter_Schritt=0;
+			} else if(counter_Schritt<2){
+				//setSchritt();
+				Kollision();
+				kollisionMauer();
+				counter_Schritt++;
+			}
+		}
+	}
+	
+	/**
+	 * Kollision des Schusses mit einer Mauer oder anderen undurchlässigen Objekten
+	 */
+	public void kollisionMauer(){
+		if ((Spielfeld.getBlockID(StartX, StartY)==1) || (Spielfeld.getBlockID(StartX+31, StartY)==1)|| (Spielfeld.getBlockID(StartX, StartY+31)==1) || (Spielfeld.getBlockID(StartX+31, StartY+31)==1)){
+			restart=true;
+		} else if ((Spielfeld.getBlockID(StartX, StartY)==2) || (Spielfeld.getBlockID(StartX+31, StartY)==2)|| (Spielfeld.getBlockID(StartX, StartY+31)==2) || (Spielfeld.getBlockID(StartX+31, StartY+31)==2)){
+			restart=true;
+		} else if ((Spielfeld.getBlockID(StartX, StartY)==4) || (Spielfeld.getBlockID(StartX+31, StartY)==4)|| (Spielfeld.getBlockID(StartX, StartY+31)==4) || (Spielfeld.getBlockID(StartX+31, StartY+31)==4)){
+			restart=true;
+		} else if ((Spielfeld.getBlockID(StartX, StartY)==41) || (Spielfeld.getBlockID(StartX+31, StartY)==41)|| (Spielfeld.getBlockID(StartX, StartY+31)==41) || (Spielfeld.getBlockID(StartX+31, StartY+31)==41)){
+			restart=true;
+		} else if ((Spielfeld.getBlockID(StartX, StartY)==42) || (Spielfeld.getBlockID(StartX+31, StartY)==42)|| (Spielfeld.getBlockID(StartX, StartY+31)==42) || (Spielfeld.getBlockID(StartX+31, StartY+31)==42)){
+			restart=true;
+		} else if ((Spielfeld.getBlockID(StartX, StartY)==56) || (Spielfeld.getBlockID(StartX+31, StartY)==56)|| (Spielfeld.getBlockID(StartX, StartY+31)==56) || (Spielfeld.getBlockID(StartX+31, StartY+31)==56)){
+			restart=true;
+		} else if ((Spielfeld.getBlockID(StartX, StartY)==57) || (Spielfeld.getBlockID(StartX+31, StartY)==57)|| (Spielfeld.getBlockID(StartX, StartY+31)==57) || (Spielfeld.getBlockID(StartX+31, StartY+31)==57)){
+			restart=true;
+		} else if ((Spielfeld.getBlockID(StartX, StartY)==58) || (Spielfeld.getBlockID(StartX+31, StartY)==58)|| (Spielfeld.getBlockID(StartX, StartY+31)==58) || (Spielfeld.getBlockID(StartX+31, StartY+31)==58)){
+			restart=true;
+		}
+	}
+	
+	/**
+	 * Kollison des Schusses mit dem Spieler
+	 */
 	public void Kollision(){
 		if((StartX+31 >= Spielfeld.spieler.x)&&(StartX <= Spielfeld.spieler.x+31)  &&
 		   (StartY+31 >= Spielfeld.spieler.y)&&(StartY <= Spielfeld.spieler.y+31)){		
@@ -109,9 +109,12 @@ public class Schuss_Endgegner extends Rectangle {
 			restart=true;
 		}
 	} 
-
+	
+	/**
+	 * Bestimmt die Richtung in die der Schuss fliegen soll abhängig von der Position des Spielers
+	 * @return 1-9
+	 */
 	public int checkFall(){
-		
 		if ((Spielfeld.spieler.x<StartX)&&(Spielfeld.spieler.y>StartY)){
 			return 1;
 		} else if ((Spielfeld.spieler.x>StartX)&&(Spielfeld.spieler.y>StartY)){
@@ -135,8 +138,9 @@ public class Schuss_Endgegner extends Rectangle {
 		}
 	}
 	
-	
-	//Funktion die den nächsten schritt berechnet
+	/**
+	 * Funktion die den nächsten schritt berechnet
+	 */
 	public void nächsterSchritt(){
 		switch(checkFall()){
 		case 1:
@@ -177,11 +181,6 @@ public class Schuss_Endgegner extends Rectangle {
 			break;
 		}		
 	}
-	
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
+	public static void main(String[] args) {}
 
 }

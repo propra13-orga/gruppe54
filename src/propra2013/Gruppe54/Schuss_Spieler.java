@@ -17,6 +17,10 @@ public class Schuss_Spieler extends Rectangle {
 	public int Richtung = 0;
 	public Spieler spieler;
 	
+	/**
+	 * Konstruktor
+	 * @param spieler, derjenige Spieler der den Schuss abgefeuert hat
+	 */
 	public Schuss_Spieler(Spieler spieler) {
 		setBounds((int)StartX,(int)StartY,32,32);
 		this.sichtbar=false;
@@ -24,7 +28,7 @@ public class Schuss_Spieler extends Rectangle {
 	}
 
 	/**
-	 * setzt die Koordinaten des Schusses auf die des Spielers
+	 * setzt die Koordinaten des Schusses auf die des jeweiligen Spielers
 	 */
 	public void setPos(){
 		if(setPos == false){
@@ -35,7 +39,7 @@ public class Schuss_Spieler extends Rectangle {
 	}
 	
 	/**
-	 * Bestimmt den Schaden an Hand der Erfahrung des Spielers
+	 * Bestimmt den Schaden anhand der Erfahrungspunkte des Spielers
 	 * @param spieler
 	 */
 	public void setSchaden(Spieler spieler){
@@ -164,5 +168,4 @@ public class Schuss_Spieler extends Rectangle {
 		}
 	}
 	public static void main(String[] args) {}
-
 }

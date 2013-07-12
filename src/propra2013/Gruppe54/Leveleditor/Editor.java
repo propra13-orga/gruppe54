@@ -16,13 +16,8 @@ import javax.swing.JLabel;
 
 public class Editor extends JFrame{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	/**
-	 * @param args
-	 */
+	
 	public static String title ="Dungeon Crawler - Leveleditor";
 	public static Dimension size = new Dimension(1000,670); 
 	public Editorfeld feld = new Editorfeld();
@@ -44,6 +39,9 @@ public class Editor extends JFrame{
 	public static JComboBox<?> Fallen = new JComboBox<Object>(auswahl4);
 	public static JComboBox<?> QuestRätsel = new JComboBox<Object>(auswahl5);
 	
+	/**
+	 * Konstruktor Frame
+	 */
 	public Editor(){
 		setTitle(title);
 		setSize(size);
@@ -282,7 +280,6 @@ public class Editor extends JFrame{
 		setVisible(true);
 	}
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		Editor editor = new Editor();
 	}
 }

@@ -1,5 +1,6 @@
 package propra2013.Gruppe54;
 
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Point;
@@ -7,13 +8,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.*;
 
 public class Frame extends JFrame{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	
 	public static String title ="Dungeon Crawler";
@@ -24,7 +25,7 @@ public class Frame extends JFrame{
     public Spielfeld spielfeld = new Spielfeld();
     public Spielerinfo spielerinfo = new Spielerinfo();
     
-    //Menü
+    //Buttons 
     public static JButton enter = new JButton("Spielen");
 	public static JButton info = new JButton("Info");
 	public static JButton schließen = new JButton("Verlassen");
@@ -33,6 +34,7 @@ public class Frame extends JFrame{
 	public static JButton nextLevel = new JButton("Nächstes Level");
 	public static JButton spiel_zurueck = new JButton("Zurück zum Spiel");
 	public static JButton checkpoint = new JButton("Zum Checkpoint");
+	//Spielerfiguren
 	public static ImageIcon Figur2_rechts = new ImageIcon("pics/Figur2_rechts.png");
 	public static ImageIcon Figur2_links = new ImageIcon("pics/Figur2_links.png");
 	public static ImageIcon Figur2_unten = new ImageIcon("pics/Figur2_unten.png");
@@ -44,14 +46,14 @@ public class Frame extends JFrame{
 	public static Image image = Figur1_rechts.getImage(),image2 = Figur2_rechts.getImage();
 	public static ImageIcon Sieger = new ImageIcon();
 	public static ImageIcon Shopguy = new ImageIcon("pics/npc_aktiv.png");	
+	
 	public static int spielerx=0,spielery=0;
 	public static double dx=0,dy=0;
+	//Multiplayer
 	public static JCheckBox multiplayer,createServer;
-	
 	//Levelauswahl
 	public static String auswahl[] = {"Level1","Level2","Level3","Level4"};
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static JComboBox levelAuswahl = new JComboBox(auswahl);
+	public static JComboBox<?> levelAuswahl = new JComboBox<Object>(auswahl);
 	
 	/**
 	 * Konstruktor
@@ -99,15 +101,15 @@ public class Frame extends JFrame{
 		nextLevel.setVisible(false);
 	
 		//Anzeige des Menüs
-		enter.setBounds(375, 100, 150, 30);		//Button Enter
+		enter.setBounds(375, 100, 150, 30);			//Button Enter
 		enter.setVisible(true);
 		add(enter);
 		
-		info.setBounds(375,150,150,30);			//Button Info
+		info.setBounds(375,150,150,30);				//Button Info
 		info.setVisible(true);
 		add(info);
 		
-		schließen.setBounds(375, 200, 150, 30); //Button Schließen
+		schließen.setBounds(375, 200, 150, 30); 	//Button Schließen
 		schließen.setVisible(true);
 		add(schließen);
 		
@@ -115,7 +117,9 @@ public class Frame extends JFrame{
 		levelAuswahl.setVisible(true);
 		add(levelAuswahl);
 		
-		//Combobox event
+		/**
+		 * Combobox zur Levelauswahl
+		 **/
 		levelAuswahl.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				JComboBox<?> selectedChoice = (JComboBox<?>) e.getSource();
@@ -149,7 +153,9 @@ public class Frame extends JFrame{
 			}
 		}); 
 		
-		//Button Enter Click
+		/**
+		 * Button Enter, startet das Spiel und entfernt Buttons etc. vom Frame
+		 **/
 		enter.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				if((multiplayer.isSelected())&(!createServer.isSelected())){
@@ -164,6 +170,8 @@ public class Frame extends JFrame{
 				remove(info);
 				remove(schließen);
 				remove(levelAuswahl);
+				remove(multiplayer);
+				remove(createServer);
 				Spielfeld.current_room=1;
 				
 				if(multiplayer.isSelected()){
@@ -207,7 +215,10 @@ public class Frame extends JFrame{
 			}
 		});
 		
-		//Button Neustart Click
+		/**
+		 * Button Neustart, sichtbar wenn der Spieler besiegt wurde, startet das komplette Level neu
+		 * ohne Berücksichtigung der Checkpoints
+		 **/
 		neustart.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				if(Spielfeld.spieler.superleben >= 1){
@@ -251,7 +262,9 @@ public class Frame extends JFrame{
 			}
 		});
 		
-		//Button Checkpoint Click
+		/**
+		 * Button Checkpoint, sichtbar wenn der Spieler besiegt wurde, bringt diesen zum letzten Checkpoint zurück
+		 **/
 		checkpoint.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				Rätsel.reset();
@@ -271,7 +284,9 @@ public class Frame extends JFrame{
 			}
 		});
 		
-		//bei Erreichen des Ziels nächstes Level
+		/**
+		 * bringt den Spieler nach erfolgreichem Abschluss eines Levels ins Nächste
+		 **/
 		nextLevel.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				Rätsel.reset();
@@ -289,14 +304,22 @@ public class Frame extends JFrame{
 			}
 		});
 		
-		// Button Info Click
+		/**
+		 *  Button Info, lädt das Benutzerhandbuch
+		 **/
 		info.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-			JOptionPane.showMessageDialog(null, "Probier's doch erstmal ohne Infos :)","", JOptionPane.INFORMATION_MESSAGE,Shopguy);
+				try {
+	                Desktop.getDesktop().open(new File("Benutzerhandbuch-2.Version.pdf"));
+	            } catch (IOException e1) {
+	                e1.printStackTrace();
+	            }
 			}
-			});
+		});
 		
-		//Button Hauptmenü Click
+		/**
+		 * Button um während des Spiels in das Hauptmenü zu gelangen
+		 **/
 		menü.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				menü.setVisible(false);
@@ -317,25 +340,30 @@ public class Frame extends JFrame{
 				add(info);
 				add(schließen);
 				add(levelAuswahl);
+				add(multiplayer);
+				add(createServer);
 				Spielfeld.spieler.aktiv = false;
 				levelAuswahl.setSelectedItem("Level"+Spielfeld.current_lvl);
 				Spielfeld.shop = false;
 			}
 		});
 		
-		//Button schließen Click
+		/**
+		 * schließt das Programm
+		 **/
 		schließen.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
 		
-		//aus dem Hauptmenü zurück ins derzeitige Spiel
+		/**
+		 * Button um aus dem Hauptmenü wieder zurück ins derzeitige Spiel zu gelangen
+		 **/
 		spiel_zurueck.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				spiel_zurueck.setVisible(false);
 				spielfeld.setVisible(true);
 				spielerinfo.setVisible(true);
@@ -346,6 +374,8 @@ public class Frame extends JFrame{
 				remove(info);
 				remove(schließen);
 				remove(levelAuswahl);
+				remove(multiplayer);
+				remove(createServer);
 				Spielfeld.spieler.beweglich = true;
 				Spielfeld.spieler.aktiv = true;
 				menü.setVisible(true);

@@ -12,16 +12,20 @@ public class Spielerinfo extends JPanel implements Runnable{
 	public Thread thread_info = new Thread(this);
 	public static boolean npc = false,questnpc = false, info = false,item_vorhanden = false,ruestung_voll = false,speed_voll = false,gold = false;
 	public static String preis_anzeige,info_anzeige;
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Konstruktor
+	 */
 	public Spielerinfo(){
 		setBounds(100,580,810,100);
 		thread_info.start();
 	}
 	
+	/**
+	 * PaintComponent - Zeichnet die Spielerinfo unter dem Spielfeld
+	 */
 	public void paintComponent(Graphics g){
 		g.clearRect(0, 0, 800, 75);
 		g.drawRoundRect(0, 0, 800, 75, 10, 10);
@@ -146,29 +150,19 @@ public class Spielerinfo extends JPanel implements Runnable{
 			g.drawString("Du hast nicht genug Gold",500,30);
 		}
 	}
-	
 	/**
-	 * @param args
+	 * Thread, aktualisiert die Spielerinfo
 	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void run() {
 		while(true){
 			validate();
 			repaint();
-			
 			try {
 				Thread.sleep(5);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
 	}
-
+	public static void main(String[] args) {}
 }

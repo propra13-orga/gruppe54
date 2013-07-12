@@ -6,7 +6,11 @@ import javax.swing.JOptionPane;
 
 public class Level {
 	
-	//prüfen ob die einzulesende Level-Datei die richtige Größe hat
+	/**
+	 * Prüfen ob die einzulesende Level-Datei die richtige Größe hat
+	 * @param loadPath, der Pfad zur Leveldatei
+	 * @return true oder false
+	 */
 	public boolean checkFile(File loadPath){
 		int zeichen = 0;
 		try{
@@ -26,18 +30,20 @@ public class Level {
 		}
 	}
 	
+	/**
+	 * Lädt die Leveldatei in das Array block[][]
+	 * @param loadPath, der Pfad zur Leveldatei
+	 */
 	public void loadLevel(File loadPath){
 		if(checkFile(loadPath)){
 		try{
 			Scanner loadScanner = new Scanner(loadPath);
 			while(loadScanner.hasNext()){     //solange noch Zeichen vorhanden sind 
-				
 				for(int y=0;y<Raum.block.length;y++){  
 					for(int x=0;x<Raum.block[0].length;x++){ 
 						Raum.block[y][x].ID = Integer.parseInt(loadScanner.next(),16);
 					}
 				}
-				
 			}
 			loadScanner.close();
 		} catch(Exception e) { 
@@ -49,12 +55,6 @@ public class Level {
 		}
 	}
 	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
+	public static void main(String[] args) {}
 
 }

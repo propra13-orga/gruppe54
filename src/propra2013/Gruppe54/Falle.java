@@ -7,14 +7,8 @@ import javax.swing.ImageIcon;
 
 public class Falle extends Rectangle {
 	//zunächst eine falle die nach unten schießt
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @param args
-	 */
 	public static double StartX;
 	public static double StartY;
 	public static double speed = 0.5;
@@ -44,7 +38,7 @@ public class Falle extends Rectangle {
 	}
 	
 	/**
-	 * Draw Methode
+	 * Zeichnet die Falle
 	 * @param g
 	 */
 	public void draw(Graphics g){
@@ -73,7 +67,6 @@ public class Falle extends Rectangle {
 	 * Gibt an was passiert wenn der Spieler die Falle berührt
 	 */
 	public void Kollision(){
-		
 		if((Falle.StartX+31 >= Spielfeld.spieler.x)&&(Falle.StartX <= Spielfeld.spieler.x+31)  &&
 			(Falle.StartY+31 >= Spielfeld.spieler.y)&&(Falle.StartY <= Spielfeld.spieler.y+31)){		
 			if (Spielfeld.spieler.ruestung>0){
@@ -84,11 +77,6 @@ public class Falle extends Rectangle {
 		}
 		counter_Kollision=0;
 	}
-		
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
+	public static void main(String[] args) {}
 
 }

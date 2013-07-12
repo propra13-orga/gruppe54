@@ -20,7 +20,9 @@ public class Raum {
 		define();
 	}
 	
-	//initialisiert die Blöcke und ordnet das Gitter an, oben links ist Block[0,0]
+	/**
+	 * initialisiert die Blöcke und ordnet das Gitter an, oben links ist Block[0,0]
+	 */
 	public void define(){           
 		block = new Block[worldHeight][worldWidth];
 		
@@ -30,7 +32,10 @@ public class Raum {
 			}
 		}
 	}
-	
+	/**
+	 * Zeichnet die Blöcke
+	 * @param g
+	 */
 	public void draw(Graphics g){
 		for(int y=0;y<worldHeight;y++){
 			for(int x=0;x<worldWidth;x++){
@@ -38,13 +43,5 @@ public class Raum {
 			}
 		}
 	}
-	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
+	public static void main(String[] args) {}
 }

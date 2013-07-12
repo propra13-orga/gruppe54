@@ -27,9 +27,6 @@ public class Spieler extends Rectangle {
 	public boolean runter = false; 
 	public boolean multiplayer = false;
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -41,6 +38,10 @@ public class Spieler extends Rectangle {
 		beweglich = true;
 	}
 	
+	/**
+	 * Zeichnet den Spieler
+	 * @param g
+	 */
 	public void draw(Graphics g){
 		if(multiplayer){
 			g.drawImage(Frame.image2,(int)x,(int)y,32,32,null);
@@ -113,18 +114,19 @@ public class Spieler extends Rectangle {
 		}
 		
 	}
-	//Prüfe ob der Spieler das Rätsel berührt
+	/**
+	 * Prüfe ob der Spieler das Rätsel berührt
+	 * @param ID
+	 * @return true oder false
+	 */
 	public boolean checkRätsel(int ID){
 		if((Spielfeld.getBlockID(x+6+Frame.dx,y+6+Frame.dy)!=ID)&&(Spielfeld.getBlockID(x+26+Frame.dx,y+6+Frame.dy)!=ID)&&(Spielfeld.getBlockID(x+6+Frame.dx,y+32+Frame.dy)!=ID)
 				&&(Spielfeld.getBlockID(x+26+Frame.dx,y+32+Frame.dy)!=ID)&&(x+Frame.dx>0)&&(y+32+Frame.dy<(Raum.worldHeight*Raum.blockSize))&&(x+32+Frame.dx<(Raum.worldWidth*Raum.blockSize))
 				&&(y+Frame.dy>0)){
 				return true;
-			} else {
-				return false;
-			}
+		} else {
+			return false;
+		}
 	}
-	
-	
 	public static void main(String[] args) {}
-
 }

@@ -1,7 +1,6 @@
 package propra2013.Gruppe54;
 
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
@@ -10,7 +9,7 @@ public class Rätsel extends Rectangle {
 
 	private static final long serialVersionUID = 1L;
 	
-	public int reihenfolge =0;	//gibt an an welcher stelle man es berühren muss
+	public int reihenfolge = 0;	//gibt an, an welcher stelle man es berühren muss
 	public boolean aktiv=true;	//true = rot , false=blau
 	public int X;
 	public int Y;
@@ -21,14 +20,13 @@ public class Rätsel extends Rectangle {
 	
 	/**
 	 * Konstruktor
-	 * @param startX
-	 * @param startY
+	 * @param reihenfolge - gibt an, als wievieltes Element der Schalter betätigt werden muss
 	 */
-	public Rätsel(int Reihenfolge){
+	public Rätsel(int reihenfolge){
 		setBounds(X,Y,32,32);
-		aktiv=true;
-		next=1;
-		reihenfolge=Reihenfolge;
+		this.aktiv=true;
+		next = 1;
+		this.reihenfolge = reihenfolge;
 	}
 	/**
 	 * Zeichnet das Rätsel
@@ -58,10 +56,9 @@ public class Rätsel extends Rectangle {
 		geschafft=false;
 		vorhanden=false;
 	}
+	
 	public void aktion(){
-		if (aktiv==false){
-			//passiert nicht
-		} else if (aktiv==true){
+		if (aktiv){
 			if (next==reihenfolge){
 				if(next<4){
 					aktiv=false;
@@ -82,11 +79,6 @@ public class Rätsel extends Rectangle {
 		}
 	}
 	
-	
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
+	public static void main(String[] args) {}
 
 }

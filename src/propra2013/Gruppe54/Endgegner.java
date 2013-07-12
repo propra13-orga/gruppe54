@@ -7,9 +7,6 @@ import javax.swing.ImageIcon;
 
 public class Endgegner extends Rectangle{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	public static double StartX;
 	public static double StartY;
@@ -25,7 +22,6 @@ public class Endgegner extends Rectangle{
 
 	/**
 	 * Konstruktor
-	 * @param args
 	 */
 	public Endgegner(){
 		setBounds((int)StartX,(int)StartY,32,32);
@@ -48,7 +44,7 @@ public class Endgegner extends Rectangle{
 	
 	
 	/**
-	 * Draw Methode
+	 * Zeichnet den Gegner
 	 * @param g
 	 */
 	public void draw(Graphics g){
@@ -57,7 +53,7 @@ public class Endgegner extends Rectangle{
 	
 	
 	/**
-	 * setItem legt ein Elemente ab wenn der Gegner besiegt wurde 
+	 * setItem legt ein Item ab wenn der Gegner besiegt wurde 
 	 */
 	public static void setItem(){
 		if(Spielfeld.getBlock(StartX+16,StartY+16).ID == 0){
@@ -107,7 +103,5 @@ public class Endgegner extends Rectangle{
 			}
 		}
 	}
-	
 	public static void main(String[] args) {}
-
 }

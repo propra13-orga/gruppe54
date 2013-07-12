@@ -9,9 +9,6 @@ public class GegnerKI extends Rectangle{
 /*
  * Dieser Gegner soll den Spieler verfolgen
  */
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	public int StartX;
 	public int StartY;
@@ -58,7 +55,7 @@ public class GegnerKI extends Rectangle{
 	}
 	
 	/**
-	 * Draw Methode
+	 * Zeichnet den Gegner
 	 * @param g
 	 */
 	public void draw(Graphics g){
@@ -186,6 +183,10 @@ public class GegnerKI extends Rectangle{
 		}
 	}
 	
+	/**
+	 * links vom Gegner frei?
+	 * @return true oder false
+	 */
 	public boolean linksfrei(){
 		boolean frei=false;
 		for (int i=1;i<16;i++){
@@ -199,6 +200,10 @@ public class GegnerKI extends Rectangle{
 		return frei;
 		
 	}
+	/**
+	 * rechts vom Gegner frei?
+	 * @return true oder false
+	 */
 	public boolean rechtsfrei(){
 		boolean frei=false;
 		for (int i=1;i<16;i++){
@@ -212,6 +217,10 @@ public class GegnerKI extends Rectangle{
 		return frei;
 		
 	}
+	/**
+	 * oben vom Gegner frei?
+	 * @return true oder false
+	 */
 	public boolean obenfrei(){
 		boolean frei=false;
 		for (int i=1;i<29;i++){
@@ -225,6 +234,10 @@ public class GegnerKI extends Rectangle{
 		return frei;
 		
 	}
+	/**
+	 * unten vom Gegner frei?
+	 * @return true oder false
+	 */
 	public boolean untenfrei(){
 		boolean frei=false;
 		for (int i=1;i<29;i++){
@@ -238,7 +251,9 @@ public class GegnerKI extends Rectangle{
 		return frei;
 	}
 	
-	//Sagt was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
+	/**
+	 * bestimmt was passieren soll wenn ein Gegner mit dem Spieler zusammen trifft
+	 */
 	public void Kollision(){
 		if( (StartX+26 >= Spielfeld.spieler.x)&&(StartX <= Spielfeld.spieler.x+26)&&
 			(StartY+26 >= Spielfeld.spieler.y)&&(StartY <= Spielfeld.spieler.y+26)){	
@@ -258,11 +273,7 @@ public class GegnerKI extends Rectangle{
 			leben=0;
 		}
 	}
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
+	public static void main(String[] args) {}
 
 }
 

@@ -30,7 +30,9 @@ public class Raum {
 		define();
 	}
 	
-	//initialisiert die Blöcke und ordnet das Gitter an, oben links ist Block[0,0]
+	/**
+	 * Initialisiert die Blöcke und ordnet das Gitter an, oben links ist Block[0,0]
+	 */
 	public void define(){           
 		block = new EditorBlock[worldHeight][worldWidth];
 		
@@ -41,7 +43,10 @@ public class Raum {
 		}
 	}
 	
-	//zeichnet die Blöcke anhand der ID
+	/**
+	 * zeichnet die Blöcke anhand der ID
+	 * @param g
+	 */
 	public void draw(Graphics g){
 		for(int y=0;y<worldHeight;y++){
 			for(int x=0;x<worldWidth;x++){
@@ -50,6 +55,9 @@ public class Raum {
 		}
 	}
 	
+	/**
+	 * "Schreibt" das Spielfeld in die Leveldatei
+	 */
 	public void saveLevel(){
 		File datei = new File("level/level"+Editorfeld.current_lvl+"_"+Editorfeld.current_room+".lvl");
 		try {
@@ -67,8 +75,11 @@ public class Raum {
 		}
 	}
 	
-	//lädt die Textdatei aus, interpretiert die eingelesene Zahl als Hexadezimal und parsed den Wert zu Integer
-	//eingelesene IDs werden in Array geladen
+	/**
+	 * lädt die Textdatei aus, interpretiert die eingelesene Zahl als Hexadezimal und parsed den Wert zu Integer
+	 * eingelesene IDs werden in Array geladen
+	 * @param loadPath, Pfad der einzulesenden Leveldatei
+	 */
 	public void loadLevel(File loadPath){
 		if(checkFile(loadPath)){
 		try{
@@ -91,7 +102,11 @@ public class Raum {
 			System.exit(0);
 		}
 	}
-	//prüfen ob die einzulesende Level-Datei die richtige Größe hat
+	/**
+	 * prüfen ob die einzulesende Level-Datei die richtige Größe hat
+	 * @param loadPath, Pfad zur Leveldatei
+	 * @return true oder false
+	 */
 	public boolean checkFile(File loadPath){
 		int zeichen = 0;
 		try{
@@ -110,12 +125,5 @@ public class Raum {
 			return false;
 		}
 	}
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
+	public static void main(String[] args) {}
 }

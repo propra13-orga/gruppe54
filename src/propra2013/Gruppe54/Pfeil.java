@@ -7,25 +7,32 @@ import javax.swing.ImageIcon;
 
 public class Pfeil extends Rectangle{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	public double x,y;
 	public double speed = 0.9;
 	public boolean aktiv = false;
 	public int richtung;
 
+	/**
+	 * Konstruktor
+	 */
 	public Pfeil(){
 		setBounds((int)x,(int)y,24,24);
 	}
 	
+	/**
+	 * Zeichnet den Schuss auf das Spielfeld an die Position des Spielers
+	 * @param g
+	 */
 	public void draw(Graphics g){
 		if(aktiv){
 			g.drawImage(new ImageIcon("pics/pfeil"+richtung+".png").getImage(),(int)x,(int)y,24,24,null);
 		}
 	}
 	
+	/**
+	 * Bewegung des Schusses
+	 */
 	public void Schuss(){
 		Kollision();
 		if(aktiv){
@@ -41,6 +48,10 @@ public class Pfeil extends Rectangle{
 		}
 	}
 	
+	/**
+	 * Check - Prüft ob die Richtung in die geschossen werden soll frei ist
+	 * @param ID - die jeweilige ID des Objektes auf das geprüft werden soll 
+	 **/
 	public boolean check(int ID){
 		boolean frei = false;
 		switch(richtung){
@@ -75,17 +86,26 @@ public class Pfeil extends Rectangle{
 		return frei;
 	}
 	
+	/**
+	 * Kollision - bestimmt die jeweilige Aktion wenn der Pfeil auf ein Objekt stößt
+	 **/
 	public void Kollision(){
 			//Endgegner
 			if((x+16 >= Endgegner.StartX)&&(x <= Endgegner.StartX+31)&&
 			   (y+16 >= Endgegner.StartY)&&(y <= Endgegner.StartY+31)){		
 				aktiv = false;
 				Endgegner.leben-=25;
+				if(Spielfeld.multiplayer){
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";gegner;4;25;");
+				}
 			//GegnerRL
 			} else if((x+16 >= Spielfeld.gegnerRL.StartX)&&(x <= Spielfeld.gegnerRL.StartX+31)&&
 			          (y+16 >= Spielfeld.gegnerRL.StartY)&&(y <= Spielfeld.gegnerRL.StartY+31)){			
 				aktiv = false;
 				Spielfeld.gegnerRL.leben-=25;
+				if(Spielfeld.multiplayer){
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";gegner;1;25;");
+				}
 			//Schuss_Endgegner
 			}else if((x+16 >= Spielfeld.schuss_endgegner.StartX)&&(x <= Spielfeld.schuss_endgegner.StartX+31)&&
 					 (y+16 >= Spielfeld.schuss_endgegner.StartY)&&(y <= Spielfeld.schuss_endgegner.StartY+31)){		

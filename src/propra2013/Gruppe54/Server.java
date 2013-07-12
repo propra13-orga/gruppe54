@@ -5,14 +5,17 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Server extends Thread{
 	ServerSocket server = null;
 	Socket client = null;
 	PrintWriter out = null,out1 = null;
 	BufferedReader in = null;
 	List<Socket> clientList = new ArrayList<Socket>();
-
+	
+	/**
+	 * Konstruktor
+	 * @throws IOException
+	 */
 	public Server() throws IOException{
 		try{
 		server = new ServerSocket(4444);
@@ -22,6 +25,10 @@ public class Server extends Thread{
 		}
 	}
 	
+	/**
+	 * Thread
+	 * Server wartet auf Verbindungen und leitet bei eingehendem Client weiter an den ServerThread
+	 */
 	public void run(){
 		while(true){
 			try{
@@ -36,9 +43,5 @@ public class Server extends Thread{
 				e.printStackTrace();
 			}
 		}
-	}
-	
-	public void sendAll(BufferedReader in){
-		
 	}
 }

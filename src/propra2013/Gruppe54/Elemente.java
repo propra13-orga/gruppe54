@@ -10,11 +10,14 @@ public class Elemente {
 	public static boolean beruehrung = false;
 	public static int feuer = 0,speer = 0; //es soll nicht jeder Schritt über das Feuer Schaden geben, es soll aber Schaden genommen werden wenn der Spieler stehen bleibt
 
-
+	
+	/**
+	 * Elemente.Aufruf - hier wird die Aktion des jeweiligen Elements anhand der ID des Block ausgeführt
+	 */
 	public static void Aufruf(int ID,Block block,Spieler spieler){
 		switch(ID){
 		
-		case 5://Ausgang
+		case 5://Ausgang - Raumwechsel
 			if(Spielfeld.current_room!=3) {  
 				if(Spielfeld.schuss_spieler.sichtbar){
 					Spielfeld.schuss_spieler.sichtbar = false;
@@ -57,7 +60,7 @@ public class Elemente {
 			}
 			break;
 		
-		case 6:
+		case 6://Schlüssel
 			if(block.Zustand == 0){
 				spieler.schluessel += 1;
 				block.Zustand = 1;
@@ -76,7 +79,7 @@ public class Elemente {
 				beruehrung = true;		  //da z.B. beim hochlaufen zwei Punkte auf Berührung überprüft werden, soll gespeichert werden,
 				if(spieler.ruestung<=0){  //ob bereits eine Falle ausgelöst wurde damit die Punkte nicht doppelt abgezogen werden
 					spieler.leben-=1;
-					if(Spielfeld.multiplayer){
+					if(Spielfeld.multiplayer){	//Nachricht an den Server schicken
 						Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";spielerleben;"+spieler.leben+";");
 					}
 				} else {
@@ -92,7 +95,7 @@ public class Elemente {
 				beruehrung = true;
 				if(spieler.ruestung<=0){
 					spieler.leben-=1;
-					if(Spielfeld.multiplayer){
+					if(Spielfeld.multiplayer){	 //Nachricht an den Server schicken
 						Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";spielerleben;"+spieler.leben+";");
 					}
 				} else {
@@ -109,7 +112,7 @@ public class Elemente {
 			if((spieler.ruestung<=0)&&(Spielfeld.Falle_counter==5)){
 				spieler.leben-=1;
 				Spielfeld.Falle_counter = 0;
-				if(Spielfeld.multiplayer){
+				if(Spielfeld.multiplayer){ 		//Nachricht an den Server schicken
 					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";spielerleben;"+spieler.leben+";");
 				}
 			} else if(Spielfeld.Falle_counter==5){
@@ -124,7 +127,7 @@ public class Elemente {
 				beruehrung = true;
 				if(spieler.ruestung<=0){
 					spieler.leben-=2;
-					if(Spielfeld.multiplayer){
+					if(Spielfeld.multiplayer){ //Nachricht an den Server schicken
 						Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";spielerleben;"+spieler.leben+";");
 					}
 				} else {
@@ -141,7 +144,7 @@ public class Elemente {
 				beruehrung = true;
 				if(spieler.ruestung<=0){
 					spieler.leben-=2;
-					if(Spielfeld.multiplayer){
+					if(Spielfeld.multiplayer){   //Nachricht an den Server schicken
 						Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";spielerleben;"+spieler.leben+";");
 					}
 				} else {
@@ -161,7 +164,7 @@ public class Elemente {
 				if(spieler.leben>100){
 					spieler.leben = 100;
 				}
-				if(Spielfeld.multiplayer){
+				if(Spielfeld.multiplayer){	//wenn im Netzwerkmodus gespielt wird, Nachricht an den Server schicken
 					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";spielerleben;"+spieler.leben+";");
 				}
 			}
@@ -183,7 +186,7 @@ public class Elemente {
 			}
 			break;
 			
-		case 15://brunnen lebensenergie
+		case 15://Brunnen Lebensenergie
 			if((spieler.leben<100)&&(block.Zustand==0)){	
 				spieler.leben = 100;
 				if(spieler.leben>100){
@@ -217,7 +220,7 @@ public class Elemente {
 			}
 			break;
 		
-		case 17://brunnen mana
+		case 17://Brunnen Mana
 			if((spieler.mana<100)&&(block.Zustand==0)){	
 				spieler.mana = 100;
 				if(spieler.mana>100){
@@ -239,7 +242,6 @@ public class Elemente {
 			}
 			Spielfeld.gegnerRL.leben=0;
 			Spielfeld.gegnerRL.leben=0;
-
 			}
 			break;
 		
@@ -320,14 +322,15 @@ public class Elemente {
    		 	}
    		 	Spielfeld.spieler_preposX = Spielfeld.spieler.x;
    		 	Spielfeld.spieler_preposY = Spielfeld.spieler.y;
-   		 if(Spielfeld.multiplayer){
+   		 if(Spielfeld.multiplayer){		
 				if(Spielfeld.schuss_spieler2.sichtbar){
 					Spielfeld.schuss_spieler2.sichtbar = false;
 				}
 				if(Spielfeld.schuss2_spieler2.sichtbar){
 					Spielfeld.schuss2_spieler2.sichtbar = false;
 				}
-				Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";shopein;");
+				//Nachricht an den Server schicken
+				Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";shopein;"); 
 			}
    		 	Spielfeld.showShop();
    		 	Rätsel.reset();
@@ -337,7 +340,10 @@ public class Elemente {
 			Spielfeld.hideShop();
 			Falle.aktiv = Falle.status;
 			Spielfeld.pfeil.aktiv = false;
-			Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";shopaus;");
+			if(Spielfeld.multiplayer){
+				//Nachricht an den Server schicken
+				Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";shopaus;");
+			}
 			Rätsel.reset();
 			break;
 		
@@ -367,7 +373,7 @@ public class Elemente {
 			
 		case 31://Schatztruhe
 			int i = (int) (Math.random()*3+1);		//Zufallszahl zwischen 1 und 3 erzeugen
-			if((block.Zustand == 0)&&(Spielfeld.spieler.schluessel>0)){
+			if((block.Zustand == 0)&&(spieler.schluessel>0)){
 				switch(i){
 				case 1:
 					spieler.gold += 150;
@@ -381,19 +387,17 @@ public class Elemente {
 					spieler.item_trank += 1;
 					Spielfeld.text_anzeige = "+1 Trank";
 					break;
-				case 4:
-					spieler.Anzahl_Schüssen += 5;
-					Spielfeld.text_anzeige = "+5 Feuerzauber";
-					break;
 				default:
 					spieler.gold += 150;
 					Spielfeld.text_anzeige = "+150 Gold";
 					break;
 				}
-
 				block.Zustand = 1;
 				Spielfeld.anzeige = true;
 				spieler.schluessel -= 1;
+			} else if(spieler.schluessel == 0){
+				Spielfeld.text_anzeige = "     ???";
+				Spielfeld.anzeige = true;
 			}
 			break;
 		case 32://Gold1

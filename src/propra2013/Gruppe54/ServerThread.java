@@ -9,11 +9,17 @@ public class ServerThread extends Thread {
 	private PrintWriter out = null,out2 = null;
 	private BufferedReader in = null;
 	
+	/**
+	 * Konstruktor
+	 **/
 	public ServerThread(Socket s,Server server) {
 		this.s = s;
 		this.server = server;
 	}
- 
+	
+	/**
+	 * Thread - Empfängt Nachrichten von den Clients und sendet diese wieder an alle unverarbeitet zurück
+	 **/
 	public void run() {
 		try {
 			// lesen
@@ -21,8 +27,7 @@ public class ServerThread extends Thread {
 				in = new BufferedReader(new InputStreamReader(s.getInputStream()));
 				out = new PrintWriter(s.getOutputStream(),true);
 			}
-			while(in != null){
-				if(in != null){
+			while((in != null)&(!s.isClosed())){
 				String incoming = in.readLine();
 				if(incoming.equals("serverdown".toString())){		//wenn der Server beendet wird
 					out.println(s.getLocalPort()+";serverdown;");	//beiden Clients mitteilen
@@ -33,8 +38,8 @@ public class ServerThread extends Thread {
 					this.interrupt();
 					break;
 				}
-				out.println(incoming.toString()); //zurück schicken
-				if(Spielfeld.server.clientList.size() == 2){	//richtigen client aus der Liste aussuchen
+				out.println(incoming.toString()); 					//zurück schicken
+				if(Spielfeld.server.clientList.size() == 2){		//richtigen client aus der Liste aussuchen
 					if(server.clientList.get(0) == s){
 						s2 = server.clientList.get(1);
 					} else if(server.clientList.get(1) == s) {
@@ -43,7 +48,6 @@ public class ServerThread extends Thread {
 					out2 = new PrintWriter(s2.getOutputStream(),true); 	//an anderen Client schicken
 					out2.println(incoming.toString());
 				}
-			  }
 			}
 			out.close();
 			out2.close();

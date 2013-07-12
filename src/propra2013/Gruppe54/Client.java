@@ -2,11 +2,7 @@ package propra2013.Gruppe54;
 
 import java.io.*;
 import java.net.*;
-import java.rmi.Naming;
-import java.util.concurrent.CancellationException;
 import java.util.regex.Pattern;
-
-import sun.net.ConnectionResetException;
 
 public class Client extends Thread{
 
@@ -15,6 +11,10 @@ public class Client extends Thread{
 	BufferedReader in = null;
 	boolean running = false;
 	
+	/**
+	 * Konstruktor
+	 * @throws UnknownHostException
+	 */
 	public Client() throws UnknownHostException{
 		try{
 			if(Spielfeld.host){		//Spieler hat den Server erstellt
@@ -30,19 +30,27 @@ public class Client extends Thread{
 		running = true;
 	}
 	
+	/**
+	 * Sendet Nachricht über den OutputStream des Clients
+	 **/
 	public void send(String text){
 		out.println(text);
 	}
 	
+	/**
+	 * Thread - empfängt Nachrichten und wertet diese aus
+	 * Sofern die Nachricht nicht vom Client selber kommt, da der Server einfach jede Nachricht an jeden Client zurück schickt,
+	 * wird diese weiter verarbeitet und je nach Kommando die dementsprechende Aktion ausgeführt 
+	 **/
 	public void run(){
-		while(running){
+		while((running)&(!socket.isClosed())){
 			String incoming;
 			try{
 				incoming = in.readLine();				//blockiert bis Nachricht empfangen
 				Pattern p = Pattern.compile("[;]");		//nachricht zerlegen
-				if(incoming != null){
-				
 				String[] input = p.split(incoming.toString());
+				if((incoming != null)&(input != null)){
+				
 				if(!input[0].equals(Integer.toString(socket.getLocalPort()))){		//wenn die Nachricht nicht von einem selber kam	
 					if(input[1] != null){
 					if(input[1].equals("spieler".toString())){			//Position von Spieler2
@@ -120,17 +128,18 @@ public class Client extends Thread{
 						Falle.StartX=0;
 						Falle.StartY=0;
 						Spielfeld.pfeil.aktiv = false;
+						Rätsel.reset();
 					} else if(input[1].equals("serverdown".toString())){	//Server wurde beendet
 						Spielfeld.spieler2.aktiv = false;
 						System.out.println("Server wurde beendet");
 						running = false;
 						out.close();
 						in.close();
-					} else if(input[1].equals("shopein".toString())){
+					} else if(input[1].equals("shopein".toString())){		//Eingang Shop
 						Spielfeld.spieler2.current_room += 1;
-					} else if(input[1].equals("shopaus".toString())){
+					} else if(input[1].equals("shopaus".toString())){		//Ausgang Shop
 						Spielfeld.spieler2.current_room -= 1;
-					} else if(input[1].equals("pfeil".toString())){
+					} else if(input[1].equals("pfeil".toString())){			//Pfeil des Spielers
 						if(input[2].equals("rechts".toString())){
 							Spielfeld.pfeil2.richtung = 0;
 						} else if(input[2].equals("links".toString())){
@@ -144,12 +153,12 @@ public class Client extends Thread{
 						Spielfeld.pfeil2.y = Double.parseDouble(input[4]);
 						Spielfeld.pfeil2.aktiv = true;
 						Spielfeld.pfeil2.Schuss();
-					} else if(input[1].equals("waffenwechsel".toString())){
+					} else if(input[1].equals("waffenwechsel".toString())){	//Waffenwechsel des Spielers
 						Spielfeld.spieler2.waffe = Integer.parseInt(input[2]);
 		        		Spielfeld.waffe2.ID = Integer.parseInt(input[2]);
-					} else if(input[1].equals("spielerleben".toString())){
+					} else if(input[1].equals("spielerleben".toString())){	//Leben des Spielers
 						Spielfeld.spieler2.leben = Integer.parseInt(input[2]);
-					} else if(input[1].equals("rätselaktion".toString())){
+					} else if(input[1].equals("rätselaktion".toString())){	//Betätigung des Rätsels
 						switch(Integer.parseInt(input[2])){
 						case 1:
 							Spielfeld.rätsel1.aktion();
@@ -174,13 +183,3 @@ public class Client extends Thread{
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-

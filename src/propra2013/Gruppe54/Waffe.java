@@ -12,16 +12,21 @@ public class Waffe extends Rectangle {
 	public int x;
 	public int y;
 	public Spieler spieler;
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * Konstruktor
+	 * @param spieler, derjenige Spieler der die Waffe hält
+	 */
 	public Waffe(Spieler spieler){
 		this.spieler = spieler;
 	}
 	
+	/**
+	 * Zeichnet die jeweilige Waffe an der Stelle des jeweiligen Spielers
+	 * @param g
+	 */
 	public void draw(Graphics g){
 		switch(ID){
 		case 0:
@@ -132,6 +137,9 @@ public class Waffe extends Rectangle {
 		}
 	}
 	
+	/**
+	 * Kollision, bestimmt ob die Waffe einen Gegner getroffen hat und bestimmt den Schaden
+	 */
 	public void Kollision(){
 		if((((x+28 >= Spielfeld.gegnerRL.StartX)&&(x+28 <= Spielfeld.gegnerRL.StartX+32))&&((y+30 >= Spielfeld.gegnerRL.StartY)&&(y+30 <= Spielfeld.gegnerRL.StartY+32)))||
 		   (((x-4 >= Spielfeld.gegnerRL.StartX)&&(x-4 <= Spielfeld.gegnerRL.StartX+32))&&((y+30 >= Spielfeld.gegnerRL.StartY)&&(y+30 <= Spielfeld.gegnerRL.StartY+32)))||
@@ -173,9 +181,6 @@ public class Waffe extends Rectangle {
 		}
 	}
 	
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {}
 
 }

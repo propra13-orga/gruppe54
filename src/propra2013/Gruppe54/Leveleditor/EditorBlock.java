@@ -4,9 +4,6 @@ import java.awt.*;
 
 public class EditorBlock extends Rectangle {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
     int ID;
@@ -19,7 +16,10 @@ public class EditorBlock extends Rectangle {
 		this.ID = ID;
 	}
 	
-	//zeichnet den Block, Bild wird anhand der ID geladen
+	/**
+	 * zeichnet den Block, Bild wird anhand der ID geladen
+	 * @param g
+	 */
 	public void draw(Graphics g){ 
 		if(ID == 2){	//Fackel, einzige Objekt hinter dem eine Mauer liegt
 			g.drawImage(Editorfeld.elemente[1],x,y,width,height,null); 
@@ -33,14 +33,6 @@ public class EditorBlock extends Rectangle {
 			g.drawImage(Editorfeld.elemente[ID],x,y,width,height,null);
 		}
 	}
-	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
+	public static void main(String[] args) {}
 }
 
