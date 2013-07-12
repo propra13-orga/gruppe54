@@ -63,7 +63,7 @@ public class GegnerKI extends Rectangle{
 	 */
 	public void draw(Graphics g){
 		if((aktiv)&&(StartX!=0)&&(StartY!=0)){
-			g.drawImage(new ImageIcon("pics/GegnerKI_1"/*+Spielfeld.current_lvl*/+".png").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
+			g.drawImage(new ImageIcon("pics/GegnerKI_1.png").getImage(), StartX, StartY, 32, 32, null); //zeichnet den Gegner an (x,y)
 		}
 	}
 	
@@ -248,13 +248,15 @@ public class GegnerKI extends Rectangle{
 				counter_kollision = 0;
 			} else if((Spielfeld.spieler.ruestung<=0)&&(counter_kollision == 4)) {
 				Spielfeld.spieler.leben -= Schaden;
+				if(Spielfeld.multiplayer){
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";spielerleben;"+Spielfeld.spieler.leben+";");
+				}
 				counter_kollision = 0;
 			}
 		}
-		if( (StartX+26 >= Falle.StartX)&&(StartX <= Falle.StartX+26)&&
-				(StartY+26 >= Falle.StartY)&&(StartY <= Falle.StartY+26)){	
-				leben=0;
-				}
+		if((StartX+26 >= Falle.StartX)&&(StartX <= Falle.StartX+26)&&(StartY+26 >= Falle.StartY)&&(StartY <= Falle.StartY+26)){	
+			leben=0;
+		}
 	}
 	
 	public static void main(String[] args) {

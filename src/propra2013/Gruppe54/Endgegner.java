@@ -91,7 +91,7 @@ public class Endgegner extends Rectangle{
 	}
 	/**
 	 * Kollision
-	 * gibt an was passieren soll wenn ein Gegener mit dem Spieler zusammen trifft
+	 * gibt an was passieren soll wenn ein Gegner mit dem Spieler zusammen trifft
 	 * 
 	 */
 	public static void Kollision(){
@@ -101,13 +101,13 @@ public class Endgegner extends Rectangle{
 				Spielfeld.spieler.ruestung-=1;
 			} else {
 				Spielfeld.spieler.leben -= 1;
+				if(Spielfeld.multiplayer){
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";spielerleben;"+Spielfeld.spieler.leben+";");
+				}
 			}
 		}
 	}
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
+	public static void main(String[] args) {}
 
 }

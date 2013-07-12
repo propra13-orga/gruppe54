@@ -234,6 +234,9 @@ public class KeyHandler implements KeyListener{
         	 Spielfeld.spieler.xp+=100;
         	 Spielfeld.spieler.Anzahl_Schüssen=10;
         	 Spielfeld.spieler.pfeile=10;
+        	 if(Spielfeld.multiplayer){
+				Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";spielerleben;"+Spielfeld.spieler.leben+";");
+			}
          }
          //Angriff
          if((key == KeyEvent.VK_B)&&(Spielfeld.spieler.aktiv)){
@@ -247,35 +250,50 @@ public class KeyHandler implements KeyListener{
         			Spielfeld.pfeil.richtung = 0;
         			Spielfeld.pfeil.x = Spielfeld.spieler.x+16;
             		Spielfeld.pfeil.y = Spielfeld.spieler.y+5;
+            		if(Spielfeld.multiplayer){
+            			Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";pfeil;rechts;"+Spielfeld.spieler.x+16+";"+Spielfeld.spieler.y+5+";");
+            		}
         		} else if(Spielfeld.spieler.links){
         			Spielfeld.pfeil.richtung = 1;
         			Spielfeld.pfeil.x = Spielfeld.spieler.x;
             		Spielfeld.pfeil.y = Spielfeld.spieler.y+5;
+            		if(Spielfeld.multiplayer){
+            			Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";pfeil;links;"+Spielfeld.spieler.x+";"+Spielfeld.spieler.y+5+";");
+            		}
         		} else if(Spielfeld.spieler.hoch){
         			Spielfeld.pfeil.richtung = 2;
         			Spielfeld.pfeil.x = Spielfeld.spieler.x+12;
             		Spielfeld.pfeil.y = Spielfeld.spieler.y+5;
+            		if(Spielfeld.multiplayer){
+            			Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";pfeil;hoch;"+Spielfeld.spieler.x+12+";"+Spielfeld.spieler.y+5+";");
+            		}
         		} else if(Spielfeld.spieler.runter){
         			Spielfeld.pfeil.richtung = 3;
         			Spielfeld.pfeil.x = Spielfeld.spieler.x;
             		Spielfeld.pfeil.y = Spielfeld.spieler.y+8;
+            		if(Spielfeld.multiplayer){
+            			Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";pfeil;runter;"+Spielfeld.spieler.x+";"+Spielfeld.spieler.y+8+";");
+            		}
         		}
         	}
          }
          if((key == KeyEvent.VK_1)&&(Spielfeld.spieler.aktiv)){
 	       	Spielfeld.spieler.waffe = 0;
 	       	Spielfeld.waffe.ID = 0;
+	       	Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";waffenwechsel;0;");
 	     }
          if((key == KeyEvent.VK_2)&&(Spielfeld.spieler.aktiv)){
         	if(Spielfeld.spieler.axt){
         		Spielfeld.spieler.waffe = 1;
         		Spielfeld.waffe.ID = 1;
+    	       	Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";waffenwechsel;1;");
         	}
 		 }
          if((key == KeyEvent.VK_3)&&(Spielfeld.spieler.aktiv)){
          	if(Spielfeld.spieler.bogen){
          		Spielfeld.spieler.waffe = 2;
          		Spielfeld.waffe.ID = 2;
+    	       	Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";waffenwechsel;2;");
          	}
  		 }
          //rätsel betätigen
@@ -283,15 +301,27 @@ public class KeyHandler implements KeyListener{
           if(Rätsel.geschafft==false){
         	if (Spielfeld.rätsel1.berührung==true){
         		Spielfeld.rätsel1.aktion();
+        		if(Spielfeld.multiplayer){
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";rätselaktion;1;");
+				}
         	}
         	if (Spielfeld.rätsel2.berührung==true){
         		Spielfeld.rätsel2.aktion();
+        		if(Spielfeld.multiplayer){
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";rätselaktion;2;");
+				}
         	}
         	if (Spielfeld.rätsel3.berührung==true){
         		Spielfeld.rätsel3.aktion();
+        		if(Spielfeld.multiplayer){
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";rätselaktion;3;");
+				}
         	}
         	if (Spielfeld.rätsel4.berührung==true){
         		Spielfeld.rätsel4.aktion();
+        		if(Spielfeld.multiplayer){
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";rätselaktion;4;");
+				}
         	}
           } 
         }

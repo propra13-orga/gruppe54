@@ -15,7 +15,7 @@ public class Spieler extends Rectangle {
 	public double schaden = 5;
 	public int item_trank = 0,item_mana = 0,item_supertrank = 0;
 	public int leben = 100,superleben = 3,mana = 100,xp = 0,ruestung = 100;
-	public boolean aktiv = false,schwert = true,axt = false,bogen = false;
+	public boolean aktiv = false,schwert = true,axt = false,bogen = true;
 	public Point checkpoint;
 	public int check_room = 1,current_room = 1;	//check_room - Raum wo das letzte Mal der Checkpoint betätigt wurde		
 	public int Anzahl_Schüssen=9;
@@ -25,6 +25,7 @@ public class Spieler extends Rectangle {
 	public boolean links = false;
 	public boolean hoch = false;
 	public boolean runter = false; 
+	public boolean multiplayer = false;
 	
 	/**
 	 * 
@@ -41,7 +42,11 @@ public class Spieler extends Rectangle {
 	}
 	
 	public void draw(Graphics g){
-		g.drawImage(Frame.image,(int)x,(int)y,32,32,null);
+		if(multiplayer){
+			g.drawImage(Frame.image2,(int)x,(int)y,32,32,null);
+		} else if(!multiplayer) {
+			g.drawImage(Frame.image,(int)x,(int)y,32,32,null);
+		}
 	}
 	
 	/**

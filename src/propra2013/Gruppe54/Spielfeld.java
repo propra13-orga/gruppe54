@@ -39,13 +39,13 @@ public class Spielfeld extends JPanel implements Runnable{
 										  //weiterhin der Position des Spielers anpasst
 	public static int counter_schuss2 = 0;
 	public static int counter_angriff = 0;
-	public static Pfeil pfeil;
+	public static Pfeil pfeil,pfeil2;
 	private static int EndgegnerLeben;
 	private static int GegnerRLLeben;
 	private static int GegnerOULeben;
 	private static int GegnerKILeben;
 	public static Falle falle;
-	public static Waffe waffe;
+	public static Waffe waffe,waffe2;
 	public static boolean multiplayer = false;
 
 	public static boolean host = false;
@@ -71,7 +71,7 @@ public class Spielfeld extends JPanel implements Runnable{
 		spieler.rechts = true;
 		spieler2 = new Spieler();
 		if(multiplayer){
-			spieler2.aktiv = true;
+			spieler2.multiplayer = true;
 			spieler2.rechts = true;
 		}
 		rätsel1 = new Rätsel(1);
@@ -177,6 +177,7 @@ public class Spielfeld extends JPanel implements Runnable{
 			}
 		}
 		schuss_spieler2 = new Schuss_Spieler(spieler2);
+		pfeil2 = new Pfeil();
 		raum = new Raum();
 		gegnerRL = new GegnerRL();
 		gegnerOU = new GegnerOU();
@@ -184,8 +185,8 @@ public class Spielfeld extends JPanel implements Runnable{
 		falle = new Falle();
 		Boss = new Endgegner();
 		gegnerKI = new GegnerKI();
-		waffe = new Waffe();
-		current_room=3;
+		waffe = new Waffe(spieler);
+		waffe2 = new Waffe(spieler2);
 		loadImages();
 		level.loadLevel(new File("level/level"+current_lvl+"_"+current_room+".lvl"));   //level-datei laden
 		schuss_endgegner = new Schuss_Endgegner();
@@ -238,12 +239,23 @@ public class Spielfeld extends JPanel implements Runnable{
 		if(multiplayer){
 			if((spieler2.aktiv)&(spieler.current_room == spieler2.current_room)){
 				spieler2.draw(g);
+				waffe2.draw(g);
+				//Lebensanzeige Spieler2
+				if(spieler2.leben>spieler2.leben/4){
+					g.setColor(Color.green);
+				} else {
+					g.setColor(Color.red);
+				}
+				g.fill3DRect((int)spieler2.x, (int)spieler2.y-10,spieler2.leben/3,3,true);
 			}
 			if(schuss_spieler2.sichtbar){
 				schuss_spieler2.draw(g);
 			}
 			if(schuss2_spieler2.sichtbar){
 				schuss2_spieler2.draw(g);
+			}
+			if(pfeil2.aktiv){
+				pfeil2.draw(g);
 			}
 		}
 		
@@ -390,11 +402,24 @@ public class Spielfeld extends JPanel implements Runnable{
 				//Schuss von Spieler2
 				schuss_spieler2.setSchaden(spieler2);
 				if(schuss_spieler2.sichtbar){
+					if (schuss_spieler.setPos==false){
+						schuss_spieler.setPos();
+					}
 					schuss_spieler2.Schuss();
+					counter_schuss = 1;
 				}
 				//Schuss2 von Spieler2
 				if(schuss2_spieler2.sichtbar){
+					if (schuss2_spieler2.setPos==false){
+						schuss2_spieler2.setPos();
+					}
 					schuss2_spieler2.Schuss();
+					counter_schuss2 = 1;
+				}
+				
+				//Pfeil von Spieler2
+				if(pfeil2.aktiv){
+					pfeil2.Schuss();
 				}
 				
 			}

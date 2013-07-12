@@ -40,7 +40,7 @@ public class ServerThread extends Thread {
 					} else if(server.clientList.get(1) == s) {
 						s2 = server.clientList.get(0);
 					}
-					out2 = new PrintWriter(s2.getOutputStream(),true);
+					out2 = new PrintWriter(s2.getOutputStream(),true); 	//an anderen Client schicken
 					out2.println(incoming.toString());
 				}
 			  }

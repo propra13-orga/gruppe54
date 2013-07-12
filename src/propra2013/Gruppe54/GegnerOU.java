@@ -92,6 +92,9 @@ public class GegnerOU extends Rectangle{
 			counter_kollision ++;
 			if(counter_kollision == 5) {
 				Spielfeld.spieler.leben -= 1;
+				if(Spielfeld.multiplayer){
+					Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";spielerleben;"+Spielfeld.spieler.leben+";");
+				}
 				counter_kollision = 0;
 			}
 		}

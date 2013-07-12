@@ -21,8 +21,7 @@ public class Rätsel extends Rectangle {
 	
 	/**
 	 * Konstruktor
-	 * @param startX
-	 * @param startY
+	 * @param Reihenfolge
 	 */
 	public Rätsel(int Reihenfolge){
 		setBounds(X,Y,32,32);
@@ -42,6 +41,9 @@ public class Rätsel extends Rectangle {
 		}
 	}	
 	
+	/**
+	 * Setzt die Berührung wieder auf false
+	 */
 	public static void setFalse(){
 		Spielfeld.rätsel1.berührung=false;
 		Spielfeld.rätsel2.berührung=false;
@@ -49,6 +51,10 @@ public class Rätsel extends Rectangle {
 		Spielfeld.rätsel4.berührung=false;
 	}
 	
+	/**
+	 * Rätsel wird vollständig zurück gesetzt
+	 * 
+	 */
 	public static void reset(){
 		Spielfeld.rätsel1.aktiv=true;
 		Spielfeld.rätsel2.aktiv=true;
@@ -58,6 +64,10 @@ public class Rätsel extends Rectangle {
 		geschafft=false;
 		vorhanden=false;
 	}
+	
+	/**
+	 *  Führt aus, was bei Betätigung des Rätsels geschehen soll
+	 */
 	public void aktion(){
 		if (aktiv==false){
 			//passiert nicht

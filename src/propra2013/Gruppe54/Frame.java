@@ -168,6 +168,7 @@ public class Frame extends JFrame{
 				
 				if(multiplayer.isSelected()){
 					Spielfeld.multiplayer = true;
+					Spielfeld.spieler2.multiplayer = true;
 				} else if(!multiplayer.isSelected()){
 					Spielfeld.multiplayer = false;
 				}
