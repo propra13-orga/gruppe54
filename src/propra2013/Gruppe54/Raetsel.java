@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
 
-public class Rätsel extends Rectangle {
+public class Raetsel extends Rectangle {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -22,7 +22,7 @@ public class Rätsel extends Rectangle {
 	 * Konstruktor
 	 * @param reihenfolge - gibt an, als wievieltes Element der Schalter betätigt werden muss
 	 */
-	public Rätsel(int reihenfolge){
+	public Raetsel(int reihenfolge){
 		setBounds(X,Y,32,32);
 		this.aktiv=true;
 		next = 1;
@@ -40,6 +40,9 @@ public class Rätsel extends Rectangle {
 		}
 	}	
 	
+	/**
+	 * Setzt die Berührung wieder auf false
+	 */
 	public static void setFalse(){
 		Spielfeld.rätsel1.berührung=false;
 		Spielfeld.rätsel2.berührung=false;
@@ -47,6 +50,10 @@ public class Rätsel extends Rectangle {
 		Spielfeld.rätsel4.berührung=false;
 	}
 	
+	/**
+	 * Rätsel wird vollständig zurück gesetzt
+	 * 
+	 */
 	public static void reset(){
 		Spielfeld.rätsel1.aktiv=true;
 		Spielfeld.rätsel2.aktiv=true;
@@ -57,6 +64,9 @@ public class Rätsel extends Rectangle {
 		vorhanden=false;
 	}
 	
+	/**
+	 *  Führt aus, was bei Betätigung des Rätsels geschehen soll
+	 */
 	public void aktion(){
 		if (aktiv){
 			if (next==reihenfolge){

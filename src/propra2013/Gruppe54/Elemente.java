@@ -47,7 +47,7 @@ public class Elemente {
 				Falle.StartX=0;
 				Falle.StartY=0;
 				Spielfeld.pfeil.aktiv = false;
-				Rätsel.reset();
+				Raetsel.reset();
 				if(Spielfeld.multiplayer){
 					if(Spielfeld.schuss_spieler2.sichtbar){
 						Spielfeld.schuss_spieler2.sichtbar = false;
@@ -333,7 +333,7 @@ public class Elemente {
 				Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";shopein;"); 
 			}
    		 	Spielfeld.showShop();
-   		 	Rätsel.reset();
+   		 	Raetsel.reset();
 			break;
 			
 		case 27://Ausgang Shop
@@ -344,7 +344,7 @@ public class Elemente {
 				//Nachricht an den Server schicken
 				Spielfeld.client.send(Spielfeld.client.socket.getLocalPort()+";shopaus;");
 			}
-			Rätsel.reset();
+			Raetsel.reset();
 			break;
 		
 		case 28://Item_Shop Axt
@@ -445,7 +445,7 @@ public class Elemente {
 				if(Spielfeld.schuss2_spieler.sichtbar){
 					Spielfeld.schuss2_spieler.sichtbar = false;
 				}
-				Rätsel.reset();
+				Raetsel.reset();
 				Spielfeld.pfeil.aktiv = false;
 				Spielfeld.current_room+=1;
 				Falle.aktiv=false;

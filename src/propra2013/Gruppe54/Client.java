@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.*;
 import java.util.regex.Pattern;
 
+import sun.net.ConnectionResetException;
+
 public class Client extends Thread{
 
 	Socket socket = null;
@@ -128,7 +130,7 @@ public class Client extends Thread{
 						Falle.StartX=0;
 						Falle.StartY=0;
 						Spielfeld.pfeil.aktiv = false;
-						Rätsel.reset();
+						Raetsel.reset();
 					} else if(input[1].equals("serverdown".toString())){	//Server wurde beendet
 						Spielfeld.spieler2.aktiv = false;
 						System.out.println("Server wurde beendet");

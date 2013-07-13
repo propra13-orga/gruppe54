@@ -52,10 +52,10 @@ public class Spielfeld extends JPanel implements Runnable{
 	public static String richtung = null;
 	public static String ip = null;
 	
-	public static Rätsel rätsel1;
-	public static Rätsel rätsel2;
-	public static Rätsel rätsel3;
-	public static Rätsel rätsel4;
+	public static Raetsel rätsel1;
+	public static Raetsel rätsel2;
+	public static Raetsel rätsel3;
+	public static Raetsel rätsel4;
 	
 	/**
 	 * Konstruktor
@@ -70,10 +70,10 @@ public class Spielfeld extends JPanel implements Runnable{
 			spieler2.multiplayer = true;
 			spieler2.rechts = true;
 		}
-		rätsel1 = new Rätsel(1);
-		rätsel2 = new Rätsel(2);
-		rätsel3 = new Rätsel(3);
-		rätsel4 = new Rätsel(4);
+		rätsel1 = new Raetsel(1);
+		rätsel2 = new Raetsel(2);
+		rätsel3 = new Raetsel(3);
+		rätsel4 = new Raetsel(4);
 	}
     /**
      * Bilder in Array laden
@@ -314,7 +314,7 @@ public class Spielfeld extends JPanel implements Runnable{
 			g.fill3DRect(gegnerKI.StartX, gegnerKI.StartY-10,gegnerKI.leben/gegnerKI.Faktor,3,true);	
 		}
 		//Rätsel
-		if(Rätsel.vorhanden){
+		if(Raetsel.vorhanden){
 		rätsel1.draw(g);
 		rätsel2.draw(g);
 		rätsel3.draw(g);

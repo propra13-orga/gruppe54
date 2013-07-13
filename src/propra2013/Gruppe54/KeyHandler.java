@@ -28,7 +28,7 @@ public class KeyHandler implements KeyListener{
             Spielfeld.spieler.runter = false;
             Frame.image = Frame.Figur1_links.getImage();
             Spielfeld.richtung = "links";
-            Rätsel.setFalse();
+            Raetsel.setFalse();
          }
          /**
    	   	  * Taste D - Bewegun rechts
@@ -43,7 +43,7 @@ public class KeyHandler implements KeyListener{
          	Spielfeld.spieler.runter = false;
          	Frame.image = Frame.Figur1_rechts.getImage();
          	Spielfeld.richtung = "rechts";
-         	Rätsel.setFalse();
+         	Raetsel.setFalse();
          }
          /**
    	      * Taste W - Bewegung runter
@@ -58,7 +58,7 @@ public class KeyHandler implements KeyListener{
 	        Spielfeld.spieler.runter = false;
 	        Frame.image = Frame.Figur1_oben.getImage();
 	        Spielfeld.richtung = "hoch";
-	        Rätsel.setFalse();
+	        Raetsel.setFalse();
          }
          /**
    	      * Taste S - Bewegung links
@@ -73,7 +73,7 @@ public class KeyHandler implements KeyListener{
 	        Spielfeld.spieler.runter = true;
 	        Frame.image = Frame.Figur1_unten.getImage();
 	        Spielfeld.richtung = "runter";
-	        Rätsel.setFalse();
+	        Raetsel.setFalse();
          }
          
          /**
@@ -345,7 +345,7 @@ public class KeyHandler implements KeyListener{
          * Taste E - Rätsel betätigen
          */
         if((key == KeyEvent.VK_E)&&(Spielfeld.spieler.aktiv)){
-          if(Rätsel.geschafft==false){
+          if(Raetsel.geschafft==false){
         	if (Spielfeld.rätsel1.berührung==true){
         		Spielfeld.rätsel1.aktion();
         		if(Spielfeld.multiplayer){

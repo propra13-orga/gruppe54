@@ -187,7 +187,7 @@ public class Frame extends JFrame{
 				}
 				
 				//Spielfeld anzeigen	
-				Rätsel.reset();
+				Raetsel.reset();
 				spielfeld.define();	
 				add(spielfeld);						
 				//Spielerinfo anzeigen
@@ -207,6 +207,10 @@ public class Frame extends JFrame{
 				Spielfeld.spieler.rechts = true;
 				Spielfeld.spieler.x = Raum.Startpunkt[Spielfeld.current_lvl-1].getX();
 				Spielfeld.spieler.y = Raum.Startpunkt[Spielfeld.current_lvl-1].getY();
+				if(Spielfeld.multiplayer){
+					Spielfeld.spieler2.x = Spielfeld.spieler.x;
+					Spielfeld.spieler2.y = Spielfeld.spieler.y;
+				}
 				Spielfeld.spieler.beweglich = true;
 				Spielfeld.spieler.leben = 100;
 				Spielfeld.spieler.mana = 100;
@@ -222,7 +226,7 @@ public class Frame extends JFrame{
 		neustart.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				if(Spielfeld.spieler.superleben >= 1){
-					Rätsel.reset();
+					Raetsel.reset();
 					Spielfeld.current_room = Spielfeld.spieler.check_room;
 					spielfeld.define();
 					Spielfeld.spieler.x = Spielfeld.spieler.checkpoint.getX();
@@ -238,7 +242,7 @@ public class Frame extends JFrame{
 					}
 				} else if(Spielfeld.spieler.superleben <= 0){
 					//aktuelles Level in Raum 1 neu laden
-					Rätsel.reset();
+					Raetsel.reset();
 					Spielfeld.current_room = 1;
 					spielfeld.define();
 					//Spieler auf den Startpunkt des jeweiligen Levels setzen
@@ -267,7 +271,7 @@ public class Frame extends JFrame{
 		 **/
 		checkpoint.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				Rätsel.reset();
+				Raetsel.reset();
 				Spielfeld.current_room = Spielfeld.spieler.check_room;
 				spielfeld.define();
 				Spielfeld.spieler.x = Spielfeld.spieler.checkpoint.getX();
@@ -289,7 +293,7 @@ public class Frame extends JFrame{
 		 **/
 		nextLevel.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				Rätsel.reset();
+				Raetsel.reset();
 				Spielfeld.current_lvl += 1;
 				Spielfeld.current_room = 1; 
 				Spielfeld.spieler.checkpoint = new Point(Raum.Startpunkt[Spielfeld.current_lvl-1].x,Raum.Startpunkt[Spielfeld.current_lvl-1].y);
