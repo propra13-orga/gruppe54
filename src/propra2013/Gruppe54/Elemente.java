@@ -394,10 +394,12 @@ public class Elemente {
 				}
 				block.Zustand = 1;
 				Spielfeld.anzeige = true;
-				spieler.schluessel -= 1;
-			} else if(spieler.schluessel == 0){
+			} else if((spieler.schluessel == 0)&&(block.Zustand == 0)){
 				Spielfeld.text_anzeige = "     ???";
 				Spielfeld.anzeige = true;
+			}
+			if(spieler.schluessel != 0){
+				spieler.schluessel -= 1;
 			}
 			break;
 		case 32://Gold1
